@@ -43,6 +43,21 @@ Dependency-free Node, with the rules in `scripts/lib/policy.mjs`.
 |Tests for the rules and the renderer, run with `npm test`.
 |===
 
+[#managed-blocks]
+== Documents and extendable configuration
+
+Documents (the root `.adoc` files and `LICENSE`) are synced whole.
+
+Configuration files are extendable: each template wraps its synced content in `house:managed:begin` and `house:managed:end`, and marks where a repository's own rules go with `house:local`.
+The sync replaces only the managed block and keeps everything else, so a repository can add Dependabot updates, code owners, issue form fields, contact links, funding platforms, pull request template sections or workflow jobs without losing them.
+
+Local rules can extend the synced ones but not change them.
+The policy check fails a pull request that edits a managed block or a synced document, and flags local rules that would redefine a synced one: a duplicate Dependabot update, a redefined top-level YAML key, a reused issue form field id, or a redefined job.
+In `CODEOWNERS` the managed block comes last, because the last matching rule wins.
+
+When a repository first adopts a file it already had, its previous content is kept, commented out at the `house:local` line, for someone to re-add as local rules.
+Making a template extendable only needs the three marker lines; `scripts/lib/managed.mjs` handles the rest.
+
 [#changing]
 == Changing a policy or template
 
@@ -82,7 +97,7 @@ HOUSE_EXCLUDE: LICENSE
 |`COVERAGE_MIN` |The minimum line and branch coverage.
 |`MAINTAINERS` |Who counts as a maintainer for the checks and the review gate.
 |`TRUSTED_BOTS` |Automation accounts that skip the disclosure and DCO checks.
-|`HOUSE_EXCLUDE` |Template paths a repository keeps its own copy of.
+|`HOUSE_EXCLUDE` |Template paths a repository keeps its own copy of. For configuration, prefer local rules outside the managed block; exclusion is for a file the repository genuinely cannot share, such as a different licence.
 |`PROJECT_TYPE` |`saas`, `desktop`, `library` or `none`; picks the deployment environments.
 |`ENVIRONMENTS` |Explicit environment names, replacing the `PROJECT_TYPE` set.
 |`CODE_SCANNING_GATE` |Whether serious CodeQL findings block merges. Turn off only where CodeQL cannot analyse the code.

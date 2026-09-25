@@ -1,16 +1,18 @@
-# Generated from Resnovas/.github templates/.github/CODEOWNERS. Edit it there, not here.
+# house:local - add this repository's own owners below this line, above the managed block.
+# The managed block comes last because the last matching rule wins, so synced owners always apply.
+
+# Fallback owner for anything no rule below matches. Change it freely.
+*                            @TGTGamer
+
+# house:managed:begin - synced from Resnovas/.github templates/.github/CODEOWNERS. Edits inside this block are overwritten.
 #
-# Owners are set by role in .github/house.yml. Later lines win, so the most
-# specific rules come last. A repository that needs owners for its own
-# directories excludes this file with HOUSE_EXCLUDE and keeps its own copy.
+# Owners are set by role in .github/house.yml. Owners for the repository's own
+# directories go in the local section above this block.
 #
 #   OWNERS_ADMIN     project administration: governance, licence, repository configuration
 #   OWNERS_DOCS      technical writing and customer success: documentation
 #   OWNERS_QA        quality assurance: tests
 #   OWNERS_WORKFLOW  workflow management: CI, tooling, dev environments, scripts
-
-# Everything not matched below.
-*                            @TGTGamer
 
 # Documentation.
 *.adoc                       @TGTGamer
@@ -45,3 +47,4 @@
 /SECURITY.adoc               @TGTGamer
 /package.json                @TGTGamer
 /.editorconfig               @TGTGamer
+# house:managed:end

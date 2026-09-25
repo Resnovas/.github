@@ -6,6 +6,8 @@
 
 export const LEVELS = ['none', 'autocomplete', 'chat', 'agent', 'autonomous']
 
+import { syncFindings } from './managed.mjs'
+
 const POLICY_URL = 'https://github.com/Resnovas/.github/blob/main'
 
 const RULE_LINKS = {
@@ -18,6 +20,7 @@ const RULE_LINKS = {
   TITLE: `${POLICY_URL}/CONTRIBUTING.adoc#pr-title`,
   STYLE: `${POLICY_URL}/AI_POLICY.adoc#ai-09`,
   REVIEW: `${POLICY_URL}/GOVERNANCE.adoc#review`,
+  SYNC: `${POLICY_URL}/GOVERNANCE.adoc#synced-files`,
 }
 
 // Findings that stay errors even on a maintainer's own pull request.
@@ -94,7 +97,8 @@ function finding(rule, message, extra = {}) {
 //   commits  [{ sha, message, authorEmail, parents }]
 //   config   { maintainers: [], trustedBots: [] }
 //   action   the pull_request event action, e.g. "opened"
-export function evaluatePullRequest({ pr, commits, config, action }) {
+//   synced   optional [{ path, rendered, base, head }] for the synced files
+export function evaluatePullRequest({ pr, commits, config, action, synced = [] }) {
   const role = authorRole(pr, config)
   if (role === 'bot') return []
 
@@ -166,6 +170,11 @@ export function evaluatePullRequest({ pr, commits, config, action }) {
     if (!human.some((s) => s.email === commit.authorEmail.toLowerCase())) {
       findings.push(finding('DCO', `No Signed-off-by matching the author <${commit.authorEmail}>. Commit with "git commit -s".`, { sha: commit.sha }))
     }
+  }
+
+  // Synced content is changed in Resnovas/.github, never in a repository.
+  for (const { path, message } of syncFindings(synced)) {
+    findings.push(finding('SYNC', `${path} ${message}. Change it in Resnovas/.github instead.`))
   }
 
   const prose = `${pr.title}\n${(pr.body ?? '').replace(/<!--[\s\S]*?-->/g, '')}`

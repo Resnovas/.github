@@ -1,9 +1,10 @@
-# Generated from Resnovas/.github templates/.github/dependabot.yml. Edit it there, not here.
+# house:managed:begin - synced from Resnovas/.github templates/.github/dependabot.yml. Edits inside this block are overwritten.
 #
 # Weekly version updates on Monday morning, grouped so each ecosystem opens one
 # pull request, with security updates grouped separately so they are never held
-# back behind routine bumps. A repository with other ecosystems excludes this
-# file with HOUSE_EXCLUDE and keeps its own copy.
+# back behind routine bumps. A repository with other ecosystems adds its own
+# updates below the managed block. One without a package.json excludes this
+# file with HOUSE_EXCLUDE, because the npm update below would fail there.
 version: 2
 updates:
   - package-ecosystem: github-actions
@@ -42,3 +43,5 @@ updates:
       npm-minor-and-patch:
         applies-to: version-updates
         update-types: [minor, patch]
+# house:managed:end
+# house:local - add further updates below, as list items under updates.

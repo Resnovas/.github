@@ -73,9 +73,9 @@ export function rulesetBody(values) {
     target: 'branch',
     enforcement: 'active',
     conditions: { ref_name: { include: ['~DEFAULT_BRANCH'], exclude: [] } },
-    // Actor 5 is the repository admin role. While there is a single
-    // maintainer they may bypass; with two or more, nobody does.
-    bypass_actors: maintainers.length >= 2 ? [] : [{ actor_id: 5, actor_type: 'RepositoryRole', bypass_mode: 'always' }],
+    // Actor 5 is the repository admin role. The owner can always override
+    // the ruleset, including the review gate, whatever the maintainer count.
+    bypass_actors: [{ actor_id: 5, actor_type: 'RepositoryRole', bypass_mode: 'always' }],
     rules,
   }
 }

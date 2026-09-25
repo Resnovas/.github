@@ -10,14 +10,22 @@
 
 import { appendFileSync, readFileSync } from 'node:fs'
 import { parseArgs } from 'node:util'
+import { existsSync } from 'node:fs'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { list, loadValues } from './lib/values.mjs'
 import { evaluatePullRequest, evaluateReviews } from './lib/policy.mjs'
+import { renderAll } from './lib/render.mjs'
 
 const { values: args } = parseArgs({
   options: {
     mode: { type: 'string', default: 'policy' },
     values: { type: 'string', default: 'house.yml' },
     override: { type: 'string', default: '.github/house.yml' },
+    // Checkouts of the base branch and the pull request, for the synced
+    // files check. Both are read as text; nothing in them is executed.
+    base: { type: 'string' },
+    head: { type: 'string' },
   },
 })
 
@@ -54,6 +62,17 @@ async function getAll(path) {
   }
 }
 
+// The house repository renders its own root in CI, so it is not checked here.
+function syncedFiles() {
+  if (!args.base || !args.head || env('GITHUB_REPOSITORY').toLowerCase() === 'resnovas/.github') return []
+  const templates = join(dirname(fileURLToPath(import.meta.url)), '..', 'templates')
+  const excluded = new Set(list(house.HOUSE_EXCLUDE))
+  const read = (root, path) => (existsSync(join(root, path)) ? readFileSync(join(root, path), 'utf8') : null)
+  return renderAll(templates, { ...house, REPOSITORY: env('GITHUB_REPOSITORY') })
+    .filter(({ path }) => !excluded.has(path))
+    .map(({ path, content }) => ({ path, rendered: content, base: read(args.base, path), head: read(args.head, path) }))
+}
+
 let findings
 let summary
 if (args.mode === 'reviews') {
@@ -70,7 +89,7 @@ if (args.mode === 'reviews') {
     authorEmail: c.commit.author?.email ?? '',
     parents: c.parents.length,
   }))
-  findings = evaluatePullRequest({ pr, commits, config, action: event.action })
+  findings = evaluatePullRequest({ pr, commits, config, action: event.action, synced: syncedFiles() })
   summary = `Checked ${commits.length} commit(s).`
 }
 

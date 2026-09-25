@@ -1,3 +1,4 @@
+<!-- house:managed:begin - synced from Resnovas/.github templates/.github/PULL_REQUEST_TEMPLATE.md. Edits inside this block are overwritten. -->
 <!--
 Describe the code in this pull request and nothing else: no conversation
 history, prompts or background it does not need. Keep it shorter than the diff.
@@ -42,3 +43,5 @@ AI level:
 AI tools:
 Accountable human:
 Human review:
+<!-- house:managed:end -->
+<!-- house:local - add this repository's own sections below this line. -->

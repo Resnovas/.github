@@ -70,8 +70,9 @@ A review of an AI-assisted pull request follows link:AI_POLICY.adoc#ai-40[AI-40]
 === Enforcement
 
 The `house-policy / reviews` check counts approvals from the maintainers listed in `.github/house.yml` and applies the table above.
-As soon as that list names two or more maintainers, the house ruleset makes the `house-policy / policy` and `house-policy / reviews` checks required on the default branch and removes the administrator bypass.
-With a single maintainer the check always passes and the owner can bypass the ruleset, so a sole maintainer is never blocked.
+As soon as that list names two or more maintainers, the house ruleset makes the `house-policy / policy` and `house-policy / reviews` checks required on the default branch.
+With a single maintainer the check always passes, so a sole maintainer is never blocked.
+The owner can always bypass the ruleset, including the review gate, whatever the number of maintainers; a bypass is recorded in the pull request.
 
 [#merging]
 == Merging
@@ -98,6 +99,21 @@ Every repository is configured to the same baseline, applied automatically by th
 * deployment environments for what the repository ships: Production, Staging and Development for software as a service; Windows, Linux and macOS with a Beta of each for desktop applications; Release for libraries.
 
 One setting has no API and is set by hand: pushes are limited to updating five branches or tags at once.
+
+[#synced-files]
+== Synced files
+
+The governance documents, templates and shared configuration are synced from https://github.com/Resnovas/.github[Resnovas/.github].
+
+* *Documents* (the `.adoc` files at the root and `LICENSE`) are synced whole.
+* *Configuration* (`CODEOWNERS`, `dependabot.yml`, `FUNDING.yml`, the issue forms and their `config.yml`, the pull request template, and the house workflows) contains a block between `house:managed:begin` and `house:managed:end`.
+The sync only ever replaces that block.
+A repository adds its own rules outside it, at the `house:local` line, and those are kept.
+
+Local rules extend the synced ones; they cannot change them.
+A pull request that edits a synced document or a managed block, or adds a local rule that redefines a synced one, fails the `house-policy / policy` check.
+In `CODEOWNERS` the managed block comes last, so its owners win over any local rule.
+A repository that genuinely needs its own version of a file lists it in `HOUSE_EXCLUDE` in `.github/house.yml`, which a maintainer has to approve.
 
 [#amendments]
 == Changing this document

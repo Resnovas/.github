@@ -1,4 +1,4 @@
-# Generated from Resnovas/.github templates/.github/workflows/house-policy.yml. Edit it there, not here.
+# house:managed:begin - synced from Resnovas/.github templates/.github/workflows/house-policy.yml. Edits inside this block are overwritten.
 #
 # Runs the house policy on every pull request. Once .github/house.yml lists two
 # or more maintainers, the house ruleset makes "house-policy / policy" and
@@ -18,3 +18,5 @@ permissions:
 jobs:
   house-policy:
     uses: Resnovas/.github/.github/workflows/policy.yml@main
+# house:managed:end
+# house:local - add further jobs below, indented under jobs.

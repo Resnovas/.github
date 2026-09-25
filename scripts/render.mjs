@@ -7,6 +7,9 @@
 //
 // Values come from house.yml, then the optional override file, then
 // --repository, each layer replacing keys from the one before.
+//
+// Files with a house:managed block keep everything the repository added
+// outside the block (scripts/lib/managed.mjs); other files are replaced whole.
 
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
@@ -14,6 +17,7 @@ import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
 import { list, loadValues } from './lib/values.mjs'
 import { renderAll } from './lib/render.mjs'
+import { managedConflicts, mergeManaged } from './lib/managed.mjs'
 
 const houseRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 
@@ -38,9 +42,13 @@ const excluded = new Set(list(values.HOUSE_EXCLUDE))
 const rendered = renderAll(join(houseRoot, 'templates'), values).filter(({ path }) => !excluded.has(path))
 const stale = []
 
-for (const { path, content } of rendered) {
+for (const { path, content: template } of rendered) {
   const target = join(args.out, path)
   const current = existsSync(target) ? readFileSync(target, 'utf8') : null
+  const content = mergeManaged(template, current, path)
+  for (const problem of managedConflicts(path, template, content)) {
+    console.log(`::warning file=${path},title=house sync::${problem}`)
+  }
   if (current === content) continue
   stale.push(path)
   if (!args.check) {

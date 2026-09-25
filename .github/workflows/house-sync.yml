@@ -1,4 +1,4 @@
-# Generated from Resnovas/.github templates/.github/workflows/house-sync.yml. Edit it there, not here.
+# house:managed:begin - synced from Resnovas/.github templates/.github/workflows/house-sync.yml. Edits inside this block are overwritten.
 #
 # Pulls the latest governance files from Resnovas/.github every Monday morning,
 # opens a pull request when anything changed, and reapplies the house
@@ -19,3 +19,5 @@ jobs:
     secrets:
       app-id: ${{ secrets.HOUSE_SYNC_APP_ID }}
       app-private-key: ${{ secrets.HOUSE_SYNC_APP_PRIVATE_KEY }}
+# house:managed:end
+# house:local - add further jobs below, indented under jobs.

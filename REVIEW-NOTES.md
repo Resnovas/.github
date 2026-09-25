@@ -23,6 +23,8 @@ repository. Nothing here has been pushed. Delete this file before the first push
 | Trailers | `Co-authored-by` and `Assisted-by: TOOL:MODEL` together on every AI-changed commit, autocomplete included. |
 | Sign-off | Names the accountable human; tooling they set up (their own agent) may add it for them. Jonathan's agents now sign off his commits. |
 | Settings | Applied weekly by the sync's settings job; see GOVERNANCE.adoc#settings. |
+| Extendable config | Synced config files have a `house:managed` block; repos add rules outside it and cannot change the block. See GOVERNANCE.adoc#synced-files. |
+| Bypass | The owner (repository admin role) can always bypass the ruleset, including the review gate. |
 | Dropped | Separate tests repository rule, Discord and Jira channels, CoC "Intended Use". |
 
 ## Please check

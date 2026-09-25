@@ -91,9 +91,9 @@ test('a sole maintainer can bypass and has no required checks', () => {
   assert.ok(!body.rules.some((r) => r.type === 'required_status_checks'))
 })
 
-test('two maintainers remove the bypass and require the house checks', () => {
+test('two maintainers require the house checks, and the owner can still bypass', () => {
   const body = rulesetBody({ ...base, MAINTAINERS: 'TGTGamer, second' })
-  assert.deepEqual(body.bypass_actors, [])
+  assert.deepEqual(body.bypass_actors, [{ actor_id: 5, actor_type: 'RepositoryRole', bypass_mode: 'always' }])
   const checks = body.rules.find((r) => r.type === 'required_status_checks')
   assert.deepEqual(checks.parameters.required_status_checks, [{ context: 'house-policy / policy' }, { context: 'house-policy / reviews' }])
 })

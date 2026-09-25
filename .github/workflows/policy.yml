@@ -34,15 +34,33 @@ jobs:
           path: .house
           persist-credentials: false
 
-      # Overrides come from the base branch, never the pull request, so a
-      # pull request cannot edit its own maintainer list.
-      - name: Check out repository overrides
+      # The base branch supplies the overrides, so a pull request cannot edit
+      # its own maintainer list, and the baseline for the synced files check.
+      - name: Check out base branch
         uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.base.sha }}
-          sparse-checkout: .github/house.yml
+          sparse-checkout: |
+            /*.adoc
+            /LICENSE
+            /.github/
           sparse-checkout-cone-mode: false
           path: .repo
+          persist-credentials: false
+
+      # Read as text to compare synced files; nothing from the pull request
+      # is ever executed, so this is safe for pull requests from forks.
+      - name: Check out pull request files
+        uses: actions/checkout@v7
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.sha }}
+          sparse-checkout: |
+            /*.adoc
+            /LICENSE
+            /.github/
+          sparse-checkout-cone-mode: false
+          path: .head
           persist-credentials: false
 
       - uses: actions/setup-node@v7
@@ -50,7 +68,7 @@ jobs:
           node-version: 24
 
       - name: Check policy
-        run: node .house/scripts/policy-check.mjs --mode policy --values .house/house.yml --override .repo/.github/house.yml
+        run: node .house/scripts/policy-check.mjs --mode policy --values .house/house.yml --override .repo/.github/house.yml --base .repo --head .head
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
