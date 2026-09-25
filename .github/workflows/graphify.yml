@@ -1,0 +1,113 @@
+# Reusable Graphify workflow. Repositories call it through the
+# house-graphify.yml workflow synced from templates/.github/workflows.
+#
+#   check    on pull requests: reports, without failing, when the committed
+#            graphify-out/graph.json no longer matches the code. The git hooks
+#            rebuild the graph after each commit, so a pull request's graph is
+#            often one commit behind; that is expected and refresh fixes it.
+#   refresh  on the default branch: rebuilds the code graph and opens or
+#            updates a pull request when it changed.
+#
+# Both run code-only extraction: local parsers, no model, no provider key.
+# Document nodes already in the committed graph are kept.
+name: Graphify
+
+on:
+  workflow_call:
+    secrets:
+      app-id:
+        description: ID of the GitHub App that opens the refresh pull request.
+        required: false
+      app-private-key:
+        description: Private key of that GitHub App.
+        required: false
+
+permissions: {}
+
+jobs:
+  check:
+    name: check
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Install uv
+        if: hashFiles('tools/graphify/graphify') != ''
+        run: curl -LsSf https://astral.sh/uv/install.sh | sh
+
+      - name: Compare the committed graph with the code
+        if: hashFiles('tools/graphify/graphify') != ''
+        run: |
+          sh tools/graphify/graphify setup --no-hooks
+          if ! out=$(sh tools/graphify/graphify check 2>&1); then
+            echo "::notice title=Graphify graph is behind the code::$out"
+          fi
+          echo "$out"
+
+  refresh:
+    name: refresh
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mint app token
+        id: app
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: ${{ secrets.app-id }}
+          private-key: ${{ secrets.app-private-key }}
+
+      - uses: actions/checkout@v7
+        with:
+          token: ${{ steps.app.outputs.token }}
+
+      - name: Install uv
+        if: hashFiles('tools/graphify/graphify') != ''
+        run: curl -LsSf https://astral.sh/uv/install.sh | sh
+
+      # graph.json records the commit it was built at, so every rebuild changes
+      # the file. Rebuild only when nodes or edges differ, or every merge would
+      # open another refresh pull request.
+      - name: Rebuild the code graph if it is stale
+        id: rebuild
+        if: hashFiles('tools/graphify/graphify') != ''
+        run: |
+          sh tools/graphify/graphify setup --no-hooks
+          if sh tools/graphify/graphify check; then
+            echo "stale=false" >> "$GITHUB_OUTPUT"
+          else
+            sh tools/graphify/graphify update
+            echo "stale=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open refresh pull request
+        if: steps.rebuild.outputs.stale == 'true'
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ steps.app.outputs.token }}
+          branch: house/graphify
+          delete-branch: true
+          signoff: true
+          add-paths: graphify-out
+          commit-message: 'chore(graphify): refresh the code graph'
+          title: 'chore(graphify): refresh the code graph'
+          labels: house-sync
+          body: |
+            ## What changed and why
+
+            Rebuilds `graphify-out/graph.json` so it matches the code on the default branch.
+            Code-only extraction: local parsers, no model and no network.
+            Document nodes already in the graph are kept.
+
+            ## Evidence
+
+            Rebuilt by the Graphify workflow run ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}.
+
+            ## AI disclosure
+
+            AI level: none
+            AI tools: none

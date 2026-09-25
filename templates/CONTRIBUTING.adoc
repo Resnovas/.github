@@ -211,6 +211,22 @@ Do not repeat what the code already says.
 Code quality is never traded for speed.
 Linting, type checking and tests must pass locally before you ask for review.
 
+[#CodeGraph]
+=== Code graph
+
+Repositories that contain `tools/graphify/graphify` commit a https://github.com/Graphify-Labs/graphify[Graphify] knowledge graph of their code in `graphify-out/graph.json`.
+You and your tools can query it to find what a change touches, without reading the whole codebase.
+Everything runs on your machine: building the code graph uses local parsers only, with no model, no network and no cost.
+
+. Install https://docs.astral.sh/uv/[uv].
+. Run `sh tools/graphify/graphify setup` once in your clone.
+This installs the latest Graphify release, which it keeps up to date, and git hooks that keep the graph current.
+. Ask questions with `sh tools/graphify/graphify query "<question>"`.
+. After changing code, run `sh tools/graphify/graphify update` and commit the changes under `graphify-out/` in the same pull request.
+
+A stale graph never blocks a pull request: CI reports it, and the default branch refreshes itself.
+AI agents find the full instructions in `.agents/skills/graphify/SKILL.md`.
+
 [#MinorContributions]
 == Minor contributions
 
