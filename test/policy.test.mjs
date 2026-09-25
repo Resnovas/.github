@@ -24,7 +24,7 @@ const pr = (overrides = {}) => ({
 })
 
 const signed = 'Signed-off-by: A Contributor <contrib@example.com>'
-const coAuthor = 'Co-authored-by: Claude Opus 5.5 <noreply@anthropic.com>'
+const coAuthor = 'Co-authored-by: Claude Opus 5.5 <noreply@anthropic.com>\nAssisted-by: claude-code:claude-opus-5-5'
 const commit = (message, extra = {}) => ({ sha: 'a'.repeat(40), message, authorEmail: 'contrib@example.com', parents: 1, ...extra })
 
 const rules = (findings, level) => findings.filter((f) => !level || f.level === level).map((f) => f.rule)
@@ -200,6 +200,38 @@ test('claiming no AI while listing AI tools is inconsistent', () => {
   const findings = evaluatePullRequest({
     pr: pr({ body: body({ level: 'none', tools: 'Copilot' }) }),
     commits: [commit(`x\n\n${signed}`)],
+    config,
+    action: 'edited',
+  })
+  assert.deepEqual(rules(findings, 'error'), ['AI-01'])
+})
+
+test('Co-authored-by and Assisted-by must appear together on each AI commit', () => {
+  const coOnly = evaluatePullRequest({
+    pr: pr(),
+    commits: [commit(`x\n\nCo-authored-by: Claude Opus 5.5 <noreply@anthropic.com>\n${signed}`)],
+    config,
+    action: 'edited',
+  })
+  assert.deepEqual(rules(coOnly, 'error'), ['AI-02'])
+  const assistedOnly = evaluatePullRequest({
+    pr: pr(),
+    commits: [commit(`x\n\nAssisted-by: aider:gpt-5\n${signed}`)],
+    config,
+    action: 'edited',
+  })
+  assert.deepEqual(rules(assistedOnly, 'error'), ['AI-02', 'AI-02'])
+})
+
+test('Assisted-by is parsed in the kernel form', () => {
+  const { assistedBy } = parseTrailers('x\n\nAssisted-by: claude-code:claude-opus-5-5 ripgrep\n')
+  assert.deepEqual(assistedBy, ['claude-code:claude-opus-5-5 ripgrep'])
+})
+
+test('claiming no AI while carrying only Assisted-by is inconsistent', () => {
+  const findings = evaluatePullRequest({
+    pr: pr({ body: body({ level: 'none', tools: 'none' }) }),
+    commits: [commit(`x\n\nAssisted-by: aider:gpt-5\n${signed}`)],
     config,
     action: 'edited',
   })

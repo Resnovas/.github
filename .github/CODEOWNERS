@@ -1,0 +1,47 @@
+# Generated from Resnovas/.github templates/.github/CODEOWNERS. Edit it there, not here.
+#
+# Owners are set by role in .github/house.yml. Later lines win, so the most
+# specific rules come last. A repository that needs owners for its own
+# directories excludes this file with HOUSE_EXCLUDE and keeps its own copy.
+#
+#   OWNERS_ADMIN     project administration: governance, licence, repository configuration
+#   OWNERS_DOCS      technical writing and customer success: documentation
+#   OWNERS_QA        quality assurance: tests
+#   OWNERS_WORKFLOW  workflow management: CI, tooling, dev environments, scripts
+
+# Everything not matched below.
+*                            @TGTGamer
+
+# Documentation.
+*.adoc                       @TGTGamer
+*.md                         @TGTGamer
+/docs/                       @TGTGamer
+
+# Tests.
+*.spec.ts                    @TGTGamer
+*.test.ts                    @TGTGamer
+*.spec.tsx                   @TGTGamer
+*.test.tsx                   @TGTGamer
+/tests/                      @TGTGamer
+/e2e/                        @TGTGamer
+
+# Tooling, CI and development environments.
+/.github/                    @TGTGamer
+/.devcontainer/              @TGTGamer
+/.vscode/                    @TGTGamer
+/scripts/                    @TGTGamer
+/tools/                      @TGTGamer
+
+# Governance, licensing and repository-wide configuration.
+/.github/CODEOWNERS          @TGTGamer
+/.github/house.yml           @TGTGamer
+/LICENSE                     @TGTGamer
+/AI_POLICY.adoc              @TGTGamer
+/CODE_OF_CONDUCT.adoc        @TGTGamer
+/CONTRIBUTING.adoc           @TGTGamer
+/COOPERATION_COMMITMENT.adoc @TGTGamer
+/DCO.adoc                    @TGTGamer
+/GOVERNANCE.adoc             @TGTGamer
+/SECURITY.adoc               @TGTGamer
+/package.json                @TGTGamer
+/.editorconfig               @TGTGamer

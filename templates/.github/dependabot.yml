@@ -1,0 +1,44 @@
+# Generated from Resnovas/.github templates/.github/dependabot.yml. Edit it there, not here.
+#
+# Weekly version updates on Monday morning, grouped so each ecosystem opens one
+# pull request, with security updates grouped separately so they are never held
+# back behind routine bumps. A repository with other ecosystems excludes this
+# file with HOUSE_EXCLUDE and keeps its own copy.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '07:00'
+      timezone: Europe/London
+    commit-message:
+      prefix: ci
+      include: scope
+    groups:
+      actions-security:
+        applies-to: security-updates
+        patterns: ['*']
+      actions:
+        applies-to: version-updates
+        patterns: ['*']
+
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '07:00'
+      timezone: Europe/London
+    versioning-strategy: increase
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      npm-security:
+        applies-to: security-updates
+        patterns: ['*']
+      npm-minor-and-patch:
+        applies-to: version-updates
+        update-types: [minor, patch]

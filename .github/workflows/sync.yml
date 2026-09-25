@@ -1,5 +1,6 @@
 # Reusable house sync. Renders templates/ with the calling repository's
-# .github/house.yml overrides and opens a pull request when anything changed.
+# .github/house.yml overrides and opens a pull request when anything changed,
+# then applies the house repository settings (scripts/lib/settings.mjs).
 # Repositories call it through the house-sync.yml workflow synced from
 # templates/.github/workflows.
 #
@@ -84,3 +85,41 @@ jobs:
 
             AI level: none
             AI tools: none
+
+  settings:
+    name: settings
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mint app token
+        id: app
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: ${{ secrets.app-id }}
+          private-key: ${{ secrets.app-private-key }}
+
+      - name: Check out house settings
+        uses: actions/checkout@v7
+        with:
+          repository: Resnovas/.github
+          ref: ${{ inputs.house-ref }}
+          path: .house
+          persist-credentials: false
+
+      # Overrides come from the default branch as merged, so settings follow
+      # the values a maintainer approved.
+      - name: Check out repository overrides
+        uses: actions/checkout@v7
+        with:
+          sparse-checkout: .github/house.yml
+          sparse-checkout-cone-mode: false
+          path: .repo
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Apply settings
+        run: node .house/scripts/apply-settings.mjs --repository "$GITHUB_REPOSITORY" --override .repo/.github/house.yml
+        env:
+          GITHUB_TOKEN: ${{ steps.app.outputs.token }}

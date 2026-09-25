@@ -1,8 +1,8 @@
 # Generated from Resnovas/.github templates/.github/workflows/house-policy.yml. Edit it there, not here.
 #
-# Runs the house policy on every pull request. Once the repository has two or
-# more maintainers, make "house-policy / policy" and "house-policy / reviews"
-# required status checks on the default branch (GOVERNANCE.adoc#review).
+# Runs the house policy on every pull request. Once .github/house.yml lists two
+# or more maintainers, the house ruleset makes "house-policy / policy" and
+# "house-policy / reviews" required on the default branch (GOVERNANCE.adoc#review).
 name: House policy
 
 on:

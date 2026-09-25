@@ -35,6 +35,9 @@ export function isAiIdentity({ name = '', email = '' }) {
 
 const TRAILER = /^(Co-authored-by|Signed-off-by):\s*(.+?)\s*<([^>]+)>\s*$/gim
 
+// Assisted-by follows the Linux kernel form: "Assisted-by: TOOL:MODEL [TOOL...]".
+const ASSISTED = /^Assisted-by:[ \t]*(\S.*?)\s*$/gim
+
 export function parseTrailers(message) {
   const coAuthors = []
   const signOffs = []
@@ -43,7 +46,8 @@ export function parseTrailers(message) {
     if (kind.toLowerCase() === 'co-authored-by') coAuthors.push(person)
     else signOffs.push(person)
   }
-  return { coAuthors, signOffs }
+  const assistedBy = [...message.matchAll(ASSISTED)].map(([, value]) => value)
+  return { coAuthors, signOffs, assistedBy }
 }
 
 function field(body, label) {
@@ -97,6 +101,10 @@ export function evaluatePullRequest({ pr, commits, config, action }) {
   const findings = []
   const disclosure = parseDisclosure(pr.body ?? '')
   const aiCoAuthored = commits.filter((c) => parseTrailers(c.message).coAuthors.some(isAiIdentity))
+  const aiAttributed = commits.filter((c) => {
+    const { coAuthors, assistedBy } = parseTrailers(c.message)
+    return coAuthors.some(isAiIdentity) || assistedBy.length > 0
+  })
 
   if (!CONVENTIONAL_TITLE.test(pr.title)) {
     findings.push(finding('TITLE', `Title "${pr.title}" is not a conventional commit, for example "fix(auth): reject expired tokens".`))
@@ -111,8 +119,8 @@ export function evaluatePullRequest({ pr, commits, config, action }) {
     if (disclosure.tools && !/^none$/i.test(disclosure.tools)) {
       findings.push(finding('AI-01', `AI level is none but AI tools lists "${disclosure.tools}".`))
     }
-    for (const commit of aiCoAuthored) {
-      findings.push(finding('AI-01', 'AI level is none but this commit credits an AI co-author.', { sha: commit.sha }))
+    for (const commit of aiAttributed) {
+      findings.push(finding('AI-01', 'AI level is none but this commit credits an AI tool.', { sha: commit.sha }))
     }
   } else {
     if (!disclosure.tools || /^none$/i.test(disclosure.tools)) {
@@ -121,6 +129,16 @@ export function evaluatePullRequest({ pr, commits, config, action }) {
     // AI-02: an AI-assisted change must credit the tool on the commits it changed.
     if (aiCoAuthored.length === 0) {
       findings.push(finding('AI-02', `AI level is ${disclosure.level} but no commit has a Co-authored-by trailer for the AI tool.`))
+    }
+    // Both trailers travel together: Co-authored-by shows on GitHub,
+    // Assisted-by records the exact tool and model.
+    for (const commit of aiAttributed) {
+      const { coAuthors, assistedBy } = parseTrailers(commit.message)
+      if (!coAuthors.some(isAiIdentity)) {
+        findings.push(finding('AI-02', 'This commit has Assisted-by but no Co-authored-by trailer for the AI tool.', { sha: commit.sha }))
+      } else if (assistedBy.length === 0) {
+        findings.push(finding('AI-02', 'This commit credits an AI co-author but has no "Assisted-by: TOOL:MODEL" trailer.', { sha: commit.sha }))
+      }
     }
     // AI-20 / AI-21: AI-assisted pull requests start as drafts and only leave
     // draft once the accountable human has reviewed them.

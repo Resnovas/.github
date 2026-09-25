@@ -1,0 +1,47 @@
+# Generated from Resnovas/.github templates/.github/CODEOWNERS. Edit it there, not here.
+#
+# Owners are set by role in .github/house.yml. Later lines win, so the most
+# specific rules come last. A repository that needs owners for its own
+# directories excludes this file with HOUSE_EXCLUDE and keeps its own copy.
+#
+#   OWNERS_ADMIN     project administration: governance, licence, repository configuration
+#   OWNERS_DOCS      technical writing and customer success: documentation
+#   OWNERS_QA        quality assurance: tests
+#   OWNERS_WORKFLOW  workflow management: CI, tooling, dev environments, scripts
+
+# Everything not matched below.
+*                            {{OWNERS_ADMIN}}
+
+# Documentation.
+*.adoc                       {{OWNERS_DOCS}}
+*.md                         {{OWNERS_DOCS}}
+/docs/                       {{OWNERS_DOCS}}
+
+# Tests.
+*.spec.ts                    {{OWNERS_QA}}
+*.test.ts                    {{OWNERS_QA}}
+*.spec.tsx                   {{OWNERS_QA}}
+*.test.tsx                   {{OWNERS_QA}}
+/tests/                      {{OWNERS_QA}}
+/e2e/                        {{OWNERS_QA}}
+
+# Tooling, CI and development environments.
+/.github/                    {{OWNERS_WORKFLOW}}
+/.devcontainer/              {{OWNERS_WORKFLOW}}
+/.vscode/                    {{OWNERS_WORKFLOW}}
+/scripts/                    {{OWNERS_WORKFLOW}}
+/tools/                      {{OWNERS_WORKFLOW}}
+
+# Governance, licensing and repository-wide configuration.
+/.github/CODEOWNERS          {{OWNERS_ADMIN}}
+/.github/house.yml           {{OWNERS_ADMIN}}
+/LICENSE                     {{OWNERS_ADMIN}}
+/AI_POLICY.adoc              {{OWNERS_ADMIN}}
+/CODE_OF_CONDUCT.adoc        {{OWNERS_ADMIN}}
+/CONTRIBUTING.adoc           {{OWNERS_ADMIN}}
+/COOPERATION_COMMITMENT.adoc {{OWNERS_ADMIN}}
+/DCO.adoc                    {{OWNERS_ADMIN}}
+/GOVERNANCE.adoc             {{OWNERS_ADMIN}}
+/SECURITY.adoc               {{OWNERS_ADMIN}}
+/package.json                {{OWNERS_ADMIN}}
+/.editorconfig               {{OWNERS_ADMIN}}

@@ -69,9 +69,35 @@ A review of an AI-assisted pull request follows link:AI_POLICY.adoc#ai-40[AI-40]
 [#enforcing-review]
 === Enforcement
 
-As soon as a project has two or more maintainers, its default branch *must* be protected so that the `house-policy / reviews` check is required before merging.
-The check counts approvals from the maintainers listed in `.github/house.yml` and applies the table above.
-With a single maintainer the check always passes, so a sole maintainer is never blocked.
+The `house-policy / reviews` check counts approvals from the maintainers listed in `.github/house.yml` and applies the table above.
+As soon as that list names two or more maintainers, the house ruleset makes the `house-policy / policy` and `house-policy / reviews` checks required on the default branch and removes the administrator bypass.
+With a single maintainer the check always passes and the owner can bypass the ruleset, so a sole maintainer is never blocked.
+
+[#merging]
+== Merging
+
+History on the default branch is linear.
+Merge commits are disabled; a pull request is either squashed or rebased.
+
+* *Squash* when the pull request has a noisy history: fix-ups, review responses, work in progress.
+The squash keeps every commit message in its body, so each `Signed-off-by`, `Co-authored-by` and `Assisted-by` trailer survives.
+* *Rebase* when the pull request is small and every commit already stands on its own.
+
+Branches are kept up to date from the pull request page, auto-merge is available, and head branches are deleted once merged.
+
+[#settings]
+== Repository settings
+
+Every repository is configured to the same baseline, applied automatically by the house sync (see the https://github.com/Resnovas/.github[house repository] README):
+
+* merging as above, with sign-off required on web commits and the wiki disabled, because documentation is published elsewhere;
+* Discussions, sponsorships and release immutability enabled;
+* private vulnerability reporting, the dependency graph, Dependabot alerts, security updates and grouped version updates;
+* CodeQL code scanning with Copilot Autofix, and on public repositories secret scanning with push protection;
+* a ruleset on the default branch requiring linear history, blocking deletion and force pushes, requesting Copilot code review, and blocking merges on serious code scanning findings;
+* deployment environments for what the repository ships: Production, Staging and Development for software as a service; Windows, Linux and macOS with a Beta of each for desktop applications; Release for libraries.
+
+One setting has no API and is set by hand: pushes are limited to updating five branches or tags at once.
 
 [#amendments]
 == Changing this document

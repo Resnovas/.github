@@ -20,6 +20,10 @@ repository. Nothing here has been pushed. Delete this file before the first push
 | CI strictness | Errors for outside contributors, warnings for maintainers. An AI sign-off is an error for everyone. |
 | Values | `house.yml` in this repo, per-repo `.github/house.yml` overrides. All resolve to Resnovas. |
 | Format | AsciiDoc, one sentence per line, anchors on every section and rule. |
+| Trailers | `Co-authored-by` and `Assisted-by: TOOL:MODEL` together on every AI-changed commit, autocomplete included. |
+| Sign-off | Names the accountable human; tooling they set up (their own agent) may add it for them. Jonathan's agents now sign off his commits. |
+| Settings | Applied weekly by the sync's settings job; see GOVERNANCE.adoc#settings. |
+| Dropped | Separate tests repository rule, Discord and Jira channels, CoC "Intended Use". |
 
 ## Please check
 
@@ -27,24 +31,26 @@ repository. Nothing here has been pushed. Delete this file before the first push
    "Contributions made with AI tools". It is a public legal commitment, so it
    is worth a professional read before publishing. The GPL Cooperation
    Commitment link in its licence section should be checked too.
-2. **Copyright holder.** `LEGAL_HOLDER` is "Jonathan Stevens trading as
+2. **Copyright year.** `LEGAL_HOLDER` is confirmed as "Jonathan Stevens trading as
    Resnovas". Eventiva's LICENSE said "Eventiva" and 2024; the year is now
    2026 by default and should be overridden per repo to its first publication.
-3. **Conduct contact.** `CONDUCT_CONTACT` points at your GitHub profile. An
-   email address would be better.
-4. **DCO for maintainers.** Your own commits are not signed off today, so the
-   DCO check reports them as warnings on your PRs, not failures. Agents must not
-   sign off for you, so this stays a warning until you sign off yourself.
-5. **Autocomplete needs a co-author trailer.** By the "material change" test,
-   accepted AI autocomplete of logic is material, so it needs a trailer too.
-6. **Dropped Eventiva specifics.** Not carried into the house files: the separate
-   tests repository rule, Discord and Jira channels, the named review bots
-   (CodeRabbit, SonarCloud, SweepAI), the CoC "Intended Use" section, and the
-   CODEOWNERS roles. Eventiva can keep these in a repo-local file.
-7. **Renamed file.** `Eventiva Cooperation Commitment.adoc` becomes
+3. **AI-03 changed.** It now allows tooling the human set up (their own
+   agent) to add the human's sign-off, because you asked your agents to sign off
+   for you. Before, it banned any agent from adding a sign-off.
+4. **CODEOWNERS is now generic.** Eventiva's used quoted role names such as
+   "Project Admin", which GitHub does not accept as owners, so those lines never
+   took effect. The house version maps the same roles to `OWNERS_*` values.
+5. **Sponsors.** `SPONSORS` is TGTGamer only; Eventiva's FUNDING.yml also listed
+   the Eventiva org. Each account must have GitHub Sponsors enabled.
+6. **dependabot.yml assumes npm.** Repositories without a package.json need
+   `HOUSE_EXCLUDE: .github/dependabot.yml` and their own copy.
+7. **Copilot code review** is requested by the ruleset on drafts and on every
+   push. It uses premium requests from the PR author's Copilot allowance, and
+   is skipped for authors without access.
+8. **Renamed file.** `Eventiva Cooperation Commitment.adoc` becomes
    `COOPERATION_COMMITMENT.adoc`. Eventiva's old copy needs deleting when it adopts
    the sync, as does the licence text duplicated inside its CODE_OF_CONDUCT.
-8. **Checks can only do so much.** CI confirms that at least one commit carries
+9. **Checks can only do so much.** CI confirms that at least one commit carries
    an AI co-author when AI was used; it cannot tell which commits were AI
    changed. Coverage thresholds are stated, but each repo's own CI enforces them.
 
@@ -53,7 +59,8 @@ repository. Nothing here has been pushed. Delete this file before the first push
 - [ ] Delete this file.
 - [ ] Make the repository public (agreed), so GitHub uses these files as org defaults.
 - [ ] Push `main` as the default branch; workflows reference `@main`.
-- [ ] Create the House sync GitHub App (Contents, Pull requests, Workflows: write),
+- [ ] Set the push limit to 5 by hand in each repository (no API exists).
+- [ ] Create the House sync GitHub App (Administration, Contents, Pull requests, Workflows: write),
       install it on each org/account, set `HOUSE_SYNC_APP_ID` and
       `HOUSE_SYNC_APP_PRIVATE_KEY` as org secrets, and add its bot login to `TRUSTED_BOTS`.
 - [ ] Consider pinning actions to commit SHAs rather than major tags.

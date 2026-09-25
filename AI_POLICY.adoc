@@ -122,28 +122,42 @@ A level of `none` *MUST NOT* be combined with an AI co-author or a listed tool.
 [#ai-02]
 === AI-02: Credit the AI as a co-author (checked)
 
-Every commit containing a material change produced by an AI tool *MUST* carry a `Co-authored-by` trailer for that tool, so the involvement shows in the history and on GitHub.
+Every commit containing a material change produced by an AI tool *MUST* carry two trailers for that tool:
+
+* `Co-authored-by`, so the involvement shows in the history and on GitHub;
+* `Assisted-by: TOOL:MODEL`, in the form the Linux kernel uses, recording exactly which tool and model did the work.
+Further tools the agent used *MAY* follow on the same line, separated by spaces.
+
+The two always travel together: a commit with one and not the other fails the check.
+For `Co-authored-by`:
 
 * The name *MUST* identify the tool and the model, for example `Claude Opus 5.5`.
 * The address *MUST* be the one the tool itself uses for attribution, for example `noreply@anthropic.com` for Claude.
 * If the tool publishes no attribution address, use `<tool-name>@ai.invalid`.
 The `.invalid` domain is reserved, so the address can never belong to a real person.
-* Credit every tool that materially changed the commit, one trailer each.
+* Credit every tool that materially changed the commit, one pair of trailers each.
 
 ----
 fix(auth): reject expired refresh tokens
 
 Co-authored-by: Claude Opus 5.5 <noreply@anthropic.com>
+Assisted-by: claude-code:claude-opus-5-5
 Signed-off-by: Jane Doe <jane@example.com>
 ----
+
+Accepted AI autocomplete counts: if it wrote logic, it is a material change and needs both trailers.
 
 [#ai-03]
 === AI-03: An AI tool never signs off (checked)
 
 `Signed-off-by` certifies the link:DCO.adoc[Developer Certificate of Origin].
-Only a person can make that certification, so a `Signed-off-by` trailer *MUST NOT* name an AI tool, and an AI tool *MUST NOT* add a sign-off on anyone's behalf.
-The accountable human signs off, and by doing so certifies the AI-produced parts as well as their own.
+Only a person can make that certification, so a `Signed-off-by` trailer *MUST* name the accountable human and *MUST NOT* name an AI tool.
+By signing off, the accountable human certifies the AI-produced parts as well as their own.
 This is the same approach the Linux kernel takes.
+
+Tooling the accountable human has set up, including their own agent, *MAY* add the human's sign-off for them.
+It is still their certification, and they stand behind it when they mark the pull request ready (<<ai-21>>).
+An agent *MUST NOT* add a sign-off for anyone who has not set it up to do so.
 
 [#ai-04]
 === AI-04: Understand everything you submit
@@ -231,7 +245,7 @@ See <<licence>>.
 === AI-15: No unsolicited AI reviews
 
 You *MUST NOT* post an AI-generated review of someone else's pull request unless a maintainer asked for one.
-The review tools this project configures itself are the exception.
+The review tools this project configures itself are the exception; they are listed in link:CONTRIBUTING.adoc#ReviewTools[the known review tools].
 
 [#contributors]
 == Submitting as a contributor

@@ -23,8 +23,8 @@ REPOSITORY: Resnovas/.github
 # npm scope used when naming packages, for example @resnovas/integrations.stripe.
 PACKAGE_SCOPE: @resnovas
 
-# Where Code of Conduct reports go.
-CONDUCT_CONTACT: https://github.com/TGTGamer
+# Email address Code of Conduct reports go to.
+CONDUCT_CONTACT: hello@resnovas.com
 
 # Minimum line and branch coverage, in percent, for any change.
 COVERAGE_MIN: 90
@@ -39,3 +39,28 @@ TRUSTED_BOTS: dependabot[bot], renovate[bot], github-actions[bot]
 # Template paths this repository keeps its own copy of instead of syncing,
 # for example LICENSE when a dependency requires a different licence.
 HOUSE_EXCLUDE:
+
+# What the repository ships, which decides its deployment environments:
+#   saas     Production, Staging, Development
+#   desktop  Windows, Linux, macOS, and a Beta of each
+#   library  Release
+#   none     no environments
+PROJECT_TYPE: none
+
+# Explicit environment names, replacing the PROJECT_TYPE set. Comma separated.
+ENVIRONMENTS:
+
+# Block merges on CodeQL errors and high or critical security alerts. Set to
+# false only for a repository CodeQL cannot analyse, such as docs only.
+CODE_SCANNING_GATE: true
+
+# GitHub Sponsors accounts shown on the Sponsor button (FUNDING.yml).
+SPONSORS: TGTGamer
+
+# Code owners by role. Each must be a GitHub user (@name) or team (@org/team);
+# separate several with spaces. They all resolve to the sole maintainer until
+# the teams exist.
+OWNERS_ADMIN: @TGTGamer
+OWNERS_DOCS: @TGTGamer
+OWNERS_QA: @TGTGamer
+OWNERS_WORKFLOW: @TGTGamer
