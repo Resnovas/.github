@@ -10,8 +10,10 @@
 //
 // Files with a house:managed block keep everything the repository added
 // outside the block (scripts/lib/managed.mjs); other files are replaced whole.
+// A template with the owner execute bit, such as tools/graphify/graphify, is
+// rendered executable.
 
-import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs'
+import { chmodSync, existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
@@ -49,11 +51,14 @@ for (const { path, content: template } of rendered) {
   for (const problem of managedConflicts(path, template, content)) {
     console.log(`::warning file=${path},title=house sync::${problem}`)
   }
-  if (current === content) continue
+  const executable = (statSync(join(houseRoot, 'templates', path)).mode & 0o100) !== 0
+  const modeStale = executable && existsSync(target) && (statSync(target).mode & 0o100) === 0
+  if (current === content && !modeStale) continue
   stale.push(path)
   if (!args.check) {
     mkdirSync(dirname(target), { recursive: true })
     writeFileSync(target, content)
+    if (executable) chmodSync(target, 0o755)
   }
 }
 
