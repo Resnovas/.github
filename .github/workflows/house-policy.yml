@@ -1,0 +1,20 @@
+# Generated from Resnovas/.github templates/.github/workflows/house-policy.yml. Edit it there, not here.
+#
+# Runs the house policy on every pull request. Once the repository has two or
+# more maintainers, make "house-policy / policy" and "house-policy / reviews"
+# required status checks on the default branch (GOVERNANCE.adoc#review).
+name: House policy
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened, ready_for_review, converted_to_draft]
+  pull_request_review:
+    types: [submitted, dismissed]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  house-policy:
+    uses: Resnovas/.github/.github/workflows/policy.yml@main

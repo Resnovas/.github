@@ -1,0 +1,93 @@
+[#top]
+= Resnovas house repository
+:icons: font
+
+The single source of truth for the governance files every Resnovas project ships with, across Resnovas, Eventiva, Climb and personal repositories.
+It holds the contributing guidelines, the AI contribution policy, the code of conduct, the Developer Certificate of Origin, the FCL-1.0-MIT licence, the Eventiva Cooperation Commitment, and the issue and pull request templates, together with the checks that enforce them.
+
+Because this repository is public and named `.github`, GitHub also uses these files as the defaults for every repository in the Resnovas organisation that does not have its own.
+
+[#layout]
+== Layout
+
+[cols="1,3",options="header"]
+|===
+|Path |What it is
+
+|`templates/`
+|The source of every governed file, with `{{KEY}}` placeholders.
+*Edit files here, never the rendered copies.*
+
+|`house.yml`
+|The values placeholders resolve to.
+Everything currently resolves to Resnovas.
+
+|root and `.github/`
+|The files rendered from `templates/` with the default values.
+CI fails if they are out of date.
+
+|`.github/workflows/policy.yml`
+|Reusable workflow: AI disclosure, co-author and sign-off trailers, title and style (`policy`), and maintainer approvals (`reviews`).
+
+|`.github/workflows/sync.yml`
+|Reusable workflow: renders `templates/` into a repository and opens a pull request when anything changed.
+
+|`scripts/`
+|The renderer and the policy checker.
+Dependency-free Node, with the rules in `scripts/lib/policy.mjs`.
+
+|`test/`
+|Tests for the rules and the renderer, run with `npm test`.
+|===
+
+[#changing]
+== Changing a policy or template
+
+. Edit the file under `templates/`, or a default in `house.yml`.
+. Run `npm run render` to update the rendered copies, and `npm test`.
+. Commit both.
+Every downstream repository picks the change up in its next sync pull request.
+
+[#adopting]
+== Adopting it in a repository
+
+. Copy `.github/workflows/house-policy.yml` and `.github/workflows/house-sync.yml` into the repository, or let the first sync add them.
+. Only if the repository needs different values, add `.github/house.yml` containing just the keys it changes:
++
+[source,yaml]
+----
+MAINTAINERS: TGTGamer, another-maintainer
+HOUSE_EXCLUDE: LICENSE
+----
+. Make sure the organisation has the `HOUSE_SYNC_APP_ID` and `HOUSE_SYNC_APP_PRIVATE_KEY` secrets (see <<sync-app>>).
+. Run the House sync workflow once by hand to open the first sync pull request.
+. Once the repository has two or more maintainers, make `house-policy / policy` and `house-policy / reviews` required status checks on the default branch.
+
+[#values]
+== Values
+
+[cols="1,3",options="header"]
+|===
+|Key |Used for
+
+|`ORG_NAME` |The owner's name in prose.
+|`LEGAL_HOLDER` |The copyright holder in `LICENSE`.
+|`COPYRIGHT_YEAR` |The year in the copyright notice.
+|`REPOSITORY` |Links to the repository's own advisories, discussions and files. Set automatically by the sync.
+|`PACKAGE_SCOPE` |The npm scope in the module boundary rule.
+|`CONDUCT_CONTACT` |Where Code of Conduct reports go.
+|`COVERAGE_MIN` |The minimum line and branch coverage.
+|`MAINTAINERS` |Who counts as a maintainer for the checks and the review gate.
+|`TRUSTED_BOTS` |Automation accounts that skip the disclosure and DCO checks.
+|`HOUSE_EXCLUDE` |Template paths a repository keeps its own copy of.
+|===
+
+[#sync-app]
+== The sync app
+
+`sync.yml` authenticates as a GitHub App rather than with a personal access token.
+The default `GITHUB_TOKEN` cannot push changes to workflow files, and an App token is minted fresh for each run and expires on its own, so no long-lived credential is stored.
+
+The App needs *Contents*, *Pull requests* and *Workflows* write access on the repositories it syncs.
+Install it on every organisation and account that adopts the house files, and set its ID and private key as the organisation secrets `HOUSE_SYNC_APP_ID` and `HOUSE_SYNC_APP_PRIVATE_KEY`.
+Add the App's bot login, for example `resnovas-house[bot]`, to `TRUSTED_BOTS` so its sync pull requests are not held to the contributor checks.

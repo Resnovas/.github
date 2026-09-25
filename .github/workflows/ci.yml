@@ -1,0 +1,30 @@
+# Checks for this repository itself: the policy and renderer tests, and that
+# the rendered files at the root match templates/ and house.yml.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Test
+        run: npm test
+
+      - name: Rendered files are up to date
+        run: npm run check

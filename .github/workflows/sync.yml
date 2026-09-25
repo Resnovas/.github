@@ -1,0 +1,86 @@
+# Reusable house sync. Renders templates/ with the calling repository's
+# .github/house.yml overrides and opens a pull request when anything changed.
+# Repositories call it through the house-sync.yml workflow synced from
+# templates/.github/workflows.
+#
+# Authenticates as a GitHub App, because the default GITHUB_TOKEN cannot push
+# changes to workflow files. App tokens are short-lived and minted per run, so
+# no long-lived credential is stored anywhere.
+name: House sync
+
+on:
+  workflow_call:
+    inputs:
+      house-ref:
+        description: Ref of Resnovas/.github to sync from.
+        type: string
+        default: main
+    secrets:
+      app-id:
+        description: ID of the GitHub App that opens sync pull requests.
+        required: true
+      app-private-key:
+        description: Private key of that GitHub App.
+        required: true
+
+permissions: {}
+
+jobs:
+  sync:
+    name: sync
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mint app token
+        id: app
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: ${{ secrets.app-id }}
+          private-key: ${{ secrets.app-private-key }}
+
+      - name: Check out repository
+        uses: actions/checkout@v7
+        with:
+          token: ${{ steps.app.outputs.token }}
+
+      - name: Check out house templates
+        uses: actions/checkout@v7
+        with:
+          repository: Resnovas/.github
+          ref: ${{ inputs.house-ref }}
+          path: .house
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Render templates
+        run: |
+          node .house/scripts/render.mjs --out . --override .github/house.yml --repository "$GITHUB_REPOSITORY"
+          rm -rf .house
+
+      - name: Open sync pull request
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ steps.app.outputs.token }}
+          branch: house/sync
+          delete-branch: true
+          signoff: true
+          commit-message: 'chore(house): sync governance files from Resnovas/.github'
+          title: 'chore(house): sync governance files from Resnovas/.github'
+          labels: house-sync
+          body: |
+            ## What changed and why
+
+            Brings the governance files managed by [Resnovas/.github](https://github.com/Resnovas/.github) up to date with its latest version.
+            They are rendered from its templates using this repository's `.github/house.yml` overrides.
+            Change the source there, not the copies here: the next sync overwrites local edits.
+
+            ## Evidence
+
+            Rendered by the house sync workflow run ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}.
+
+            ## AI disclosure
+
+            AI level: none
+            AI tools: none

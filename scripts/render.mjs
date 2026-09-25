@@ -1,0 +1,56 @@
+#!/usr/bin/env node
+// Renders templates/ into a repository.
+//
+//   node scripts/render.mjs                      render into this repository's root
+//   node scripts/render.mjs --check              exit 1 if the root is out of date
+//   node scripts/render.mjs --out <dir> --override <dir>/.github/house.yml --repository owner/name
+//
+// Values come from house.yml, then the optional override file, then
+// --repository, each layer replacing keys from the one before.
+
+import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs'
+import { dirname, join, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { parseArgs } from 'node:util'
+import { list, loadValues } from './lib/values.mjs'
+import { renderAll } from './lib/render.mjs'
+
+const houseRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+
+const { values: args } = parseArgs({
+  options: {
+    out: { type: 'string', default: houseRoot },
+    override: { type: 'string' },
+    repository: { type: 'string' },
+    check: { type: 'boolean', default: false },
+  },
+})
+
+const values = {
+  ...loadValues(join(houseRoot, 'house.yml')),
+  ...(args.override ? loadValues(args.override, { optional: true }) : {}),
+  ...(args.repository ? { REPOSITORY: args.repository } : {}),
+}
+
+// HOUSE_EXCLUDE lets a repository keep its own copy of a file, for example a
+// LICENSE its dependencies require.
+const excluded = new Set(list(values.HOUSE_EXCLUDE))
+const rendered = renderAll(join(houseRoot, 'templates'), values).filter(({ path }) => !excluded.has(path))
+const stale = []
+
+for (const { path, content } of rendered) {
+  const target = join(args.out, path)
+  const current = existsSync(target) ? readFileSync(target, 'utf8') : null
+  if (current === content) continue
+  stale.push(path)
+  if (!args.check) {
+    mkdirSync(dirname(target), { recursive: true })
+    writeFileSync(target, content)
+  }
+}
+
+if (args.check && stale.length > 0) {
+  console.error(`Out of date with templates/ (run: node scripts/render.mjs):\n  ${stale.join('\n  ')}`)
+  process.exit(1)
+}
+console.log(args.check ? 'Rendered files are up to date.' : `Rendered ${rendered.length} files, ${stale.length} changed.`)

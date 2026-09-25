@@ -1,0 +1,20 @@
+# Generated from Resnovas/.github templates/.github/workflows/house-sync.yml. Edit it there, not here.
+#
+# Pulls the latest governance files from Resnovas/.github every Monday morning
+# and opens a pull request when anything changed. Needs the HOUSE_SYNC_APP_ID
+# and HOUSE_SYNC_APP_PRIVATE_KEY secrets, set once per organisation.
+name: House sync
+
+on:
+  schedule:
+    - cron: '0 7 * * 1'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  house-sync:
+    uses: Resnovas/.github/.github/workflows/sync.yml@main
+    secrets:
+      app-id: ${{ secrets.HOUSE_SYNC_APP_ID }}
+      app-private-key: ${{ secrets.HOUSE_SYNC_APP_PRIVATE_KEY }}

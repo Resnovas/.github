@@ -1,0 +1,41 @@
+# House values.
+#
+# Every {{KEY}} in templates/ is replaced with the value below when the
+# templates are rendered. The root of this repository is rendered from these
+# defaults; a downstream repository may override any key by committing its own
+# .github/house.yml containing only the keys it changes.
+#
+# Flat `KEY: value` pairs only. Lists are comma separated.
+
+# Trading name shown in prose.
+ORG_NAME: Resnovas
+
+# Legal copyright holder, used in LICENSE and copyright notices.
+LEGAL_HOLDER: Jonathan Stevens trading as Resnovas
+
+# Year of first publication for the copyright notice.
+COPYRIGHT_YEAR: 2026
+
+# owner/name of the repository being rendered. The sync workflow sets this
+# automatically from the repository it runs in.
+REPOSITORY: Resnovas/.github
+
+# npm scope used when naming packages, for example @resnovas/integrations.stripe.
+PACKAGE_SCOPE: @resnovas
+
+# Where Code of Conduct reports go.
+CONDUCT_CONTACT: https://github.com/TGTGamer
+
+# Minimum line and branch coverage, in percent, for any change.
+COVERAGE_MIN: 90
+
+# GitHub logins of the maintainers. With two or more, the review gate starts
+# requiring maintainer approvals; with one, the owner merges at their discretion.
+MAINTAINERS: TGTGamer
+
+# Automation accounts that skip the AI disclosure and DCO checks.
+TRUSTED_BOTS: dependabot[bot], renovate[bot], github-actions[bot]
+
+# Template paths this repository keeps its own copy of instead of syncing,
+# for example LICENSE when a dependency requires a different licence.
+HOUSE_EXCLUDE:

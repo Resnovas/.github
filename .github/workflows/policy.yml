@@ -1,0 +1,88 @@
+# Reusable house policy check. Repositories call it through the
+# house-policy.yml workflow synced from templates/.github/workflows.
+#
+#   policy   AI disclosure, co-author and sign-off trailers, title, style
+#   reviews  maintainer approvals, per GOVERNANCE.adoc#review
+#
+# Both jobs only read: the pull request, its commits and its reviews. They
+# never check out or run the pull request's code, so they are safe on forks.
+name: House policy
+
+on:
+  workflow_call:
+    inputs:
+      house-ref:
+        description: Ref of Resnovas/.github to take the policy from.
+        type: string
+        default: main
+
+permissions: {}
+
+jobs:
+  policy:
+    name: policy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - name: Check out house policy
+        uses: actions/checkout@v7
+        with:
+          repository: Resnovas/.github
+          ref: ${{ inputs.house-ref }}
+          path: .house
+          persist-credentials: false
+
+      # Overrides come from the base branch, never the pull request, so a
+      # pull request cannot edit its own maintainer list.
+      - name: Check out repository overrides
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          sparse-checkout: .github/house.yml
+          sparse-checkout-cone-mode: false
+          path: .repo
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Check policy
+        run: node .house/scripts/policy-check.mjs --mode policy --values .house/house.yml --override .repo/.github/house.yml
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  reviews:
+    name: reviews
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - name: Check out house policy
+        uses: actions/checkout@v7
+        with:
+          repository: Resnovas/.github
+          ref: ${{ inputs.house-ref }}
+          path: .house
+          persist-credentials: false
+
+      - name: Check out repository overrides
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          sparse-checkout: .github/house.yml
+          sparse-checkout-cone-mode: false
+          path: .repo
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Check maintainer approvals
+        run: node .house/scripts/policy-check.mjs --mode reviews --values .house/house.yml --override .repo/.github/house.yml
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
