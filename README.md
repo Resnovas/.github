@@ -77,6 +77,10 @@ Workflows here and under `templates/` pin every third-party action to a full com
 Dependabot's `github-actions` update moves the SHA and the comment together.
 First-party references stay on a ref: the reusable workflows here track `main`, so a house change reaches every repository on its next run, and `resnovas/smartcloud` follows its major tag.
 
+Every workflow here and under `templates/` grants the workflow token nothing at the top level (`permissions: {}`), and each job declares only the scopes it uses, so a job added later starts with no access; `npm test` fails on a workflow or job that does not.
+A job that calls a reusable workflow grants no more than the called jobs declare, because GitHub caps the called workflow at the caller's grant.
+Pull requests from forks get a read-only token whatever a job asks for.
+
 ### <a id="workflow-lint"></a>Workflow lint
 
 Every repository lints its workflows from the synced `.github/workflows/house-workflow-lint.yml`, which calls the reusable `.github/workflows/workflow-lint.yml`.
