@@ -39,6 +39,7 @@
 /.github/smartcloud.yml      {{OWNERS_ADMIN}}
 /LICENSE                     {{OWNERS_ADMIN}}
 /AI_POLICY.md              {{OWNERS_ADMIN}}
+/APPROVAL_POLICY.md        {{OWNERS_ADMIN}}
 /CODE_OF_CONDUCT.md        {{OWNERS_ADMIN}}
 /CONTRIBUTING.md           {{OWNERS_ADMIN}}
 /COOPERATION_COMMITMENT.md {{OWNERS_ADMIN}}

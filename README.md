@@ -3,7 +3,7 @@
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/Resnovas/.github/badge)](https://scorecard.dev/viewer/?uri=github.com/Resnovas/.github)
 
 The single source of truth for the governance files every Resnovas project ships with, across Resnovas, Eventiva and personal repositories.  
-It holds the contributing guidelines, the AI contribution policy, the code of conduct, the Developer Certificate of Origin, the FCL-1.0-MIT licence, the Cooperation Commitment, and the issue and pull request templates, together with the checks that enforce them.
+It holds the contributing guidelines, the AI contribution policy, the approval policy for automated approval agents, the code of conduct, the Developer Certificate of Origin, the FCL-1.0-MIT licence, the Cooperation Commitment, and the issue and pull request templates, together with the checks that enforce them.
 
 Because this repository is public and named `.github`, GitHub also uses these files as the defaults for every repository in the Resnovas organisation that does not have its own.
 
@@ -23,6 +23,7 @@ Because this repository is public and named `.github`, GitHub also uses these fi
 ## <a id="managed-blocks"></a>Documents and extendable configuration
 
 Documents (the root Markdown documents and `LICENSE`) are synced whole.
+The exception is `APPROVAL_POLICY.md`, which tells automated approval agents such as Cursor's what they may approve: its house rules are a managed block, and each repository adds its own after the `house:local` line, for example which of its generated files may be approved when they match their generator.
 
 Configuration files are extendable: each template wraps its synced content in `house:managed:begin` and `house:managed:end`, and marks where a repository's own rules go with `house:local`.
 The sync replaces only the managed block and keeps everything else, so a repository can add Dependabot updates, code owners, issue form fields, contact links, funding platforms, pull request template sections or workflow jobs without losing them.
