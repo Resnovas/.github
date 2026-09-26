@@ -104,6 +104,16 @@ A repository that bundles a GitHub Action should check the built entry file in C
 
 smartcloud implements this with `bundle-size.json` and `pnpm bundle:check` for `dist/index.js`, using gzip level 9 and initially 10% headroom. Its existing build job runs the check, feeding the required aggregate `check` context on pull requests and merge queue groups, with only `contents: read`. There is no PR comment, personal token or base-branch build: forks and Dependabot use the same check. This stays repository-local because the house preset does not define a shared action-bundling target; repositories without an action bundle need no extra job.
 
+### Action smoke test
+
+A repository that publishes a JavaScript GitHub Action runs it end to end in CI, the way a workflow uses it: `uses: ./` on the freshly built bundle, in dry-run mode, once for each of a set of recorded events, and then checks the job summary it wrote.
+Record each event's payload in version control, trimmed to what the action reads, and keep the expected summary lines (the event, each feature's result and the changes it would make) beside them; a change that alters them updates the expectations in the same pull request.
+Give the config inline, turn telemetry off, and grant only read scopes, so the job runs with the read-only workflow token, including on pull requests from forks and from Dependabot, and needs no secret.
+The runner sets `GITHUB_EVENT_NAME`, `GITHUB_EVENT_PATH` and `GITHUB_STEP_SUMMARY` for an action itself, over anything in the step's `env`, so point them at the recording from a small preload given in `NODE_OPTIONS` (`--import=<preload>`) that fails when its inputs are missing, rather than adding a test-only input to the action.
+Run the check step with `if: ${{ !cancelled() }}`, so a failed run still reports its summary, or that there was none, and add the job to the aggregate `check` job's `needs`.
+
+smartcloud implements this as the `smoke` job in its CI, with the recordings, config, preload and check in `tools/ci/smoke`; it runs whenever the build does.
+
 ### <a id="workflow-lint"></a>Workflow lint
 
 Every repository lints its workflows from the synced `.github/workflows/house-workflow-lint.yml`, which calls the reusable `.github/workflows/workflow-lint.yml`.
