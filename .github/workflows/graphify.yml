@@ -6,7 +6,11 @@
 #            rebuild the graph after each commit, so a pull request's graph is
 #            often one commit behind; that is expected and refresh fixes it.
 #   refresh  on the default branch: rebuilds the code graph and opens or
-#            updates a pull request when it changed.
+#            updates a pull request when it changed. It acts with a Resnovas
+#            Bot GitHub App token, minted only in this job and only for the
+#            calling repository, and commits through the API, so GitHub signs
+#            the commit. Without the app key it falls back to the workflow
+#            token, whose commits GitHub signs too.
 #
 # Both run code-only extraction: local parsers, no model, no provider key.
 # Document nodes already in the committed graph are kept.
@@ -14,9 +18,18 @@ name: Graphify
 
 on:
   workflow_call:
+    inputs:
+      app-id:
+        description: The Resnovas Bot GitHub App's ID (the RESNOVAS_BOT_APP_ID organisation variable).
+        type: string
+        required: false
+        default: ''
     secrets:
+      private-key:
+        description: The Resnovas Bot GitHub App's private key (the RESNOVAS_BOT_PRIVATE_KEY organisation secret), which mints the refresh job's token. Leave it unset on pull requests; without it the workflow token is used.
+        required: false
       token:
-        description: Token that pushes and opens the refresh pull request (the ACCESS_TOKEN organisation secret). Leave it unset on pull requests; without it the workflow token is used.
+        description: Deprecated fallback for callers not yet synced, used only when no app token is minted. Pass private-key instead.
         required: false
 
 permissions: {}
@@ -52,11 +65,13 @@ jobs:
     name: refresh
     if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
     runs-on: ubuntu-latest
-    # Used only when no token secret is passed: the workflow token then pushes
+    # Used only when no app token is minted: the workflow token then pushes
     # the branch and opens the pull request.
     permissions:
       contents: write
       pull-requests: write
+    env:
+      HAS_APP_KEY: ${{ inputs.app-id != '' && secrets.private-key != '' }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -81,14 +96,47 @@ jobs:
             echo "stale=true" >> "$GITHUB_OUTPUT"
           fi
 
+      # Minted only once there is something to push, only for this repository,
+      # and with only the access the pull request needs.
+      - name: Mint the Resnovas Bot token
+        id: app
+        if: steps.rebuild.outputs.stale == 'true' && env.HAS_APP_KEY == 'true'
+        continue-on-error: true
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          # GitHub accepts the App ID wherever the client ID is asked for.
+          client-id: ${{ inputs.app-id }}
+          private-key: ${{ secrets.private-key }}
+          permission-contents: write
+          permission-pull-requests: write
+
+      # The commit is made as the token's bot, so the sign-off names that bot.
+      - name: Commit identity
+        id: identity
+        if: steps.rebuild.outputs.stale == 'true'
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+          SLUG: ${{ steps.app.outputs.app-slug }}
+        run: |
+          if [ -n "$GH_TOKEN" ] && [ -n "$SLUG" ]; then
+            id=$(gh api "/users/${SLUG}%5Bbot%5D" --jq .id)
+            echo "committer=${SLUG}[bot] <${id}+${SLUG}[bot]@users.noreply.github.com>" >> "$GITHUB_OUTPUT"
+          else
+            echo "committer=github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Open refresh pull request
         if: steps.rebuild.outputs.stale == 'true'
         uses: peter-evans/create-pull-request@v8
         with:
-          token: ${{ secrets.token || github.token }}
+          token: ${{ steps.app.outputs.token || secrets.token || github.token }}
           branch: house/graphify
           delete-branch: true
+          # Commits through the API, which GitHub signs for a bot token.
+          sign-commits: true
           signoff: true
+          committer: ${{ steps.identity.outputs.committer }}
+          author: ${{ steps.identity.outputs.committer }}
           add-paths: graphify-out
           commit-message: 'chore(graphify): refresh the code graph'
           title: 'chore(graphify): refresh the code graph'

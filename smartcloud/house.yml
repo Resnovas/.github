@@ -157,7 +157,7 @@ reviews:
     maintainer: 1
 
 # The house baseline, GOVERNANCE.md#settings. Needs an admin token, which the
-# smartcloud workflow takes from the ACCESS_TOKEN organisation secret.
+# smartcloud workflow mints from the Resnovas Bot GitHub App.
 settings:
   merging:
     mergeCommit: false
@@ -197,7 +197,7 @@ settings:
     adminBypass: true
   # Every house workflow declares the permissions it needs, so the workflow
   # token is read-only by default. It may still open pull requests: the
-  # Graphify refresh falls back to it where ACCESS_TOKEN is not available.
+  # Graphify refresh falls back to it where the app token is not available.
   # A private repository's reusable workflows stay callable from the rest of
   # the organisation; public repositories have no access level to set.
   actions:
