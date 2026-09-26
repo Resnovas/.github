@@ -34,7 +34,7 @@ COVERAGE_MIN: 90
 MAINTAINERS: TGTGamer
 
 # Automation accounts that skip the AI disclosure and DCO checks.
-TRUSTED_BOTS: dependabot[bot], renovate[bot], github-actions[bot]
+TRUSTED_BOTS: dependabot[bot], renovate[bot], github-actions[bot], resnovas-smartcloud[bot]
 
 # Template paths this repository keeps its own copy of instead of syncing,
 # for example LICENSE when a dependency requires a different licence.

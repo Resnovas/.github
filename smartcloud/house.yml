@@ -16,7 +16,7 @@ version: 2
 
 roles:
   maintainers: [TGTGamer]
-  trustedBots: ["dependabot[bot]", "renovate[bot]", "github-actions[bot]"]
+  trustedBots: ["dependabot[bot]", "renovate[bot]", "github-actions[bot]", "resnovas-smartcloud[bot]"]
 
 links:
   policyBase: https://github.com/Resnovas/.github/blob/main
@@ -73,7 +73,7 @@ conventions:
         requires: 1
         condition:
           - type: creatorMatches
-            condition: '/^(TGTGamer|dependabot\[bot\]|renovate\[bot\]|github-actions\[bot\])$/i'
+            condition: '/^(TGTGamer|dependabot\[bot\]|renovate\[bot\]|github-actions\[bot\]|resnovas-smartcloud\[bot\])$/i'
           - type: titleMatches
             condition: '^(feat|fix|perf|refactor|test|docs|chore|build|ci|style|revert)(\([\w./-]+\))?!?: \S'
     title-maintainer:
@@ -97,7 +97,7 @@ conventions:
         requires: 1
         condition:
           - type: creatorMatches
-            condition: '/^(dependabot|renovate|github-actions)\[bot\]$/i'
+            condition: '/^(dependabot|renovate|github-actions|resnovas-smartcloud)\[bot\]$/i'
           - type: $not
             condition:
               requires: 1
@@ -114,7 +114,7 @@ conventions:
         requires: 1
         condition:
           - type: creatorMatches
-            condition: '/^(dependabot|renovate|github-actions)\[bot\]$/i'
+            condition: '/^(dependabot|renovate|github-actions|resnovas-smartcloud)\[bot\]$/i'
           - type: $not
             condition:
               requires: 1
@@ -131,7 +131,7 @@ conventions:
         requires: 1
         condition:
           - type: creatorMatches
-            condition: '/^(dependabot|renovate|github-actions)\[bot\]$/i'
+            condition: '/^(dependabot|renovate|github-actions|resnovas-smartcloud)\[bot\]$/i'
           - type: $not
             condition:
               - type: descriptionMatches
