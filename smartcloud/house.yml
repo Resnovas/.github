@@ -191,7 +191,8 @@ settings:
     codeScanningGate: true
     # Required only once two or more maintainers are listed. The workflow job
     # is the context, so pull requests from forks, whose read-only token
-    # cannot create check runs, still report it.
+    # cannot create check runs, still report it. It is the aggregate check
+    # (see required below), so no other check is listed here.
     requiredChecks: [smartcloud]
     # Locked on: the owner can always bypass, including the review gate.
     adminBypass: true
@@ -204,6 +205,12 @@ settings:
     workflowPermissions: read
     createPullRequests: true
     accessLevel: organization
+
+# One aggregate check: on pull requests, the smartcloud job waits for every
+# other check on the head commit and fails if any of them fails, so the
+# ruleset requires the smartcloud check alone instead of a list of names.
+# The workflow passes the job's check run id, which the feature needs.
+required: {}
 
 # Governance files synced from this repository's templates.
 sync:
