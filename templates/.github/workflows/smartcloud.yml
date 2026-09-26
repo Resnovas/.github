@@ -6,6 +6,8 @@
 # and passes only when they all have, so its "smartcloud" check is the one
 # aggregate check: once the preset lists two or more maintainers, the house
 # ruleset requires it, and no other, on the default branch.
+# The default branch merges through a merge queue, so the job also runs on
+# merge_group.
 #
 # Every event acts with a Resnovas Bot GitHub App token, minted from the
 # organisation variable RESNOVAS_BOT_APP_ID and secret RESNOVAS_BOT_PRIVATE_KEY,
@@ -30,6 +32,7 @@ on:
     types: [opened, edited, reopened, labeled, unlabeled]
   push:
     branches: [main]
+  merge_group:
   schedule:
     - cron: '0 7 * * 1'
   workflow_dispatch:
