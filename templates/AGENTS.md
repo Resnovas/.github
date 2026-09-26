@@ -588,11 +588,3 @@ Complete every item before declaring done. Mark N/A only with a one-line reason.
 If any required box is unchecked, fix it before done.
 <!-- house:managed:end -->
 <!-- house:local - add this repository's own agent instructions below this line. -->
-
-## This repository
-
-`Resnovas/.github` is the house repository: it is the source every other repository syncs from.
-
-- Change a governed file or house default under `templates/` or in `house.yml`, never a rendered copy in the root or `.github/`, then run `npm run render`, `npm test` and `npm run check`. The `change-template` command walks through it.
-- This file and `CLAUDE.md` are rendered too: the house part comes from `templates/AGENTS.md` and `templates/CLAUDE.md`, and only this section is local.
-- The repository's own surfaces add a `render` action and task, render and test debug configurations, and an Orca `claude` tab.
