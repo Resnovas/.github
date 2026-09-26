@@ -20,7 +20,7 @@ While a project has a single maintainer, the owner has full discretion over it: 
 ### <a id="maintainers"></a>Maintainers
 
 Maintainers review and merge pull requests, steer technical direction, uphold the standards in the [Contributing Guidelines](CONTRIBUTING.md) and the [AI Contribution Policy](AI_POLICY.md), and resolve conflicts.
-The current maintainers are listed in `.github/house.yml` under `MAINTAINERS`.
+The current maintainers are listed under `roles.maintainers` in the house smartcloud preset, [`smartcloud/house.yml`](https://github.com/Resnovas/.github/blob/main/smartcloud/house.yml).
 
 ### <a id="code-owners"></a>Code owners
 
@@ -50,9 +50,9 @@ A review of an AI-assisted pull request follows [AI-40](AI_POLICY.md#ai-40): an 
 
 ### <a id="enforcing-review"></a>Enforcement
 
-The `house-policy / reviews` check counts approvals from the maintainers listed in `.github/house.yml` and applies the table above.
-As soon as that list names two or more maintainers, the house ruleset makes the `house-policy / policy` and `house-policy / reviews` checks required on the default branch.
-With a single maintainer the check always passes, so a sole maintainer is never blocked.
+[smartcloud](https://github.com/Resnovas/smartcloud) counts approvals from the maintainers in the house preset and applies the table above, reporting the result as the `smartcloud / reviews` check.
+As soon as the preset names two or more maintainers, the house ruleset makes the `smartcloud` check required on the default branch; it fails on any policy error, including too few approvals.
+With a single maintainer the review gate is always open, so a sole maintainer is never blocked.
 The owner can always bypass the ruleset, including the review gate, whatever the number of maintainers; a bypass is recorded in the pull request.
 
 ## <a id="merging"></a>Merging
@@ -68,7 +68,7 @@ Branches are kept up to date from the pull request page, auto-merge is available
 
 ## <a id="settings"></a>Repository settings
 
-Every repository is configured to the same baseline, applied automatically by the house sync (see the [house repository](https://github.com/Resnovas/.github) README):
+Every repository is configured to the same baseline, applied automatically by smartcloud from the house preset (see the [house repository](https://github.com/Resnovas/.github) README):
 
 - merging as above, with sign-off required on web commits and the wiki disabled, because documentation is published elsewhere;
 - Discussions, sponsorships and release immutability enabled;
@@ -84,14 +84,14 @@ One setting has no API and is set by hand: pushes are limited to updating five b
 The governance documents, templates and shared configuration are synced from [Resnovas/.github](https://github.com/Resnovas/.github).
 
 - **Documents** (the Markdown documents at the root and `LICENSE`) are synced whole.
-- **Configuration** (`CODEOWNERS`, `dependabot.yml`, `FUNDING.yml`, the issue forms and their `config.yml`, the pull request template, and the house workflows) contains a block between `house:managed:begin` and `house:managed:end`.
+- **Configuration** (`CODEOWNERS`, `dependabot.yml`, `FUNDING.yml`, the issue forms and their `config.yml`, the pull request template, `.github/smartcloud.yml`, and the smartcloud and Graphify workflows) contains a block between `house:managed:begin` and `house:managed:end`.
 The sync only ever replaces that block.
 A repository adds its own rules outside it, at the `house:local` line, and those are kept.
 
 Local rules extend the synced ones; they cannot change them.
-A pull request that edits a synced document or a managed block, or adds a local rule that redefines a synced one, fails the `house-policy / policy` check.
+A pull request that edits a synced document or a managed block, or adds a local rule that redefines a synced one, fails the `smartcloud` check.
 In `CODEOWNERS` the managed block comes last, so its owners win over any local rule.
-A repository that genuinely needs its own version of a file lists it in `HOUSE_EXCLUDE` in `.github/house.yml`, which a maintainer has to approve.
+A repository that genuinely needs its own version of a file lists it under `sync.exclude` in `.github/smartcloud.yml`, which a maintainer has to approve.
 
 ## <a id="amendments"></a>Changing this document
 

@@ -6,7 +6,7 @@
 
 # house:managed:begin - synced from Resnovas/.github templates/.github/CODEOWNERS. Edits inside this block are overwritten.
 #
-# Owners are set by role in .github/house.yml. Owners for the repository's own
+# Owners are set by role in the house smartcloud preset. Owners for the repository's own
 # directories go in the local section above this block.
 #
 #   OWNERS_ADMIN     project administration: governance, licence, repository configuration
@@ -36,7 +36,7 @@
 
 # Governance, licensing and repository-wide configuration.
 /.github/CODEOWNERS          @TGTGamer
-/.github/house.yml           @TGTGamer
+/.github/smartcloud.yml      @TGTGamer
 /LICENSE                     @TGTGamer
 /AI_POLICY.md              @TGTGamer
 /CODE_OF_CONDUCT.md        @TGTGamer
