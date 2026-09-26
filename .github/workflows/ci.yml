@@ -1,12 +1,17 @@
 # Checks for this repository itself, as parallel jobs: test runs the policy and
 # renderer tests, and rendered checks that the files at the root match
-# templates/ and house.yml.
+# templates/ and house.yml. The check job waits for both and is the one context
+# the ruleset and the merge queue require, so adding a job never touches the
+# ruleset.
 name: CI
 
 on:
   push:
     branches: [main]
   pull_request:
+  # The default branch merges through a merge queue, which needs the required
+  # "check" context on every queued group.
+  merge_group:
 
 # Each job asks for the access it needs; the workflow grants none.
 permissions: {}
@@ -47,3 +52,25 @@ jobs:
 
       - name: Rendered files are up to date
         run: npm run check
+
+  # The required context. It runs even when a job above fails or is cancelled,
+  # and passes only when every job succeeded.
+  check:
+    name: check
+    needs: [test, rendered]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions: {}
+    steps:
+      - name: Every job passed
+        env:
+          RESULTS: ${{ toJSON(needs) }}
+        run: |
+          failed=$(jq -r 'to_entries[] | select(.value.result != "success") | "\(.key): \(.value.result)"' <<<"$RESULTS")
+          if [ -n "$failed" ]; then
+            echo "::error::Not every CI job passed:"
+            echo "$failed"
+            exit 1
+          fi
+          echo "Every job passed."

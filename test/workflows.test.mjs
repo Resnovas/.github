@@ -102,3 +102,23 @@ test('no workflow filters pull requests or the merge queue by path', () => {
     .map(({ path }) => path)
   assert.deepEqual(filtered, [])
 })
+
+// The default branch merges through a merge queue, which waits for the
+// required checks on every queued group, so a workflow that checks pull
+// requests also runs on merge_group. Graphify only reports a notice on pull
+// requests and gates nothing, so the queue does not need it.
+const ungated = new Set(['house-graphify.yml'])
+
+test('every workflow that checks pull requests also runs in the merge queue', () => {
+  const missing = workflows
+    .filter(({ path }) => !ungated.has(path.split('/').at(-1)))
+    .filter(({ lines }) => {
+      const on = lines.findIndex((line) => /^on:/.test(line))
+      const end = lines.findIndex((line, index) => index > on && /^\S/.test(line) && !line.startsWith('#'))
+      const triggers = lines.slice(on + 1, end === -1 ? undefined : end)
+      const has = (event) => triggers.some((line) => new RegExp(`^ {2}${event}:`).test(line))
+      return has('pull_request') && !has('merge_group')
+    })
+    .map(({ path }) => path)
+  assert.deepEqual(missing, [])
+})

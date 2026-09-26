@@ -10,3 +10,11 @@ extends:
 # leaves unset, such as settings.environments.projectType or sync.exclude.
 # A value the preset already sets cannot be changed here; restating it exactly
 # is allowed, but any other value fails the run.
+
+# This repository's CI job gates merging and every merge queue group alongside
+# the preset's own checks.
+settings:
+  ruleset:
+    statusChecks:
+      checks:
+        check: true
