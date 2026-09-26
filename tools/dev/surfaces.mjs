@@ -10,14 +10,14 @@
 //   node tools/dev/surfaces.mjs install   register actions and prompts in Orca and OpenChamber
 //   node tools/dev/surfaces.mjs install --dry-run
 //
-// `.agents/surfaces.json` (JSON with comments) lists the actions: the synced
+// `.agents/surfaces.jsonc` (JSON with comments) lists the actions: the synced
 // `house` list and the repository's own `actions`. Each runs a package script
 // through `node --run`, or a `command`. `agents` get a button per prompt.
 // `.agents/prompts/<id>.md` holds each prompt once, the house ones synced and
 // the repository's own beside them; `sync` writes it to `.claude/commands` and
 // `.cursor/commands`, which this tool owns outright.
 //
-// `.agents/mcp.json` (JSON with comments) lists the MCP servers: the synced
+// `.agents/mcp.jsonc` (JSON with comments) lists the MCP servers: the synced
 // `house` servers and the repository's own `servers`. `sync` writes them to
 // each host's config, which this tool also owns outright, since those formats
 // cannot carry the house:managed markers. Secrets stay in the environment:
@@ -60,15 +60,56 @@ const parseJsonc = (text) => {
   return JSON.parse(out.replace(/,(\s*[\]}])/g, '$1'))
 }
 
-const manifest = parseJsonc(readFileSync(join(root, '.agents/surfaces.json'), 'utf8'))
+const [command, ...flags] = process.argv.slice(2)
+const dryRun = flags.includes('--dry-run')
+
+// Sources that moved to .jsonc, so editors read their comments as valid.
+// The house sync adds the new file beside the old one; `sync` keeps the
+// repository's own lines from the old file, moves them into the new one and
+// deletes the old one, and `check` reports it until then.
+const renamedSources = [['.agents/surfaces.json', '.agents/surfaces.jsonc']]
+
+const splitManaged = (text) => {
+  const lines = text.split('\n')
+  const at = (name) => lines.findIndex((line) => new RegExp(`^\\s*//\\s*house:managed:${name}(?![\\w:-])`).test(line))
+  const begin = at('begin')
+  const end = at('end')
+  return begin === -1 || end < begin ? null : { before: lines.slice(0, begin), block: lines.slice(begin, end + 1), after: lines.slice(end + 1) }
+}
+
+const migrateSources = (write) => {
+  const stale = []
+  for (const [legacy, current] of renamedSources) {
+    const legacyPath = join(root, legacy)
+    if (!existsSync(legacyPath)) continue
+    stale.push(legacy)
+    if (!write) continue
+    const currentPath = join(root, current)
+    let next = readFileSync(legacyPath, 'utf8')
+    if (existsSync(currentPath)) {
+      const fresh = splitManaged(readFileSync(currentPath, 'utf8'))
+      const kept = splitManaged(next)
+      if (fresh === null || kept === null) throw new Error(`Move the local entries from ${legacy} into ${current} by hand, then delete ${legacy}.`)
+      next = [...fresh.before, ...fresh.block, ...kept.after].join('\n')
+    }
+    writeFileSync(currentPath, next)
+    rmSync(legacyPath)
+  }
+  return stale
+}
+
+const migrated = command === 'sync' ? migrateSources(true) : []
+const sourcePath = (current) => {
+  const renamed = renamedSources.find(([, name]) => name === current)
+  return renamed !== undefined && !existsSync(join(root, current)) && existsSync(join(root, renamed[0])) ? renamed[0] : current
+}
+
+const manifest = parseJsonc(readFileSync(join(root, sourcePath('.agents/surfaces.jsonc')), 'utf8'))
 const actions = [...(manifest.house ?? []), ...(manifest.actions ?? [])]
 // Every entry this tool writes starts with the repository's name, so it only
 // ever replaces or removes its own.
 const prefix = `${manifest.repository.split('/').pop()}:`
 const commandOf = (action) => action.command ?? `node --run ${action.script}`
-const [command, ...flags] = process.argv.slice(2)
-const dryRun = flags.includes('--dry-run')
-
 const agentNames = {
   claude: 'Claude',
   codex: 'Codex',
@@ -168,17 +209,17 @@ const syncPrompts = (write) => {
 // --- MCP servers -------------------------------------------------------------
 
 const readServers = () => {
-  const path = join(root, '.agents/mcp.json')
+  const path = join(root, '.agents/mcp.jsonc')
   if (!existsSync(path)) return null
   const source = parseJsonc(readFileSync(path, 'utf8'))
   const house = source.house ?? {}
   const local = source.servers ?? {}
   const clash = Object.keys(local).filter((name) => name in house)
-  if (clash.length > 0) throw new Error(`.agents/mcp.json: local servers reuse house names: ${clash.join(', ')}`)
+  if (clash.length > 0) throw new Error(`.agents/mcp.jsonc: local servers reuse house names: ${clash.join(', ')}`)
   return Object.entries({ ...house, ...local })
 }
 
-const generatedNotice = 'Generated from .agents/mcp.json by tools/dev/surfaces.mjs sync. Edit that file, not this one.'
+const generatedNotice = 'Generated from .agents/mcp.jsonc by tools/dev/surfaces.mjs sync. Edit that file, not this one.'
 
 // A stdio argument naming a file in the repository, for hosts that do not
 // start servers in the workspace folder.
@@ -239,7 +280,7 @@ const mcpTargets = [
   { path: '.codex/config.toml', render: codexConfig },
 ]
 
-// Returns the files that differ from what .agents/mcp.json produces.
+// Returns the files that differ from what .agents/mcp.jsonc produces.
 const syncServers = (write) => {
   const servers = readServers()
   if (servers === null) return []
@@ -418,7 +459,7 @@ const installOpenChamber = () => {
 // --- Commands ----------------------------------------------------------------
 
 if (command === 'sync' || command === 'check') {
-  const stale = [...syncPrompts(command === 'sync'), ...syncServers(command === 'sync')]
+  const stale = [...(command === 'sync' ? migrated : migrateSources(false)), ...syncPrompts(command === 'sync'), ...syncServers(command === 'sync')]
   if (command === 'check' && stale.length > 0) {
     console.error(
       `Agent commands or MCP configs are out of date with .agents (run node tools/dev/surfaces.mjs sync):\n  ${stale.join('\n  ')}`,
@@ -429,7 +470,7 @@ if (command === 'sync' || command === 'check') {
     stale.length === 0 ? 'Agent commands and MCP configs are up to date.' : `Updated ${stale.length} agent command and MCP config files.`,
   )
 } else if (command === 'install') {
-  if (syncPrompts(false).length > 0 || syncServers(false).length > 0) {
+  if (migrateSources(false).length > 0 || syncPrompts(false).length > 0 || syncServers(false).length > 0) {
     console.warn('Agent commands or MCP configs are out of date; run node tools/dev/surfaces.mjs sync.')
   }
   const prompts = readPrompts()

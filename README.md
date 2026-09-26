@@ -46,9 +46,9 @@ Every repository gets the same one-click tasks, debug configurations and app act
 | `.run/house-*.run.xml` | JetBrains; a repository adds its own as other files in `.run/` |
 | `.codex/environments/environment.toml` | Codex desktop |
 | `orca.yaml` | Orca worktree setup |
-| `.agents/surfaces.json` | Orca quick commands and OpenChamber project actions |
+| `.agents/surfaces.jsonc` | Orca quick commands and OpenChamber project actions |
 | `.agents/prompts/*.md` | Agent prompts; a repository adds its own beside the synced ones |
-| `.agents/mcp.json` | MCP servers for every agent host; a repository adds its own under `servers` |
+| `.agents/mcp.jsonc` | MCP servers for every agent host; a repository adds its own under `servers` |
 | `tools/dev/surfaces.mjs`, `tools/dev/open.mjs` | The tool that installs and generates the above |
 
 The synced entries only rely on three package scripts every repository must have, `setup`, `check` and `test`, run with `node --run` so they work under npm and pnpm alike, and on the synced tools.
@@ -58,7 +58,7 @@ The JSON files are JSON with comments, so their markers are `//` lines; a local 
 Orca and OpenChamber keep quick commands and project actions in per-user settings, so `node tools/dev/surfaces.mjs install` registers them for the checkout; each repository's `setup` script runs it.
 `node tools/dev/surfaces.mjs sync` writes `.agents/prompts` to `.claude/commands` and `.cursor/commands`, which it owns and prunes (it also deletes the `.opencode/commands` it used to write), and a repository's `check` script runs `surfaces.mjs check` so they cannot drift.
 
-`.agents/mcp.json` is the one source of MCP servers, because the host configs are strict JSON or TOML that cannot carry the managed markers.
+`.agents/mcp.jsonc` is the one source of MCP servers, because the host configs are strict JSON or TOML that cannot carry the managed markers.
 `surfaces.mjs sync` writes it to `.mcp.json` (Claude Code), `.cursor/mcp.json`, `.vscode/mcp.json` and `.codex/config.toml`, which it owns, and `check` fails while they differ.
 The house servers are the Mem0 gateway, Cognee, the repository's own Graphify graph and Graphify Cloud.
 No credential is ever written: each host config references `MEM0_GATEWAY_TOKEN`, `COGNEE_BASE_URL` and `COGNEE_API_KEY` from the environment in its own syntax, and Graphify Cloud signs in with OAuth.
