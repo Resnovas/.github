@@ -12,10 +12,17 @@ export const BEGIN = 'house:managed:begin'
 export const END = 'house:managed:end'
 export const LOCAL = 'house:local'
 
+// A marker only counts on a comment line: `# ...` in YAML and CODEOWNERS, or
+// `<!-- ...` in Markdown. A document that merely mentions a marker in its
+// prose, as GOVERNANCE does, stays a whole-file document.
+export function isMarker(line, marker) {
+  return new RegExp(`^\\s*(?:#|<!--)\\s*${marker}(?![\\w:-])`).test(line)
+}
+
 export function splitManaged(text) {
   const lines = text.split('\n')
-  const begin = lines.findIndex((line) => line.includes(BEGIN))
-  const end = lines.findIndex((line) => line.includes(END))
+  const begin = lines.findIndex((line) => isMarker(line, BEGIN))
+  const end = lines.findIndex((line) => isMarker(line, END))
   if (begin === -1 || end === -1 || end < begin) return null
   return { before: lines.slice(0, begin), block: lines.slice(begin, end + 1), after: lines.slice(end + 1) }
 }
@@ -44,7 +51,7 @@ export function mergeManaged(rendered, existing, path) {
   // First adoption of a file the repository already had: keep its content,
   // commented out, where local additions go, so nothing is lost silently.
   const lines = rendered.split('\n')
-  const at = lines.findIndex((line) => line.includes(LOCAL))
+  const at = lines.findIndex((line) => isMarker(line, LOCAL))
   const legacy = [legacyNotice(path), ...commentOut(existing.replace(/\n+$/, '').split('\n'), path)]
   const insertAt = at === -1 ? lines.length : at + 1
   return [...lines.slice(0, insertAt), ...legacy, ...lines.slice(insertAt)].join('\n')
@@ -95,7 +102,7 @@ export function managedConflicts(path, rendered, current) {
   if (!template || !local) return []
   const problems = []
   const localLines = [...local.before, ...local.after]
-  const templateLocalIsBefore = template.before.some((line) => line.includes(LOCAL))
+  const templateLocalIsBefore = template.before.some((line) => isMarker(line, LOCAL))
 
   // Where the managed block must come last (CODEOWNERS: the last matching
   // rule wins), nothing may follow it.

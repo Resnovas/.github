@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { managedConflicts, mergeManaged, splitManaged, syncFindings } from '../scripts/lib/managed.mjs'
+import { BEGIN, END, LOCAL, isMarker, managedConflicts, mergeManaged, splitManaged, syncFindings } from '../scripts/lib/managed.mjs'
 import { evaluatePullRequest } from '../scripts/lib/policy.mjs'
 
 const dependabot = [
@@ -132,4 +132,25 @@ test('synced file findings fail contributors and warn maintainers', () => {
   assert.deepEqual(contributor.map((f) => [f.rule, f.level]), [['SYNC', 'error']])
   const owner = evaluatePullRequest({ pr: { ...pr, user: { login: 'owner' } }, commits, config, action: 'edited', synced })
   assert.deepEqual(owner.map((f) => [f.rule, f.level]), [['SYNC', 'warning']])
+})
+
+test('markers only count on comment lines, so a document quoting them is synced whole', () => {
+  const doc = [
+    '= Governance',
+    '',
+    '* Configuration contains a block between `house:managed:begin` and `house:managed:end`.',
+    'A repository adds its own rules at the `house:local` line.',
+    '',
+  ].join('\n')
+  assert.equal(splitManaged(doc), null)
+  assert.equal(mergeManaged(doc, 'the previous document\n', 'GOVERNANCE.md'), doc)
+})
+
+test('isMarker accepts YAML and Markdown comment markers and rejects look-alikes', () => {
+  assert.ok(isMarker('# house:managed:begin - synced', BEGIN))
+  assert.ok(isMarker('  <!-- house:managed:end -->', END))
+  assert.ok(isMarker('# house:local - add rules below', LOCAL))
+  assert.ok(!isMarker('Mentions `house:managed:begin` in prose', BEGIN))
+  assert.ok(!isMarker('#house:managed:beginning', BEGIN))
+  assert.ok(!isMarker('// house:managed:begin', BEGIN))
 })
