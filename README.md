@@ -66,7 +66,7 @@ Every downstream repository picks the change up in its next sync pull request.
 
 1. Copy `templates/.github/smartcloud.yml` and `templates/.github/workflows/smartcloud.yml` into the repository, or let the first sync add them.
 1. Add the repository's own configuration after the `house:local` line of `.github/smartcloud.yml`: keys the preset leaves unset, such as `settings.environments` or `sync.exclude` for a template path it keeps its own copy of.
-1. Make sure the organisation has the `HOUSE_SYNC_APP_ID` and `HOUSE_SYNC_APP_PRIVATE_KEY` secrets (see [The sync app](#sync-app)).
+1. Make sure the organisation has the `ACCESS_TOKEN` secret (see [The sync token](#sync-token)).
 1. Run the smartcloud workflow once by hand to open the first sync pull request.
 1. Give the repository `setup`, `check` and `test` package scripts; the synced editor and agent surfaces run them.
 1. Once the preset lists two or more maintainers, the house ruleset makes the `smartcloud` check required on the default branch.
@@ -112,12 +112,11 @@ Settings best made once at organisation level:
 This covers private repositories the per-repository settings cannot, where the licence allows.
 - Settings > Advanced Security > Global settings: Dependabot on Actions runners, and Copilot Autofix for third-party tools.
 
-## <a id="sync-app"></a>The sync app
+## <a id="sync-token"></a>The sync token
 
-The smartcloud workflow's push, schedule and manual runs (the sync and the settings) authenticate as a GitHub App; pull request and issue events use the workflow token.
-The workflow token cannot push changes to workflow files or change repository settings, and pull requests it opens do not start other workflows, so sync pull requests would arrive without CI.
-An App token is minted fresh for each run and expires on its own, so no long-lived credential is stored.
+The house workflows authenticate with the organisation secret `ACCESS_TOKEN`, a personal access token.
+The workflow token cannot read this private repository, so it cannot load the preset (`smartcloud/house.yml`) or call the reusable Graphify workflow; nor can it push changes to workflow files or change repository settings, and pull requests it opens do not start other workflows.
+Runs that get no secrets, such as pull requests from forks, fall back to the workflow token.
 
-The App needs **Administration**, **Contents**, **Pull requests** and **Workflows** write access on the repositories it syncs; Administration is what lets it apply the repository settings.
-Install it on every organisation and account that adopts the house files, and set its ID and private key as the organisation secrets `HOUSE_SYNC_APP_ID` and `HOUSE_SYNC_APP_PRIVATE_KEY`.
-Add the App's bot login, for example `resnovas-house[bot]`, to `roles.trustedBots` in `smartcloud/house.yml` so its sync pull requests are not held to the contributor checks.
+The token needs **Administration**, **Contents**, **Pull requests** and **Workflows** write access on the repositories it syncs, and read access to `Resnovas/.github`; Administration is what lets it apply the repository settings.
+This repository's Actions access (Settings > Actions > General > Access) must allow repositories in the organisation, so they can call its reusable workflows and Dependabot can resolve them.

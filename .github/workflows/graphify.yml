@@ -15,11 +15,8 @@ name: Graphify
 on:
   workflow_call:
     secrets:
-      app-id:
-        description: ID of the GitHub App that opens the refresh pull request.
-        required: false
-      app-private-key:
-        description: Private key of that GitHub App.
+      token:
+        description: Token that pushes and opens the refresh pull request (the ACCESS_TOKEN organisation secret).
         required: false
 
 permissions: {}
@@ -54,16 +51,9 @@ jobs:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
-      - name: Mint app token
-        id: app
-        uses: actions/create-github-app-token@v3
-        with:
-          app-id: ${{ secrets.app-id }}
-          private-key: ${{ secrets.app-private-key }}
-
       - uses: actions/checkout@v7
         with:
-          token: ${{ steps.app.outputs.token }}
+          token: ${{ secrets.token || github.token }}
 
       - name: Install uv
         if: hashFiles('tools/graphify/graphify') != ''
@@ -88,7 +78,7 @@ jobs:
         if: steps.rebuild.outputs.stale == 'true'
         uses: peter-evans/create-pull-request@v8
         with:
-          token: ${{ steps.app.outputs.token }}
+          token: ${{ secrets.token || github.token }}
           branch: house/graphify
           delete-branch: true
           signoff: true
