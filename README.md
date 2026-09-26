@@ -66,7 +66,7 @@ Every downstream repository picks the change up in its next sync pull request.
 
 1. Copy `templates/.github/smartcloud.yml` and `templates/.github/workflows/smartcloud.yml` into the repository, or let the first sync add them.
 1. Add the repository's own configuration after the `house:local` line of `.github/smartcloud.yml`: keys the preset leaves unset, such as `settings.environments` or `sync.exclude` for a template path it keeps its own copy of.
-1. Make sure the organisation has the `ACCESS_TOKEN` secret (see [The sync token](#sync-token)).
+1. Make sure the Resnovas Bot GitHub App is installed on the repository (see [The sync token](#sync-token)).
 1. Run the smartcloud workflow once by hand to open the first sync pull request.
 1. Give the repository `setup`, `check` and `test` package scripts; the synced editor and agent surfaces run them.
 1. Once the preset lists two or more maintainers, the house ruleset makes the `smartcloud` check required on the default branch.
@@ -114,14 +114,22 @@ This covers private repositories the per-repository settings cannot, where the l
 
 ## <a id="sync-token"></a>The sync token
 
-The house workflows authenticate with the organisation secret `ACCESS_TOKEN`, a personal access token.
-The workflow token cannot read this private repository, so it cannot load the preset (`smartcloud/house.yml`) or call the reusable Graphify workflow; nor can it push changes to workflow files or change repository settings, and pull requests it opens do not start other workflows.
-Runs that get no secrets, such as pull requests from forks and Dependabot, fall back to the workflow token.
-smartcloud then runs restricted rather than failing: it skips the preset, settings, sync and any write the token is refused, and lists them in the job summary.
-Forks and Dependabot runs act with the workflow token even if a workflow passes the secret, and no house workflow runs pull request code with the secret.
-Without the secret, the Graphify refresh on the default branch opens its refresh pull request with the workflow token, which the preset allows to create pull requests.
+The house workflows authenticate as the Resnovas Bot GitHub App (`resnovas-smartcloud[bot]`), installed on every repository in the organisation.
+Each job that needs it mints a short-lived token with `actions/create-github-app-token` from the organisation variable `RESNOVAS_BOT_APP_ID` and the organisation secret `RESNOVAS_BOT_PRIVATE_KEY`.
+The smartcloud workflow's token reaches only its own repository and `Resnovas/.github`; the Graphify refresh's token reaches only its own repository, with contents and pull request access.
+The workflow token cannot read this private repository, so it cannot load the preset (`smartcloud/house.yml`); nor can it push changes to workflow files or change repository settings, and pull requests it opens do not start other workflows.
+Everything else, such as CI and the Graphify check, acts with the workflow token.
 
-The token needs **Administration**, **Contents**, **Pull requests** and **Workflows** write access on the repositories it syncs, and read access to `Resnovas/.github`; Administration is what lets it apply the repository settings.
+Commits made with the app token go through the GitHub API, so GitHub signs them: sync and Graphify refresh commits pass required signatures without a ruleset bypass, and are signed off as the app's bot.
+The app has its own rate limit, so house runs no longer share one person's.
+
+Runs that get no secrets, such as pull requests from forks and Dependabot, mint no token and fall back to the workflow token.
+smartcloud then runs restricted rather than failing: it skips the preset, settings, sync and any write the token is refused, and lists them in the job summary.
+Forks and Dependabot runs act with the workflow token even if a workflow passes a stronger one, and no house workflow mints the app token in a job that runs pull request code.
+Without the app key, the Graphify refresh on the default branch opens its refresh pull request with the workflow token, which the preset allows to create pull requests.
+
+The app needs **Administration**, **Checks**, **Contents**, **Issues**, **Pull requests** and **Workflows** write access, plus whatever else the preset's settings manage, such as environments, Pages, webhooks and variables; Administration is what lets it apply the repository settings.
+The `ACCESS_TOKEN` organisation secret, a personal access token, is no longer used, except by the reusable Graphify workflow for callers that have not yet synced the new `house-graphify.yml`; remove it once every repository has.
 While this repository is private, its Actions access (Settings > Actions > General > Access) must allow repositories in the organisation, so they can call its reusable workflows and Dependabot can resolve them.
 The preset keeps it there (`settings.actions.accessLevel: organization`), but the reusable workflows that apply it cannot run until it is set, so set it by hand once when making this repository private.
 

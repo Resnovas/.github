@@ -5,14 +5,18 @@
 # weekly house sync. Once the preset lists two or more maintainers, the house
 # ruleset makes this job's "smartcloud" check required on the default branch.
 #
-# Every event acts with the organisation secret ACCESS_TOKEN, because the
-# workflow token can neither read the private preset in Resnovas/.github, push
-# workflow files nor change repository settings. Runs without the secret, such
-# as pull requests from forks and Dependabot, fall back to the workflow token,
-# and smartcloud then runs restricted: it skips the private preset, settings,
-# sync and any write the token is refused, and lists them in the job summary.
-# Forks and Dependabot runs are restricted whatever token is passed. The job
-# runs a released smartcloud, never the pull request's code.
+# Every event acts with a Resnovas Bot GitHub App token, minted from the
+# organisation variable RESNOVAS_BOT_APP_ID and secret RESNOVAS_BOT_PRIVATE_KEY,
+# because the workflow token can neither read the private preset in
+# Resnovas/.github, push workflow files nor change repository settings. The
+# token reaches only this repository and Resnovas/.github; GitHub signs the
+# sync commits made with it, and its rate limit is the app's own. Pull
+# requests from forks and Dependabot get no secrets, so no token is minted:
+# they fall back to the workflow token, and smartcloud then runs restricted.
+# It skips the private preset, settings, sync and any write the token is
+# refused, and lists them in the job summary. Forks and Dependabot runs are
+# restricted whatever token is passed. The job runs a released smartcloud,
+# never the pull request's code.
 name: smartcloud
 
 on:
@@ -40,8 +44,27 @@ jobs:
       checks: write
       issues: write
     steps:
+      - name: Repositories the token may reach
+        id: scope
+        run: |
+          name="${GITHUB_REPOSITORY#*/}"
+          if [ "$name" = .github ]; then echo "repositories=.github"; else echo "repositories=$name,.github"; fi >> "$GITHUB_OUTPUT"
+
+      # A failed mint falls back to the workflow token rather than failing the run.
+      - name: Mint the Resnovas Bot token
+        id: app
+        if: github.event.pull_request.head.repo.fork != true && github.actor != 'dependabot[bot]'
+        continue-on-error: true
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          # GitHub accepts the App ID wherever the client ID is asked for.
+          client-id: ${{ vars.RESNOVAS_BOT_APP_ID }}
+          private-key: ${{ secrets.RESNOVAS_BOT_PRIVATE_KEY }}
+          owner: Resnovas
+          repositories: ${{ steps.scope.outputs.repositories }}
+
       - uses: resnovas/smartcloud@v2
         with:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN || github.token }}
+          GITHUB_TOKEN: ${{ steps.app.outputs.token || github.token }}
 # house:managed:end
 # house:local - add further jobs below, indented under jobs.
