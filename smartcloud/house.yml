@@ -216,7 +216,9 @@ settings:
     # read-only token cannot create check runs, still report it. It is the
     # aggregate check (see required below). A repository adds its main CI job
     # here and under required.expect, because a restricted run from a fork or
-    # Dependabot skips this private preset, and with it the aggregate.
+    # Dependabot skips this private preset, and with it the aggregate. One
+    # whose CI runs parallel jobs requires a single job that needs them all and
+    # fails unless every one succeeded, so adding a job leaves the ruleset unchanged.
     statusChecks:
       checks:
         smartcloud: true

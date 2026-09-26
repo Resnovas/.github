@@ -1,5 +1,6 @@
-# Checks for this repository itself: the policy and renderer tests, and that
-# the rendered files at the root match templates/ and house.yml.
+# Checks for this repository itself, as parallel jobs: test runs the policy and
+# renderer tests, and rendered checks that the files at the root match
+# templates/ and house.yml.
 name: CI
 
 on:
@@ -28,6 +29,21 @@ jobs:
 
       - name: Test
         run: npm test
+
+  rendered:
+    name: rendered
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
 
       - name: Rendered files are up to date
         run: npm run check
