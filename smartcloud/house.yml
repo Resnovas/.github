@@ -219,6 +219,9 @@ settings:
     # Dependabot skips this private preset, and with it the aggregate. One
     # whose CI runs parallel jobs requires a single job that needs them all and
     # fails unless every one succeeded, so adding a job leaves the ruleset unchanged.
+    # A CI that skips jobs a change cannot affect gates them on the outputs of a
+    # classifying job, never on workflow path filters, which leave a required
+    # check pending; the aggregate job accepts only the skips it ordered.
     statusChecks:
       checks:
         smartcloud: true

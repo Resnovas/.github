@@ -82,3 +82,23 @@ test('every job that runs Nx caches .nx/cache', () => {
     .map(({ path, name }) => `${path} ${name}`)
   assert.deepEqual(uncached, [])
 })
+
+// A workflow filtered by path never starts for a change outside the filter, so
+// a required check it reports waits forever. Skip jobs a change cannot affect
+// with `if:` on a classifying job's outputs instead, and let the aggregate job
+// accept those skips.
+test('no workflow filters pull requests or the merge queue by path', () => {
+  const filtered = workflows
+    .filter(({ lines }) => {
+      const on = lines.findIndex((line) => /^on:/.test(line))
+      const end = lines.findIndex((line, index) => index > on && /^\S/.test(line) && !line.startsWith('#'))
+      const triggers = lines.slice(on + 1, end === -1 ? undefined : end)
+      let event = ''
+      return triggers.some((line) => {
+        event = line.match(/^ {2}([\w-]+):/)?.[1] ?? event
+        return (event === 'pull_request' || event === 'merge_group') && /^ {4}paths(-ignore)?:/.test(line)
+      })
+    })
+    .map(({ path }) => path)
+  assert.deepEqual(filtered, [])
+})
