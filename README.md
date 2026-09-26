@@ -88,6 +88,16 @@ A job that runs [Nx](https://nx.dev) caches `.nx/cache` between runs with `actio
 Nx replays an entry only when the hash of the task's inputs matches, and a pull request's cache entries are scoped to its own ref, so they never reach the default branch.
 A release workflow restores no cache and runs Nx with `--skip-nx-cache`, so nothing it builds or publishes comes from a cache entry.
 
+### Test matrix
+
+A repository whose code runs on contributors' or users' machines, such as a CLI, an action or the synced tools, runs its tests on Linux, macOS and Windows, each with the minimum Node major (`.nvmrc`, currently 24) and the current release (`node-version: current`).
+Only the test job needs the matrix; lint, type checks, builds and docs give the same answer everywhere, so they stay on one Linux runner.
+Set `fail-fast: false`, so a failure on one combination does not cancel the others and hide their results; `npm test` fails on a matrix job without it.
+The aggregate `check` job needs the matrix job as a whole, which fails when any combination failed, so the ruleset never lists a combination.
+Run steps written for bash with `defaults.run.shell: bash`, since Windows defaults to PowerShell, and turn off `core.autocrlf` before checkout, since Windows checks text out with CRLF.
+A matrix job that runs Nx gives each combination its own cache key and adds the Node version and platform to the test target's inputs (`{ "runtime": "node --version" }` and `{ "runtime": "node -p process.platform" }`), so a result cached on one combination is never replayed on another.
+Keep tests portable: turn file URLs into paths with `fileURLToPath`, never with `URL.pathname`, build paths with `node:path`, and do not assume a shell, line ending or case-sensitive file system.
+
 ### Action bundle budgets
 
 A repository that bundles a GitHub Action should check the built entry file in CI against reviewed raw and gzip byte limits. Keep the baseline and limits in version control, build before measuring, report the signed change from that baseline and the remaining budget in the job summary, and fail when either limit is exceeded. Document the compression level and which files count; intentional increases need an explanation and an explicit budget update in the pull request.

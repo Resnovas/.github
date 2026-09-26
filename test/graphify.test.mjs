@@ -1,19 +1,26 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { execFileSync } from 'node:child_process'
-import { cpSync, mkdtempSync, readFileSync, rmSync, statSync } from 'node:fs'
+import { cpSync, mkdtempSync, readFileSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-const templates = new URL('../templates/', import.meta.url).pathname
+const templates = fileURLToPath(new URL('../templates/', import.meta.url))
 
 test('the Claude Code skill is the same as the .agents skill', () => {
   const body = (path) => readFileSync(join(templates, path), 'utf8').replace(/^<!-- Synced from .*-->$/m, '')
   assert.equal(body('.claude/skills/graphify/SKILL.md'), body('.agents/skills/graphify/SKILL.md'))
 })
 
+// Read from git, which records the executable bit on every OS; Windows file
+// modes have none.
 test('the graphify wrapper template is executable', () => {
-  assert.ok(statSync(join(templates, 'tools/graphify/graphify')).mode & 0o100)
+  const entry = execFileSync('git', ['ls-files', '--stage', 'templates/tools/graphify/graphify'], {
+    cwd: join(templates, '..'),
+    encoding: 'utf8',
+  })
+  assert.match(entry, /^100755 /)
 })
 
 test('graphify-out commits the graph and the semantic cache, nothing else', () => {

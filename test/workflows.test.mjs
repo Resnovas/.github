@@ -2,8 +2,9 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-const root = new URL('../', import.meta.url).pathname
+const root = fileURLToPath(new URL('../', import.meta.url))
 const directories = ['.github/workflows', 'templates/.github/workflows']
 
 const workflows = directories.flatMap((directory) =>
@@ -111,7 +112,8 @@ const ungated = new Set(['house-graphify.yml'])
 
 test('every workflow that checks pull requests also runs in the merge queue', () => {
   const missing = workflows
-    .filter(({ path }) => !ungated.has(path.split('/').at(-1)))
+    // The file name, whichever separator the platform uses.
+    .filter(({ path }) => !ungated.has(path.split(/[\\/]/).at(-1)))
     .filter(({ lines }) => {
       const on = lines.findIndex((line) => /^on:/.test(line))
       const end = lines.findIndex((line, index) => index > on && /^\S/.test(line) && !line.startsWith('#'))
@@ -121,4 +123,16 @@ test('every workflow that checks pull requests also runs in the merge queue', ()
     })
     .map(({ path }) => path)
   assert.deepEqual(missing, [])
+})
+
+// A matrix cancels its other combinations when one fails unless fail-fast is
+// off, so a failure on one OS or Node version would hide the state of the
+// rest, and the aggregate check would report them as cancelled.
+test('every matrix job runs every combination', () => {
+  const failFast = workflows
+    .flatMap(jobs)
+    .filter(({ lines }) => lines.some((line) => /^ {4}strategy:/.test(line)))
+    .filter(({ lines }) => !lines.some((line) => /^ {6}fail-fast: false\s*$/.test(line)))
+    .map(({ path, name }) => `${path} ${name}`)
+  assert.deepEqual(failFast, [])
 })

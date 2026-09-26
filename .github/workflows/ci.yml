@@ -1,8 +1,8 @@
 # Checks for this repository itself, as parallel jobs: test runs the policy and
-# renderer tests, and rendered checks that the files at the root match
-# templates/ and house.yml. The check job waits for both and is the one context
-# the ruleset and the merge queue require, so adding a job never touches the
-# ruleset.
+# renderer tests on Linux, macOS and Windows with Node 24 and the current
+# release, and rendered checks that the files at the root match templates/ and
+# house.yml. The check job waits for both and is the one context the ruleset
+# and the merge queue require, so adding a job never touches the ruleset.
 name: CI
 
 on:
@@ -17,20 +17,33 @@ on:
 permissions: {}
 
 jobs:
+  # The renderer and the synced tools run on contributors' machines, so the
+  # tests run on Linux, macOS and Windows, each on Node 24, the minimum, and
+  # the current release. Every combination runs to the end.
   test:
-    name: test
-    runs-on: ubuntu-latest
+    name: test (${{ matrix.os }}, Node ${{ matrix.node }})
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     permissions:
       contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node: ['24', current]
     steps:
+      # Windows checks text files out with CRLF by default, which the
+      # line-based tests would misread.
+      - name: Keep LF line endings
+        run: git config --global core.autocrlf false
+
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 24
+          node-version: ${{ matrix.node }}
 
       - name: Test
         run: npm test
