@@ -195,6 +195,15 @@ settings:
     requiredChecks: [smartcloud]
     # Locked on: the owner can always bypass, including the review gate.
     adminBypass: true
+  # Every house workflow declares the permissions it needs, so the workflow
+  # token is read-only by default. It may still open pull requests: the
+  # Graphify refresh falls back to it where ACCESS_TOKEN is not available.
+  # A private repository's reusable workflows stay callable from the rest of
+  # the organisation; public repositories have no access level to set.
+  actions:
+    workflowPermissions: read
+    createPullRequests: true
+    accessLevel: organization
 
 # Governance files synced from this repository's templates.
 sync:

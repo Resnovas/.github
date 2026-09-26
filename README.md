@@ -119,10 +119,11 @@ The workflow token cannot read this private repository, so it cannot load the pr
 Runs that get no secrets, such as pull requests from forks and Dependabot, fall back to the workflow token.
 smartcloud then runs restricted rather than failing: it skips the preset, settings, sync and any write the token is refused, and lists them in the job summary.
 Forks and Dependabot runs act with the workflow token even if a workflow passes the secret, and no house workflow runs pull request code with the secret.
-Without the secret, the Graphify refresh on the default branch reports a stale graph as a notice instead of opening its refresh pull request.
+Without the secret, the Graphify refresh on the default branch opens its refresh pull request with the workflow token, which the preset allows to create pull requests.
 
 The token needs **Administration**, **Contents**, **Pull requests** and **Workflows** write access on the repositories it syncs, and read access to `Resnovas/.github`; Administration is what lets it apply the repository settings.
-This repository's Actions access (Settings > Actions > General > Access) must allow repositories in the organisation, so they can call its reusable workflows and Dependabot can resolve them.
+While this repository is private, its Actions access (Settings > Actions > General > Access) must allow repositories in the organisation, so they can call its reusable workflows and Dependabot can resolve them.
+The preset keeps it there (`settings.actions.accessLevel: organization`), but the reusable workflows that apply it cannot run until it is set, so set it by hand once when making this repository private.
 
 ## <a id="releases"></a>Releases and changelogs
 
