@@ -12,11 +12,12 @@ export const BEGIN = 'house:managed:begin'
 export const END = 'house:managed:end'
 export const LOCAL = 'house:local'
 
-// A marker only counts on a comment line: `# ...` in YAML and CODEOWNERS, or
-// `<!-- ...` in Markdown. A document that merely mentions a marker in its
-// prose, as GOVERNANCE does, stays a whole-file document.
+// A marker only counts on a comment line: `# ...` in YAML, TOML and
+// CODEOWNERS, `// ...` in JSON with comments (editor settings), or `<!-- ...`
+// in Markdown. A document that merely mentions a marker in its prose, as
+// GOVERNANCE does, stays a whole-file document.
 export function isMarker(line, marker) {
-  return new RegExp(`^\\s*(?:#|<!--)\\s*${marker}(?![\\w:-])`).test(line)
+  return new RegExp(`^\\s*(?:#|//|<!--)\\s*${marker}(?![\\w:-])`).test(line)
 }
 
 export function splitManaged(text) {
@@ -28,15 +29,20 @@ export function splitManaged(text) {
 }
 
 const isMarkdown = (path) => path.endsWith('.md')
+const isJson = (path) => /\.jsonc?$/.test(path)
+
+// The line comment for a file's format; Markdown has none.
+const lineComment = (path) => (isJson(path) ? '//' : '#')
 
 function commentOut(lines, path) {
   if (isMarkdown(path)) return ['<!--', ...lines.map((line) => line.replace(/-->/g, '-- >')), '-->']
-  return lines.map((line) => (line === '' ? '#' : `# ${line}`))
+  const comment = lineComment(path)
+  return lines.map((line) => (line === '' ? comment : `${comment} ${line}`))
 }
 
 function legacyNotice(path) {
   const text = 'Previous content of this file, kept when it was first synced. Re-add what is still needed as local rules, then delete this.'
-  return isMarkdown(path) ? `<!-- ${text} -->` : `# ${text}`
+  return isMarkdown(path) ? `<!-- ${text} -->` : `${lineComment(path)} ${text}`
 }
 
 // Combines the freshly rendered template with the repository's current file.
@@ -57,7 +63,7 @@ export function mergeManaged(rendered, existing, path) {
   return [...lines.slice(0, insertAt), ...legacy, ...lines.slice(insertAt)].join('\n')
 }
 
-const meaningful = (lines) => lines.filter((line) => line.trim() !== '' && !/^\s*(#|<!--|-->)/.test(line))
+const meaningful = (lines) => lines.filter((line) => line.trim() !== '' && !/^\s*(#|\/\/|<!--|-->)/.test(line))
 const strip = (value) => value.trim().replace(/^(['"])(.*)\1$/, '$2')
 
 function topLevelKeys(lines) {
@@ -84,6 +90,11 @@ function dependabotEntries(lines) {
   }
   return entries.map((e) => `${e.ecosystem} in ${e.directory}${e.branch ? ` on ${e.branch}` : ''}`)
 }
+
+// The names editors identify an entry by: task and debug `label`, VS Code
+// `name`, and surfaces `id`. A local entry reusing one shadows the synced one.
+const jsonNames = (lines) =>
+  lines.map((line) => /^\s*\{?\s*"(?:label|name|id)"\s*:\s*"([^"]*)"/.exec(line)?.[1]).filter(Boolean)
 
 const ids = (lines) => lines.map((line) => /^\s+id:\s*(\S+)/.exec(line)?.[1]).filter(Boolean)
 
@@ -123,6 +134,13 @@ export function managedConflicts(path, rendered, current) {
     const managedJobs = new Set(jobIds(template.block))
     for (const job of jobIds(['jobs:', ...local.after])) {
       if (managedJobs.has(job)) problems.push(`redefines the synced job "${job}"`)
+    }
+  }
+
+  if (isJson(path)) {
+    const managed = new Set(jsonNames(template.block))
+    for (const name of jsonNames(localLines)) {
+      if (managed.has(name)) problems.push(`reuses the synced name "${name}"`)
     }
   }
 
