@@ -1,0 +1,215 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Resnovas/smartcloud/main/schema/smartcloud.schema.json
+#
+# The Resnovas house preset. Every Resnovas repository extends it from its
+# .github/smartcloud.yml:
+#
+#   extends:
+#     - Resnovas/.github/smartcloud/house.yml@main
+#
+# Presets are locked: a repository may add keys this file leaves unset, but it
+# cannot change a value set here. Identical restatements are allowed.
+#
+# Left unset on purpose, so each repository adds its own:
+#   settings.environments  projectType (saas, desktop, library) or names
+#   sync.exclude           template paths the repository keeps its own copy of
+version: 2
+
+roles:
+  maintainers: [TGTGamer]
+  trustedBots: ["dependabot[bot]", "renovate[bot]", "github-actions[bot]"]
+
+links:
+  policyBase: https://github.com/Resnovas/.github/blob/main
+
+# The process labels from AI_POLICY.md#labels, plus the label automation uses
+# on its own pull requests.
+labels:
+  needs-disclosure:
+    name: needs-disclosure
+    color: D93F0B
+    description: Complete the AI disclosure (AI-01) and co-author trailers (AI-02).
+  needs-dco:
+    name: needs-dco
+    color: B60205
+    description: Sign off every commit.
+  needs-reproduction:
+    name: needs-reproduction
+    color: FBCA04
+    description: Provide a reproduction on the production branch with exact steps.
+  needs-evidence:
+    name: needs-evidence
+    color: F9D0C4
+    description: Attach the evidence the change requires.
+  needs-tests:
+    name: needs-tests
+    color: FEF2C0
+    description: Add the missing regression or coverage tests.
+  needs-human-explanation:
+    name: needs-human-explanation
+    color: E99695
+    description: Explain the rationale or a material change yourself (AI-04, AI-05).
+  needs-scope-approval:
+    name: needs-scope-approval
+    color: C5DEF5
+    description: Agree the scope or dependency with a maintainer before continuing.
+  needs-refactor:
+    name: needs-refactor
+    color: BFD4F2
+    description: Move code to the correct module or package (AI-13).
+  house-sync:
+    name: house-sync
+    color: EDEDED
+    description: Automated update from Resnovas/.github.
+
+# Pull request title and house style. Every pattern runs in linear time.
+# Trusted bots are exempt, as before. A maintainer's non-conventional title is
+# a warning rather than an error, through the second title rule.
+conventions:
+  rules:
+    title:
+      on: [pullRequest]
+      message: 'The title is not a conventional commit, for example "fix(auth): reject expired tokens". See https://github.com/Resnovas/.github/blob/main/CONTRIBUTING.md#pr-title'
+      when:
+        requires: 1
+        condition:
+          - type: creatorMatches
+            condition: '/^(TGTGamer|dependabot\[bot\]|renovate\[bot\]|github-actions\[bot\])$/i'
+          - type: titleMatches
+            condition: '^(feat|fix|perf|refactor|test|docs|chore|build|ci|style|revert)(\([\w./-]+\))?!?: \S'
+    title-maintainer:
+      on: [pullRequest]
+      level: warning
+      message: 'The title is not a conventional commit, for example "fix(auth): reject expired tokens". See https://github.com/Resnovas/.github/blob/main/CONTRIBUTING.md#pr-title'
+      when:
+        requires: 1
+        condition:
+          - type: $not
+            condition:
+              - type: creatorMatches
+                condition: '/^TGTGamer$/i'
+          - type: titleMatches
+            condition: '^(feat|fix|perf|refactor|test|docs|chore|build|ci|style|revert)(\([\w./-]+\))?!?: \S'
+    no-emoji:
+      on: [pullRequest]
+      level: warning
+      message: Remove emoji from the title and description. See https://github.com/Resnovas/.github/blob/main/AI_POLICY.md#ai-09
+      when:
+        requires: 1
+        condition:
+          - type: creatorMatches
+            condition: '/^(dependabot|renovate|github-actions)\[bot\]$/i'
+          - type: $not
+            condition:
+              requires: 1
+              condition:
+                - type: titleMatches
+                  condition: '/\p{Extended_Pictographic}/u'
+                - type: descriptionMatches
+                  condition: '/\p{Extended_Pictographic}/u'
+    no-long-dashes:
+      on: [pullRequest]
+      level: warning
+      message: Replace em and en dashes with ordinary punctuation. See https://github.com/Resnovas/.github/blob/main/AI_POLICY.md#ai-09
+      when:
+        requires: 1
+        condition:
+          - type: creatorMatches
+            condition: '/^(dependabot|renovate|github-actions)\[bot\]$/i'
+          - type: $not
+            condition:
+              requires: 1
+              condition:
+                - type: titleMatches
+                  condition: '[\u2013\u2014]'
+                - type: descriptionMatches
+                  condition: '[\u2013\u2014]'
+    checklist-done:
+      on: [pullRequest]
+      level: warning
+      message: Remove unticked checklist items; state what was done instead. See https://github.com/Resnovas/.github/blob/main/AI_POLICY.md#ai-09
+      when:
+        requires: 1
+        condition:
+          - type: creatorMatches
+            condition: '/^(dependabot|renovate|github-actions)\[bot\]$/i'
+          - type: $not
+            condition:
+              - type: descriptionMatches
+                condition: '/^[ \t]*[-*+] \[ \]/m'
+
+# DCO sign-off and AI attribution (AI-02, AI-03). An AI sign-off is an error
+# for everyone; anything else on a maintainer's own pull request is a warning.
+commits:
+  dco: true
+  aiAttribution: true
+  maintainerLevel: warning
+
+# The AI disclosure (AI-01), drafts (AI-20) and leaving draft (AI-21).
+disclosure:
+  requireDraft: true
+  maintainerLevel: warning
+
+# GOVERNANCE.md#review. The gate stays open while fewer than two maintainers
+# are listed, so a sole owner is never blocked.
+reviews:
+  gate:
+    outside: 2
+    maintainer: 1
+
+# The house baseline, GOVERNANCE.md#settings. Needs an admin token, which the
+# smartcloud workflow mints from the House sync app.
+settings:
+  merging:
+    mergeCommit: false
+    squash: true
+    rebase: true
+    autoMerge: true
+    updateBranch: true
+    deleteBranchOnMerge: true
+    webCommitSignoff: true
+    # Keeping the commit messages preserves every Signed-off-by,
+    # Co-authored-by and Assisted-by trailer through a squash.
+    squashTitle: PR_TITLE
+    squashMessage: COMMIT_MESSAGES
+  features:
+    wiki: false
+    discussions: true
+    sponsorships: true
+  security:
+    immutableReleases: true
+    privateVulnerabilityReporting: true
+    dependabotAlerts: true
+    dependabotSecurityUpdates: true
+    codeScanning: extended
+    secretScanning: true
+  ruleset:
+    name: "house: default branch"
+    blockDeletion: true
+    blockForcePush: true
+    linearHistory: true
+    copilotReview: true
+    codeScanningGate: true
+    # Required only once two or more maintainers are listed. The workflow job
+    # is the context, so pull requests from forks, whose read-only token
+    # cannot create check runs, still report it.
+    requiredChecks: [smartcloud]
+    # Locked on: the owner can always bypass, including the review gate.
+    adminBypass: true
+
+# Governance files synced from this repository's templates.
+sync:
+  source: Resnovas/.github/templates@main
+  branch: house/sync
+  check: true
+  values:
+    ORG_NAME: Resnovas
+    LEGAL_HOLDER: Jonathan Stevens trading as Resnovas
+    COPYRIGHT_YEAR: "2026"
+    PACKAGE_SCOPE: "@resnovas"
+    CONDUCT_CONTACT: hello@resnovas.com
+    COVERAGE_MIN: "90"
+    SPONSORS: TGTGamer
+    OWNERS_ADMIN: "@TGTGamer"
+    OWNERS_DOCS: "@TGTGamer"
+    OWNERS_QA: "@TGTGamer"
+    OWNERS_WORKFLOW: "@TGTGamer"

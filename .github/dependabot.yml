@@ -4,7 +4,8 @@
 # pull request, with security updates grouped separately so they are never held
 # back behind routine bumps. A repository with other ecosystems adds its own
 # updates below the managed block. One without a package.json excludes this
-# file with HOUSE_EXCLUDE, because the npm update below would fail there.
+# file with sync.exclude in .github/smartcloud.yml, because the npm update
+# below would fail there.
 version: 2
 updates:
   - package-ecosystem: github-actions

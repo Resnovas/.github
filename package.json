@@ -2,7 +2,7 @@
   "name": "@resnovas/house",
   "private": true,
   "type": "module",
-  "description": "House governance files, templates and policy checks for every Resnovas project.",
+  "description": "House governance files, templates and the smartcloud preset for every Resnovas project.",
   "license": "SEE LICENSE IN LICENSE",
   "engines": {
     "node": ">=24"

@@ -1,7 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { BEGIN, END, LOCAL, isMarker, managedConflicts, mergeManaged, splitManaged, syncFindings } from '../scripts/lib/managed.mjs'
-import { evaluatePullRequest } from '../scripts/lib/policy.mjs'
 
 const dependabot = [
   '# house:managed:begin - synced',
@@ -115,23 +114,6 @@ test('sync findings: a sync that brings the block up to date is allowed', () => 
   const stale = dependabot.replace('npm', 'yarn')
   assert.deepEqual(syncFindings([{ path: '.github/dependabot.yml', rendered: dependabot, base: stale, head: dependabot }]), [])
   assert.deepEqual(syncFindings([{ path: '.github/dependabot.yml', rendered: dependabot, base: null, head: dependabot }]), [])
-})
-
-test('synced file findings fail contributors and warn maintainers', () => {
-  const pr = {
-    title: 'docs: tweak',
-    body: 'AI level: none\nAI tools: none',
-    draft: false,
-    user: { login: 'contrib' },
-    author_association: 'CONTRIBUTOR',
-  }
-  const commits = [{ sha: 'a'.repeat(40), message: 'x\n\nSigned-off-by: C <c@x.io>', authorEmail: 'c@x.io', parents: 1 }]
-  const synced = [{ path: 'SECURITY.md', rendered: 'new', base: 'old', head: 'mine' }]
-  const config = { maintainers: ['owner'], trustedBots: [] }
-  const contributor = evaluatePullRequest({ pr, commits, config, action: 'edited', synced })
-  assert.deepEqual(contributor.map((f) => [f.rule, f.level]), [['SYNC', 'error']])
-  const owner = evaluatePullRequest({ pr: { ...pr, user: { login: 'owner' } }, commits, config, action: 'edited', synced })
-  assert.deepEqual(owner.map((f) => [f.rule, f.level]), [['SYNC', 'warning']])
 })
 
 test('markers only count on comment lines, so a document quoting them is synced whole', () => {
