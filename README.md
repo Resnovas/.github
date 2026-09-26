@@ -87,6 +87,7 @@ A job that calls a reusable workflow cannot set a timeout, and is bounded by the
 A job that runs [Nx](https://nx.dev) caches `.nx/cache` between runs with `actions/cache`, keyed on the runner OS, the lockfile hash, the commit and the workflow, with the OS and lockfile prefix as a restore key, so tasks whose inputs did not change replay from the last run; `npm test` fails on a job that runs Nx without it.
 Nx replays an entry only when the hash of the task's inputs matches, and a pull request's cache entries are scoped to its own ref, so they never reach the default branch.
 A release workflow restores no cache and runs Nx with `--skip-nx-cache`, so nothing it builds or publishes comes from a cache entry.
+A nightly full run restores no cache either (see [Nightly full run](#nightly)).
 
 ### Test matrix
 
@@ -113,6 +114,16 @@ The runner sets `GITHUB_EVENT_NAME`, `GITHUB_EVENT_PATH` and `GITHUB_STEP_SUMMAR
 Run the check step with `if: ${{ !cancelled() }}`, so a failed run still reports its summary, or that there was none, and add the job to the aggregate `check` job's `needs`.
 
 smartcloud implements this as the `smoke` job in its CI, with the recordings, config, preload and check in `tools/ci/smoke`; it runs whenever the build does.
+
+### <a id="nightly"></a>Nightly full run
+
+A repository whose CI runs only what a change affects (`nx affected`, or jobs skipped for documentation-only changes) also runs its whole CI every night, on every project, from scratch.
+Add a `schedule` trigger to the CI workflow at an off-peak minute, and on scheduled and manual (`workflow_dispatch`) runs have each job call `nx run-many` instead of `nx affected`, set `NX_SKIP_NX_CACHE=true` and skip the `.nx/cache` restore, so every task really runs.
+This catches the failures no change sets off, such as a new Node release on the `current` leg of the test matrix, a new runner image, a dependency or upstream service that changed behaviour, or a cache entry that should not have replayed, the next morning rather than on an unrelated pull request.
+Put the event in the workflow's `concurrency` group (`ci-${{ github.event_name }}-${{ github.ref }}`), so a push to the default branch does not cancel the nightly run.
+The run needs no more access than CI already has: each job keeps its own read-only scopes, and GitHub runs schedules only on the default branch of the repository itself, never in forks, and emails a failed run to whoever last changed the `cron`.
+
+smartcloud implements this in its `CI` workflow with a workflow-level `NX_RUN` (`affected` or `run-many`) that every Nx step uses.
 
 ### <a id="workflow-lint"></a>Workflow lint
 
