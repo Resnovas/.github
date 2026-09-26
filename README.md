@@ -125,6 +125,16 @@ The run needs no more access than CI already has: each job keeps its own read-on
 
 smartcloud implements this in its `CI` workflow with a workflow-level `NX_RUN` (`affected` or `run-many`) that every Nx step uses.
 
+### <a id="flaky-tests"></a>Flaky tests
+
+A repository's CI retries a failed test, and never retries it locally, so a flaky test does not fail an unrelated pull request, a merge queue group or the nightly run, but a developer who runs the tests still sees it fail.
+Retries must not hide the flake: report every test that failed and then passed on a retry as a `::warning` annotation on the test's file and line, which shows on the run and the pull request's changed files, and as a table in the job summary.
+Keep the retry count low (two) and set it in the shared test configuration keyed on `CI=true`, so every project gets the same behaviour; never raise it to get a run green.
+A flaky test is a bug, handled as the contributing guide says: fix the test or the code it exercises, never skip or delete it.
+Reporting needs no extra access: annotations and the job summary come from the job's own output, so it works with the read-only token on pull requests from forks and from Dependabot.
+
+smartcloud implements this in `vitest.shared.ts` (`retry`, `includeTaskLocation` and the `tools/ci/flaky-tests.ts` reporter, on CI only), which every test project uses.
+
 ### <a id="workflow-lint"></a>Workflow lint
 
 Every repository lints its workflows from the synced `.github/workflows/house-workflow-lint.yml`, which calls the reusable `.github/workflows/workflow-lint.yml`.
