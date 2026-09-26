@@ -88,6 +88,12 @@ A job that runs [Nx](https://nx.dev) caches `.nx/cache` between runs with `actio
 Nx replays an entry only when the hash of the task's inputs matches, and a pull request's cache entries are scoped to its own ref, so they never reach the default branch.
 A release workflow restores no cache and runs Nx with `--skip-nx-cache`, so nothing it builds or publishes comes from a cache entry.
 
+### Action bundle budgets
+
+A repository that bundles a GitHub Action should check the built entry file in CI against reviewed raw and gzip byte limits. Keep the baseline and limits in version control, build before measuring, report the signed change from that baseline and the remaining budget in the job summary, and fail when either limit is exceeded. Document the compression level and which files count; intentional increases need an explanation and an explicit budget update in the pull request.
+
+smartcloud implements this with `bundle-size.json` and `pnpm bundle:check` for `dist/index.js`, using gzip level 9 and initially 10% headroom. Its existing build job runs the check, feeding the required aggregate `check` context on pull requests and merge queue groups, with only `contents: read`. There is no PR comment, personal token or base-branch build: forks and Dependabot use the same check. This stays repository-local because the house preset does not define a shared action-bundling target; repositories without an action bundle need no extra job.
+
 ### <a id="workflow-lint"></a>Workflow lint
 
 Every repository lints its workflows from the synced `.github/workflows/house-workflow-lint.yml`, which calls the reusable `.github/workflows/workflow-lint.yml`.
