@@ -1,7 +1,7 @@
 # <a id="top"></a>Resnovas house repository
 
-The single source of truth for the governance files every Resnovas project ships with, across Resnovas, Eventiva, Climb and personal repositories.
-It holds the contributing guidelines, the AI contribution policy, the code of conduct, the Developer Certificate of Origin, the FCL-1.0-MIT licence, the Eventiva Cooperation Commitment, and the issue and pull request templates, together with the checks that enforce them.
+The single source of truth for the governance files every Resnovas project ships with, across Resnovas, Eventiva and personal repositories.  
+It holds the contributing guidelines, the AI contribution policy, the code of conduct, the Developer Certificate of Origin, the FCL-1.0-MIT licence, the  Cooperation Commitment, and the issue and pull request templates, together with the checks that enforce them.
 
 Because this repository is public and named `.github`, GitHub also uses these files as the defaults for every repository in the Resnovas organisation that does not have its own.
 
