@@ -120,3 +120,24 @@ Runs that get no secrets, such as pull requests from forks, fall back to the wor
 
 The token needs **Administration**, **Contents**, **Pull requests** and **Workflows** write access on the repositories it syncs, and read access to `Resnovas/.github`; Administration is what lets it apply the repository settings.
 This repository's Actions access (Settings > Actions > General > Access) must allow repositories in the organisation, so they can call its reusable workflows and Dependabot can resolve them.
+
+## <a id="releases"></a>Releases and changelogs
+
+`templates/` has no release configuration yet: each repository keeps its own Nx release setup.
+The house default, which [smartcloud](https://github.com/Resnovas/smartcloud/blob/main/docs/releasing.mdx) follows, is:
+
+- **Nx release, started by hand** from a `release` workflow on the default branch, with conventional commits deciding the version.
+The published projects form one release group, tagged `v{version}`.
+- **The GitHub release holds the main notes**: `release.changelog.workspaceChangelog` sets `createRelease: github`, with a renderer that replaces Nx's emoji with words (smartcloud's `tools/release/changelog-renderer.ts`).
+- **The notes are also written to the repository**, through the same renderer: the workspace changelog to the root `CHANGELOG.md` (new releases above any older history, which stays), and `projectChangelogs` to `{projectRoot}/CHANGELOG.md` for each published project, with `createRelease: false`.
+Unpublished libraries get none; their changes appear under the projects that bundle them.
+- **The files reach the default branch through a pull request**, because the house ruleset takes changes only through pull requests, with signed commits and the merge queue.
+After tagging, a separate `changelogs` job mints a token for the Resnovas Bot app (`resnovas-smartcloud`, from the organisation variable `RESNOVAS_BOT_APP_ID` and secret `RESNOVAS_BOT_PRIVATE_KEY`, with `actions/create-github-app-token` pinned to a commit), commits the files through the GitHub API, so GitHub signs the commit, and opens `chore(release): changelogs for v<version>`.
+The commit is signed off by `resnovas-smartcloud[bot]`, which the preset lists in `roles.trustedBots`.
+- **The app's token never meets untrusted code**: the job that mints it checks out and runs nothing from the repository, and the job that installs dependencies and runs Nx hands it the files as an artifact.
+
+When smartcloud's sync manages Nx release configuration ([SMC-81](https://linear.app/resnovas/issue/SMC-81)), it should sync:
+
+- `nx.json`'s `release.changelog` (both changelog settings and the renderer path) and `release.conventionalCommits`, in a managed block, leaving `release.groups` local, since each repository lists its own published projects;
+- the changelog renderer, as `tools/release/changelog-renderer.ts`;
+- the release workflow's `changelogs` job, as a managed job.
