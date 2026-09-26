@@ -98,6 +98,11 @@ const jsonNames = (lines) =>
 
 const ids = (lines) => lines.map((line) => /^\s+id:\s*(\S+)/.exec(line)?.[1]).filter(Boolean)
 
+// TOML table headers, `[name]`. Defining a table twice is a parse error, so a
+// local table may not reuse a synced one; an array of tables, `[[name]]`, is
+// meant to repeat.
+const tomlTables = (lines) => lines.map((line) => /^\s*\[(?!\[)\s*([^\]]+?)\s*\](?:\s*#.*)?$/.exec(line)?.[1]).filter(Boolean)
+
 // Workflow job ids are the two-space keys under `jobs:`.
 function jobIds(lines) {
   const start = lines.findIndex((line) => /^jobs:\s*$/.test(line))
@@ -134,6 +139,13 @@ export function managedConflicts(path, rendered, current) {
     const managedJobs = new Set(jobIds(template.block))
     for (const job of jobIds(['jobs:', ...local.after])) {
       if (managedJobs.has(job)) problems.push(`redefines the synced job "${job}"`)
+    }
+  }
+
+  if (path.endsWith('.toml')) {
+    const managed = new Set(tomlTables(template.block))
+    for (const table of tomlTables(localLines)) {
+      if (managed.has(table)) problems.push(`redefines the synced table "${table}"`)
     }
   }
 

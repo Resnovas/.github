@@ -54,6 +54,14 @@ graphify-out/
 *.min.js
 *.map
 
+# The rest of the ignore list every review bot shares (GOVERNANCE.md#review-bots):
+# generated schemas and reference pages, changelogs, and vendored upstream
+# source, which is reviewed by provenance rather than read.
+schema/*.schema.json
+docs/reference/
+CHANGELOG.md
+externals/
+
 # Binary assets.
 *.png
 *.jpg

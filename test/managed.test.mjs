@@ -67,6 +67,14 @@ test('local YAML may not redefine a synced top-level key', () => {
   assert.deepEqual(managedConflicts('.github/FUNDING.yml', funding, `${funding}custom: ['https://x.io']\n`), [])
 })
 
+test('local TOML may not redefine a synced table', () => {
+  const toml = '# house:managed:begin\n[github_app]\npr_commands = []\n# house:managed:end\n# house:local\n'
+  assert.deepEqual(managedConflicts('.pr_agent.toml', toml, `${toml}[github_app] # again\nx = 1\n`), ['redefines the synced table "github_app"'])
+  assert.deepEqual(managedConflicts('.pr_agent.toml', toml, `${toml}[pr_questions]\nx = 1\n`), [])
+  const actions = '# house:managed:begin\n[[actions]]\nname = "a"\n# house:managed:end\n# house:local\n'
+  assert.deepEqual(managedConflicts('environment.toml', actions, `${actions}[[actions]]\nname = "b"\n`), [])
+})
+
 test('local issue form fields may not reuse a synced id', () => {
   const form = '# house:managed:begin\nbody:\n  - type: input\n    id: version\n# house:managed:end\n# house:local\n'
   assert.deepEqual(managedConflicts('.github/ISSUE_TEMPLATE/bug.yml', form, `${form}  - type: input\n    id: version\n`), ['reuses the synced field id "version"'])

@@ -29,7 +29,7 @@ Configuration files are extendable: each template wraps its synced content in `h
 The sync replaces only the managed block and keeps everything else, so a repository can add Dependabot updates, code owners, issue form fields, contact links, funding platforms, pull request template sections or workflow jobs without losing them.
 
 Local rules can extend the synced ones but not change them.
-The policy check fails a pull request that edits a managed block or a synced document, and flags local rules that would redefine a synced one: a duplicate Dependabot update, a redefined top-level YAML key, a reused issue form field id, or a redefined job.
+The policy check fails a pull request that edits a managed block or a synced document, and flags local rules that would redefine a synced one: a duplicate Dependabot update, a redefined top-level YAML key, a reused issue form field id, a redefined job, or a redefined TOML table.
 In `CODEOWNERS` the managed block comes last, because the last matching rule wins.
 
 When a repository first adopts a file it already had, its previous content is kept, commented out at the `house:local` line, for someone to re-add as local rules.
@@ -66,6 +66,46 @@ The house servers are the Mem0 gateway, Cognee (pinned to a reviewed `cognee-mcp
 No credential is ever written: each host config references `MEM0_GATEWAY_TOKEN`, `COGNEE_BASE_URL` and `COGNEE_API_KEY` from the environment in its own syntax, and Graphify Cloud signs in with OAuth.
 
 This repository has no documentation site to serve: its documents are the Markdown files in the root, which GitHub renders.
+
+## <a id="review-bots"></a>Review bots
+
+Every review bot is configured by a synced file, so each repository gets the same division of labour: one job per bot, one pull request summary, and the same files skipped everywhere.
+[The governance document](GOVERNANCE.md#review-bots) sets out the jobs and which findings block a merge, and the [Approval Policy](APPROVAL_POLICY.md#ap-31) applies the same rule.
+
+| Path | Bot | Repository additions |
+| --- | --- | --- |
+| `.coderabbit.yaml` | CodeRabbit: the line-level review and the only summary | Path instructions after `house:local`, as list items under `reviews.path_instructions`. |
+| `.github/copilot-instructions.md` | GitHub Copilot code review: security and permissions | Instructions after `house:local`. |
+| `.github/instructions/house-*.instructions.md` | Copilot, for the paths in each file's `applyTo` | Other `.github/instructions/*.instructions.md` files. |
+| `.pr_agent.toml` | Qodo Merge: the ticket, tests and edge cases | New tables after `house:local`; TOML cannot define a table twice. |
+| `.cursor/BUGBOT.md` | Cursor Bugbot: logic bugs | Rules after `house:local`, or a `.cursor/BUGBOT.md` in a subdirectory for the files under it. |
+| `.graphifyignore` | Graphify: architecture | Ignores after `house:local`. |
+
+The shared ignore list is vendored source (`externals/`), the code graph (`graphify-out/`), build output (`dist/`), generated schemas (`schema/*.schema.json`) and reference pages (`docs/reference/`), lockfiles and `CHANGELOG.md` files.
+CodeRabbit and Qodo take it as path filters, Graphify as ignores; Copilot and Bugbot have no ignore file, so their instructions name it, and Copilot skips lockfiles by itself.
+
+The files do nothing until the app is installed, and CodeRabbit only reviews repositories its plan covers, such as open source ones; elsewhere `.coderabbit.yaml` is inert.
+Some settings exist only in each app's dashboard, and are set once for the organisation:
+
+- **Qodo Merge:** leave automatic `/describe` and `/improve` off; the synced `pr_commands` runs the review alone.
+- **Cursor Bugbot:** pull request summaries off, and draft pull requests not reviewed, since CodeRabbit writes the summary.
+- **Copilot code review:** the house ruleset requests it on every push, drafts included. Content exclusions, set in the organisation's Copilot settings, would hide files from every Copilot feature, so the ignore list stays in the instructions instead.
+
+No bot's check is required: the ruleset requires the `smartcloud` check, and a bot's finding blocks through the review rules above rather than a status.
+
+### <a id="licences"></a>Dependency licences
+
+The synced `.github/dependency-review-config.yml` holds the licence policy the dependency review applies to every dependency a pull request adds: the permissive licences that FCL-1.0-MIT, and the MIT licence it converts to, can ship alongside.
+A repository clears one package with `allow-dependencies-licenses` after its `house:local` line; it cannot widen the list.
+
+### <a id="optional-apps"></a>Optional apps
+
+Worth installing where a repository needs more than the house checks:
+
+- **FOSSA:** licence compliance across the full dependency tree, with attribution reports and policy on transitive dependencies, beyond what dependency review sees in one pull request.
+- **Socket:** supply-chain analysis of new npm packages (install scripts, typosquats, network or shell access) before they are merged.
+- **Codecov:** coverage on each pull request, for a repository that does not upload coverage to GitHub.
+- **OpenSSF Scorecard:** a scheduled workflow that scores the repository's own security practices; dependency review already shows each new dependency's Scorecard.
 
 ## <a id="changing"></a>Changing a policy or template
 

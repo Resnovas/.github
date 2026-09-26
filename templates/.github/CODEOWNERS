@@ -37,6 +37,11 @@
 # Governance, licensing and repository-wide configuration.
 /.github/CODEOWNERS          {{OWNERS_ADMIN}}
 /.github/smartcloud.yml      {{OWNERS_ADMIN}}
+/.coderabbit.yaml            {{OWNERS_ADMIN}}
+/.pr_agent.toml              {{OWNERS_ADMIN}}
+/.cursor/BUGBOT.md           {{OWNERS_ADMIN}}
+/.github/copilot-instructions.md {{OWNERS_ADMIN}}
+/.github/instructions/       {{OWNERS_ADMIN}}
 /LICENSE                     {{OWNERS_ADMIN}}
 /AI_POLICY.md              {{OWNERS_ADMIN}}
 /APPROVAL_POLICY.md        {{OWNERS_ADMIN}}
