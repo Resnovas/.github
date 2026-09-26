@@ -16,7 +16,7 @@ on:
   workflow_call:
     secrets:
       token:
-        description: Token that pushes and opens the refresh pull request (the ACCESS_TOKEN organisation secret).
+        description: Token that pushes and opens the refresh pull request (the ACCESS_TOKEN organisation secret). Leave it unset on pull requests; without it the refresh pull request is skipped with a notice.
         required: false
 
 permissions: {}
@@ -46,14 +46,21 @@ jobs:
           fi
           echo "$out"
 
+  # Only the default branch's code runs next to the token, so a manual run
+  # from another branch or a tag does nothing. Without the token, the refresh
+  # pull request is skipped with a notice: the workflow token cannot open it.
   refresh:
     name: refresh
-    if: github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      HAS_TOKEN: ${{ secrets.token != '' }}
     steps:
       - uses: actions/checkout@v7
         with:
-          token: ${{ secrets.token || github.token }}
+          persist-credentials: false
 
       - name: Install uv
         if: hashFiles('tools/graphify/graphify') != ''
@@ -74,11 +81,15 @@ jobs:
             echo "stale=true" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Skip the refresh pull request without the token
+        if: steps.rebuild.outputs.stale == 'true' && env.HAS_TOKEN != 'true'
+        run: echo "::notice title=Graphify refresh skipped::The graph is behind the code, but ACCESS_TOKEN is not set, so no refresh pull request was opened."
+
       - name: Open refresh pull request
-        if: steps.rebuild.outputs.stale == 'true'
+        if: steps.rebuild.outputs.stale == 'true' && env.HAS_TOKEN == 'true'
         uses: peter-evans/create-pull-request@v8
         with:
-          token: ${{ secrets.token || github.token }}
+          token: ${{ secrets.token }}
           branch: house/graphify
           delete-branch: true
           signoff: true
