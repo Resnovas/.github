@@ -29,12 +29,12 @@ test('placeholders are replaced and unknown keys are an error', () => {
 test('renderAll walks nested templates and keeps relative paths', () => {
   const root = mkdtempSync(join(tmpdir(), 'house-'))
   mkdirSync(join(root, '.github', 'ISSUE_TEMPLATE'), { recursive: true })
-  writeFileSync(join(root, 'README.adoc'), '= {{ORG_NAME}}\n')
+  writeFileSync(join(root, 'README.md'), '= {{ORG_NAME}}\n')
   writeFileSync(join(root, '.github', 'ISSUE_TEMPLATE', 'bug.yml'), 'name: {{ORG_NAME}} bug\n')
   const rendered = renderAll(root, { ORG_NAME: 'Resnovas' })
   assert.deepEqual(rendered, [
     { path: join('.github', 'ISSUE_TEMPLATE', 'bug.yml'), content: 'name: Resnovas bug\n' },
-    { path: 'README.adoc', content: '= Resnovas\n' },
+    { path: 'README.md', content: '= Resnovas\n' },
   ])
 })
 

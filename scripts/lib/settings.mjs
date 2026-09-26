@@ -58,7 +58,7 @@ export function rulesetBody(values) {
     })
   }
   // The review gate only binds once there are two maintainers
-  // (GOVERNANCE.adoc#review); a sole maintainer is never blocked.
+  // (GOVERNANCE.md#review); a sole maintainer is never blocked.
   if (maintainers.length >= 2) {
     rules.push({
       type: 'required_status_checks',
