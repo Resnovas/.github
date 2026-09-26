@@ -5,8 +5,8 @@
 // Keeps the one-click surfaces that editors and agent apps cannot read from
 // the repository in step with it (house standard project-dev-surfaces).
 //
-//   node tools/dev/surfaces.mjs sync      write the agent commands from .agents/prompts
-//   node tools/dev/surfaces.mjs check     exit 1 if the agent commands are out of date
+//   node tools/dev/surfaces.mjs sync      write the agent commands and MCP configs
+//   node tools/dev/surfaces.mjs check     exit 1 if either is out of date
 //   node tools/dev/surfaces.mjs install   register actions and prompts in Orca and OpenChamber
 //   node tools/dev/surfaces.mjs install --dry-run
 //
@@ -16,6 +16,12 @@
 // `.agents/prompts/<id>.md` holds each prompt once, the house ones synced and
 // the repository's own beside them; `sync` writes it to `.claude/commands` and
 // `.cursor/commands`, which this tool owns outright.
+//
+// `.agents/mcp.json` (JSON with comments) lists the MCP servers: the synced
+// `house` servers and the repository's own `servers`. `sync` writes them to
+// each host's config, which this tool also owns outright, since those formats
+// cannot carry the house:managed markers. Secrets stay in the environment:
+// every host gets a reference to the variable, never its value.
 //
 // Orca keeps quick commands, and OpenChamber keeps project actions, in
 // per-user settings rather than in the repository, so `install` writes them
@@ -154,6 +160,98 @@ const syncPrompts = (write) => {
       rmSync(directory, { recursive: true })
       const parent = dirname(directory)
       if (readdirSync(parent).length === 0) rmSync(parent, { recursive: true })
+    }
+  }
+  return stale
+}
+
+// --- MCP servers -------------------------------------------------------------
+
+const readServers = () => {
+  const path = join(root, '.agents/mcp.json')
+  if (!existsSync(path)) return null
+  const source = parseJsonc(readFileSync(path, 'utf8'))
+  const house = source.house ?? {}
+  const local = source.servers ?? {}
+  const clash = Object.keys(local).filter((name) => name in house)
+  if (clash.length > 0) throw new Error(`.agents/mcp.json: local servers reuse house names: ${clash.join(', ')}`)
+  return Object.entries({ ...house, ...local })
+}
+
+const generatedNotice = 'Generated from .agents/mcp.json by tools/dev/surfaces.mjs sync. Edit that file, not this one.'
+
+// A stdio argument naming a file in the repository, for hosts that do not
+// start servers in the workspace folder.
+const inWorkspace = (arg) => (existsSync(join(root, arg)) ? `\${workspaceFolder}/${arg}` : arg)
+
+// Claude Code, Cursor and VS Code share a JSON shape with small differences:
+// the top-level key, how a variable is referenced, and whether `type` is set.
+const jsonConfig = ({ key, variable, typed, workspaceArgs }) => (servers) => {
+  const out = {}
+  for (const [name, server] of servers) {
+    if (server.url !== undefined) {
+      out[name] = {
+        ...(typed ? { type: 'http' } : {}),
+        url: server.url,
+        ...(server.bearerEnv === undefined ? {} : { headers: { Authorization: `Bearer ${variable(server.bearerEnv)}` } }),
+      }
+    } else {
+      out[name] = {
+        ...(typed ? { type: 'stdio' } : {}),
+        command: server.command,
+        args: (server.args ?? []).map(workspaceArgs ? inWorkspace : (arg) => arg),
+        ...(server.envPassthrough === undefined
+          ? {}
+          : { env: Object.fromEntries(server.envPassthrough.map((name) => [name, variable(name)])) }),
+      }
+    }
+  }
+  return `${JSON.stringify({ [key]: out }, null, 2)}\n`
+}
+
+const tomlString = (value) => JSON.stringify(value)
+const tomlKey = (key) => (/^[A-Za-z0-9_-]+$/.test(key) ? key : tomlString(key))
+
+// Codex reads MCP servers from a trusted project's .codex/config.toml. It
+// forwards named variables to a stdio server and reads a bearer token from a
+// variable itself, so neither needs interpolation.
+const codexConfig = (servers) => {
+  const lines = [`# ${generatedNotice}`]
+  for (const [name, server] of servers) {
+    lines.push('', `[mcp_servers.${tomlKey(name)}]`)
+    if (server.url !== undefined) {
+      lines.push(`url = ${tomlString(server.url)}`)
+      if (server.bearerEnv !== undefined) lines.push(`bearer_token_env_var = ${tomlString(server.bearerEnv)}`)
+    } else {
+      lines.push(`command = ${tomlString(server.command)}`)
+      lines.push(`args = [${(server.args ?? []).map(tomlString).join(', ')}]`)
+      if (server.envPassthrough !== undefined) lines.push(`env_vars = [${server.envPassthrough.map(tomlString).join(', ')}]`)
+    }
+  }
+  return `${lines.join('\n')}\n`
+}
+
+const mcpTargets = [
+  // Claude Code fails to load the file over an unset variable without a default.
+  { path: '.mcp.json', render: jsonConfig({ key: 'mcpServers', variable: (name) => `\${${name}:-}`, typed: true }) },
+  { path: '.cursor/mcp.json', render: jsonConfig({ key: 'mcpServers', variable: (name) => `\${env:${name}}`, workspaceArgs: true }) },
+  { path: '.vscode/mcp.json', render: jsonConfig({ key: 'servers', variable: (name) => `\${env:${name}}`, typed: true, workspaceArgs: true }) },
+  { path: '.codex/config.toml', render: codexConfig },
+]
+
+// Returns the files that differ from what .agents/mcp.json produces.
+const syncServers = (write) => {
+  const servers = readServers()
+  if (servers === null) return []
+  const stale = []
+  for (const target of mcpTargets) {
+    const path = join(root, target.path)
+    const content = target.render(servers)
+    if (existsSync(path) && readFileSync(path, 'utf8') === content) continue
+    stale.push(target.path)
+    if (write) {
+      mkdirSync(dirname(path), { recursive: true })
+      writeFileSync(path, content)
     }
   }
   return stale
@@ -320,16 +418,20 @@ const installOpenChamber = () => {
 // --- Commands ----------------------------------------------------------------
 
 if (command === 'sync' || command === 'check') {
-  const stale = syncPrompts(command === 'sync')
+  const stale = [...syncPrompts(command === 'sync'), ...syncServers(command === 'sync')]
   if (command === 'check' && stale.length > 0) {
     console.error(
-      `Agent commands are out of date with .agents/prompts (run node tools/dev/surfaces.mjs sync):\n  ${stale.join('\n  ')}`,
+      `Agent commands or MCP configs are out of date with .agents (run node tools/dev/surfaces.mjs sync):\n  ${stale.join('\n  ')}`,
     )
     process.exit(1)
   }
-  console.log(stale.length === 0 ? 'Agent commands are up to date.' : `Wrote ${stale.length} agent command files.`)
+  console.log(
+    stale.length === 0 ? 'Agent commands and MCP configs are up to date.' : `Updated ${stale.length} agent command and MCP config files.`,
+  )
 } else if (command === 'install') {
-  if (syncPrompts(false).length > 0) console.warn('Agent commands are out of date; run node tools/dev/surfaces.mjs sync.')
+  if (syncPrompts(false).length > 0 || syncServers(false).length > 0) {
+    console.warn('Agent commands or MCP configs are out of date; run node tools/dev/surfaces.mjs sync.')
+  }
   const prompts = readPrompts()
   console.log(await installOrca(prompts))
   console.log(installOpenChamber())
