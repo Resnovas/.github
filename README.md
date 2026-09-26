@@ -81,6 +81,9 @@ Every workflow here and under `templates/` grants the workflow token nothing at 
 A job that calls a reusable workflow grants no more than the called jobs declare, because GitHub caps the called workflow at the caller's grant.
 Pull requests from forks get a read-only token whatever a job asks for.
 
+Every job that runs steps sets `timeout-minutes`, sized to a few times its usual run, so a hung step fails in minutes instead of holding a runner for GitHub's six-hour default; `npm test` fails on a job without one.
+A job that calls a reusable workflow cannot set a timeout, and is bounded by the called workflow's jobs.
+
 ### <a id="workflow-lint"></a>Workflow lint
 
 Every repository lints its workflows from the synced `.github/workflows/house-workflow-lint.yml`, which calls the reusable `.github/workflows/workflow-lint.yml`.

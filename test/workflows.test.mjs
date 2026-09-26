@@ -53,3 +53,15 @@ test('no workflow grants read-all or write-all', () => {
     .map(({ path }) => path)
   assert.deepEqual(blanket, [])
 })
+
+// A hung step would otherwise hold a runner for GitHub's six-hour default.
+// A job that calls a reusable workflow cannot set a timeout; the called
+// workflow's jobs set theirs.
+test('every job that runs steps sets timeout-minutes', () => {
+  const unbounded = workflows
+    .flatMap(jobs)
+    .filter(({ lines }) => !lines.some((line) => /^ {4}uses:/.test(line)))
+    .filter(({ lines }) => !lines.some((line) => /^ {4}timeout-minutes: \d+\s*$/.test(line)))
+    .map(({ path, name }) => `${path} ${name}`)
+  assert.deepEqual(unbounded, [])
+})
