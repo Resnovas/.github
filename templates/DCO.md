@@ -1,15 +1,14 @@
-// Generated from Resnovas/.github templates/DCO.adoc. Edit it there, not here.
-[#top]
-= Developer Certificate of Origin
+<!-- Generated from Resnovas/.github templates/DCO.md. Edit it there, not here. -->
+# <a id="top"></a>Developer Certificate of Origin
 
 Every contribution to this project is made under the Developer Certificate of Origin below.
 You certify it by adding `Signed-off-by: Your Name <your@email>` to every commit, with `git commit -s`.
 Only a person can certify it; an AI tool never signs off.
-See link:CONTRIBUTING.adoc#dco[Contributing: Developer Certificate of Origin] and link:AI_POLICY.adoc#ai-03[AI-03].
+See [Contributing: Developer Certificate of Origin](CONTRIBUTING.md#dco) and [AI-03](AI_POLICY.md#ai-03).
 
 The certificate is reproduced verbatim, as its licence requires.
 
-....
+```text
 Developer Certificate of Origin
 Version 1.1
 
@@ -17,7 +16,6 @@ Copyright (C) 2004, 2006 The Linux Foundation and its contributors.
 
 Everyone is permitted to copy and distribute verbatim copies of this
 license document, but changing it is not allowed.
-
 
 Developer's Certificate of Origin 1.1
 
@@ -44,4 +42,4 @@ By making a contribution to this project, I certify that:
     personal information I submit with it, including my sign-off) is
     maintained indefinitely and may be redistributed consistent with
     this project or the open source license(s) involved.
-....
+```

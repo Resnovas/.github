@@ -9,7 +9,7 @@ body:
       value: |
         A bug report needs a reproduction on the production branch, logs, and a recording or screenshots.
         Reports without them are slowed down or closed for lack of evidence.
-        Security issue? Do not use this form: follow the [Security Policy](https://github.com/Resnovas/.github/blob/HEAD/SECURITY.adoc).
+        Security issue? Do not use this form: follow the [Security Policy](https://github.com/Resnovas/.github/blob/HEAD/SECURITY.md).
 
   - type: input
     id: version
@@ -68,7 +68,7 @@ body:
     id: ai-level
     attributes:
       label: AI level
-      description: The highest level of AI involvement in this report. See the [AI Contribution Policy](https://github.com/Resnovas/.github/blob/HEAD/AI_POLICY.adoc#levels).
+      description: The highest level of AI involvement in this report. See the [AI Contribution Policy](https://github.com/Resnovas/.github/blob/HEAD/AI_POLICY.md#levels).
       options:
         - none
         - autocomplete

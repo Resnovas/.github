@@ -19,17 +19,17 @@ repository. Nothing here has been pushed. Delete this file before the first push
 | Licence | Undisclosed AI found after merge is a licence breach, cured via the Cooperation Commitment's 30-day process. "The AI did it" is not a defence. |
 | CI strictness | Errors for outside contributors, warnings for maintainers. An AI sign-off is an error for everyone. |
 | Values | `house.yml` in this repo, per-repo `.github/house.yml` overrides. All resolve to Resnovas. |
-| Format | AsciiDoc, one sentence per line, anchors on every section and rule. |
+| Format | Markdown (converted from AsciiDoc on 2026-09-26 so Graphify can read the documents), one sentence per line, an HTML anchor (`<a id="...">`) on every section and rule. |
 | Trailers | `Co-authored-by` and `Assisted-by: TOOL:MODEL` together on every AI-changed commit, autocomplete included. |
 | Sign-off | Names the accountable human; tooling they set up (their own agent) may add it for them. Jonathan's agents now sign off his commits. |
-| Settings | Applied weekly by the sync's settings job; see GOVERNANCE.adoc#settings. |
-| Extendable config | Synced config files have a `house:managed` block; repos add rules outside it and cannot change the block. See GOVERNANCE.adoc#synced-files. |
+| Settings | Applied weekly by the sync's settings job; see GOVERNANCE.md#settings. |
+| Extendable config | Synced config files have a `house:managed` block; repos add rules outside it and cannot change the block. See GOVERNANCE.md#synced-files. |
 | Bypass | The owner (repository admin role) can always bypass the ruleset, including the review gate. |
 | Dropped | Separate tests repository rule, Discord and Jira channels, CoC "Intended Use". |
 
 ## Please check
 
-1. **Legal wording.** `COOPERATION_COMMITMENT.adoc` is now version 1.2 with a new section,
+1. **Legal wording.** `COOPERATION_COMMITMENT.md` is now version 1.2 with a new section,
    "Contributions made with AI tools". It is a public legal commitment, so it
    is worth a professional read before publishing. The GPL Cooperation
    Commitment link in its licence section should be checked too.
@@ -49,8 +49,14 @@ repository. Nothing here has been pushed. Delete this file before the first push
 7. **Copilot code review** is requested by the ruleset on drafts and on every
    push. It uses premium requests from the PR author's Copilot allowance, and
    is skipped for authors without access.
-8. **Renamed file.** `Eventiva Cooperation Commitment.adoc` becomes
-   `COOPERATION_COMMITMENT.adoc`. Eventiva's old copy needs deleting when it adopts
+8. **Renamed files.** The house documents are now Markdown, so the sync writes
+   `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md` and the rest, and never deletes a
+   repository's old `.adoc` copies: they must be deleted by hand, or GitHub may
+   show the stale AsciiDoc version. Eventiva is the known case: its
+   `CONTRIBUTING.adoc`, `CODE_OF_CONDUCT.adoc`, `GOVERNANCE.adoc`,
+   `SECURITY.adoc`, `SUPPORT.adoc`, `DCO.adoc` and
+   `Eventiva Cooperation Commitment.adoc` (now `COOPERATION_COMMITMENT.md`) all
+   need deleting when it adopts
    the sync, as does the licence text duplicated inside its CODE_OF_CONDUCT.
 9. **Checks can only do so much.** CI confirms that at least one commit carries
    an AI co-author when AI was used; it cannot tell which commits were AI

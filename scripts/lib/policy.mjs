@@ -1,7 +1,7 @@
 // Pure rule logic for the house pull request policy. No I/O lives here, so
 // every rule can be exercised directly by the tests.
 //
-// Each finding carries the rule id from AI_POLICY.adoc or CONTRIBUTING.adoc so
+// Each finding carries the rule id from AI_POLICY.md or CONTRIBUTING.md so
 // the check output links straight to the text being enforced.
 
 export const LEVELS = ['none', 'autocomplete', 'chat', 'agent', 'autonomous']
@@ -11,16 +11,16 @@ import { syncFindings } from './managed.mjs'
 const POLICY_URL = 'https://github.com/Resnovas/.github/blob/main'
 
 const RULE_LINKS = {
-  'AI-01': `${POLICY_URL}/AI_POLICY.adoc#ai-01`,
-  'AI-02': `${POLICY_URL}/AI_POLICY.adoc#ai-02`,
-  'AI-03': `${POLICY_URL}/AI_POLICY.adoc#ai-03`,
-  'AI-20': `${POLICY_URL}/AI_POLICY.adoc#ai-20`,
-  'AI-21': `${POLICY_URL}/AI_POLICY.adoc#ai-21`,
-  DCO: `${POLICY_URL}/CONTRIBUTING.adoc#dco`,
-  TITLE: `${POLICY_URL}/CONTRIBUTING.adoc#pr-title`,
-  STYLE: `${POLICY_URL}/AI_POLICY.adoc#ai-09`,
-  REVIEW: `${POLICY_URL}/GOVERNANCE.adoc#review`,
-  SYNC: `${POLICY_URL}/GOVERNANCE.adoc#synced-files`,
+  'AI-01': `${POLICY_URL}/AI_POLICY.md#ai-01`,
+  'AI-02': `${POLICY_URL}/AI_POLICY.md#ai-02`,
+  'AI-03': `${POLICY_URL}/AI_POLICY.md#ai-03`,
+  'AI-20': `${POLICY_URL}/AI_POLICY.md#ai-20`,
+  'AI-21': `${POLICY_URL}/AI_POLICY.md#ai-21`,
+  DCO: `${POLICY_URL}/CONTRIBUTING.md#dco`,
+  TITLE: `${POLICY_URL}/CONTRIBUTING.md#pr-title`,
+  STYLE: `${POLICY_URL}/AI_POLICY.md#ai-09`,
+  REVIEW: `${POLICY_URL}/GOVERNANCE.md#review`,
+  SYNC: `${POLICY_URL}/GOVERNANCE.md#synced-files`,
 }
 
 // Findings that stay errors even on a maintainer's own pull request.
@@ -196,7 +196,7 @@ export function evaluatePullRequest({ pr, commits, config, action, synced = [] }
   return findings
 }
 
-// Counts maintainer approvals against GOVERNANCE.adoc#review. With fewer than
+// Counts maintainer approvals against GOVERNANCE.md#review. With fewer than
 // two maintainers the gate is open: the owner merges at their discretion.
 //   reviews  [{ user: { login }, state }] in the order GitHub returns them (oldest first)
 export function evaluateReviews({ pr, reviews, config }) {

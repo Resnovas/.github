@@ -38,7 +38,7 @@ body:
     id: ai-level
     attributes:
       label: AI level
-      description: The highest level of AI involvement in this request. See the [AI Contribution Policy](https://github.com/Resnovas/.github/blob/HEAD/AI_POLICY.adoc#levels).
+      description: The highest level of AI involvement in this request. See the [AI Contribution Policy](https://github.com/Resnovas/.github/blob/HEAD/AI_POLICY.md#levels).
       options:
         - none
         - autocomplete

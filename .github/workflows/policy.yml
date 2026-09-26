@@ -2,7 +2,7 @@
 # house-policy.yml workflow synced from templates/.github/workflows.
 #
 #   policy   AI disclosure, co-author and sign-off trailers, title, style
-#   reviews  maintainer approvals, per GOVERNANCE.adoc#review
+#   reviews  maintainer approvals, per GOVERNANCE.md#review
 #
 # Both jobs only read: the pull request, its commits and its reviews. They
 # never check out or run the pull request's code, so they are safe on forks.
@@ -41,7 +41,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.base.sha }}
           sparse-checkout: |
-            /*.adoc
+            /*.md
             /LICENSE
             /.github/
           sparse-checkout-cone-mode: false
@@ -56,7 +56,7 @@ jobs:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.sha }}
           sparse-checkout: |
-            /*.adoc
+            /*.md
             /LICENSE
             /.github/
           sparse-checkout-cone-mode: false

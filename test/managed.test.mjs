@@ -18,7 +18,7 @@ const withLocal = (template, local) => template.replace('# house:local - add fur
 
 test('a file without markers is fully managed', () => {
   assert.equal(splitManaged('plain\ntext'), null)
-  assert.equal(mergeManaged('new', 'old', 'SECURITY.adoc'), 'new')
+  assert.equal(mergeManaged('new', 'old', 'SECURITY.md'), 'new')
 })
 
 test('a new file gets the whole template', () => {
@@ -93,11 +93,11 @@ test('conflict checks ignore files without markers on either side', () => {
 })
 
 test('sync findings: documents may not be edited, only synced', () => {
-  const doc = { path: 'SECURITY.adoc', rendered: 'new', base: 'old' }
+  const doc = { path: 'SECURITY.md', rendered: 'new', base: 'old' }
   assert.deepEqual(syncFindings([{ ...doc, head: 'old' }]), [])
   assert.deepEqual(syncFindings([{ ...doc, head: 'new' }]), [])
-  assert.deepEqual(syncFindings([{ ...doc, head: 'mine' }]), [{ path: 'SECURITY.adoc', message: 'edits a synced file' }])
-  assert.deepEqual(syncFindings([{ ...doc, head: null }]), [{ path: 'SECURITY.adoc', message: 'deletes a synced file' }])
+  assert.deepEqual(syncFindings([{ ...doc, head: 'mine' }]), [{ path: 'SECURITY.md', message: 'edits a synced file' }])
+  assert.deepEqual(syncFindings([{ ...doc, head: null }]), [{ path: 'SECURITY.md', message: 'deletes a synced file' }])
   assert.deepEqual(syncFindings([{ ...doc, base: null, head: null }]), [])
 })
 
@@ -126,7 +126,7 @@ test('synced file findings fail contributors and warn maintainers', () => {
     author_association: 'CONTRIBUTOR',
   }
   const commits = [{ sha: 'a'.repeat(40), message: 'x\n\nSigned-off-by: C <c@x.io>', authorEmail: 'c@x.io', parents: 1 }]
-  const synced = [{ path: 'SECURITY.adoc', rendered: 'new', base: 'old', head: 'mine' }]
+  const synced = [{ path: 'SECURITY.md', rendered: 'new', base: 'old', head: 'mine' }]
   const config = { maintainers: ['owner'], trustedBots: [] }
   const contributor = evaluatePullRequest({ pr, commits, config, action: 'edited', synced })
   assert.deepEqual(contributor.map((f) => [f.rule, f.level]), [['SYNC', 'error']])

@@ -3,7 +3,7 @@
 // event and reports findings as annotations and a job summary.
 //
 //   node policy-check.mjs --mode policy     disclosure, co-authors, DCO, title, style
-//   node policy-check.mjs --mode reviews    maintainer approvals (GOVERNANCE.adoc#review)
+//   node policy-check.mjs --mode reviews    maintainer approvals (GOVERNANCE.md#review)
 //
 // Needs GITHUB_TOKEN, GITHUB_REPOSITORY and GITHUB_EVENT_PATH. House values are
 // read from --values, then the repository's own override from --override.
