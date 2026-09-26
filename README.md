@@ -180,6 +180,32 @@ The action publishes nothing for a private repository.
 Publishing verifies the reusable workflow against the action's [workflow restrictions](https://github.com/ossf/scorecard-action#workflow-restrictions), so it keeps to the approved actions and sets no `env` or `defaults`.
 The workflow uses only the workflow token, never a personal access token, so the Branch-Protection check scores only what a read-only token can see, and it runs only on the default branch, never for pull requests from forks or Dependabot.
 
+### <a id="attestations"></a>Build attestations and SBOMs
+
+A repository that ships files attests them from its release workflow with the reusable `.github/workflows/attest.yml`.
+Releases differ between repositories, so nothing is synced: the release workflow builds the files and an SBOM of each, uploads them as one workflow artifact, and calls it:
+
+```yaml
+  attest:
+    needs: build
+    uses: Resnovas/.github/.github/workflows/attest.yml@main
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    with:
+      artifact: release-files
+      subject-path: dist/index.js
+      sbom-path: sbom.spdx.json
+      release: v1.2.3
+```
+
+It signs [build provenance](https://docs.github.com/actions/security-for-github-actions/using-artifact-attestations) for the subjects with `actions/attest-build-provenance`, binds the SBOM to them with `actions/attest-sbom`, and, given a release tag, attaches the SBOMs (or the `release-assets` globs) to that GitHub release.
+The release must still be a draft: house repositories make releases immutable once published, so create it as a draft, call the workflow, then publish it.
+Anyone can then check a released file with `gh attestation verify <file> --repo <owner>/<name>`.
+Attestations need a public repository, or GitHub Enterprise Cloud for a private one.
+The workflow uses only the workflow token; call it only from a release workflow on the default branch, never for pull requests.
+
 ## <a id="sync-token"></a>The sync token
 
 The house workflows authenticate as the Resnovas Bot GitHub App (`resnovas-smartcloud[bot]`), installed on every repository in the organisation.
