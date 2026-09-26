@@ -1,5 +1,7 @@
 # <a id="top"></a>Resnovas house repository
 
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/Resnovas/.github/badge)](https://scorecard.dev/viewer/?uri=github.com/Resnovas/.github)
+
 The single source of truth for the governance files every Resnovas project ships with, across Resnovas, Eventiva and personal repositories.  
 It holds the contributing guidelines, the AI contribution policy, the code of conduct, the Developer Certificate of Origin, the FCL-1.0-MIT licence, the  Cooperation Commitment, and the issue and pull request templates, together with the checks that enforce them.
 
@@ -152,6 +154,22 @@ The review reads the file from the base commit, so a pull request cannot allow i
 The house severity and scopes take precedence over the file.
 
 The check is not required by the house ruleset; a repository that wants it to block merges adds `house-dependency-review / dependency-review` under `settings.ruleset.statusChecks.checks`.
+
+### <a id="scorecard"></a>OpenSSF Scorecard
+
+The default branch runs [OpenSSF Scorecard](https://scorecard.dev) on every push, weekly and whenever branch protection changes, from the synced `.github/workflows/house-scorecard.yml`, which calls the reusable `.github/workflows/scorecard.yml`.
+Scorecard scores the repository's supply-chain practices, such as pinned dependencies, token permissions, branch protection, dangerous workflows and code review.
+The results go to code scanning under the `scorecard` category, where each failing check is an alert with its remediation; the ruleset gates merges on CodeQL only, so they never block a pull request.
+
+A public repository also publishes its results to the OpenSSF API, which serves the viewer and a badge for its README:
+
+```markdown
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/<owner>/<name>/badge)](https://scorecard.dev/viewer/?uri=github.com/<owner>/<name>)
+```
+
+The action publishes nothing for a private repository.
+Publishing verifies the reusable workflow against the action's [workflow restrictions](https://github.com/ossf/scorecard-action#workflow-restrictions), so it keeps to the approved actions and sets no `env` or `defaults`.
+The workflow uses only the workflow token, never a personal access token, so the Branch-Protection check scores only what a read-only token can see, and it runs only on the default branch, never for pull requests from forks or Dependabot.
 
 ## <a id="sync-token"></a>The sync token
 
