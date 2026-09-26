@@ -69,7 +69,7 @@ Every downstream repository picks the change up in its next sync pull request.
 1. Make sure the Resnovas Bot GitHub App is installed on the repository (see [The sync token](#sync-token)).
 1. Run the smartcloud workflow once by hand to open the first sync pull request.
 1. Give the repository `setup`, `check` and `test` package scripts; the synced editor and agent surfaces run them.
-1. Once the preset lists two or more maintainers, the house ruleset makes the `smartcloud` check required on the default branch. It is the aggregate check: it waits for every other check on the pull request and fails if any does.
+1. Once the preset lists two or more maintainers, the house ruleset makes the `smartcloud` check required on the default branch. It is the aggregate check: it waits for every other check on the pull request and fails if any does. The preset turns the aggregate on as soon as it changes, but it only starts waiting once the sync pull request adds `checkRunId` to the workflow; until then the `smartcloud` check reports smartcloud's own findings, as before.
 
 ## <a id="values"></a>Values
 
