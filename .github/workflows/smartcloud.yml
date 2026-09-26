@@ -8,7 +8,11 @@
 # Every event acts with the organisation secret ACCESS_TOKEN, because the
 # workflow token can neither read the private preset in Resnovas/.github, push
 # workflow files nor change repository settings. Runs without the secret, such
-# as pull requests from forks, fall back to the read-only workflow token.
+# as pull requests from forks and Dependabot, fall back to the workflow token,
+# and smartcloud then runs restricted: it skips the private preset, settings,
+# sync and any write the token is refused, and lists them in the job summary.
+# Forks and Dependabot runs are restricted whatever token is passed. The job
+# runs a released smartcloud, never the pull request's code.
 name: smartcloud
 
 on:

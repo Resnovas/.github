@@ -116,7 +116,9 @@ This covers private repositories the per-repository settings cannot, where the l
 
 The house workflows authenticate with the organisation secret `ACCESS_TOKEN`, a personal access token.
 The workflow token cannot read this private repository, so it cannot load the preset (`smartcloud/house.yml`) or call the reusable Graphify workflow; nor can it push changes to workflow files or change repository settings, and pull requests it opens do not start other workflows.
-Runs that get no secrets, such as pull requests from forks, fall back to the workflow token.
+Runs that get no secrets, such as pull requests from forks and Dependabot, fall back to the workflow token.
+smartcloud then runs restricted rather than failing: it skips the preset, settings, sync and any write the token is refused, and lists them in the job summary.
+Forks and Dependabot runs act with the workflow token even if a workflow passes the secret, and no house workflow runs pull request code with the secret.
 
 The token needs **Administration**, **Contents**, **Pull requests** and **Workflows** write access on the repositories it syncs, and read access to `Resnovas/.github`; Administration is what lets it apply the repository settings.
 This repository's Actions access (Settings > Actions > General > Access) must allow repositories in the organisation, so they can call its reusable workflows and Dependabot can resolve them.

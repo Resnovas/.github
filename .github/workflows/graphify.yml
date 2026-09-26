@@ -16,7 +16,7 @@ on:
   workflow_call:
     secrets:
       token:
-        description: Token that pushes and opens the refresh pull request (the ACCESS_TOKEN organisation secret).
+        description: Token that pushes and opens the refresh pull request (the ACCESS_TOKEN organisation secret). Leave it unset on pull requests; without it the workflow token is used.
         required: false
 
 permissions: {}
@@ -46,14 +46,16 @@ jobs:
           fi
           echo "$out"
 
+  # Only the default branch's code runs next to the token, so a manual run
+  # from another branch does nothing.
   refresh:
     name: refresh
-    if: github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request' && github.ref_name == github.event.repository.default_branch
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
         with:
-          token: ${{ secrets.token || github.token }}
+          persist-credentials: false
 
       - name: Install uv
         if: hashFiles('tools/graphify/graphify') != ''
