@@ -32,6 +32,30 @@ In `CODEOWNERS` the managed block comes last, because the last matching rule win
 When a repository first adopts a file it already had, its previous content is kept, commented out at the `house:local` line, for someone to re-add as local rules.
 Making a template extendable only needs the three marker lines; `scripts/lib/managed.mjs` handles the rest.
 
+## <a id="surfaces"></a>Editor and agent surfaces
+
+Every repository gets the same one-click tasks, debug configurations and app actions, synced from `templates/` with managed blocks like the rest of the configuration:
+
+| Path | Surface |
+| --- | --- |
+| `.zed/tasks.json`, `.zed/debug.json` | Zed |
+| `.vscode/tasks.json`, `.vscode/launch.json` | VS Code and Cursor |
+| `.run/house-*.run.xml` | JetBrains; a repository adds its own as other files in `.run/` |
+| `.codex/environments/environment.toml` | Codex desktop |
+| `orca.yaml` | Orca worktree setup |
+| `.agents/surfaces.json` | Orca quick commands and OpenChamber project actions |
+| `.agents/prompts/*.md` | Agent prompts; a repository adds its own beside the synced ones |
+| `tools/dev/surfaces.mjs`, `tools/dev/open.mjs` | The tool that installs and generates the above |
+
+The synced entries only rely on three package scripts every repository must have, `setup`, `check` and `test`, run with `node --run` so they work under npm and pnpm alike, and on the synced tools.
+Everything specific to a repository (its dev server, docs server, debug targets and prompts) goes after the `house:local` line.
+The JSON files are JSON with comments, so their markers are `//` lines; a local entry may not reuse a synced label, name or id.
+
+Orca and OpenChamber keep quick commands and project actions in per-user settings, so `node tools/dev/surfaces.mjs install` registers them for the checkout; each repository's `setup` script runs it.
+`node tools/dev/surfaces.mjs sync` writes `.agents/prompts` to `.claude/commands`, `.cursor/commands` and `.opencode/commands`, which it owns, and a repository's `check` script runs `surfaces.mjs check` so they cannot drift.
+
+This repository has no documentation site to serve: its documents are the Markdown files in the root, which GitHub renders.
+
 ## <a id="changing"></a>Changing a policy or template
 
 1. Edit the file under `templates/`, or a default in `house.yml`.
