@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { readdirSync, readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -54,4 +54,11 @@ test('every pin of one action uses the same commit', () => {
     shas.set(repository, new Set([...(shas.get(repository) ?? []), rest]))
   }
   for (const [repository, pins] of shas) assert.equal(pins.size, 1, `${repository} is pinned to ${[...pins].join(', ')}`)
+})
+
+test('every house reusable workflow a workflow calls exists here', () => {
+  const missing = references
+    .map(({ ref }) => ref.match(/^Resnovas\/\.github\/(\.github\/workflows\/[\w.-]+\.ya?ml)@/)?.[1])
+    .filter((path) => path && !existsSync(join(root, path)))
+  assert.deepEqual(missing, [])
 })
