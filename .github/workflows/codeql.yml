@@ -11,8 +11,11 @@
 #
 # A repository tunes the analysis with .github/codeql/codeql-config.yml, for
 # example paths-ignore for vendored source; queries it lists are added to
-# security-extended. Uses only the workflow token, so pull requests from forks
-# and Dependabot run it with the same least privilege.
+# security-extended. The config is read from the base commit on pull requests
+# and merge queue entries, like the workflow itself, so a change cannot narrow
+# its own scan; a config change applies once it merges. Uses only the workflow
+# token, so pull requests from forks and Dependabot run it with the same least
+# privilege.
 name: CodeQL
 
 on:
@@ -66,12 +69,30 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Read the analysis config from the base commit
+        id: config
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          REF: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || github.sha }}
+        run: |
+          file="$RUNNER_TEMP/codeql-config.yml"
+          if gh api "repos/$REPOSITORY/contents/.github/codeql/codeql-config.yml?ref=$REF" \
+            -H 'Accept: application/vnd.github.raw' > "$file" 2> "$RUNNER_TEMP/codeql-config.err"; then
+            echo "file=$file" >> "$GITHUB_OUTPUT"
+          elif grep -q 'HTTP 404' "$RUNNER_TEMP/codeql-config.err"; then
+            echo "No .github/codeql/codeql-config.yml at $REF."
+          else
+            cat "$RUNNER_TEMP/codeql-config.err" >&2
+            exit 1
+          fi
+
       - uses: github/codeql-action/init@v4
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
           queries: +security-extended
-          config-file: ${{ hashFiles('.github/codeql/codeql-config.yml') != '' && './.github/codeql/codeql-config.yml' || '' }}
+          config-file: ${{ steps.config.outputs.file }}
 
       - uses: github/codeql-action/analyze@v4
         with:
