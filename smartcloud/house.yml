@@ -11,6 +11,8 @@
 #
 # Left unset on purpose, so each repository adds its own:
 #   settings.environments  projectType (saas, desktop, library) or names
+#   settings.ruleset       requiredDeployments, statusChecks.checks,
+#                          codeScanning.ESLint, codeCoverage.enabled
 #   sync.exclude           template paths the repository keeps its own copy of
 version: 2
 
@@ -187,13 +189,51 @@ settings:
     blockDeletion: true
     blockForcePush: true
     linearHistory: true
+    # Every pull request merges through the queue, and every queued entry must
+    # pass the required checks. Required workflows also run on merge_group.
+    # One method serves the whole queue; squashing keeps every trailer in the
+    # body and always lands a single commit GitHub signs.
+    mergeQueue:
+      method: squash
+      grouping: allGreen
+    # Left unset on purpose: a repository that deploys a pre-production
+    # environment adds, for example, requiredDeployments: [Staging].
+    signedCommits: true
+    # GOVERNANCE.md#review: one other maintainer approves a maintainer's pull
+    # request, two approve an outside one. The ruleset cannot tell them apart,
+    # so it requires the shared minimum and the smartcloud check enforces the
+    # rest. Approvals bind only once two or more maintainers are listed.
+    pullRequest:
+      requiredApprovals: 1
+      dismissStaleReviews: true
+      conversationResolution: true
+      extraApprovalForUnattributedCopilot: true
+      mergeMethods: [squash, rebase]
+    # The workflow job is the context, so pull requests from forks, whose
+    # read-only token cannot create check runs, still report it. It is the
+    # aggregate check (see required below). A repository adds its main CI job
+    # here and under required.expect, because a restricted run from a fork or
+    # Dependabot skips this private preset, and with it the aggregate.
+    statusChecks:
+      checks:
+        smartcloud: true
+      strict: true
+      skipOnCreation: true
+    # A repository that uploads ESLint results to code scanning adds
+    # codeScanning.ESLint with the same thresholds; one that uploads nothing
+    # would block every pull request.
+    codeScanning:
+      CodeQL:
+        securityAlerts: high_or_higher
+        alerts: errors
+    codeQuality: errors
+    # Enforced only in a repository that uploads coverage to GitHub
+    # (actions/upload-code-coverage) and adds codeCoverage.enabled: true.
+    codeCoverage:
+      minimum: 80
+      maxDrop: 5
+    secretScanningAlerts: [provider_patterns]
     copilotReview: true
-    codeScanningGate: true
-    # Required only once two or more maintainers are listed. The workflow job
-    # is the context, so pull requests from forks, whose read-only token
-    # cannot create check runs, still report it. It is the aggregate check
-    # (see required below), so no other check is listed here.
-    requiredChecks: [smartcloud]
     # Locked on: the owner can always bypass, including the review gate.
     adminBypass: true
   # Every house workflow declares the permissions it needs, so the workflow
