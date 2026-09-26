@@ -157,7 +157,7 @@ reviews:
     maintainer: 1
 
 # The house baseline, GOVERNANCE.md#settings. Needs an admin token, which the
-# smartcloud workflow mints from the House sync app.
+# smartcloud workflow takes from the ACCESS_TOKEN organisation secret.
 settings:
   merging:
     mergeCommit: false
