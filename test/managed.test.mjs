@@ -128,11 +128,34 @@ test('markers only count on comment lines, so a document quoting them is synced 
   assert.equal(mergeManaged(doc, 'the previous document\n', 'GOVERNANCE.md'), doc)
 })
 
-test('isMarker accepts YAML and Markdown comment markers and rejects look-alikes', () => {
+test('isMarker accepts YAML, JSON and Markdown comment markers and rejects look-alikes', () => {
   assert.ok(isMarker('# house:managed:begin - synced', BEGIN))
   assert.ok(isMarker('  <!-- house:managed:end -->', END))
   assert.ok(isMarker('# house:local - add rules below', LOCAL))
   assert.ok(!isMarker('Mentions `house:managed:begin` in prose', BEGIN))
   assert.ok(!isMarker('#house:managed:beginning', BEGIN))
-  assert.ok(!isMarker('// house:managed:begin', BEGIN))
+  assert.ok(isMarker('  // house:managed:begin - synced', BEGIN))
+  assert.ok(!isMarker('"// house:managed:begin"', BEGIN))
+})
+
+const zedTasks = [
+  '[',
+  '  // house:managed:begin - synced',
+  '  { "label": "check", "command": "node --run check" },',
+  '  // house:managed:end',
+  '  // house:local - add tasks below.',
+  ']',
+  '',
+].join('\n')
+
+test('first adoption of a JSON file comments out the previous content with //', () => {
+  const merged = mergeManaged(zedTasks, '[\n  { "label": "dev" }\n]\n', '.zed/tasks.json')
+  assert.match(merged, /\/\/ house:local - add tasks below\.\n\/\/ Previous content/)
+  assert.match(merged, /\n\/\/ \[\n\/\/ {3}\{ "label": "dev" \}\n\/\/ \]\n\]\n$/)
+})
+
+test('local JSON entries may not reuse a synced label, name or id', () => {
+  const current = zedTasks.replace('// house:local - add tasks below.\n', '// house:local - add tasks below.\n  { "label": "check", "command": "x" },\n  { "label": "dev", "command": "y" },\n')
+  assert.deepEqual(managedConflicts('.zed/tasks.json', zedTasks, current), ['reuses the synced name "check"'])
+  assert.deepEqual(managedConflicts('.zed/tasks.json', zedTasks, zedTasks), [])
 })

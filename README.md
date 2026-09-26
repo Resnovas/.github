@@ -12,11 +12,10 @@ Because this repository is public and named `.github`, GitHub also uses these fi
 | `templates/` | The source of every governed file, with `{{KEY}}` placeholders. **Edit files here, never the rendered copies.** |
 | `house.yml` | The values placeholders resolve to. Everything currently resolves to Resnovas. |
 | root and `.github/` | The files rendered from `templates/` with the default values. CI fails if they are out of date. |
-| `.github/workflows/policy.yml` | Reusable workflow: AI disclosure, co-author and sign-off trailers, title and style (`policy`), and maintainer approvals (`reviews`). |
-| `.github/workflows/sync.yml` | Reusable workflow: renders `templates/` into a repository and opens a pull request when anything changed, then applies the house repository settings. |
-| `scripts/lib/settings.mjs` | The house repository settings, as the API calls that apply them. |
-| `scripts/` | The renderer and the policy checker. Dependency-free Node, with the rules in `scripts/lib/policy.mjs`. |
-| `test/` | Tests for the rules and the renderer, run with `npm test`. |
+| `smartcloud/house.yml` | The locked smartcloud preset every repository extends: roles, the AI disclosure, DCO and title checks, the review gate, labels, the repository settings baseline, and the sync of `templates/`. smartcloud is the engine that enforces it. |
+| `templates/.github/workflows/smartcloud.yml` | The one workflow every repository runs: the pull request checks, label sync, repository settings and the weekly house sync. |
+| `scripts/` | The renderer this repository uses to render its own root, since smartcloud's sync skips the source repository. Dependency-free Node. |
+| `test/` | Tests for the renderer and the managed blocks, run with `npm test`. |
 
 ## <a id="managed-blocks"></a>Documents and extendable configuration
 
@@ -32,6 +31,30 @@ In `CODEOWNERS` the managed block comes last, because the last matching rule win
 When a repository first adopts a file it already had, its previous content is kept, commented out at the `house:local` line, for someone to re-add as local rules.
 Making a template extendable only needs the three marker lines; `scripts/lib/managed.mjs` handles the rest.
 
+## <a id="surfaces"></a>Editor and agent surfaces
+
+Every repository gets the same one-click tasks, debug configurations and app actions, synced from `templates/` with managed blocks like the rest of the configuration:
+
+| Path | Surface |
+| --- | --- |
+| `.zed/tasks.json`, `.zed/debug.json` | Zed |
+| `.vscode/tasks.json`, `.vscode/launch.json` | VS Code and Cursor |
+| `.run/house-*.run.xml` | JetBrains; a repository adds its own as other files in `.run/` |
+| `.codex/environments/environment.toml` | Codex desktop |
+| `orca.yaml` | Orca worktree setup |
+| `.agents/surfaces.json` | Orca quick commands and OpenChamber project actions |
+| `.agents/prompts/*.md` | Agent prompts; a repository adds its own beside the synced ones |
+| `tools/dev/surfaces.mjs`, `tools/dev/open.mjs` | The tool that installs and generates the above |
+
+The synced entries only rely on three package scripts every repository must have, `setup`, `check` and `test`, run with `node --run` so they work under npm and pnpm alike, and on the synced tools.
+Everything specific to a repository (its dev server, docs server, debug targets and prompts) goes after the `house:local` line.
+The JSON files are JSON with comments, so their markers are `//` lines; a local entry may not reuse a synced label, name or id.
+
+Orca and OpenChamber keep quick commands and project actions in per-user settings, so `node tools/dev/surfaces.mjs install` registers them for the checkout; each repository's `setup` script runs it.
+`node tools/dev/surfaces.mjs sync` writes `.agents/prompts` to `.claude/commands`, `.cursor/commands` and `.opencode/commands`, which it owns, and a repository's `check` script runs `surfaces.mjs check` so they cannot drift.
+
+This repository has no documentation site to serve: its documents are the Markdown files in the root, which GitHub renders.
+
 ## <a id="changing"></a>Changing a policy or template
 
 1. Edit the file under `templates/`, or a default in `house.yml`.
@@ -41,18 +64,16 @@ Every downstream repository picks the change up in its next sync pull request.
 
 ## <a id="adopting"></a>Adopting it in a repository
 
-1. Copy `.github/workflows/house-policy.yml` and `.github/workflows/house-sync.yml` into the repository, or let the first sync add them.
-1. Only if the repository needs different values, add `.github/house.yml` containing just the keys it changes:
-
-```yaml
-MAINTAINERS: TGTGamer, another-maintainer
-HOUSE_EXCLUDE: LICENSE
-```
+1. Copy `templates/.github/smartcloud.yml` and `templates/.github/workflows/smartcloud.yml` into the repository, or let the first sync add them.
+1. Add the repository's own configuration after the `house:local` line of `.github/smartcloud.yml`: keys the preset leaves unset, such as `settings.environments` or `sync.exclude` for a template path it keeps its own copy of.
 1. Make sure the organisation has the `HOUSE_SYNC_APP_ID` and `HOUSE_SYNC_APP_PRIVATE_KEY` secrets (see [The sync app](#sync-app)).
-1. Run the House sync workflow once by hand to open the first sync pull request.
-1. Once the repository has two or more maintainers, make `house-policy / policy` and `house-policy / reviews` required status checks on the default branch.
+1. Run the smartcloud workflow once by hand to open the first sync pull request.
+1. Give the repository `setup`, `check` and `test` package scripts; the synced editor and agent surfaces run them.
+1. Once the preset lists two or more maintainers, the house ruleset makes the `smartcloud` check required on the default branch.
 
 ## <a id="values"></a>Values
+
+`house.yml` renders this repository's own root. Downstream repositories get their values from `sync.values` in `smartcloud/house.yml`, and `REPOSITORY` from the repository the sync runs in; roles, trusted bots, environments and exclusions are preset keys rather than values.
 
 | Key | Used for |
 | --- | --- |
@@ -78,7 +99,7 @@ The sync's `settings` job applies the baseline in [the governance document](GOVE
 Preview what it would change for any repository you can read:
 
 ```shell
-GITHUB_TOKEN=$(gh auth token) node scripts/apply-settings.mjs --repository owner/name --dry-run
+GITHUB_TOKEN=$(gh auth token) npx @resnovas/smartcloud plan settings --repo owner/name
 ```
 
 Settings that no API exposes, and so are set by hand once per repository:
@@ -93,9 +114,10 @@ This covers private repositories the per-repository settings cannot, where the l
 
 ## <a id="sync-app"></a>The sync app
 
-`sync.yml` authenticates as a GitHub App rather than with a personal access token.
-The default `GITHUB_TOKEN` cannot push changes to workflow files, and an App token is minted fresh for each run and expires on its own, so no long-lived credential is stored.
+The smartcloud workflow's push, schedule and manual runs (the sync and the settings) authenticate as a GitHub App; pull request and issue events use the workflow token.
+The workflow token cannot push changes to workflow files or change repository settings, and pull requests it opens do not start other workflows, so sync pull requests would arrive without CI.
+An App token is minted fresh for each run and expires on its own, so no long-lived credential is stored.
 
 The App needs **Administration**, **Contents**, **Pull requests** and **Workflows** write access on the repositories it syncs; Administration is what lets it apply the repository settings.
 Install it on every organisation and account that adopts the house files, and set its ID and private key as the organisation secrets `HOUSE_SYNC_APP_ID` and `HOUSE_SYNC_APP_PRIVATE_KEY`.
-Add the App's bot login, for example `resnovas-house[bot]`, to `TRUSTED_BOTS` so its sync pull requests are not held to the contributor checks.
+Add the App's bot login, for example `resnovas-house[bot]`, to `roles.trustedBots` in `smartcloud/house.yml` so its sync pull requests are not held to the contributor checks.
