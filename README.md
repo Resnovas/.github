@@ -194,6 +194,7 @@ The check is not required by the house ruleset; a repository that wants it to bl
 1. Copy `templates/.github/smartcloud.yml` and `templates/.github/workflows/smartcloud.yml` into the repository, or let the first sync add them.
 1. Add the repository's own configuration after the `house:local` line of `.github/smartcloud.yml`: keys the preset leaves unset, such as `settings.environments` or `sync.exclude` for a template path it keeps its own copy of.
 1. Make sure the Resnovas Bot GitHub App is installed on the repository (see [The sync token](#sync-token)).
+1. Check the repository with `GITHUB_TOKEN=$(gh auth token) npx @resnovas/smartcloud doctor --repo owner/name` (see [Diagnosing a repository](#doctor)).
 1. Run the smartcloud workflow once by hand to open the first sync pull request.
 1. Give the repository `setup`, `check` and `test` package scripts; the synced editor and agent surfaces run them.
 1. The house ruleset requires the `smartcloud` check and a merge queue on the default branch, so every workflow behind a required check also runs on `merge_group`. Add the repository's own required checks under `settings.ruleset.statusChecks.checks`; a CI that runs parallel jobs requires one aggregate job that needs them all and fails unless every one succeeded, so adding a job never changes the ruleset. To skip work a change cannot affect, such as a documentation-only pull request, skip jobs, not workflows: a workflow filtered with `paths` or `paths-ignore` never reports its check, so a required check waits forever. A first job classifies the changed files, the others run `if:` its outputs say they are needed, and the aggregate job accepts a skipped job only when that output said so, so a failed classifier fails the check. smartcloud's `tools/ci/changes.ts` classifies with the Graphify graph and `nx show projects --affected`. In the merge queue, work out what changed from `merge_group.base_sha`, the commit the group lands on, so the group covers the pull requests queued ahead of it as well as its own; `nrwl/nx-set-shas` otherwise compares with the last green run on the default branch or, with `use-previous-merge-group-commit`, with the entry ahead only, which a `headGreen` queue would let through untested. Add a pre-production environment under `settings.ruleset.requiredDeployments`, `settings.ruleset.codeScanning.ESLint` once ESLint uploads results to code scanning, and `settings.ruleset.codeCoverage.enabled: true` once coverage is uploaded to GitHub.
@@ -304,6 +305,18 @@ The release must still be a draft: house repositories make releases immutable on
 Anyone can then check a released file with `gh attestation verify <file> --repo <owner>/<name>`.
 Attestations need a public repository, or GitHub Enterprise Cloud for a private one.
 The workflow uses only the workflow token; call it only from a release workflow on the default branch, never for pull requests.
+
+## <a id="doctor"></a>Diagnosing a repository
+
+`smartcloud doctor` checks, without changing anything, what the house workflows need in a repository:
+
+```shell
+GITHUB_TOKEN=$(gh auth token) npx @resnovas/smartcloud doctor --repo owner/name
+```
+
+It reports the token's kind and scopes, whether the preset and everything it extends can be read, whether a private repository whose actions or reusable workflows the repository uses allows it (the Actions access below), and whether every secret and variable the workflows read, such as `RESNOVAS_BOT_PRIVATE_KEY` and `RESNOVAS_BOT_APP_ID`, exists for the repository or the organisation.
+It also warns when a workflow passes smartcloud a secret as its token: a personal access token cannot create check runs, so the `smartcloud` check would fail.
+Run it with an organisation admin's token, since listing secrets and reading Actions access need admin access; with less, those checks warn rather than fail.
 
 ## <a id="sync-token"></a>The sync token
 
