@@ -130,6 +130,48 @@ On agent hosts **we control** that are **not** Cursor Desktop, Codex (local or c
 
 If setup fails, stop and report the gap instead of improvising unsafe substitutes.
 
+## Set up this repository's workspace
+
+The ecosystem above is the host. This section covers the checkout: the editor and agent toolsets committed in the repository (house standard `project-dev-surfaces`). Every Resnovas repository gets the same set from the house sync, so these steps work in any of them.
+
+### On a clean clone
+
+1. Install Node 24 or later (`engines.node` in `package.json`). The toolsets run package scripts with `node --run`, so npm and pnpm both work.
+2. Run `node --run setup`. In this repository it runs `node tools/dev/surfaces.mjs install`, which registers the Orca quick commands and OpenChamber project actions for the checkout (see Orca below). It skips any app that is not installed or not running, so it is safe on a headless box. Downstream repositories add their own install steps to the same script.
+3. Run `sh tools/graphify/graphify setup` once per clone. It installs Graphify (once per machine) and the git hooks that keep `graphify-out/graph.json` current. Load the `graphify` skill for how to query it.
+4. Run `node --run check` to confirm the checkout is healthy. It is the same gate CI runs.
+
+Every step is idempotent: re-run it whenever a sync pull request changes a toolset, and after adding or editing a prompt.
+
+### Which toolset each host reads
+
+| Path | Host | What it gives you |
+| --- | --- | --- |
+| `.agents/prompts/*.md` | Every agent (the source) | Each slash command written once: `review`, `verify`, `address-review`, and in this repository `change-template`. Edit prompts here only. |
+| `.agents/skills/` | Codex and other hosts that read `.agents/skills` | Repository skills, such as `graphify`. |
+| `.agents/surfaces.json` | Orca and OpenChamber | The action list: the synced `house` actions (setup, check, test, graph) and this repository's own `actions` (here, `render`). |
+| `CLAUDE.md`, `.claude/commands/`, `.claude/skills/` | Claude Code | `CLAUDE.md` imports this file; the commands are generated from `.agents/prompts` (`/review`, `/verify`, ...); `graphify` is the skill. `.claude/settings.local.json` is per-user and not committed. |
+| `.codex/environments/environment.toml` | Codex desktop | Runs `node --run setup` when Codex creates the local environment, and adds Check, Test, code graph and Render actions. Codex cloud does not read it. |
+| `.cursor/commands/` | Cursor | The same commands, generated from `.agents/prompts`. Cursor also reads `.vscode/`. |
+| `.vscode/tasks.json`, `.vscode/launch.json` | VS Code and Cursor | Tasks: setup, check, test, graph open/update/check, agents sync/install, render. Launch configs debug the render, the tests, the current file and a dry-run surfaces install. |
+| `.zed/tasks.json`, `.zed/debug.json` | Zed | The same tasks and debug configurations. |
+| `.run/*.run.xml` | JetBrains IDEs | The same actions as run configurations: `house-*.run.xml` are synced, the rest belong to this repository. |
+| `orca.yaml` | Orca | Worktree setup; see below. |
+
+OpenCode is not supported: the house does not generate `.opencode/commands`, and `node tools/dev/surfaces.mjs sync` deletes it where an older sync left it.
+
+### How Orca sets itself up
+
+- **Worktrees.** `orca.yaml` sets `scripts.setup: node --run setup`, so Orca runs setup after it creates each worktree. `setupAgentStartupPolicy: wait-for-setup` holds agents until setup finishes, so an agent in an Orca worktree starts with its workspace ready and should not run setup again. This repository also opens a `claude` tab by default (`defaultTabs`, after the `house:local` line).
+- **Quick commands and prompts.** Orca keeps these in per-user settings, not in the repository, so `node tools/dev/surfaces.mjs install` (run by setup) writes them through Orca's local socket. Orca must be running and the checkout must be added to Orca, otherwise install says so and skips. It adds one quick command per action in `.agents/surfaces.json`, plus one agent prompt per prompt for each agent in its `agents` list (Claude and Codex); prompts that take `$ARGUMENTS` stay editor-only. It only touches entries prefixed with the repository name and refuses to exceed Orca's limit of 40 quick commands.
+- **Check before writing.** `node tools/dev/surfaces.mjs install --dry-run` reports what it would change and writes nothing.
+
+### Changing a toolset
+
+- Synced files carry a `house:managed` block. Put repository-specific tasks, actions, debug configurations and Orca settings after the `house:local` line; never edit inside the managed block. In this repository the managed content comes from `templates/`: edit it there and run `npm run render` (use the `change-template` command).
+- `.claude/commands/` and `.cursor/commands/` are generated. Edit `.agents/prompts/`, then run `node tools/dev/surfaces.mjs sync`; `check` fails while they are out of date.
+- After changing `.agents/surfaces.json`, re-run `node --run setup` so Orca and OpenChamber pick it up.
+
 ## Context7 (always)
 
 **Always** resolve library, framework, and SDK behaviour through Context7 via Mem0 Gateway before implementing or reviewing against that API - including well-known stacks (Effect, Nx, React Native, Blnk, WorkOS, etc.). Training data and pasted snippets go stale; Context7 tracks current docs.
@@ -492,6 +534,7 @@ Complete every item before declaring done. Mark N/A only with a one-line reason.
 ### A. Ecosystem
 
 - [ ] CE available (or install/report gap)
+- [ ] Repository workspace set up (`node --run setup`, Graphify hooks) or already done by Orca worktree setup
 - [ ] Mem0 Gateway usable (`find_tools` works)
 - [ ] Cognee reachable (`recall` works) when memory is read or written
 - [ ] Needed PostHog skills reachable (`coding-preferences` when implementing/reviewing)
