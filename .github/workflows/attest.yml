@@ -1,0 +1,129 @@
+# Reusable build attestations. A repository's release workflow calls it after
+# building what it ships.
+#
+# The caller uploads the release files, and an SBOM of each, as one workflow
+# artifact. This workflow signs build provenance for the subjects with
+# actions/attest-build-provenance and, given an SBOM, binds it to them with
+# actions/attest-sbom. Both go to the repository's attestations, where anyone
+# can check a file with `gh attestation verify <file> --repo <owner>/<name>`.
+# Given a release tag, it attaches the SBOMs to that GitHub release, which must
+# still be a draft: house repositories lock releases once published
+# (immutableReleases), so a published release takes no new assets. Create the
+# release as a draft, call this workflow, then publish it.
+#
+# Attestations need a public repository, or GitHub Enterprise Cloud for a
+# private one. The caller grants the job contents: write (to upload release
+# assets), id-token: write (for the Sigstore signing certificate) and
+# attestations: write. Uses only the workflow token; call it only from a
+# release workflow on the default branch, never for pull requests.
+name: Attest
+
+on:
+  workflow_call:
+    inputs:
+      artifact:
+        description: Name of the workflow artifact holding the subjects and SBOMs
+        type: string
+        required: true
+      subject-path:
+        description: Path or glob, inside the artifact, of the files to attest; one per line for several
+        type: string
+        required: true
+      sbom-path:
+        description: Path, inside the artifact, of the SPDX or CycloneDX SBOM describing the subjects
+        type: string
+        required: false
+      release:
+        description: Tag of the draft GitHub release to attach the SBOMs to; empty attaches nothing
+        type: string
+        required: false
+      release-assets:
+        description: Paths or globs, inside the artifact, attached to the release, one per line; defaults to sbom-path
+        type: string
+        required: false
+
+permissions: {}
+
+jobs:
+  attest:
+    name: attest
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: ${{ inputs.artifact }}
+
+      # Fail before signing anything when the assets could not be attached.
+      - name: Check the release is still a draft
+        if: inputs.release != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE: ${{ inputs.release }}
+        run: |
+          draft=$(gh release view "$RELEASE" --repo "$GITHUB_REPOSITORY" --json isDraft --jq .isDraft)
+          if [ "$draft" != true ]; then
+            echo "::error::release $RELEASE is published, and immutable releases take no new assets: create it as a draft, attest, then publish it"
+            exit 1
+          fi
+
+      # Resolved before anything is signed, so a pattern that matches nothing
+      # fails the run without leaving an attestation behind. Each line is one
+      # pattern: it splits on newlines only, so a path may contain spaces, and
+      # ** matches at any depth. Only files inside the downloaded artifact are
+      # attached: absolute or .. patterns, and anything outside it, fail.
+      - name: Resolve the release assets
+        if: inputs.release != ''
+        env:
+          ASSETS: ${{ inputs.release-assets || inputs.sbom-path }}
+        run: |
+          shopt -s nullglob globstar
+          root=$(pwd -P)
+          list="$RUNNER_TEMP/release-assets"
+          : > "$list"
+          while IFS= read -r pattern; do
+            [ -n "$pattern" ] || continue
+            case "$pattern" in
+              /* | .. | ../* | */.. | */../*) echo "::error::$pattern points outside the artifact"; exit 1 ;;
+            esac
+            IFS=$'\n'
+            # Unquoted on purpose, so the glob expands; IFS keeps spaces in paths.
+            # shellcheck disable=SC2206
+            matches=($pattern)
+            unset IFS
+            if [ "${#matches[@]}" -eq 0 ]; then echo "::error::no file in the artifact matches $pattern"; exit 1; fi
+            for file in "${matches[@]}"; do
+              real=$(realpath -e -- "$file")
+              case "$real" in
+                "$root"/*) [ -f "$real" ] && printf '%s\0' "$file" >> "$list" ;;
+                *) echo "::error::$file is outside the artifact"; exit 1 ;;
+              esac
+            done
+          done <<< "$ASSETS"
+          if [ ! -s "$list" ]; then echo '::error::nothing to attach: set sbom-path or release-assets'; exit 1; fi
+          # A release names each asset by its file name, so two files with the
+          # same name in different folders would overwrite each other.
+          duplicate=$(tr '\0' '\n' < "$list" | sed 's#.*/##' | sort | uniq -d | head -n 1)
+          if [ -n "$duplicate" ]; then echo "::error::two release assets are both named $duplicate; give them different file names"; exit 1; fi
+
+      - uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-path: ${{ inputs.subject-path }}
+
+      - if: inputs.sbom-path != ''
+        uses: actions/attest-sbom@c604332985a26aa8cf1bdc465b92731239ec6b9e # v4.1.0
+        with:
+          subject-path: ${{ inputs.subject-path }}
+          sbom-path: ${{ inputs.sbom-path }}
+
+      - name: Attach the SBOMs to the release
+        if: inputs.release != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE: ${{ inputs.release }}
+        run: |
+          mapfile -d '' -t files < "$RUNNER_TEMP/release-assets"
+          gh release upload "$RELEASE" "${files[@]}" --clobber --repo "$GITHUB_REPOSITORY"
