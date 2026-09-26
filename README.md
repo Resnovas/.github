@@ -51,7 +51,7 @@ Everything specific to a repository (its dev server, docs server, debug targets 
 The JSON files are JSON with comments, so their markers are `//` lines; a local entry may not reuse a synced label, name or id.
 
 Orca and OpenChamber keep quick commands and project actions in per-user settings, so `node tools/dev/surfaces.mjs install` registers them for the checkout; each repository's `setup` script runs it.
-`node tools/dev/surfaces.mjs sync` writes `.agents/prompts` to `.claude/commands`, `.cursor/commands` and `.opencode/commands`, which it owns, and a repository's `check` script runs `surfaces.mjs check` so they cannot drift.
+`node tools/dev/surfaces.mjs sync` writes `.agents/prompts` to `.claude/commands` and `.cursor/commands`, which it owns and prunes (it also deletes the `.opencode/commands` it used to write), and a repository's `check` script runs `surfaces.mjs check` so they cannot drift.
 
 This repository has no documentation site to serve: its documents are the Markdown files in the root, which GitHub renders.
 

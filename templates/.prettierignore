@@ -38,7 +38,6 @@ orca.yaml
 # Generated from .agents/prompts by tools/dev/surfaces.mjs.
 .claude/commands/
 .cursor/commands/
-.opencode/commands/
 # The committed code graph.
 graphify-out/
 # house:managed:end
