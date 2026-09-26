@@ -2,8 +2,9 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-const root = new URL('../', import.meta.url).pathname
+const root = fileURLToPath(new URL('../', import.meta.url))
 const directories = ['.github/workflows', 'templates/.github/workflows']
 
 // A third-party action is pinned to a full commit SHA, with its release as a
@@ -12,18 +13,29 @@ const directories = ['.github/workflows', 'templates/.github/workflows']
 const pinned = /^[\w.-]+\/[\w./-]+@[0-9a-f]{40} # v\d+(\.\d+)*$/
 const firstParty = (ref) => ref.startsWith('./') || /^resnovas\//i.test(ref)
 
-const references = directories.flatMap((directory) =>
+const lines = directories.flatMap((directory) =>
   readdirSync(join(root, directory))
     .filter((name) => /\.ya?ml$/.test(name))
     .flatMap((name) => {
       const path = join(directory, name)
       return readFileSync(join(root, path), 'utf8')
         .split('\n')
-        .map((line) => line.match(/^\s*(?:-\s+)?uses:\s*(.+?)\s*$/)?.[1])
-        .filter(Boolean)
-        .map((ref) => ({ path, ref }))
+        .map((line) => ({ path, line }))
     }),
 )
+const block = /^\s*(?:-\s+)?uses:\s*(.+?)\s*$/
+const references = lines.flatMap(({ path, line }) => {
+  const ref = line.match(block)?.[1]
+  return ref ? [{ path, ref }] : []
+})
+
+// The pin checks read block-style lines only, so any other spelling of a uses
+// key, such as a flow mapping (- { uses: owner/action@v1 }), fails here
+// instead of slipping past them.
+test('every uses key is a block-style line', () => {
+  const other = lines.filter(({ line }) => /["']?\buses["']?\s*:/.test(line.replace(/#.*$/, '')) && !block.test(line))
+  assert.deepEqual(other, [])
+})
 
 test('the workflows reference actions', () => {
   assert.ok(references.some(({ ref }) => !firstParty(ref)))
