@@ -65,3 +65,20 @@ test('every job that runs steps sets timeout-minutes', () => {
     .map(({ path, name }) => `${path} ${name}`)
   assert.deepEqual(unbounded, [])
 })
+
+// Nx replays tasks whose inputs did not change from .nx/cache, which starts
+// empty on every runner unless the job restores it. A release job runs Nx with
+// --skip-nx-cache instead, so nothing it publishes comes from a cache entry.
+test('every job that runs Nx caches .nx/cache', () => {
+  const uncached = workflows
+    .flatMap(jobs)
+    .filter(({ lines }) =>
+      lines.some((line) => /\bnx\s/.test(line) && !/^\s*#/.test(line) && !line.includes('--skip-nx-cache')),
+    )
+    .filter(({ lines }) => {
+      const cache = lines.findIndex((line) => /uses: actions\/cache@/.test(line))
+      return cache === -1 || !lines.slice(cache).some((line) => /^\s+path:.*\.nx\/cache/.test(line))
+    })
+    .map(({ path, name }) => `${path} ${name}`)
+  assert.deepEqual(uncached, [])
+})

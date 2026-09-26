@@ -84,6 +84,10 @@ Pull requests from forks get a read-only token whatever a job asks for.
 Every job that runs steps sets `timeout-minutes`, sized to a few times its usual run, so a hung step fails in minutes instead of holding a runner for GitHub's six-hour default; `npm test` fails on a job without one.
 A job that calls a reusable workflow cannot set a timeout, and is bounded by the called workflow's jobs.
 
+A job that runs [Nx](https://nx.dev) caches `.nx/cache` between runs with `actions/cache`, keyed on the runner OS, the lockfile hash, the commit and the workflow, with the OS and lockfile prefix as a restore key, so tasks whose inputs did not change replay from the last run; `npm test` fails on a job that runs Nx without it.
+Nx replays an entry only when the hash of the task's inputs matches, and a pull request's cache entries are scoped to its own ref, so they never reach the default branch.
+A release workflow restores no cache and runs Nx with `--skip-nx-cache`, so nothing it builds or publishes comes from a cache entry.
+
 ### <a id="workflow-lint"></a>Workflow lint
 
 Every repository lints its workflows from the synced `.github/workflows/house-workflow-lint.yml`, which calls the reusable `.github/workflows/workflow-lint.yml`.
