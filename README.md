@@ -3,21 +3,22 @@
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/Resnovas/.github/badge)](https://scorecard.dev/viewer/?uri=github.com/Resnovas/.github)
 
 The single source of truth for the governance files every Resnovas project ships with, across Resnovas, Eventiva and personal repositories.  
-It holds the contributing guidelines, the AI contribution policy, the code of conduct, the Developer Certificate of Origin, the FCL-1.0-MIT licence, the  Cooperation Commitment, and the issue and pull request templates, together with the checks that enforce them.
+It holds the contributing guidelines, the AI contribution policy, the code of conduct, the Developer Certificate of Origin, the FCL-1.0-MIT licence, the Cooperation Commitment, and the issue and pull request templates, together with the checks that enforce them.
 
 Because this repository is public and named `.github`, GitHub also uses these files as the defaults for every repository in the Resnovas organisation that does not have its own.
 
 ## <a id="layout"></a>Layout
 
-| Path | What it is |
-| --- | --- |
-| `templates/` | The source of every governed file, with `{{KEY}}` placeholders. **Edit files here, never the rendered copies.** |
-| `house.yml` | The values placeholders resolve to. Everything currently resolves to Resnovas. |
-| root and `.github/` | The files rendered from `templates/` with the default values. CI fails if they are out of date. |
-| `smartcloud/house.yml` | The locked smartcloud preset every repository extends: roles, the AI disclosure, DCO and title checks, the review gate, labels, the repository settings baseline, and the sync of `templates/`. smartcloud is the engine that enforces it. |
-| `templates/.github/workflows/smartcloud.yml` | The one workflow every repository runs: the pull request checks, label sync, repository settings and the weekly house sync. |
-| `scripts/` | The renderer this repository uses to render its own root, since smartcloud's sync skips the source repository. Dependency-free Node. |
-| `test/` | Tests for the renderer and the managed blocks, run with `npm test`. |
+| Path                                                | What it is                                                                                                                                                                                                                                 |
+| --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `templates/`                                        | The source of every governed file, with `{{KEY}}` placeholders. **Edit files here, never the rendered copies.**                                                                                                                            |
+| `house.yml`                                         | The values placeholders resolve to. Everything currently resolves to Resnovas.                                                                                                                                                             |
+| root and `.github/`                                 | The files rendered from `templates/` with the default values. CI fails if they are out of date.                                                                                                                                            |
+| `smartcloud/house.yml`                              | The locked smartcloud preset every repository extends: roles, the AI disclosure, DCO and title checks, the review gate, labels, the repository settings baseline, and the sync of `templates/`. smartcloud is the engine that enforces it. |
+| `templates/.github/workflows/smartcloud.yml`        | The one workflow every repository runs: the pull request checks, label sync, repository settings and the weekly house sync.                                                                                                                |
+| `templates/.github/workflows/smartcloud-review.yml` | Re-runs a pull request's smartcloud run when it is reviewed, so the one required `smartcloud` check reads the reviews again without a second check on the commit.                                                                          |
+| `scripts/`                                          | The renderer this repository uses to render its own root, since smartcloud's sync skips the source repository. Dependency-free Node.                                                                                                       |
+| `test/`                                             | Tests for the renderer and the managed blocks, run with `npm test`.                                                                                                                                                                        |
 
 ## <a id="managed-blocks"></a>Documents and extendable configuration
 
@@ -39,17 +40,17 @@ Making a template extendable only needs the three marker lines; `scripts/lib/man
 
 Every repository gets the same one-click tasks, debug configurations and app actions, synced from `templates/` with managed blocks like the rest of the configuration:
 
-| Path | Surface |
-| --- | --- |
-| `.zed/tasks.json`, `.zed/debug.json` | Zed |
-| `.vscode/tasks.json`, `.vscode/launch.json` | VS Code and Cursor |
-| `.run/house-*.run.xml` | JetBrains; a repository adds its own as other files in `.run/` |
-| `.codex/environments/environment.toml` | Codex desktop |
-| `orca.yaml` | Orca worktree setup |
-| `.agents/surfaces.jsonc` | Orca quick commands and OpenChamber project actions |
-| `.agents/prompts/*.md` | Agent prompts; a repository adds its own beside the synced ones |
-| `.agents/mcp.jsonc` | MCP servers for every agent host; a repository adds its own under `servers` |
-| `tools/dev/surfaces.mjs`, `tools/dev/open.mjs` | The tool that installs and generates the above |
+| Path                                           | Surface                                                                     |
+| ---------------------------------------------- | --------------------------------------------------------------------------- |
+| `.zed/tasks.json`, `.zed/debug.json`           | Zed                                                                         |
+| `.vscode/tasks.json`, `.vscode/launch.json`    | VS Code and Cursor                                                          |
+| `.run/house-*.run.xml`                         | JetBrains; a repository adds its own as other files in `.run/`              |
+| `.codex/environments/environment.toml`         | Codex desktop                                                               |
+| `orca.yaml`                                    | Orca worktree setup                                                         |
+| `.agents/surfaces.jsonc`                       | Orca quick commands and OpenChamber project actions                         |
+| `.agents/prompts/*.md`                         | Agent prompts; a repository adds its own beside the synced ones             |
+| `.agents/mcp.jsonc`                            | MCP servers for every agent host; a repository adds its own under `servers` |
+| `tools/dev/surfaces.mjs`, `tools/dev/open.mjs` | The tool that installs and generates the above                              |
 
 The synced entries only rely on three package scripts every repository must have, `setup`, `check` and `test`, run with `node --run` so they work under npm and pnpm alike, and on the synced tools.
 Everything specific to a repository (its dev server, docs server, debug targets and prompts) goes after the `house:local` line.
@@ -70,7 +71,7 @@ This repository has no documentation site to serve: its documents are the Markdo
 1. Edit the file under `templates/`, or a default in `house.yml`.
 1. Run `npm run render` to update the rendered copies, and `npm test`.
 1. Commit both.
-Every downstream repository picks the change up in its next sync pull request.
+   Every downstream repository picks the change up in its next sync pull request.
 
 Workflows here and under `templates/` pin every third-party action to a full commit SHA, with its release as a trailing comment (`uses: actions/checkout@<sha> # v7.0.1`), and `npm test` fails on one that is not.
 Dependabot's `github-actions` update moves the SHA and the comment together.
@@ -103,23 +104,23 @@ The check is not required by the house ruleset; a repository that wants it to bl
 
 `house.yml` renders this repository's own root. Downstream repositories get their values from `sync.values` in `smartcloud/house.yml`, and `REPOSITORY` from the repository the sync runs in; roles, trusted bots, environments and exclusions are preset keys rather than values.
 
-| Key | Used for |
-| --- | --- |
-| `ORG_NAME` | The owner's name in prose. |
-| `LEGAL_HOLDER` | The copyright holder in `LICENSE`. |
-| `COPYRIGHT_YEAR` | The year in the copyright notice. |
-| `REPOSITORY` | Links to the repository's own advisories, discussions and files. Set automatically by the sync. |
-| `PACKAGE_SCOPE` | The npm scope in the module boundary rule. |
-| `CONDUCT_CONTACT` | Where Code of Conduct reports go. |
-| `COVERAGE_MIN` | The minimum line and branch coverage. |
-| `MAINTAINERS` | Who counts as a maintainer for the checks and the review gate. |
-| `TRUSTED_BOTS` | Automation accounts that skip the disclosure and DCO checks. |
-| `HOUSE_EXCLUDE` | Template paths a repository keeps its own copy of. For configuration, prefer local rules outside the managed block; exclusion is for a file the repository genuinely cannot share, such as a different licence. |
-| `PROJECT_TYPE` | `saas`, `desktop`, `library` or `none`; picks the deployment environments. |
-| `ENVIRONMENTS` | Explicit environment names, replacing the `PROJECT_TYPE` set. |
-| `CODE_SCANNING_GATE` | Whether serious CodeQL findings block merges. Turn off only where CodeQL cannot analyse the code. |
-| `SPONSORS` | GitHub Sponsors accounts in `FUNDING.yml`. |
-| `OWNERS_ADMIN`, `OWNERS_DOCS`, `OWNERS_QA`, `OWNERS_WORKFLOW` | Code owners by role, in `CODEOWNERS`. |
+| Key                                                           | Used for                                                                                                                                                                                                        |
+| ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ORG_NAME`                                                    | The owner's name in prose.                                                                                                                                                                                      |
+| `LEGAL_HOLDER`                                                | The copyright holder in `LICENSE`.                                                                                                                                                                              |
+| `COPYRIGHT_YEAR`                                              | The year in the copyright notice.                                                                                                                                                                               |
+| `REPOSITORY`                                                  | Links to the repository's own advisories, discussions and files. Set automatically by the sync.                                                                                                                 |
+| `PACKAGE_SCOPE`                                               | The npm scope in the module boundary rule.                                                                                                                                                                      |
+| `CONDUCT_CONTACT`                                             | Where Code of Conduct reports go.                                                                                                                                                                               |
+| `COVERAGE_MIN`                                                | The minimum line and branch coverage.                                                                                                                                                                           |
+| `MAINTAINERS`                                                 | Who counts as a maintainer for the checks and the review gate.                                                                                                                                                  |
+| `TRUSTED_BOTS`                                                | Automation accounts that skip the disclosure and DCO checks.                                                                                                                                                    |
+| `HOUSE_EXCLUDE`                                               | Template paths a repository keeps its own copy of. For configuration, prefer local rules outside the managed block; exclusion is for a file the repository genuinely cannot share, such as a different licence. |
+| `PROJECT_TYPE`                                                | `saas`, `desktop`, `library` or `none`; picks the deployment environments.                                                                                                                                      |
+| `ENVIRONMENTS`                                                | Explicit environment names, replacing the `PROJECT_TYPE` set.                                                                                                                                                   |
+| `CODE_SCANNING_GATE`                                          | Whether serious CodeQL findings block merges. Turn off only where CodeQL cannot analyse the code.                                                                                                               |
+| `SPONSORS`                                                    | GitHub Sponsors accounts in `FUNDING.yml`.                                                                                                                                                                      |
+| `OWNERS_ADMIN`, `OWNERS_DOCS`, `OWNERS_QA`, `OWNERS_WORKFLOW` | Code owners by role, in `CODEOWNERS`.                                                                                                                                                                           |
 
 ## <a id="settings"></a>Repository settings
 
@@ -137,7 +138,7 @@ Settings that no API exposes, and so are set by hand once per repository:
 Settings best made once at organisation level:
 
 - Settings > Advanced Security > Configurations: a code security configuration with every feature enabled except CodeQL default setup (see [CodeQL](#codeql)), applied to all repositories and set as the default for new ones.
-This covers private repositories the per-repository settings cannot, where the licence allows.
+  This covers private repositories the per-repository settings cannot, where the licence allows.
 - Settings > Advanced Security > Global settings: Dependabot on Actions runners, and Copilot Autofix for third-party tools.
 
 ### <a id="codeql"></a>CodeQL
@@ -206,13 +207,13 @@ The preset keeps it there (`settings.actions.accessLevel: organization`), but th
 The house default, which [smartcloud](https://github.com/Resnovas/smartcloud/blob/main/docs/releasing.mdx) follows, is:
 
 - **Nx release, started by hand** from a `release` workflow on the default branch, with conventional commits deciding the version.
-The published projects form one release group, tagged `v{version}`.
+  The published projects form one release group, tagged `v{version}`.
 - **The GitHub release holds the main notes**: `release.changelog.workspaceChangelog` sets `createRelease: github`, with a renderer that replaces Nx's emoji with words (smartcloud's `tools/release/changelog-renderer.ts`).
 - **The notes are also written to the repository**, through the same renderer: the workspace changelog to the root `CHANGELOG.md` (new releases above any older history, which stays), and `projectChangelogs` to `{projectRoot}/CHANGELOG.md` for each published project, with `createRelease: false`.
-Unpublished libraries get none; their changes appear under the projects that bundle them.
+  Unpublished libraries get none; their changes appear under the projects that bundle them.
 - **The files reach the default branch through a pull request**, because the house ruleset takes changes only through pull requests with signed commits; the pull request merges like any other, by squash or rebase, or by auto-merge where it is on.
-After tagging, a separate `changelogs` job mints a token for the Resnovas Bot app (`resnovas-smartcloud`, from the organisation variable `RESNOVAS_BOT_APP_ID` and secret `RESNOVAS_BOT_PRIVATE_KEY`, with `actions/create-github-app-token` pinned to a commit), commits the files through the GitHub API, so GitHub signs the commit, and opens `chore(release): changelogs for v<version>`.
-The commit is signed off by `resnovas-smartcloud[bot]`, which the preset lists in `roles.trustedBots`.
+  After tagging, a separate `changelogs` job mints a token for the Resnovas Bot app (`resnovas-smartcloud`, from the organisation variable `RESNOVAS_BOT_APP_ID` and secret `RESNOVAS_BOT_PRIVATE_KEY`, with `actions/create-github-app-token` pinned to a commit), commits the files through the GitHub API, so GitHub signs the commit, and opens `chore(release): changelogs for v<version>`.
+  The commit is signed off by `resnovas-smartcloud[bot]`, which the preset lists in `roles.trustedBots`.
 - **The app's token never meets untrusted code**: the job that mints it checks out and runs nothing from the repository, and the job that installs dependencies and runs Nx hands it the files as an artifact.
 
 When smartcloud's sync manages Nx release configuration ([SMC-81](https://linear.app/resnovas/issue/SMC-81)), it should sync:

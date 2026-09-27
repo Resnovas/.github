@@ -26,6 +26,7 @@ LICENSE
 .github/workflows/house-graphify.yml
 .github/workflows/house-workflow-lint.yml
 .github/workflows/smartcloud.yml
+.github/workflows/smartcloud-review.yml
 .graphifyignore
 .agents/skills/graphify/
 .claude/skills/graphify/

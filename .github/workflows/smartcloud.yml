@@ -27,8 +27,6 @@ name: smartcloud
 on:
   pull_request:
     types: [opened, edited, synchronize, reopened, ready_for_review, converted_to_draft]
-  pull_request_review:
-    types: [submitted, dismissed]
   issues:
     types: [opened, edited, reopened, labeled, unlabeled]
   push:
