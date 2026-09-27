@@ -194,6 +194,22 @@ So the ruleset requires one check, `smartcloud`, and adding a CI job never means
 It waits up to 60 minutes.
 A repository adds `required.expect` (checks that must appear, such as `'^check$'`), `required.ignore` (checks that do not count) and `required.timeout`.
 
+The preset leaves these unset so each repository can list its own; a list the preset set could not be added to, because presets are locked.
+Every house repository with review bots should ignore their checks, so a bot that is slow, or reports a neutral result, never holds a merge.
+The review bots advise; the findings that block are listed in [AP-31](../APPROVAL_POLICY.md#ap-31) and reach the pull request as review comments or the Graphify check, which still counts.
+The Cursor approval agent waits for the checks, so counting its own check would make the two wait for each other.
+Add this after the `house:local` line of `.github/smartcloud.yml`:
+
+```yaml
+required:
+  ignore:
+    - ^CodeRabbit
+    - '^Cursor '
+```
+
+A pattern matches the start of a check's name, so `'^Cursor '` covers Bugbot and the approval and security agents.
+Keep the quotes: the trailing space is part of the pattern.
+
 ## <a id="sync"></a>`sync`: the house files
 
 ```yaml

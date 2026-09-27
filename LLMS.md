@@ -283,6 +283,13 @@ When you change the preset, keep it valid against smartcloud's schema (the
 repository on its next run. Changing a locked value can make a repository's
 own config, which restated the old value, fail; search the organisation first.
 
+`required.ignore` stays out of the preset on purpose: a list the preset set
+could not be extended, because presets are locked. Each house repository with
+review bots lists `^CodeRabbit` and `'^Cursor '` (quoted; the trailing space
+matters) under `required.ignore` after its `house:local` line, so bot checks
+never gate the aggregate and the Cursor approval agent cannot deadlock with it.
+Graphify is not ignored: its check is an AP-31 gate.
+
 ---
 
 ## Reusable workflows

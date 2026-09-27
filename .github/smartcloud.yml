@@ -23,3 +23,13 @@ settings:
     statusChecks:
       checks:
         check: true
+
+# Review bots advise; only APPROVAL_POLICY.md AP-31's findings block, and those
+# arrive as review comments or the Graphify check, which still counts.
+# CodeRabbit's status and the Cursor agents' check runs never gate the
+# aggregate, so the approval agent, which waits for the checks, cannot
+# deadlock with it.
+required:
+  ignore:
+    - ^CodeRabbit
+    - '^Cursor '
