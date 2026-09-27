@@ -109,9 +109,20 @@ Settings that no API exposes, and so are set by hand once per repository:
 
 Settings best made once at organisation level:
 
-- Settings > Advanced Security > Configurations: a code security configuration with every feature enabled, applied to all repositories and set as the default for new ones.
+- Settings > Advanced Security > Configurations: a code security configuration with every feature enabled except CodeQL default setup (see [CodeQL](#codeql)), applied to all repositories and set as the default for new ones.
 This covers private repositories the per-repository settings cannot, where the licence allows.
 - Settings > Advanced Security > Global settings: Dependabot on Actions runners, and Copilot Autofix for third-party tools.
+
+### <a id="codeql"></a>CodeQL
+
+Code scanning runs as CodeQL advanced setup, from the synced `.github/workflows/house-codeql.yml`, which calls the reusable `.github/workflows/codeql.yml`.
+It maps the repository's languages to CodeQL languages, always adds `actions`, and runs the `security-extended` queries, the suite default setup ran, under the same `/language:<name>` categories, so existing alerts carry over.
+The preset turns default setup off (`settings.security.codeScanning: off`), because GitHub rejects advanced results while it is on.
+A code security configuration that enforces default setup blocks that, so the organisation's configuration must leave CodeQL default setup unset or disabled.
+
+A repository tunes the analysis in `.github/codeql/codeql-config.yml`, for example `paths-ignore` for vendored source; queries it lists are added to `security-extended`.
+The workflow uses only the workflow token, so pull requests from forks and Dependabot run it with the same least privilege.
+A repository with no code CodeQL can analyse still scans its workflows.
 
 ## <a id="sync-token"></a>The sync token
 

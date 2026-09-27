@@ -1,0 +1,100 @@
+# Reusable CodeQL workflow: code scanning's advanced setup. Repositories call
+# it through the house-codeql.yml workflow synced from
+# templates/.github/workflows, and the house preset turns CodeQL default setup
+# off, since GitHub rejects advanced results while default setup is on.
+#
+#   languages  maps the repository's GitHub languages to CodeQL languages,
+#              always adding actions for the workflows themselves.
+#   analyze    runs the security-extended queries, the suite default setup
+#              ran, once per language under the same /language:<name>
+#              category, so existing alerts carry over.
+#
+# A repository tunes the analysis with .github/codeql/codeql-config.yml, for
+# example paths-ignore for vendored source; queries it lists are added to
+# security-extended. The config is read from the base commit on pull requests
+# and merge queue entries, like the workflow itself, so a change cannot narrow
+# its own scan; a config change applies once it merges. Uses only the workflow
+# token, so pull requests from forks and Dependabot run it with the same least
+# privilege.
+name: CodeQL
+
+on:
+  workflow_call:
+
+permissions: {}
+
+jobs:
+  languages:
+    name: languages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      matrix: ${{ steps.detect.outputs.matrix }}
+    steps:
+      - name: Map the repository languages to CodeQL languages
+        id: detect
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          matrix=$(gh api "repos/$REPOSITORY/languages" --jq '
+            {
+              "C": "c-cpp", "C++": "c-cpp", "C#": "csharp", "Go": "go",
+              "Java": "java-kotlin", "Kotlin": "java-kotlin",
+              "JavaScript": "javascript-typescript", "TypeScript": "javascript-typescript",
+              "Python": "python", "Ruby": "ruby", "Rust": "rust"
+            } as $codeql
+            | [keys[] | $codeql[.] | select(. != null)] + ["actions"]
+            | unique
+            | map({language: ., "build-mode": (if . == "go" then "autobuild" else "none" end)})
+            | {include: .}
+          ')
+          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
+          echo "$matrix"
+
+  analyze:
+    name: analyze (${{ matrix.language }})
+    needs: languages
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.languages.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Read the analysis config from the base commit
+        id: config
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          REF: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || github.sha }}
+        run: |
+          # init reads a local config only from the workspace, which holds the
+          # pull request's code, so it reads the base commit's file remotely.
+          if gh api "repos/$REPOSITORY/contents/.github/codeql/codeql-config.yml?ref=$REF" \
+            -H 'Accept: application/vnd.github.raw' > /dev/null 2> "$RUNNER_TEMP/codeql-config.err"; then
+            echo "file=$REPOSITORY/.github/codeql/codeql-config.yml@$REF" >> "$GITHUB_OUTPUT"
+          elif grep -q 'HTTP 404' "$RUNNER_TEMP/codeql-config.err"; then
+            echo "No .github/codeql/codeql-config.yml at $REF."
+          else
+            cat "$RUNNER_TEMP/codeql-config.err" >&2
+            exit 1
+          fi
+
+      - uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          queries: +security-extended
+          config-file: ${{ steps.config.outputs.file }}
+
+      - uses: github/codeql-action/analyze@v4
+        with:
+          category: /language:${{ matrix.language }}

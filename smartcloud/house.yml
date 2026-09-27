@@ -182,7 +182,10 @@ settings:
     privateVulnerabilityReporting: true
     dependabotAlerts: true
     dependabotSecurityUpdates: true
-    codeScanning: extended
+    # CodeQL runs as advanced setup from the synced house-codeql.yml workflow,
+    # so a repository can tune it (paths-ignore for vendored code). GitHub
+    # rejects advanced results while default setup is on, so it stays off.
+    codeScanning: off
     secretScanning: true
   ruleset:
     name: "house: default branch"
