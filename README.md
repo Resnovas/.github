@@ -66,6 +66,19 @@ Workflows here and under `templates/` pin every third-party action to a full com
 Dependabot's `github-actions` update moves the SHA and the comment together.
 First-party references stay on a ref: the reusable workflows here track `main`, so a house change reaches every repository on its next run, and `resnovas/smartcloud` follows its major tag.
 
+### <a id="workflow-lint"></a>Workflow lint
+
+Every repository lints its workflows from the synced `.github/workflows/house-workflow-lint.yml`, which calls the reusable `.github/workflows/workflow-lint.yml`.
+[actionlint](https://github.com/rhysd/actionlint) checks the syntax, expressions and run scripts, and [zizmor](https://docs.zizmor.sh) audits the workflows, actions and Dependabot configuration for security problems such as template injection, persisted credentials and unpinned actions.
+Both fail on any finding, and both use only the workflow token with read access, so pull requests from forks and Dependabot run them too.
+
+zizmor reads the synced `.github/zizmor.yml`, which lets Resnovas references follow a branch and holds every other action to a commit SHA.
+Ignore one intended finding where it occurs, with a trailing `# zizmor: ignore[<audit>]` comment that gives the reason; a repository that needs other rules keeps its own copy with `sync.exclude`.
+actionlint reads a repository's own `.github/actionlint.yaml`, for example to ignore a message in one file.
+Run both locally with `uvx zizmor .` and `uvx --from actionlint-py actionlint`.
+
+The check is not required by the house ruleset; a repository that wants it to block merges adds `house-workflow-lint / actionlint` and `house-workflow-lint / zizmor` under `settings.ruleset.statusChecks.checks`.
+
 ## <a id="adopting"></a>Adopting it in a repository
 
 1. Copy `templates/.github/smartcloud.yml` and `templates/.github/workflows/smartcloud.yml` into the repository, or let the first sync add them.

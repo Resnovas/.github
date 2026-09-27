@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { readdirSync, readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -8,9 +8,10 @@ const root = fileURLToPath(new URL('../', import.meta.url))
 const directories = ['.github/workflows', 'templates/.github/workflows']
 
 // A third-party action is pinned to a full commit SHA, with its release as a
-// comment so Dependabot can move both. First-party references, the local
-// action and Resnovas repositories, may follow a branch or tag.
-const pinned = /^[\w.-]+\/[\w./-]+@[0-9a-f]{40} # v\d+(\.\d+)*$/
+// comment so Dependabot can move both, and optionally a trailing zizmor
+// ignore. First-party references, the local action and Resnovas repositories,
+// may follow a branch or tag.
+const pinned = /^[\w.-]+\/[\w./-]+@[0-9a-f]{40} # v\d+(\.\d+)*(?: # zizmor: ignore\[[\w-]+(?:,[\w-]+)*\])?$/
 const firstParty = (ref) => ref.startsWith('./') || /^resnovas\//i.test(ref)
 
 const lines = directories.flatMap((directory) =>
@@ -49,9 +50,16 @@ test('every third-party action is pinned to a commit SHA with its release', () =
 test('every pin of one action uses the same commit', () => {
   const shas = new Map()
   for (const { ref } of references.filter(({ ref }) => pinned.test(ref))) {
-    const [action, rest] = ref.split('@')
+    const [action, rest] = ref.replace(/ # zizmor: .*$/, '').split('@')
     const repository = action.split('/').slice(0, 2).join('/')
     shas.set(repository, new Set([...(shas.get(repository) ?? []), rest]))
   }
   for (const [repository, pins] of shas) assert.equal(pins.size, 1, `${repository} is pinned to ${[...pins].join(', ')}`)
+})
+
+test('every house reusable workflow a workflow calls exists here', () => {
+  const missing = references
+    .map(({ ref }) => ref.match(/^Resnovas\/\.github\/(\.github\/workflows\/[\w.-]+\.ya?ml)@/)?.[1])
+    .filter((path) => path && !existsSync(join(root, path)))
+  assert.deepEqual(missing, [])
 })

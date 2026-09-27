@@ -1,0 +1,74 @@
+# Reusable workflow lint. Repositories call it through the house-workflow-lint.yml
+# workflow synced from templates/.github/workflows.
+#
+#   actionlint  checks workflow syntax, expressions, job and step references,
+#               and the run scripts with the runner's shellcheck.
+#   zizmor      audits workflows, actions and Dependabot configuration for
+#               security problems: template injection, credential persistence,
+#               excessive permissions, unpinned actions and more. It reads the
+#               synced .github/zizmor.yml, which lets Resnovas references
+#               follow a branch and holds every other action to a commit SHA.
+#
+# Both fail the job on any finding. A finding that is intended is ignored where
+# it occurs with a trailing `# zizmor: ignore[<audit>]` comment giving the
+# reason. Uses only the workflow token with read access, so pull requests from
+# forks and Dependabot run it with the same least privilege.
+name: Workflow lint
+
+on:
+  workflow_call:
+
+permissions: {}
+
+env:
+  ACTIONLINT_VERSION: 1.7.12
+  ACTIONLINT_SHA256: 8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8
+  ZIZMOR_VERSION: 1.30.1
+
+jobs:
+  actionlint:
+    name: actionlint
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # The release binary, checked against its published checksum.
+      - name: Install actionlint
+        run: |
+          archive="actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
+          curl -fsSLo "$RUNNER_TEMP/$archive" "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/$archive"
+          echo "$ACTIONLINT_SHA256  $RUNNER_TEMP/$archive" | sha256sum --check --strict
+          tar -xzf "$RUNNER_TEMP/$archive" -C "$RUNNER_TEMP" actionlint
+
+      # One annotation per finding. A repository configures it with
+      # .github/actionlint.yaml, for example to ignore a message in one file.
+      - name: Lint the workflows
+        run: |
+          # The single quotes are deliberate: the template is actionlint's, not the shell's.
+          # shellcheck disable=SC2016
+          "$RUNNER_TEMP/actionlint" -format '{{range $err := .}}::error file={{$err.Filepath}},line={{$err.Line}},col={{$err.Column}}::{{$err.Message}}%0A```%0A{{replace $err.Snippet "\\n" "%0A"}}%0A```\n{{end}}'
+
+  zizmor:
+    name: zizmor
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # Plain output and annotations rather than a code scanning upload, which
+      # would need security-events: write and fail on pull requests from forks.
+      - uses: zizmorcore/zizmor-action@cc914d7f3750a2d13d75c7f184a1060aa0e9d482 # v0.6.4
+        with:
+          version: ${{ env.ZIZMOR_VERSION }}
+          advanced-security: false
+          annotations: true
+          # Workflows, local actions under .github/actions and Dependabot live
+          # here; auditing the whole tree would also audit vendored code.
+          inputs: .github
