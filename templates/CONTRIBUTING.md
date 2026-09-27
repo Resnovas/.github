@@ -99,7 +99,7 @@ A short, clear request is read sooner than a long one.
 
 ### <a id="pr-title"></a>Titling your pull request
 
-Pull request titles follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/), because pull requests are squash merged and the title becomes the commit that drives the changelog and releases.
+Pull request titles follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/), and so does every commit in the pull request, because the merge queue rebases each commit onto the default branch as it stands, where it drives the changelog and releases.
 The check fails if the title does not follow it.
 
 Use one of `feat`, `fix`, `perf`, `refactor`, `test`, `docs`, `chore`, `build`, `ci`, `style` or `revert`, with a scope where one applies: `fix(auth): reject expired tokens`.
@@ -221,7 +221,7 @@ Code owners for the files you changed are asked to review as well.
 A human reviewer's comment gets a reply from you, in your own words, even if the fix itself was produced with an AI tool.
 
 When every required review is in, the pull request is merged with a linear history; merge commits are disabled.
-See [merging](GOVERNANCE.md#merging) for when a maintainer squashes and when they rebase.
+See [merging](GOVERNANCE.md#merging) for how the merge queue rebases each commit and what that asks of them.
 Maintainers may turn on auto-merge so it merges as soon as the last check passes, and the head branch is deleted automatically afterwards.
 
 ### <a id="ReviewTools"></a>Known review tools

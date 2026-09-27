@@ -60,12 +60,12 @@ The owner can always bypass the ruleset, including the review gate, whatever the
 ## <a id="merging"></a>Merging
 
 History on the default branch is linear and every commit on it is signed.
-Merge commits are disabled; a pull request is either squashed or rebased.
-Pull requests merge through a merge queue, which tests every queued pull request against the required checks and squashes it as it lands.
+Merge commits are disabled.
+Pull requests merge through a merge queue, which tests every queued pull request against the required checks and rebases its commits onto the default branch as they stand.
 
-- **Squash** when the pull request has a noisy history: fix-ups, review responses, work in progress.
-The squash keeps every commit message in its body, so each `Signed-off-by`, `Co-authored-by` and `Assisted-by` trailer survives.
-- **Rebase** when the pull request is small and every commit already stands on its own.
+- **Every commit must stand on its own:** one change, a Conventional Commits message and its own `Signed-off-by`, `Co-authored-by` and `Assisted-by` trailers, because each lands on the default branch as it is.
+- **Squash fix-ups, review responses and work in progress into the commit they belong to before review,** not at merge time.
+- **Batch related work into one pull request,** one commit per issue, rather than a pull request per issue: each pull request re-runs every check.
 
 Branches are kept up to date from the pull request page, auto-merge is available, and head branches are deleted once merged.
 

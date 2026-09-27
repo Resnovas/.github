@@ -194,10 +194,12 @@ settings:
     linearHistory: true
     # Every pull request merges through the queue, and every queued entry must
     # pass the required checks. Required workflows also run on merge_group.
-    # One method serves the whole queue; squashing keeps every trailer in the
-    # body and always lands a single commit GitHub signs.
+    # One method serves the whole queue. It rebases: work is batched into one
+    # pull request whose commits were each squashed to one conventional,
+    # signed-off commit per issue before review, so each lands as it stands,
+    # and GitHub signs the rebased commits.
     mergeQueue:
-      method: squash
+      method: rebase
       grouping: allGreen
     # Left unset on purpose: a repository that deploys a pre-production
     # environment adds, for example, requiredDeployments: [Staging].
