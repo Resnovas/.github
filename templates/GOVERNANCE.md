@@ -76,7 +76,7 @@ Every repository is configured to the same baseline, applied automatically by sm
 - merging as above, with sign-off required on web commits and the wiki disabled, because documentation is published elsewhere;
 - Discussions, sponsorships and release immutability enabled;
 - private vulnerability reporting, the dependency graph, Dependabot alerts, security updates and grouped version updates;
-- CodeQL code scanning with Copilot Autofix, a dependency review of every pull request, and on public repositories secret scanning with push protection;
+- CodeQL code scanning with Copilot Autofix, a dependency review of every pull request, an OpenSSF Scorecard of the default branch, and on public repositories secret scanning with push protection;
 - GitHub Actions with a read-only workflow token by default, which may still open pull requests, and on private repositories reusable workflows shared across the organisation;
 - a ruleset on the default branch requiring linear history, signed commits, a merge queue and a pull request (with approvals as above, stale approvals dismissed, conversations resolved and an extra approval for Copilot pull requests opened on no one's behalf), blocking deletion and force pushes, requiring the status checks up to date, requesting Copilot code review on every push and on drafts, and blocking merges on serious code scanning findings, code quality errors and open secret scanning alerts for provider patterns;
 - where a repository opts in: successful deployment to its pre-production environment, ESLint code scanning results, and line coverage of at least 80% dropping no more than 5 points;
