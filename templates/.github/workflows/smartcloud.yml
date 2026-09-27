@@ -2,8 +2,10 @@
 #
 # Runs smartcloud with the house preset (.github/smartcloud.yml): the pull
 # request policy and review gate, label sync, repository settings and the
-# weekly house sync. Once the preset lists two or more maintainers, the house
-# ruleset makes this job's "smartcloud" check required on the default branch.
+# weekly house sync. On pull requests the job also waits for every other check
+# and passes only when they all have, so its "smartcloud" check is the one
+# aggregate check: once the preset lists two or more maintainers, the house
+# ruleset requires it, and no other, on the default branch.
 #
 # Every event acts with a Resnovas Bot GitHub App token, minted from the
 # organisation variable RESNOVAS_BOT_APP_ID and secret RESNOVAS_BOT_PRIVATE_KEY,
@@ -47,6 +49,7 @@ jobs:
       pull-requests: write
       checks: write
       issues: write
+      statuses: read
     steps:
       - name: Repositories the token may reach
         id: scope
@@ -70,5 +73,7 @@ jobs:
       - uses: resnovas/smartcloud@v2
         with:
           GITHUB_TOKEN: ${{ steps.app.outputs.token || github.token }}
+          # Lets the required feature wait for the other checks and leave this job out.
+          checkRunId: ${{ job.check_run_id }}
 # house:managed:end
 # house:local - add further jobs below, indented under jobs.
