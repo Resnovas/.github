@@ -77,6 +77,15 @@ Every pull request re-runs CI, smartcloud and the review bots, and every restack
 5. **Once Jonathan has reviewed and approved it, it lands as an owner fast-forward:** its signed commits are pushed onto the default branch unchanged with his ruleset bypass, after the full gate passes on top of the current default branch, so each issue keeps its own signed commit; then the pull request is closed with links to them. The merge queue squashes, because GitHub cannot sign rebased commits. Never land it before he approves.
 6. **Merge open pull requests before starting new work.**
 
+## Documentation: always twice
+
+Every change to a feature, config option, preset, workflow or setup step updates both kinds of documentation **in the same commit**:
+
+- **ELI5 docs for people** (the README, `docs/` or the docs site): plain words, what it is and why before how, step-by-step setup, one complete example, what you will see when it runs, every option with its default, common problems and fixes.
+- **ai-docs for agents**: the repository's sections under `ai-docs/src` (numbered from 10), with compiling examples in the codebase's own style.
+
+The ai-docs basics are synced from `Resnovas/.github`: `tools/ai-docs/docgen.mjs`, `ai-docs/README.md` and the house standards section `ai-docs/src/05_house-standards`. `LLMS.md` is generated from `ai-docs/src` by `node tools/ai-docs/docgen.mjs` (the `ai-docs` script) and checked by `ai-docs:check`, which the `check` script runs; never edit it by hand.
+
 ## Setup your ecosystem
 
 Before non-trivial work, verify the host can do the job. If something is missing, install it or tell the user exactly what to install. Prefer org-standard tools.

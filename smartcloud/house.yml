@@ -260,12 +260,9 @@ settings:
 # One aggregate check: on pull requests, the smartcloud job waits for every
 # other check on the head commit and fails if any of them fails, so the
 # ruleset requires the smartcloud check alone instead of a list of names.
-# The workflow passes the job's check run id, which the feature needs.
-# Rollout: a repository extends this preset from main, so this goes live on
-# merge, before its sync pull request adds checkRunId to the workflow. Until
-# then the feature is skipped and the smartcloud check reports only
-# smartcloud's own findings, as it did before; the ruleset already requires
-# that check alone, so no required check is dropped in between.
+# The workflow passes the job's check run id, which the feature needs: without
+# it the check fails with required.check-run-missing. The synced smartcloud
+# workflow passes it, so a repository takes the sync before relying on this.
 required: {}
 
 # Governance files synced from this repository's templates.
