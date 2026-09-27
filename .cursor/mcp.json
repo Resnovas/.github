@@ -9,7 +9,7 @@
     "cognee": {
       "command": "uvx",
       "args": [
-        "cognee-mcp@latest"
+        "cognee-mcp==0.5.5"
       ],
       "env": {
         "COGNEE_BASE_URL": "${env:COGNEE_BASE_URL}",

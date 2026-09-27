@@ -69,6 +69,18 @@ const dryRun = flags.includes('--dry-run')
 // deletes the old one, and `check` reports it until then.
 const renamedSources = [['.agents/surfaces.json', '.agents/surfaces.jsonc']]
 
+// Reads a file, or returns null when it does not exist. Reading straight away,
+// rather than testing existsSync first, leaves no window for the file to change
+// between the test and the read.
+const readIfExists = (path) => {
+  try {
+    return readFileSync(path, 'utf8')
+  } catch (error) {
+    if (error.code === 'ENOENT') return null
+    throw error
+  }
+}
+
 const splitManaged = (text) => {
   const lines = text.split('\n')
   const at = (name) => lines.findIndex((line) => new RegExp(`^\\s*//\\s*house:managed:${name}(?![\\w:-])`).test(line))
@@ -86,8 +98,9 @@ const migrateSources = (write) => {
     if (!write) continue
     const currentPath = join(root, current)
     let next = readFileSync(legacyPath, 'utf8')
-    if (existsSync(currentPath)) {
-      const fresh = splitManaged(readFileSync(currentPath, 'utf8'))
+    const existing = readIfExists(currentPath)
+    if (existing !== null) {
+      const fresh = splitManaged(existing)
       const kept = splitManaged(next)
       if (fresh === null || kept === null) throw new Error(`Move the local entries from ${legacy} into ${current} by hand, then delete ${legacy}.`)
       next = [...fresh.before, ...fresh.block, ...kept.after].join('\n')
@@ -255,9 +268,13 @@ const tomlKey = (key) => (/^[A-Za-z0-9_-]+$/.test(key) ? key : tomlString(key))
 
 // Codex reads MCP servers from a trusted project's .codex/config.toml. It
 // forwards named variables to a stdio server and reads a bearer token from a
-// variable itself, so neither needs interpolation.
+// variable itself, so neither needs interpolation. The file also holds the
+// project's other Codex settings, so sync owns only the block between the
+// markers, written last because TOML keys after a table belong to it.
+const codexBegin = `# house:mcp:begin - ${generatedNotice}`
+const codexEnd = '# house:mcp:end'
 const codexConfig = (servers) => {
-  const lines = [`# ${generatedNotice}`]
+  const lines = [codexBegin]
   for (const [name, server] of servers) {
     lines.push('', `[mcp_servers.${tomlKey(name)}]`)
     if (server.url !== undefined) {
@@ -269,7 +286,18 @@ const codexConfig = (servers) => {
       if (server.envPassthrough !== undefined) lines.push(`env_vars = [${server.envPassthrough.map(tomlString).join(', ')}]`)
     }
   }
+  lines.push(codexEnd)
   return `${lines.join('\n')}\n`
+}
+
+// Keeps everything outside the managed block. A file this tool wrote whole,
+// before the markers, is replaced; any other file gets the block appended.
+const mergeCodexConfig = (existing, block) => {
+  if (existing === null || existing.startsWith(`# ${generatedNotice}`)) return block
+  const begin = existing.indexOf(codexBegin)
+  const end = existing.indexOf(codexEnd)
+  if (begin !== -1 && end > begin) return existing.slice(0, begin) + block + existing.slice(end + codexEnd.length + 1)
+  return `${existing.trimEnd()}\n\n${block}`
 }
 
 const mcpTargets = [
@@ -277,7 +305,7 @@ const mcpTargets = [
   { path: '.mcp.json', render: jsonConfig({ key: 'mcpServers', variable: (name) => `\${${name}:-}`, typed: true }) },
   { path: '.cursor/mcp.json', render: jsonConfig({ key: 'mcpServers', variable: (name) => `\${env:${name}}`, workspaceArgs: true }) },
   { path: '.vscode/mcp.json', render: jsonConfig({ key: 'servers', variable: (name) => `\${env:${name}}`, typed: true, workspaceArgs: true }) },
-  { path: '.codex/config.toml', render: codexConfig },
+  { path: '.codex/config.toml', render: codexConfig, merge: mergeCodexConfig },
 ]
 
 // Returns the files that differ from what .agents/mcp.jsonc produces.
@@ -287,8 +315,10 @@ const syncServers = (write) => {
   const stale = []
   for (const target of mcpTargets) {
     const path = join(root, target.path)
-    const content = target.render(servers)
-    if (existsSync(path) && readFileSync(path, 'utf8') === content) continue
+    const existing = readIfExists(path)
+    const rendered = target.render(servers)
+    const content = target.merge === undefined ? rendered : target.merge(existing, rendered)
+    if (existing === content) continue
     stale.push(target.path)
     if (write) {
       mkdirSync(dirname(path), { recursive: true })

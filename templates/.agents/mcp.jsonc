@@ -3,8 +3,9 @@
   // Hosts read strict JSON or TOML that cannot carry the house:managed
   // markers, so this file is the one source: `node tools/dev/surfaces.mjs sync`
   // writes it to .mcp.json (Claude Code), .cursor/mcp.json (Cursor),
-  // .vscode/mcp.json (VS Code) and .codex/config.toml (Codex), which that tool
-  // owns outright, and `check` fails while they are out of date.
+  // .vscode/mcp.json (VS Code), which that tool owns outright, and to the
+  // house:mcp block at the end of .codex/config.toml (Codex), whose other
+  // settings it keeps; `check` fails while they are out of date.
   //
   // Never put a credential here. A server takes secrets from the environment:
   // `bearerEnv` names the variable holding a bearer token for an HTTP server,
@@ -16,10 +17,11 @@
     // External tools behind one gateway. MEM0_GATEWAY_TOKEN comes from Proton Pass.
     "mem0-gateway": { "url": "https://gateway-mcp.mem0.ai/mcp", "bearerEnv": "MEM0_GATEWAY_TOKEN" },
     // Memory and knowledge on Cognee Cloud. COGNEE_BASE_URL and COGNEE_API_KEY
-    // come from Proton Pass (AI Agents Vault, item "Cognee").
+    // come from Proton Pass (AI Agents Vault, item "Cognee"). Pinned, because
+    // the server runs with those credentials: bump it after reviewing a release.
     "cognee": {
       "command": "uvx",
-      "args": ["cognee-mcp@latest"],
+      "args": ["cognee-mcp==0.5.5"],
       "envPassthrough": ["COGNEE_BASE_URL", "COGNEE_API_KEY"],
     },
     // This repository's committed code graph, served locally over stdio.

@@ -59,8 +59,8 @@ Orca and OpenChamber keep quick commands and project actions in per-user setting
 `node tools/dev/surfaces.mjs sync` writes `.agents/prompts` to `.claude/commands` and `.cursor/commands`, which it owns and prunes (it also deletes the `.opencode/commands` it used to write), and a repository's `check` script runs `surfaces.mjs check` so they cannot drift.
 
 `.agents/mcp.jsonc` is the one source of MCP servers, because the host configs are strict JSON or TOML that cannot carry the managed markers.
-`surfaces.mjs sync` writes it to `.mcp.json` (Claude Code), `.cursor/mcp.json`, `.vscode/mcp.json` and `.codex/config.toml`, which it owns, and `check` fails while they differ.
-The house servers are the Mem0 gateway, Cognee, the repository's own Graphify graph and Graphify Cloud.
+`surfaces.mjs sync` writes it to `.mcp.json` (Claude Code), `.cursor/mcp.json`, and `.vscode/mcp.json`, which it owns, and to a marked block at the end of `.codex/config.toml`, keeping the project's other Codex settings above it; `check` fails while they differ.
+The house servers are the Mem0 gateway, Cognee (pinned to a reviewed `cognee-mcp` release, since it runs with the Cognee credentials), the repository's own Graphify graph and Graphify Cloud.
 No credential is ever written: each host config references `MEM0_GATEWAY_TOKEN`, `COGNEE_BASE_URL` and `COGNEE_API_KEY` from the environment in its own syntax, and Graphify Cloud signs in with OAuth.
 
 This repository has no documentation site to serve: its documents are the Markdown files in the root, which GitHub renders.
