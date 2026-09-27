@@ -36,6 +36,12 @@ on:
 
 permissions: {}
 
+# A newer run on the same pull request, issue or branch replaces an older one
+# on the same event, so retriggered runs never wait beside each other.
+concurrency:
+  group: smartcloud-${{ github.event_name }}-${{ github.event.pull_request.number || github.event.issue.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   smartcloud:
     name: smartcloud
