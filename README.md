@@ -33,6 +33,8 @@ In `CODEOWNERS` the managed block comes last, because the last matching rule win
 When a repository first adopts a file it already had, its previous content is kept, commented out at the `house:local` line, for someone to re-add as local rules.
 Making a template extendable only needs the three marker lines; `scripts/lib/managed.mjs` handles the rest.
 
+`AGENTS.md` and `CLAUDE.md` are extendable documents: the house agent instructions sit in the managed block, `CLAUDE.md` only imports `AGENTS.md`, and a repository adds its own instructions after the `house:local` line.
+
 ## <a id="surfaces"></a>Editor and agent surfaces
 
 Every repository gets the same one-click tasks, debug configurations and app actions, synced from `templates/` with managed blocks like the rest of the configuration:
