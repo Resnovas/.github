@@ -48,6 +48,8 @@ jobs:
       # .github/actionlint.yaml, for example to ignore a message in one file.
       - name: Lint the workflows
         run: |
+          # The single quotes are deliberate: the template is actionlint's, not the shell's.
+          # shellcheck disable=SC2016
           "$RUNNER_TEMP/actionlint" -format '{{range $err := .}}::error file={{$err.Filepath}},line={{$err.Line}},col={{$err.Column}}::{{$err.Message}}%0A```%0A{{replace $err.Snippet "\\n" "%0A"}}%0A```\n{{end}}'
 
   zizmor:
@@ -67,3 +69,6 @@ jobs:
           version: ${{ env.ZIZMOR_VERSION }}
           advanced-security: false
           annotations: true
+          # Workflows, local actions under .github/actions and Dependabot live
+          # here; auditing the whole tree would also audit vendored code.
+          inputs: .github

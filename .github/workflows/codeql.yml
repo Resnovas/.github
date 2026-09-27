@@ -38,6 +38,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           REPOSITORY: ${{ github.repository }}
         run: |
+          # The single quotes are deliberate: $ names inside are jq's, not the shell's.
+          # shellcheck disable=SC2016
           matrix=$(gh api "repos/$REPOSITORY/languages" --jq '
             {
               "C": "c-cpp", "C++": "c-cpp", "C#": "csharp", "Go": "go",
