@@ -14,8 +14,8 @@
 // `house` list and the repository's own `actions`. Each runs a package script
 // through `node --run`, or a `command`. `agents` get a button per prompt.
 // `.agents/prompts/<id>.md` holds each prompt once, the house ones synced and
-// the repository's own beside them; `sync` writes it to `.claude/commands`, `.cursor/commands` and
-// `.opencode/commands`, which this tool owns outright.
+// the repository's own beside them; `sync` writes it to `.claude/commands` and
+// `.cursor/commands`, which this tool owns outright.
 //
 // Orca keeps quick commands, and OpenChamber keeps project actions, in
 // per-user settings rather than in the repository, so `install` writes them
@@ -66,7 +66,6 @@ const dryRun = flags.includes('--dry-run')
 const agentNames = {
   claude: 'Claude',
   codex: 'Codex',
-  opencode: 'OpenCode',
   gemini: 'Gemini',
   cursor: 'Cursor',
 }
@@ -115,11 +114,11 @@ const targets = [
       ]) + prompt.body,
   },
   { directory: '.cursor/commands', render: (prompt) => prompt.body },
-  {
-    directory: '.opencode/commands',
-    render: (prompt) => frontmatter([['description', prompt.description]]) + prompt.body,
-  },
 ]
+
+// Command directories the house no longer writes. `sync` deletes what this
+// tool left in them, and `check` reports it until then.
+const retired = ['.opencode/commands']
 
 // Returns the files that differ from what the prompts produce.
 const syncPrompts = (write) => {
@@ -142,6 +141,19 @@ const syncPrompts = (write) => {
         mkdirSync(directory, { recursive: true })
         writeFileSync(path, content)
       }
+    }
+  }
+  for (const retiredDirectory of retired) {
+    const directory = join(root, retiredDirectory)
+    if (!existsSync(directory)) continue
+    for (const file of readdirSync(directory).filter((file) => file.endsWith('.md'))) {
+      stale.push(`${retiredDirectory}/${file}`)
+      if (write) rmSync(join(directory, file))
+    }
+    if (write && readdirSync(directory).length === 0) {
+      rmSync(directory, { recursive: true })
+      const parent = dirname(directory)
+      if (readdirSync(parent).length === 0) rmSync(parent, { recursive: true })
     }
   }
   return stale
