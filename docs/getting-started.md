@@ -21,7 +21,7 @@ This page explains the ideas behind the house in plain words, then walks you thr
 | **Aggregate check** | A single check that passes only when every other check has. The `smartcloud` check is one, so the ruleset never needs a list of check names. |
 | **Merge queue** | GitHub lines up approved pull requests and tests each one on top of the others before merging it, so the default branch never breaks. |
 | **Reusable workflow** | A GitHub Actions workflow in this repository that other repositories call with one short file, so the logic lives in one place. |
-| **Resnovas Bot** | A GitHub App (`resnovas-smartcloud[bot]`) the house workflows act as. It can do things the normal workflow token cannot, such as reading this private preset and changing settings. |
+| **Resnovas Bot** | A GitHub App (`resnovas-smartcloud[bot]`) the house workflows act as. It can do things the normal workflow token cannot, such as changing settings and syncing workflow files. |
 | **Restricted run** | A run with only the read-only workflow token, such as a pull request from a fork or from Dependabot. It skips what it cannot do instead of failing. |
 | **DCO** | The Developer Certificate of Origin. You agree to it by adding `Signed-off-by: Your Name <you@example.com>` to every commit (`git commit -s`). |
 
@@ -87,7 +87,7 @@ sync:
 ```
 
 Every key you can add is explained in [The house preset](preset.md#unset).
-Check the file before you commit it (the token lets it read the private preset):
+Check the file before you commit it:
 
 ```shell
 GITHUB_TOKEN=$(gh auth token) npx @resnovas/smartcloud validate
@@ -159,7 +159,7 @@ Once it merges, the repository runs every house workflow, and every later sync p
 ### The aggregate check and a second maintainer
 
 On every pull request, the `smartcloud` check waits for every other check on the commit and fails if any of them fails, so it is the only check the ruleset needs to require.
-List the repository's main CI check under `required.expect` too, so a renamed or deleted CI job cannot let it pass with nothing to wait for, and keep that CI check required beside `smartcloud` in the ruleset: a pull request from a fork or Dependabot cannot read the private preset, so its `smartcloud` check does not wait for the others.
+List the repository's main CI check under `required.expect` too, so a renamed or deleted CI job cannot let it pass with nothing to wait for, and keep that CI check required beside `smartcloud` in the ruleset: a pull request from a fork or Dependabot runs restricted, so a required CI check keeps it gated whatever smartcloud can do there.
 
 While the preset lists one maintainer, the owner merges at their discretion: no approval is required.
 Once it lists two or more, pull requests need approvals: one for a maintainer's own, two for an outside contributor's.

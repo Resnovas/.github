@@ -181,7 +181,7 @@ One ruleset, named `house: default branch`, is written in full on every run.
 | --- | --- | --- |
 | `workflowPermissions` | `read` | The workflow token is read-only unless a job asks for more. Every house workflow declares what it needs. |
 | `createPullRequests` | `true` | The workflow token may open pull requests (the code graph refresh falls back to it). |
-| `accessLevel` | `organization` | Other Resnovas repositories may call this repository's reusable workflows while it is private. |
+| `accessLevel` | `organization` | Other Resnovas repositories may call this repository's reusable workflows even if it is made private. |
 
 ## <a id="required"></a>`required`: one check to require
 

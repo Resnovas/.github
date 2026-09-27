@@ -27,7 +27,7 @@ Start with `smartcloud doctor` (see [Access](access.md#doctor)): it finds most s
 | The `smartcloud` check fails naming another check. | The aggregate check fails when any other check fails. | Fix that check, re-run it, then re-run the smartcloud job. |
 | `required.missing` after an hour. | A check listed under `required.expect` never appeared. | Make sure the CI job still exists with that name and runs on pull requests. |
 | `required.check-run-missing`. | The workflow does not pass `checkRunId`. | Merge the latest sync pull request, which updates `smartcloud.yml`. |
-| Checks are neutral with "config left out". | A fork or Dependabot pull request cannot read the private preset. | Expected; it does not block the merge. |
+| Checks are neutral with "config left out". | A restricted run (fork or Dependabot pull request) could not read a preset, for example one in a private repository. | Expected; it does not block the merge. |
 | The check never re-runs after a review on a fork's pull request. | The fork's token cannot re-run workflows. | Push a commit, or re-run the check by hand. |
 | The run fails on a value in `.github/smartcloud.yml`. | The file sets a different value for a key the preset sets. Presets are locked. | Remove the key, or restate the preset's value exactly. Check with `smartcloud validate`. |
 | `unknown key` warnings (`config.ignored`). | The config or preset has a key this smartcloud version does not know. | Usually harmless; fix typos, or update smartcloud. |
@@ -36,7 +36,7 @@ Start with `smartcloud doctor` (see [Access](access.md#doctor)): it finds most s
 
 | What you see | Why | Fix |
 | --- | --- | --- |
-| Every `house-*` workflow fails at once with a "workflow was not found" or access error. | `Resnovas/.github` is private and its Actions access does not allow the organisation. | Settings > Actions > General > Access on `Resnovas/.github`: allow repositories in the organisation. |
+| Every `house-*` workflow fails at once with a "workflow was not found" or access error. | `Resnovas/.github` was made private and its Actions access does not allow the organisation. | Settings > Actions > General > Access on `Resnovas/.github`: allow repositories in the organisation. |
 | CodeQL upload fails: advanced results rejected. | GitHub's automatic CodeQL setup is on. | The preset turns it off on the next settings run; an organisation security configuration must not enforce it. |
 | Dependency review fails on a new package. | It has a high or critical advisory, or a licence outside the allowed list. | Pick another version or package, or have a maintainer allow it in `.github/dependency-review-config.yml` after `house:local` (it applies once merged). |
 | zizmor fails on `unpinned-uses`. | A third-party action is referenced by tag. | Pin it to the full commit SHA with the release as a comment. |

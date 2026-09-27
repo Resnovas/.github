@@ -32,8 +32,8 @@ On a push to the default branch, weekly and by hand, it syncs the labels, applie
 In the merge queue the job is skipped, which GitHub counts as passing: the pull request was already checked.
 A newer run for the same pull request, issue or branch cancels the older one.
 
-**Access.** It mints a short-lived Resnovas Bot token that reaches only the repository and `Resnovas/.github` (see [Access](access.md)).
-Forks and Dependabot get no token, so smartcloud runs restricted: it skips the preset, settings and sync, and lists what it skipped in the job summary.
+**Access.** It uses three tokens, each for its own job (see [Access](access.md#tokens)): the workflow token for checks, comments and labels; a read-only Resnovas Bot token for reading the preset and templates in `Resnovas/.github`; and, only on pushes, the weekly run and manual runs, a full Resnovas Bot token that reaches only the repository, for settings and sync.
+Forks and Dependabot get no app token, so smartcloud runs restricted: it skips the preset, settings and sync, and lists what it skipped in the job summary.
 
 **What you will see.**
 
