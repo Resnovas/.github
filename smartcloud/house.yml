@@ -194,8 +194,11 @@ settings:
     linearHistory: true
     # Every pull request merges through the queue, and every queued entry must
     # pass the required checks. Required workflows also run on merge_group.
-    # One method serves the whole queue; squashing keeps every trailer in the
-    # body and always lands a single commit GitHub signs.
+    # One method serves the whole queue. It squashes: GitHub signs the squash
+    # commit, while commits it rewrites by rebasing are unsigned, which the
+    # signed-commits rule below would reject. A maintainer's batch pull request
+    # (one signed commit per issue) keeps its commits by landing as an owner
+    # fast-forward instead; see GOVERNANCE.md#merging.
     mergeQueue:
       method: squash
       grouping: allGreen

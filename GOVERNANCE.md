@@ -100,9 +100,14 @@ Pull requests merge through a merge queue.
 The queue runs the required checks again on the pull request combined with the latest default branch and every pull request queued ahead of it, and lands it only when they pass.
 A pull request that fails in the queue is removed from it, and the ones behind it are tested again without it.
 
-The queue squashes every pull request.
-The squash keeps every commit message in its body, so each `Signed-off-by`, `Co-authored-by` and `Assisted-by` trailer survives.
-Rebase merging stays allowed for the owner's bypass of the ruleset.
+The queue squashes each pull request into one commit, which GitHub signs, and keeps every commit message in its body, so each `Signed-off-by`, `Co-authored-by` and `Assisted-by` trailer survives.
+It does not rebase: GitHub cannot sign the commits it rewrites that way, and every commit on the default branch must be signed.
+
+**Batch pull requests.** Related work is batched into one pull request with one commit per issue, rather than a pull request per issue, because each pull request re-runs every check:
+
+- **Every commit must stand on its own:** one change, a Conventional Commits message, its own trailers, and a signature.
+- **Squash fix-ups, review responses and work in progress into the commit they belong to before review,** not at merge time.
+- **Once the owner has reviewed and approved it,** the batch lands as an *owner fast-forward*: its signed commits are pushed onto the default branch unchanged, with the owner's ruleset bypass, after the full checks pass on top of the current default branch. Each issue keeps its own signed commit, and the pull request is closed with a link to them.
 
 Branches can be updated from the pull request page, and head branches are deleted once merged.
 
