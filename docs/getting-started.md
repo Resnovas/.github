@@ -163,3 +163,14 @@ List the repository's main CI check under `required.expect` too, so a renamed or
 
 While the preset lists one maintainer, the owner merges at their discretion: no approval is required.
 Once it lists two or more, pull requests need approvals: one for a maintainer's own, two for an outside contributor's.
+
+## <a id="own-org"></a>A hub for your own organisation
+
+Nothing here is special to Resnovas: any organisation can run its repositories the same way from its own `.github` repository, with its own preset, templates and app.
+The smartcloud documentation walks through it from scratch:
+
+- [Your organisation's sync hub](https://github.com/Resnovas/smartcloud/blob/main/docs/guides/organisation-hub.mdx): create the hub, write a preset and templates with managed blocks and `{{KEY}}` placeholders, connect each repository, read the first sync pull request, and roll a change out to every repository.
+- [Recommended setups](https://github.com/Resnovas/smartcloud/blob/main/docs/guides/recommended-setups.mdx): complete settings files for a small repository, a monorepo, an open-source project and an organisation preset.
+- [Build your settings file](https://github.com/Resnovas/smartcloud/blob/main/docs/guides/settings-file.mdx): every section of `.github/smartcloud.yml`, in the order to add it, and what each does when it runs.
+
+Use this repository as the full-size example: [`smartcloud/house.yml`](../smartcloud/house.yml) is the preset, `templates/` holds the synced files, and [`templates/.github/smartcloud.yml`](../templates/.github/smartcloud.yml) is the settings file every repository starts from.

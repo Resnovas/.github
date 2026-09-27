@@ -28,6 +28,7 @@ Because the repository is public and named `.github`, GitHub also shows its root
 | Write documentation for AI agents (`ai-docs`, `LLMS.md`) | [AI docs](docs/ai-docs.md) |
 | Fix something that went wrong | [Troubleshooting](docs/troubleshooting.md) |
 | Change a house rule or template | [Changing the house](#changing) below |
+| Build the same kind of hub for another organisation | [Getting started: a hub for your own organisation](docs/getting-started.md#own-org) |
 
 An AI agent should read [`LLMS.md`](LLMS.md) instead: the same ground, written for agents, generated from [`ai-docs/src`](ai-docs/src).
 
