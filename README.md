@@ -62,6 +62,10 @@ This repository has no documentation site to serve: its documents are the Markdo
 1. Commit both.
 Every downstream repository picks the change up in its next sync pull request.
 
+Workflows here and under `templates/` pin every third-party action to a full commit SHA, with its release as a trailing comment (`uses: actions/checkout@<sha> # v7.0.1`), and `npm test` fails on one that is not.
+Dependabot's `github-actions` update moves the SHA and the comment together.
+First-party references stay on a ref: the reusable workflows here track `main`, so a house change reaches every repository on its next run, and `resnovas/smartcloud` follows its major tag.
+
 ## <a id="adopting"></a>Adopting it in a repository
 
 1. Copy `templates/.github/smartcloud.yml` and `templates/.github/workflows/smartcloud.yml` into the repository, or let the first sync add them.
