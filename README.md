@@ -141,6 +141,18 @@ A repository tunes the analysis in `.github/codeql/codeql-config.yml`, for examp
 The workflow uses only the workflow token, so pull requests from forks and Dependabot run it with the same least privilege.
 A repository with no code CodeQL can analyse still scans its workflows.
 
+### <a id="dependency-review"></a>Dependency review
+
+Every pull request and merge queue entry runs a dependency review, from the synced `.github/workflows/house-dependency-review.yml`, which calls the reusable `.github/workflows/dependency-review.yml`.
+[dependency-review-action](https://github.com/actions/dependency-review-action) compares the dependency graph of the base and head commits and fails when the change adds a dependency, in runtime or development scope, with a known vulnerability of high or critical severity, the threshold the ruleset applies to code scanning alerts.
+It lists the changed dependencies, their licences and OpenSSF Scorecards in the job summary rather than a pull request comment, so it needs only the workflow token with read access, and pull requests from forks and Dependabot run it with the same least privilege.
+
+A repository adds its own policy in `.github/dependency-review-config.yml`, which takes the action's [configuration options](https://github.com/actions/dependency-review-action#configuration-options), for example `allow-ghsas` for an advisory that does not apply or `allow-licenses` for a licence policy.
+The review reads the file from the base commit, so a pull request cannot allow its own advisories: a policy change applies once it has merged.
+The house severity and scopes take precedence over the file.
+
+The check is not required by the house ruleset; a repository that wants it to block merges adds `house-dependency-review / dependency-review` under `settings.ruleset.statusChecks.checks`.
+
 ## <a id="sync-token"></a>The sync token
 
 The house workflows authenticate as the Resnovas Bot GitHub App (`resnovas-smartcloud[bot]`), installed on every repository in the organisation.

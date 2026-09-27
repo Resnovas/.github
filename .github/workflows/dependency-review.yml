@@ -1,0 +1,53 @@
+# Reusable dependency review. Repositories call it through the
+# house-dependency-review.yml workflow synced from templates/.github/workflows.
+#
+# On every pull request and merge queue entry it compares the dependency graph
+# of the base and head commits and fails when a change adds a dependency with a
+# known vulnerability of high or critical severity, in runtime or development
+# scope: the threshold the house ruleset applies to code scanning alerts. The
+# summary goes to the job summary rather than a pull request comment, which
+# would need pull-requests: write.
+#
+# A repository adds its own policy in .github/dependency-review-config.yml, for
+# example allow-ghsas for an advisory that does not apply, or allow-licenses.
+# The file is read from the base commit, never from the change under review, so
+# a pull request cannot allow its own advisories; a policy change applies from
+# the next pull request after it merges. The severity and scopes set here take
+# precedence over that file. Uses only
+# the workflow token with read access, so pull requests from forks and
+# Dependabot run it with the same least privilege.
+name: Dependency review
+
+on:
+  workflow_call:
+
+permissions: {}
+
+jobs:
+  dependency-review:
+    name: dependency-review
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      # Only the configuration file, from the base commit: the review itself
+      # reads the dependency graph through the API.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+          sparse-checkout: /.github/dependency-review-config.yml
+          sparse-checkout-cone-mode: false
+
+      - name: Find the repository's review configuration
+        id: config
+        run: |
+          file=.github/dependency-review-config.yml
+          if [ -f "$file" ]; then echo "file=$file" >> "$GITHUB_OUTPUT"; fi
+
+      - uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
+        with:
+          config-file: ${{ steps.config.outputs.file }}
+          fail-on-severity: high
+          fail-on-scopes: runtime, development
+          comment-summary-in-pr: never
