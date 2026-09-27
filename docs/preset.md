@@ -35,6 +35,9 @@ roles:
 - **`maintainers`** are the people who approve and merge. Their own pull requests get warnings instead of errors for most house rules. While fewer than two are listed, no approval is required and the owner merges at their discretion.
 - **`trustedBots`** are automation accounts. Their pull requests skip the AI disclosure, sign-off and title checks, and the review count.
 
+The synced documents name both lists through the `MAINTAINERS` and `TRUSTED_BOTS` values (see [Values that describe a setting](sync.md#values-and-settings)), and the title rules under `conventions` repeat them.
+When you change a list, change all three in the same pull request; `test/values.test.mjs` fails if they disagree.
+
 ## <a id="links"></a>`links`: where findings point
 
 ```yaml
@@ -165,7 +168,7 @@ One ruleset, named `house: default branch`, is written in full on every run.
 | `signedCommits` | Every commit on the branch is signed. GitHub signs squash commits and the bot's commits, but not commits it rewrites with "Rebase and merge", which is why the queue squashes. |
 | `pullRequest` | Changes arrive only through pull requests. `requiredApprovals: 1` (only once two maintainers are listed), stale approvals are dismissed on a new push, every conversation must be resolved, a pull request Copilot opens on no one's behalf needs one extra approval, and squash and rebase are the allowed methods. |
 | `statusChecks` | The `smartcloud` check is required, the branch must be up to date, and a new branch can be created before checks run. A repository adds its own required checks here. |
-| `codeScanning` (`CodeQL`) | A pull request cannot merge with a new CodeQL error or a high or critical security alert. |
+| `codeScanning` (`CodeQL`) | A pull request cannot merge with a new CodeQL error or a high or critical security alert. The `CODE_SCANNING_GATE` value (`true`) says so in `GOVERNANCE.md`, and must stay `true` while this is set. |
 | `codeQuality: errors` | GitHub Code Quality errors block merging. |
 | `codeCoverage` (`minimum: 80`, `maxDrop: 5`) | Line coverage of at least 80% that drops no more than 5 points, enforced only where a repository uploads coverage and sets `enabled: true`. |
 | `secretScanningAlerts` | An open secret scanning alert for a known provider's secret blocks merging. |
@@ -198,13 +201,13 @@ sync:
   source: Resnovas/.github/templates@main
   branch: house/sync
   check: true
-  values: { ORG_NAME: Resnovas, ... }
+  values: { ORG_NAME: Resnovas, MAINTAINERS: TGTGamer, ... }
 ```
 
 - **`source`**: where the templates come from.
 - **`branch`**: the branch the sync pull request comes from.
 - **`check`**: pull requests that edit synced content fail (see [The edit check](sync.md#edit-check)).
-- **`values`**: what each placeholder becomes (see [Values](sync.md#values)).
+- **`values`**: what each placeholder becomes (see [Values](sync.md#values)). Quote a value YAML would read as something other than text, such as `"true"`, `"2026"` or `"@resnovas"`: smartcloud only accepts text values.
 
 ## <a id="unset"></a>What a repository adds
 
@@ -212,7 +215,7 @@ The preset leaves these to each repository, in `.github/smartcloud.yml` after th
 
 | Key | When you need it | Example |
 | --- | --- | --- |
-| `settings.environments.projectType` | The repository deploys or publishes. `saas` creates Production, Staging and Development; `desktop` creates Windows, Linux and macOS with a Beta of each; `library` creates Release; `none` creates nothing. | `projectType: library` |
+| `settings.environments.projectType` | The repository deploys or publishes. Each repository chooses its own, and also sets `PROJECT_TYPE` in its `sync.values` so the synced documents describe it (see [Project type and environments](sync.md#environments)). `saas` creates Production, Staging and Development; `desktop` creates Windows, Linux and macOS with a Beta of each; `library` creates Release; `none` creates nothing. | `projectType: library` |
 | `settings.environments.names` | Explicit environment names instead of a project type. | `names: [Production, Preview]` |
 | `settings.ruleset.requiredDeployments` | The branch must deploy to a pre-production environment before merging. | `requiredDeployments: [Staging]` |
 | `settings.ruleset.statusChecks.checks` | The repository's own required checks, such as its CI aggregate job. | `checks: { check: true }` |
@@ -229,6 +232,6 @@ Check your file with `GITHUB_TOKEN=$(gh auth token) npx @resnovas/smartcloud val
 
 Edit `smartcloud/house.yml` here and open a pull request.
 Remember it applies to every repository on its next run.
-A new placeholder value goes in both `sync.values` and `house.yml`.
+A new placeholder value goes in both `sync.values` and `house.yml`, with the same value; `test/values.test.mjs` fails if they differ.
 If you change a value a repository restated in its own file, that repository's run fails until it removes or updates the restatement, so search the organisation first.
 smartcloud ignores, with a warning, a key it does not know, so a preset written for a newer smartcloud does not break an older one.

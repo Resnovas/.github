@@ -10,12 +10,16 @@
 # cannot change a value set here. Identical restatements are allowed.
 #
 # Left unset on purpose, so each repository adds its own:
-#   settings.environments  projectType (saas, desktop, library) or names
+#   settings.environments  projectType (saas, desktop, library) or names; not a
+#                          sync value, because a value set here is locked
 #   settings.ruleset       requiredDeployments, statusChecks.checks,
 #                          codeScanning.ESLint, codeCoverage.enabled
 #   sync.exclude           template paths the repository keeps its own copy of
 version: 2
 
+# sync.values MAINTAINERS and TRUSTED_BOTS name these in the synced documents,
+# and the title rules under conventions repeat them; test/values.test.mjs fails
+# when any of them disagree.
 roles:
   maintainers: [TGTGamer]
   trustedBots: ["dependabot[bot]", "renovate[bot]", "github-actions[bot]", "resnovas-smartcloud[bot]"]
@@ -233,6 +237,7 @@ settings:
     # A repository that uploads ESLint results to code scanning adds
     # codeScanning.ESLint with the same thresholds; one that uploads nothing
     # would block every pull request.
+    # sync.values CODE_SCANNING_GATE is "true" while this gate is set.
     codeScanning:
       CodeQL:
         securityAlerts: high_or_higher
@@ -282,3 +287,8 @@ sync:
     OWNERS_DOCS: "@TGTGamer"
     OWNERS_QA: "@TGTGamer"
     OWNERS_WORKFLOW: "@TGTGamer"
+    # The same people and gate as roles and settings.ruleset.codeScanning
+    # above, for the documents that name them.
+    MAINTAINERS: TGTGamer
+    TRUSTED_BOTS: "dependabot[bot], renovate[bot], github-actions[bot], resnovas-smartcloud[bot]"
+    CODE_SCANNING_GATE: "true"

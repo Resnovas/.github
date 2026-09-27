@@ -29,4 +29,7 @@ smartcloud workflow by hand. Reusable workflows and the preset are read from
 
 Never write a change that breaks a downstream smartcloud run: unknown config
 keys only warn, but a template placeholder with no value in `sync.values`
-fails every repository's sync. Add the value to the preset in the same commit.
+fails every repository's sync. Add the value to the preset in the same commit,
+or give the placeholder a default (`{{KEY:-default}}`) when each repository
+should set its own; never put a per-repository value in the preset's
+`sync.values`, which locks it for everyone.

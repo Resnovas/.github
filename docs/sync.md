@@ -132,13 +132,50 @@ This repository renders its own root from [`house.yml`](../house.yml) instead, b
 | `COVERAGE_MIN` | The minimum line and branch coverage, in percent. | `90` |
 | `SPONSORS` | GitHub Sponsors accounts in `FUNDING.yml`. | `TGTGamer` |
 | `OWNERS_ADMIN`, `OWNERS_DOCS`, `OWNERS_QA`, `OWNERS_WORKFLOW` | Code owners by role in `CODEOWNERS`. Each is a `@user` or `@org/team`; separate several with spaces. | `@TGTGamer` |
+| `MAINTAINERS` | The maintainers named in `GOVERNANCE.md`, `CONTRIBUTING.md` and the comment in `.github/smartcloud.yml`. GitHub logins, comma separated. | `TGTGamer` |
+| `TRUSTED_BOTS` | The automation accounts named as exempt in `GOVERNANCE.md`, `DCO.md`, `AI_POLICY.md`, `APPROVAL_POLICY.md` and `CONTRIBUTING.md`. Comma separated. | `dependabot[bot], renovate[bot], github-actions[bot], resnovas-smartcloud[bot]` |
+| `CODE_SCANNING_GATE` | Whether `GOVERNANCE.md` says merges are blocked on CodeQL findings. `true` or `false`. | `true` |
 
 A value is fixed by the preset, so a repository cannot change it; a repository that needs a different licence holder, for example, excludes `LICENSE` and keeps its own.
 A template that uses a placeholder with no value fails the sync, so a new placeholder needs its value in the preset in the same change.
+A placeholder may carry a default, written `{{KEY:-default}}`: it becomes the default when no value is set, and the value when one is. Use it for a value each repository may set for itself but need not; a plain `{{KEY}}` must always have a value.
 
-`house.yml` has a few keys no template uses today: `MAINTAINERS`, `TRUSTED_BOTS`, `PROJECT_TYPE`, `ENVIRONMENTS` and `CODE_SCANNING_GATE`.
-Their settings live in the preset instead (`roles`, `settings.environments`, `settings.ruleset.codeScanning`).
-`HOUSE_EXCLUDE` in `house.yml` is the renderer's equivalent of `sync.exclude`, for this repository's own root.
+### <a id="values-and-settings"></a>Values that describe a setting
+
+`MAINTAINERS`, `TRUSTED_BOTS` and `CODE_SCANNING_GATE` only put words in the documents.
+What smartcloud actually enforces comes from the preset's own settings: `roles.maintainers`, `roles.trustedBots`, and the CodeQL entry under `settings.ruleset.codeScanning`.
+So the two must say the same thing, and a test in this repository (`test/values.test.mjs`) fails if they do not.
+It also checks the pull request title rules, which list the same people in their patterns.
+To add a maintainer or a trusted bot, change all of them in one pull request: `roles`, the title patterns under `conventions`, `sync.values` in [`smartcloud/house.yml`](../smartcloud/house.yml), and [`house.yml`](../house.yml).
+
+Why not let the synced `.github/smartcloud.yml` set `roles` from the values?
+Two reasons.
+A local line may not reuse a top-level key the managed block sets, so a managed `settings` or `roles` would stop every repository adding its own.
+And a repository's file only changes when it merges the sync pull request: if the preset's maintainers changed first, the old copy in its file would count as changing a locked value, and its runs would fail until the sync merged.
+The managed block shows the three values in a comment instead.
+
+### <a id="environments"></a>Project type and environments: per repository
+
+What a repository ships (its project type) and which environments it deploys to differ for every repository, so the preset does not set them: a value in the preset's `sync.values` is locked for everyone.
+
+- **`PROJECT_TYPE`** (`saas`, `desktop`, `library` or `none`) and **`ENVIRONMENTS`** (explicit names, comma separated) are optional values. A repository sets them in its own `.github/smartcloud.yml`, after the `house:local` line, and the synced documents describe it. The templates write them with defaults, `{{PROJECT_TYPE:-none}}` and `{{ENVIRONMENTS:-that its project type implies}}`, so a repository that sets neither still syncs.
+- The environments themselves are created from `settings.environments`, which the repository sets in the same file.
+
+```yaml
+sync:
+  values:
+    PROJECT_TYPE: library
+settings:
+  environments:
+    projectType: library    # or saas, desktop; or names: [Production, Preview]
+```
+
+See [What a repository adds](preset.md#unset) for what each project type creates.
+
+### <a id="values-root"></a>This repository's own values
+
+`house.yml` holds the same keys and values as `sync.values`, plus two for this repository alone: `REPOSITORY` (`Resnovas/.github`), and `HOUSE_EXCLUDE`, the renderer's equivalent of `sync.exclude`.
+The same test fails if `house.yml` and `sync.values` differ in any other key.
 
 ## <a id="preview"></a>Seeing what a repository will get
 

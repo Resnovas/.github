@@ -2,8 +2,11 @@
 #
 # Every {{KEY}} in templates/ is replaced with the value below when the
 # templates are rendered. The root of this repository is rendered from these
-# defaults; a downstream repository may override any key by committing its own
-# .github/house.yml containing only the keys it changes.
+# values. Other repositories are rendered by smartcloud's sync from sync.values
+# in smartcloud/house.yml, which holds the same keys and values apart from
+# REPOSITORY and HOUSE_EXCLUDE (test/values.test.mjs checks). The --override
+# option of scripts/render.mjs layers another file of keys over these for a
+# preview.
 #
 # Flat `KEY: value` pairs only. Lists are comma separated.
 
@@ -29,30 +32,38 @@ CONDUCT_CONTACT: hello@resnovas.com
 # Minimum line and branch coverage, in percent, for any change.
 COVERAGE_MIN: 90
 
-# GitHub logins of the maintainers. With two or more, the review gate starts
-# requiring maintainer approvals; with one, the owner merges at their discretion.
+# GitHub logins of the maintainers, named in GOVERNANCE.md and CONTRIBUTING.md.
+# With two or more, the review gate starts requiring maintainer approvals; with
+# one, the owner merges at their discretion. Must match roles.maintainers in
+# smartcloud/house.yml (test/values.test.mjs checks).
 MAINTAINERS: TGTGamer
 
-# Automation accounts that skip the AI disclosure and DCO checks.
+# Automation accounts that skip the AI disclosure, DCO and title checks, named
+# in GOVERNANCE.md, DCO.md, AI_POLICY.md and APPROVAL_POLICY.md. Must match
+# roles.trustedBots in smartcloud/house.yml.
 TRUSTED_BOTS: dependabot[bot], renovate[bot], github-actions[bot], resnovas-smartcloud[bot]
 
 # Template paths this repository keeps its own copy of instead of syncing,
 # for example LICENSE when a dependency requires a different licence.
 HOUSE_EXCLUDE:
 
-# What the repository ships, which decides its deployment environments:
-#   saas     Production, Staging, Development
-#   desktop  Windows, Linux, macOS, and a Beta of each
-#   library  Release
-#   none     no environments
-PROJECT_TYPE: none
-
-# Explicit environment names, replacing the PROJECT_TYPE set. Comma separated.
-ENVIRONMENTS:
-
-# Block merges on CodeQL errors and high or critical security alerts. Set to
-# false only for a repository CodeQL cannot analyse, such as docs only.
+# Whether merges are blocked on CodeQL errors and high or critical security
+# alerts, shown in GOVERNANCE.md. true exactly when smartcloud/house.yml sets
+# settings.ruleset.codeScanning.CodeQL (test/values.test.mjs checks).
 CODE_SCANNING_GATE: true
+# Optional, per repository (set in a repository's own sync.values; templates
+# write {{PROJECT_TYPE:-none}} and {{ENVIRONMENTS:-...}} so an unset key
+# renders its default instead of failing):
+#   PROJECT_TYPE  saas, desktop, library or none - what the repository ships.
+#   ENVIRONMENTS  explicit deployment environment names, comma separated.
+# They describe the repository in the synced documents; the environments
+# themselves are created from settings.environments in .github/smartcloud.yml.
+
+# Deployment environments are not a value: each repository chooses its own, so
+# it sets settings.environments.projectType (saas, desktop, library) or
+# settings.environments.names in its own .github/smartcloud.yml. A preset value
+# would be locked for every repository, and a template placeholder without a
+# value fails the sync. See docs/sync.md#values.
 
 # GitHub Sponsors accounts shown on the Sponsor button (FUNDING.yml).
 SPONSORS: TGTGamer

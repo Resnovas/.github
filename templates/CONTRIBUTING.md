@@ -211,13 +211,13 @@ They follow the same process and still need a sign-off ([Developer Certificate o
 
 Once you open a pull request, automated checks run:
 
-- **House policy:** AI disclosure, co-author and sign-off trailers, and the pull request title.
+- **House policy:** AI disclosure, co-author and sign-off trailers, and the pull request title. The [trusted bots](GOVERNANCE.md#trusted-bots) (`{{TRUSTED_BOTS}}`) skip these.
 - **Build and test:** build, lint, type check and tests for everything the change affects.
 - **Security and quality:** the security and code quality scans configured for the repository.
 - **Automated review:** AI and analysis tools review the change, including drafts.
 Treat their comments as seriously as a person's, and reply if you disagree.
 
-Then a maintainer reviews it.
+Then a maintainer (`{{MAINTAINERS}}`) reviews it.
 The number of human approvals needed is set in [the governance document](GOVERNANCE.md#review): two maintainers for an outside contribution once a project has two or more maintainers.
 Code owners for the files you changed are asked to review as well.
 

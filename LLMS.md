@@ -146,8 +146,9 @@ repository. Rendering does three things:
 
 1. **Substitutes placeholders.** `{{KEY}}` is replaced from the values
    (`scripts/lib/render.mjs`). An unknown key throws, naming the template, so a
-   blank copyright holder or contact address can never ship. Keys are upper
-   snake case. Avoid a literal `{{UPPER}}` in a template for any other reason.
+   blank copyright holder or contact address can never ship; `{{KEY:-default}}`
+   renders the default instead, for an optional per-repository value such as
+   `PROJECT_TYPE`. Keys are upper snake case. Avoid a literal `{{UPPER}}` in a template for any other reason.
 2. **Merges managed blocks.** A template with a `house:managed:begin` and
    `house:managed:end` pair is extendable: only the lines between the markers
    are replaced, and everything the repository added around them is kept
@@ -220,7 +221,10 @@ smartcloud workflow by hand. Reusable workflows and the preset are read from
 
 Never write a change that breaks a downstream smartcloud run: unknown config
 keys only warn, but a template placeholder with no value in `sync.values`
-fails every repository's sync. Add the value to the preset in the same commit.
+fails every repository's sync. Add the value to the preset in the same commit,
+or give the placeholder a default (`{{KEY:-default}}`) when each repository
+should set its own; never put a per-repository value in the preset's
+`sync.values`, which locks it for everyone.
 
 ---
 

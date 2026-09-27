@@ -50,7 +50,7 @@ An AI agent should read [`LLMS.md`](LLMS.md) instead: the same ground, written f
 You need Node 24 or newer. There is nothing to install.
 
 1. Edit the file under `templates/`, or a default in `house.yml`.
-   A default that other repositories need also goes under `sync.values` in `smartcloud/house.yml`, because that is where their sync reads values from.
+   Every value except `REPOSITORY` and `HOUSE_EXCLUDE` also goes, unchanged, under `sync.values` in `smartcloud/house.yml`, because that is where the other repositories' sync reads values from; `test/values.test.mjs` fails if the two differ.
 1. Run `npm run render`. It rewrites this repository's own copies from the templates.
 1. Update the documentation twice: the page under `docs/` (or this README) for people, and the section under `ai-docs/src` for agents. Then run `npm run ai-docs` to rebuild `LLMS.md`.
 1. Run `npm test` and `npm run check`.
