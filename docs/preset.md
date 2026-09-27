@@ -183,6 +183,41 @@ One ruleset, named `house: default branch`, is written in full on every run.
 | `createPullRequests` | `true` | The workflow token may open pull requests (the code graph refresh falls back to it). |
 | `accessLevel` | `organization` | Other Resnovas repositories may call this repository's reusable workflows even if it is made private. |
 
+## <a id="automerge"></a>`autoMerge`: dependency updates merge themselves
+
+```yaml
+autoMerge:
+  rules:
+    dependency-updates:
+      when:
+        condition:
+          - type: dependencyUpdateType
+            condition: [patch, minor]
+```
+
+**What it is.** When Dependabot or Renovate opens a pull request that moves a dependency up a patch or minor version (for example `1.4.1` to `1.4.2`, or `1.4` to `1.5`), smartcloud turns on GitHub auto-merge for it.
+Auto-merge means "merge this as soon as it is allowed": GitHub waits for every required check and review, then puts the pull request in the merge queue.
+So nobody has to come back and press merge on routine updates, and nothing skips CI.
+
+**What it leaves alone.** Major updates (`1.x` to `2.0`) can break things, so they wait for a person. Pull requests from people are never touched.
+
+**What you will see.** On a matching pull request, a comment from smartcloud: "Auto-merge is on (squash), because the `dependency-updates` auto-merge rule matched", and the pull request's merge box shows auto-merge as enabled.
+It merges once the `smartcloud` check and any other required checks pass.
+
+**What it needs.** The repository must allow auto-merge (the preset's `settings.repository.autoMerge: true` does that) and the synced smartcloud workflow's job needs `contents: write`, which it has, so the workflow token can turn auto-merge on in Dependabot's runs, where no app token is minted.
+
+**Adding your own rules.** Add rules with keys of your own after the `house:local` line, for example to let your release bot's pull requests merge themselves. You cannot change `dependency-updates` itself.
+To turn auto-merge off again when a rule stops matching, set `autoMerge.disableWhenUnmatched: true` in your own config.
+Every option is described in [smartcloud's auto-merge page](https://github.com/Resnovas/smartcloud/blob/main/docs/features/auto-merge.mdx).
+
+**If it does not happen.**
+
+| You see | Why | What to do |
+| --- | --- | --- |
+| A warning that auto-merge is not allowed | The repository does not allow auto-merge. | Let the settings feature apply the preset, or tick **Allow auto-merge** in the repository settings. |
+| A warning that the token is read-only | The workflow's job lacks `contents: write`. | Take the house sync of `.github/workflows/smartcloud.yml`. |
+| A notice that the pull request can already be merged | Nothing required was pending, so GitHub refused to wait. | Nothing: merge it, or require a check. |
+
 ## <a id="required"></a>`required`: one check to require
 
 ```yaml

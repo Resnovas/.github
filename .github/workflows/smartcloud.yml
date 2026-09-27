@@ -65,8 +65,13 @@ jobs:
     # organisation, the mint is skipped rather than attempted with empty inputs.
     env:
       HAS_APP_KEY: ${{ vars.RESNOVAS_BOT_APP_ID != '' && secrets.RESNOVAS_BOT_PRIVATE_KEY != '' }}
+    # contents: write lets the workflow token turn on auto-merge for the pull
+    # requests an autoMerge rule allows (Dependabot patch and minor updates),
+    # since enabling it needs the right to merge. This job runs the published
+    # action, never the pull request's code, and a fork's token stays
+    # read-only whatever is asked for here.
     permissions:
-      contents: read
+      contents: write
       pull-requests: write
       checks: write
       issues: write

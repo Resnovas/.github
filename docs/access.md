@@ -37,7 +37,7 @@ Why split them? A pull request can change its own copy of the workflow file. If 
 
 - **On a pull request**: checks, the report comment and labels come from `github-actions[bot]`. The job summary has a notice that the run was restricted (it had no app token) and lists settings as skipped; that is expected, as settings only runs on `main`. The house preset is still read and its rules are checked, and the synced-file check (`SYNC`) still runs.
 - **On a push to `main`, weekly and by hand**: settings and the sync pull request come from `resnovas-smartcloud[bot]`; checks and labels still come from `github-actions[bot]`.
-- **When a pull request from the repository is merged**: a repository that configures backports gets them from `resnovas-smartcloud[bot]`, so CI runs on them. GitHub starts no workflows for a pull request opened with the workflow token, which is why backport needs the app token. By the time the pull request is merged its code is on the default branch, so that run is trusted. Without the app token, the job's `contents: read` cannot push: nothing is backported and the job summary has a warning saying so.
+- **When a pull request from the repository is merged**: a repository that configures backports gets them from `resnovas-smartcloud[bot]`, so CI runs on them. GitHub starts no workflows for a pull request opened with the workflow token, which is why backport needs the app token. By the time the pull request is merged its code is on the default branch, so that run is trusted. Without the app token, the run is restricted and does not push backports with the workflow token (their pull requests would start no CI): nothing is backported and the job summary has a warning saying so.
 
 ### Setting it up in a new organisation
 
@@ -91,7 +91,7 @@ The synced `smartcloud.yml` already does this; these are the steps if you adopt 
        checkRunId: ${{ job.check_run_id }}
    ```
 
-5. Give the job the permissions the workflow token now needs: `contents: read`, `checks: write`, `issues: write`, `pull-requests: write` and `statuses: read`.
+5. Give the job the permissions the workflow token now needs: `contents: write` (so it can turn on auto-merge for the pull requests an `autoMerge` rule allows; use `contents: read` if you have no auto-merge rules), `checks: write`, `issues: write`, `pull-requests: write` and `statuses: read`.
 
 `houseToken` is optional. A smartcloud release that does not know it ignores it with a warning, and a workflow that does not pass it still works: the workflow token then reads the public preset.
 
