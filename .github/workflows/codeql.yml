@@ -76,10 +76,11 @@ jobs:
           REPOSITORY: ${{ github.repository }}
           REF: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || github.sha }}
         run: |
-          file="$RUNNER_TEMP/codeql-config.yml"
+          # init reads a local config only from the workspace, which holds the
+          # pull request's code, so it reads the base commit's file remotely.
           if gh api "repos/$REPOSITORY/contents/.github/codeql/codeql-config.yml?ref=$REF" \
-            -H 'Accept: application/vnd.github.raw' > "$file" 2> "$RUNNER_TEMP/codeql-config.err"; then
-            echo "file=$file" >> "$GITHUB_OUTPUT"
+            -H 'Accept: application/vnd.github.raw' > /dev/null 2> "$RUNNER_TEMP/codeql-config.err"; then
+            echo "file=$REPOSITORY/.github/codeql/codeql-config.yml@$REF" >> "$GITHUB_OUTPUT"
           elif grep -q 'HTTP 404' "$RUNNER_TEMP/codeql-config.err"; then
             echo "No .github/codeql/codeql-config.yml at $REF."
           else
