@@ -4,7 +4,10 @@
 # off, since GitHub rejects advanced results while default setup is on.
 #
 #   languages  maps the repository's GitHub languages to CodeQL languages,
-#              always adding actions for the workflows themselves.
+#              adds the languages of the files a pull request or merge queue
+#              entry changes (so a change that brings a new language is
+#              scanned for it before it merges, not after), and always adds
+#              actions for the workflows themselves.
 #   analyze    runs the security-extended queries, the suite default setup
 #              ran, once per language under the same /language:<name>
 #              category, so existing alerts carry over.
@@ -33,13 +36,35 @@ jobs:
     outputs:
       matrix: ${{ steps.detect.outputs.matrix }}
     steps:
-      - name: Map the repository languages to CodeQL languages
+      - name: Map the repository and changed-file languages to CodeQL languages
         id: detect
         env:
           GH_TOKEN: ${{ github.token }}
           REPOSITORY: ${{ github.repository }}
+          BASE: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+          HEAD: ${{ github.event.pull_request.head.sha || github.event.merge_group.head_sha }}
         run: |
-          # The single quotes are deliberate: $ names inside are jq's, not the shell's.
+          # GitHub's language list reflects the default branch, so a change
+          # that adds a repository's first file in a language would go
+          # unscanned until after merge. Add the languages of the changed
+          # files, by extension, skipping vendored and generated paths, where
+          # a language with nothing to analyse would fail its job.
+          changed='[]'
+          if [ -n "$BASE" ] && [ -n "$HEAD" ]; then
+            # The single quotes are deliberate: $ names inside are jq's, not the shell's.
+            # shellcheck disable=SC2016
+            # A failed comparison falls back to the repository's languages,
+            # as before, rather than stopping the scan.
+            changed=$(gh api "repos/$REPOSITORY/compare/$BASE...$HEAD" --jq '
+              [.files[]? | select(.status != "removed") | .filename
+               | select(test("^(externals|vendor|node_modules|dist)/|/(vendor|node_modules|dist)/") | not)
+               | capture("\\.(?<ext>[A-Za-z0-9]+)$")?.ext | ascii_downcase]
+              | unique
+            ') || {
+              echo "::warning title=CodeQL languages::Could not list the changed files; scanning the repository's languages only."
+              changed='[]'
+            }
+          fi
           # shellcheck disable=SC2016
           matrix=$(gh api "repos/$REPOSITORY/languages" --jq '
             {
@@ -48,7 +73,17 @@ jobs:
               "JavaScript": "javascript-typescript", "TypeScript": "javascript-typescript",
               "Python": "python", "Ruby": "ruby", "Rust": "rust"
             } as $codeql
-            | [keys[] | $codeql[.] | select(. != null)] + ["actions"]
+            | {
+                "c": "c-cpp", "h": "c-cpp", "cc": "c-cpp", "cpp": "c-cpp", "cxx": "c-cpp", "hh": "c-cpp", "hpp": "c-cpp",
+                "cs": "csharp", "go": "go", "java": "java-kotlin", "kt": "java-kotlin", "kts": "java-kotlin",
+                "js": "javascript-typescript", "jsx": "javascript-typescript", "mjs": "javascript-typescript",
+                "cjs": "javascript-typescript", "ts": "javascript-typescript", "tsx": "javascript-typescript",
+                "mts": "javascript-typescript", "cts": "javascript-typescript",
+                "py": "python", "rb": "ruby", "rs": "rust"
+              } as $extensions
+            | [keys[] | $codeql[.] | select(. != null)]
+              + [('"$changed"')[] | $extensions[.] | select(. != null)]
+              + ["actions"]
             | unique
             | map({language: ., "build-mode": (if . == "go" then "autobuild" else "none" end)})
             | {include: .}

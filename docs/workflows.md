@@ -58,7 +58,16 @@ GitHub allows 50 re-runs of one run; after that, push a commit.
 ## <a id="codeql"></a>CodeQL
 
 **What it does.** Finds security problems in the code with [CodeQL](https://codeql.github.com/).
-A first job maps the repository's languages to CodeQL's (C and C++, C#, Go, Java and Kotlin, JavaScript and TypeScript, Python, Ruby, Rust), always adding `actions` for the workflows; a second job analyses each with the `security-extended` queries.
+A first job works out which languages to scan, and a second job analyses each with the `security-extended` queries.
+The languages are CodeQL's (C and C++, C#, Go, Java and Kotlin, JavaScript and TypeScript, Python, Ruby, Rust), taken from two places:
+
+- the languages GitHub lists for the repository, which describe the default branch;
+- on a pull request or merge queue entry, the languages of the files it adds or changes, by file extension.
+
+So a pull request that brings the repository's first Python file is scanned for Python before it merges, not only after.
+Files under `externals/`, `vendor/`, `node_modules/` and `dist/` do not add a language, because a language with nothing left to analyse would fail its job.
+`actions` is always scanned, for the workflows themselves.
+If the list of changed files cannot be read, the job warns "Could not list the changed files" and scans the repository's languages only.
 
 **When it runs.** Pull requests, the merge queue, pushes to `main`, Mondays at 04:27 UTC, and by hand.
 
