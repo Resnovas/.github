@@ -32,7 +32,8 @@ LICENSE
 tools/graphify/
 tools/dev/surfaces.mjs
 tools/dev/open.mjs
-.agents/surfaces.json
+.agents/surfaces.jsonc
+.agents/mcp.jsonc
 .agents/prompts/verify.md
 .agents/prompts/review.md
 .agents/prompts/address-review.md
@@ -42,9 +43,13 @@ tools/dev/open.mjs
 .run/house-*.run.xml
 .codex/environments/environment.toml
 orca.yaml
-# Generated from .agents/prompts by tools/dev/surfaces.mjs.
+# Generated from .agents/prompts and .agents/mcp.jsonc by tools/dev/surfaces.mjs.
 .claude/commands/
 .cursor/commands/
+.mcp.json
+.cursor/mcp.json
+.vscode/mcp.json
+.codex/config.toml
 # The committed code graph.
 graphify-out/
 # house:managed:end
