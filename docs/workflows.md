@@ -166,8 +166,18 @@ In a repository without `tools/graphify/graphify` both do nothing.
 | `private-key` | secret | no | The app's private key (`RESNOVAS_BOT_PRIVATE_KEY`). The synced caller passes it only outside pull requests. Without it, the workflow token opens the pull request. |
 | `token` | secret | no | Deprecated. A fallback for callers not yet synced. Pass `private-key` instead. |
 
-**What you will see.** On pull requests, a `check` job and, when the graph is behind, a notice "Graphify graph is behind the code".
-On the default branch, a pull request titled `chore(graphify): refresh the code graph` from the `house/graphify` branch, labelled `house-sync`.
+**What you will see.** On pull requests, a `check` job that always passes, and a `refresh (default branch only)` job shown as skipped, because it only runs after merge.
+When the graph is behind, `check` adds a notice "Graphify graph is behind the code (no action needed)" and the same explanation in the job summary, with the counts of nodes and edges that differ.
+You do not need to do anything: after the pull request merges, `refresh` runs on the default branch and opens a pull request titled `chore(graphify): refresh the code graph` from the `house/graphify` branch, labelled `house-sync`.
+If you would rather ship the rebuilt graph in your own pull request, run `sh tools/graphify/graphify update` and commit `graphify-out/`.
+
+**Common problems.**
+
+| You see | Why | What to do |
+| --- | --- | --- |
+| "Graphify graph is behind the code" on a pull request, and `refresh` skipped | Expected: the graph is refreshed after merge, not on pull requests. | Nothing, or update and commit the graph yourself. |
+| No refresh pull request after a merge | The graph already matched the code, or the default branch has no `tools/graphify/graphify`. | Check the `refresh` job's log on the default branch. |
+| The refresh pull request conflicts | The default branch moved again before it merged. | Close it; the next push to the default branch opens a fresh one. |
 
 ## <a id="attest"></a>Attest (for release workflows)
 

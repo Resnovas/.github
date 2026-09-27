@@ -324,6 +324,12 @@ The synced callers also pass actionlint and zizmor (`.github/zizmor.yml` lets
 `env:`, and `actions/checkout` sets `persist-credentials: false` unless a later
 step pushes.
 
+Graphify's `check` job never fails a pull request: a graph one commit behind
+is expected, because `refresh` (named `refresh (default branch only)` so its
+skip on pull requests explains itself) rebuilds it after merge. When stale,
+`check` writes one notice and a job summary saying no action is needed; do not
+reintroduce the tool's "update, then commit" advice as the only guidance.
+
 ---
 
 ## Making a change here

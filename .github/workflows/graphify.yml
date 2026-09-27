@@ -51,19 +51,34 @@ jobs:
         if: hashFiles('tools/graphify/graphify') != ''
         run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
+      # A graph behind the code is expected here, and nothing needs doing:
+      # after merge, refresh opens the house/graphify pull request. Say so,
+      # rather than repeating the tool's local advice to update and commit.
       - name: Compare the committed graph with the code
         if: hashFiles('tools/graphify/graphify') != ''
         run: |
           sh tools/graphify/graphify setup --no-hooks
-          if ! out=$(sh tools/graphify/graphify check 2>&1); then
-            echo "::notice title=Graphify graph is behind the code::$out"
+          if out=$(sh tools/graphify/graphify check 2>&1); then
+            echo "$out"
+            exit 0
           fi
-          echo "$out"
+          drift=$(printf '%s\n' "$out" | grep 'is stale' || printf '%s' "$out")
+          message="$drift No action needed: after this pull request merges, the refresh job opens a pull request with the rebuilt graph. To include it here instead, run sh tools/graphify/graphify update and commit graphify-out/."
+          echo "::notice title=Graphify graph is behind the code (no action needed)::$message"
+          {
+            echo "### Graphify graph is behind the code (no action needed)"
+            echo
+            echo "$drift"
+            echo
+            echo "After this pull request merges, the \`refresh\` job rebuilds the graph on the default branch and opens a \`chore(graphify): refresh the code graph\` pull request. It is skipped on pull requests on purpose."
+            echo "To include the rebuilt graph in this pull request instead, run \`sh tools/graphify/graphify update\` and commit \`graphify-out/\`."
+          } >> "$GITHUB_STEP_SUMMARY"
 
   # Only the default branch's code runs next to the token, so a manual run
   # from another branch or a tag does nothing.
   refresh:
-    name: refresh
+    # Named for why it shows as skipped on pull requests.
+    name: refresh (default branch only)
     if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
     runs-on: ubuntu-latest
     timeout-minutes: 30
