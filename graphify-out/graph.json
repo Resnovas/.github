@@ -445,7 +445,7 @@
       "file_type": "code",
       "norm_label": "codexconfig()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L276"
+      "source_location": "L337"
     },
     {
       "id": "templates_tools_dev_surfaces_commandof",
@@ -481,7 +481,7 @@
       "file_type": "code",
       "norm_label": "installopenchamber()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L456"
+      "source_location": "L517"
     },
     {
       "id": "templates_tools_dev_surfaces_installorca",
@@ -493,7 +493,7 @@
       "file_type": "code",
       "norm_label": "installorca()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L398"
+      "source_location": "L459"
     },
     {
       "id": "templates_tools_dev_surfaces_inworkspace",
@@ -505,7 +505,7 @@
       "file_type": "code",
       "norm_label": "inworkspace()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L239"
+      "source_location": "L300"
     },
     {
       "id": "templates_tools_dev_surfaces_jsonconfig",
@@ -517,7 +517,19 @@
       "file_type": "code",
       "norm_label": "jsonconfig()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L243"
+      "source_location": "L304"
+    },
+    {
+      "id": "templates_tools_dev_surfaces_listfiles",
+      "label": "listFiles()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 61,
+      "community_name": "templates/tools/dev/surfaces.mjs",
+      "file_type": "code",
+      "norm_label": "listfiles()",
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L230"
     },
     {
       "id": "templates_tools_dev_surfaces_maincheckout",
@@ -529,7 +541,7 @@
       "file_type": "code",
       "norm_label": "maincheckout()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L383"
+      "source_location": "L444"
     },
     {
       "id": "templates_tools_dev_surfaces_mergecodexconfig",
@@ -541,7 +553,7 @@
       "file_type": "code",
       "norm_label": "mergecodexconfig()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L295"
+      "source_location": "L356"
     },
     {
       "id": "templates_tools_dev_surfaces_migratesources",
@@ -565,7 +577,7 @@
       "file_type": "code",
       "norm_label": "orcacall()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L342"
+      "source_location": "L403"
     },
     {
       "id": "templates_tools_dev_surfaces_orcauserdata",
@@ -577,7 +589,7 @@
       "file_type": "code",
       "norm_label": "orcauserdata()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L335"
+      "source_location": "L396"
     },
     {
       "id": "templates_tools_dev_surfaces_parsejsonc",
@@ -590,6 +602,18 @@
       "norm_label": "parsejsonc()",
       "source_file": "templates/tools/dev/surfaces.mjs",
       "source_location": "L46"
+    },
+    {
+      "id": "templates_tools_dev_surfaces_pruneempty",
+      "label": "pruneEmpty()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 61,
+      "community_name": "templates/tools/dev/surfaces.mjs",
+      "file_type": "code",
+      "norm_label": "pruneempty()",
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L240"
     },
     {
       "id": "templates_tools_dev_surfaces_readifexists",
@@ -625,7 +649,7 @@
       "file_type": "code",
       "norm_label": "readservers()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L224"
+      "source_location": "L285"
     },
     {
       "id": "templates_tools_dev_surfaces_samepath",
@@ -637,7 +661,7 @@
       "file_type": "code",
       "norm_label": "samepath()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L391"
+      "source_location": "L452"
     },
     {
       "id": "templates_tools_dev_surfaces_sourcepath",
@@ -685,7 +709,19 @@
       "file_type": "code",
       "norm_label": "syncservers()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L312"
+      "source_location": "L373"
+    },
+    {
+      "id": "templates_tools_dev_surfaces_syncskills",
+      "label": "syncSkills()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 61,
+      "community_name": "templates/tools/dev/surfaces.mjs",
+      "file_type": "code",
+      "norm_label": "syncskills()",
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L251"
     },
     {
       "id": "templates_tools_dev_surfaces_tomlkey",
@@ -697,7 +733,7 @@
       "file_type": "code",
       "norm_label": "tomlkey()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L267"
+      "source_location": "L328"
     },
     {
       "id": "templates_tools_dev_surfaces_tomlstring",
@@ -709,7 +745,7 @@
       "file_type": "code",
       "norm_label": "tomlstring()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L266"
+      "source_location": "L327"
     },
     {
       "id": "tools_dev_surfaces_codexconfig",
@@ -721,7 +757,7 @@
       "file_type": "code",
       "norm_label": "codexconfig()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L276"
+      "source_location": "L337"
     },
     {
       "id": "tools_dev_surfaces_commandof",
@@ -757,7 +793,7 @@
       "file_type": "code",
       "norm_label": "installopenchamber()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L456"
+      "source_location": "L517"
     },
     {
       "id": "tools_dev_surfaces_installorca",
@@ -769,7 +805,7 @@
       "file_type": "code",
       "norm_label": "installorca()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L398"
+      "source_location": "L459"
     },
     {
       "id": "tools_dev_surfaces_inworkspace",
@@ -781,7 +817,7 @@
       "file_type": "code",
       "norm_label": "inworkspace()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L239"
+      "source_location": "L300"
     },
     {
       "id": "tools_dev_surfaces_jsonconfig",
@@ -793,7 +829,19 @@
       "file_type": "code",
       "norm_label": "jsonconfig()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L243"
+      "source_location": "L304"
+    },
+    {
+      "id": "tools_dev_surfaces_listfiles",
+      "label": "listFiles()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 62,
+      "community_name": "tools/dev/surfaces.mjs",
+      "file_type": "code",
+      "norm_label": "listfiles()",
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L230"
     },
     {
       "id": "tools_dev_surfaces_maincheckout",
@@ -805,7 +853,7 @@
       "file_type": "code",
       "norm_label": "maincheckout()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L383"
+      "source_location": "L444"
     },
     {
       "id": "tools_dev_surfaces_mergecodexconfig",
@@ -817,7 +865,7 @@
       "file_type": "code",
       "norm_label": "mergecodexconfig()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L295"
+      "source_location": "L356"
     },
     {
       "id": "tools_dev_surfaces_migratesources",
@@ -841,7 +889,7 @@
       "file_type": "code",
       "norm_label": "orcacall()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L342"
+      "source_location": "L403"
     },
     {
       "id": "tools_dev_surfaces_orcauserdata",
@@ -853,7 +901,7 @@
       "file_type": "code",
       "norm_label": "orcauserdata()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L335"
+      "source_location": "L396"
     },
     {
       "id": "tools_dev_surfaces_parsejsonc",
@@ -866,6 +914,18 @@
       "norm_label": "parsejsonc()",
       "source_file": "tools/dev/surfaces.mjs",
       "source_location": "L46"
+    },
+    {
+      "id": "tools_dev_surfaces_pruneempty",
+      "label": "pruneEmpty()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 62,
+      "community_name": "tools/dev/surfaces.mjs",
+      "file_type": "code",
+      "norm_label": "pruneempty()",
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L240"
     },
     {
       "id": "tools_dev_surfaces_readifexists",
@@ -901,7 +961,7 @@
       "file_type": "code",
       "norm_label": "readservers()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L224"
+      "source_location": "L285"
     },
     {
       "id": "tools_dev_surfaces_samepath",
@@ -913,7 +973,7 @@
       "file_type": "code",
       "norm_label": "samepath()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L391"
+      "source_location": "L452"
     },
     {
       "id": "tools_dev_surfaces_sourcepath",
@@ -961,7 +1021,19 @@
       "file_type": "code",
       "norm_label": "syncservers()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L312"
+      "source_location": "L373"
+    },
+    {
+      "id": "tools_dev_surfaces_syncskills",
+      "label": "syncSkills()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 62,
+      "community_name": "tools/dev/surfaces.mjs",
+      "file_type": "code",
+      "norm_label": "syncskills()",
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L251"
     },
     {
       "id": "tools_dev_surfaces_tomlkey",
@@ -973,7 +1045,7 @@
       "file_type": "code",
       "norm_label": "tomlkey()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L267"
+      "source_location": "L328"
     },
     {
       "id": "tools_dev_surfaces_tomlstring",
@@ -985,7 +1057,7 @@
       "file_type": "code",
       "norm_label": "tomlstring()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L266"
+      "source_location": "L327"
     },
     {
       "id": "templates_tools_ai_docs_docgen_byprefix",
@@ -1730,6 +1802,18 @@
       "source_location": "L212"
     },
     {
+      "id": "llms_what_this_repository_is",
+      "label": "What this repository is",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "ai-docs.test.mjs",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "what this repository is",
+      "source_file": "LLMS.md",
+      "source_location": "L101"
+    },
+    {
       "id": "ai_policy_a_id_agents_a_autonomous_agents",
       "label": "<a id=\"agents\"></a>Autonomous agents",
       "_origin": "ast",
@@ -2282,106 +2366,6 @@
       "source_location": "L46"
     },
     {
-      "id": "templates_claude_skills_graphify_skill",
-      "label": "templates/.claude/skills/graphify/SKILL.md",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "Graphify in this repository",
-      "file_type": "document",
-      "frontmatter": {
-        "name": "graphify",
-        "description": "Query and maintain this repository&#x27;s committed Graphify knowledge graph (graphify-out/graph.json). Use before broad code searches, when asked what depends on, calls or touches something, when orienting in an unfamiliar area, after changing code (to refresh the graph), and when graph.json conflicts in a merge."
-      },
-      "node_kind": "page",
-      "norm_label": "templates/.claude/skills/graphify/skill.md",
-      "source_file": "templates/.claude/skills/graphify/SKILL.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "templates_claude_skills_graphify_skill_do_not",
-      "label": "Do not",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "Graphify in this repository",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "do not",
-      "source_file": "templates/.claude/skills/graphify/SKILL.md",
-      "source_location": "L70"
-    },
-    {
-      "id": "templates_claude_skills_graphify_skill_documents_maintainers",
-      "label": "Documents (maintainers)",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "Graphify in this repository",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "documents (maintainers)",
-      "source_file": "templates/.claude/skills/graphify/SKILL.md",
-      "source_location": "L64"
-    },
-    {
-      "id": "templates_claude_skills_graphify_skill_graphify_in_this_repository",
-      "label": "Graphify in this repository",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "Graphify in this repository",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "graphify in this repository",
-      "source_file": "templates/.claude/skills/graphify/SKILL.md",
-      "source_location": "L8"
-    },
-    {
-      "id": "templates_claude_skills_graphify_skill_keep_the_graph_current",
-      "label": "Keep the graph current",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "Graphify in this repository",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "keep the graph current",
-      "source_file": "templates/.claude/skills/graphify/SKILL.md",
-      "source_location": "L40"
-    },
-    {
-      "id": "templates_claude_skills_graphify_skill_merge_conflicts_in_graph_json",
-      "label": "Merge conflicts in graph.json",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "Graphify in this repository",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "merge conflicts in graph.json",
-      "source_file": "templates/.claude/skills/graphify/SKILL.md",
-      "source_location": "L53"
-    },
-    {
-      "id": "templates_claude_skills_graphify_skill_query_before_you_search",
-      "label": "Query before you search",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "Graphify in this repository",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "query before you search",
-      "source_file": "templates/.claude/skills/graphify/SKILL.md",
-      "source_location": "L25"
-    },
-    {
-      "id": "templates_claude_skills_graphify_skill_set_up_once_per_clone",
-      "label": "Set up once per clone",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "Graphify in this repository",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "set up once per clone",
-      "source_file": "templates/.claude/skills/graphify/SKILL.md",
-      "source_location": "L14"
-    },
-    {
       "id": "ai_docs_src_40_preset_index",
       "label": "40_preset/index.md",
       "_origin": "ast",
@@ -2451,294 +2435,6 @@
       "node_kind": "heading",
       "norm_label": "making a change here",
       "source_file": "ai-docs/src/60_making-a-change/index.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "readme_a_id_adopting_a_adopting_it_in_a_repository",
-      "label": "<a id=\"adopting\"></a>Adopting it in a repository",
-      "_origin": "ast",
-      "community": 104,
-      "community_name": "<a id=\"top\"></a>Resnovas house repository",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"adopting\"></a>adopting it in a repository",
-      "source_file": "README.md",
-      "source_location": "L42"
-    },
-    {
-      "id": "readme_a_id_changing_a_changing_a_policy_or_template",
-      "label": "<a id=\"changing\"></a>Changing a policy or template",
-      "_origin": "ast",
-      "community": 104,
-      "community_name": "<a id=\"top\"></a>Resnovas house repository",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"changing\"></a>changing a policy or template",
-      "source_file": "README.md",
-      "source_location": "L35"
-    },
-    {
-      "id": "readme_a_id_layout_a_layout",
-      "label": "<a id=\"layout\"></a>Layout",
-      "_origin": "ast",
-      "community": 104,
-      "community_name": "<a id=\"top\"></a>Resnovas house repository",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"layout\"></a>layout",
-      "source_file": "README.md",
-      "source_location": "L8"
-    },
-    {
-      "id": "readme_a_id_managed_blocks_a_documents_and_extendable_configuration",
-      "label": "<a id=\"managed-blocks\"></a>Documents and extendable configuration",
-      "_origin": "ast",
-      "community": 104,
-      "community_name": "<a id=\"top\"></a>Resnovas house repository",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"managed-blocks\"></a>documents and extendable configuration",
-      "source_file": "README.md",
-      "source_location": "L21"
-    },
-    {
-      "id": "readme_a_id_settings_a_repository_settings",
-      "label": "<a id=\"settings\"></a>Repository settings",
-      "_origin": "ast",
-      "community": 104,
-      "community_name": "<a id=\"top\"></a>Resnovas house repository",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"settings\"></a>repository settings",
-      "source_file": "README.md",
-      "source_location": "L75"
-    },
-    {
-      "id": "readme_a_id_sync_app_a_the_sync_app",
-      "label": "<a id=\"sync-app\"></a>The sync app",
-      "_origin": "ast",
-      "community": 104,
-      "community_name": "<a id=\"top\"></a>Resnovas house repository",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"sync-app\"></a>the sync app",
-      "source_file": "README.md",
-      "source_location": "L94"
-    },
-    {
-      "id": "readme_a_id_top_a_resnovas_house_repository",
-      "label": "<a id=\"top\"></a>Resnovas house repository",
-      "_origin": "ast",
-      "community": 104,
-      "community_name": "<a id=\"top\"></a>Resnovas house repository",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"top\"></a>resnovas house repository",
-      "source_file": "README.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "readme_a_id_values_a_values",
-      "label": "<a id=\"values\"></a>Values",
-      "_origin": "ast",
-      "community": 104,
-      "community_name": "<a id=\"top\"></a>Resnovas house repository",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"values\"></a>values",
-      "source_file": "README.md",
-      "source_location": "L55"
-    },
-    {
-      "id": "docs_access_a_id_by_hand_a_settings_no_workflow_can_apply",
-      "label": "<a id=\"by-hand\"></a>Settings no workflow can apply",
-      "_origin": "ast",
-      "community": 105,
-      "community_name": "Access: the app, secrets and variables",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"by-hand\"></a>settings no workflow can apply",
-      "source_file": "docs/access.md",
-      "source_location": "L67"
-    },
-    {
-      "id": "docs_access_a_id_doctor_a_checking_a_repository",
-      "label": "<a id=\"doctor\"></a>Checking a repository",
-      "_origin": "ast",
-      "community": 105,
-      "community_name": "Access: the app, secrets and variables",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"doctor\"></a>checking a repository",
-      "source_file": "docs/access.md",
-      "source_location": "L51"
-    },
-    {
-      "id": "docs_access_a_id_restricted_a_pull_requests_from_forks_and_dependabot",
-      "label": "<a id=\"restricted\"></a>Pull requests from forks and Dependabot",
-      "_origin": "ast",
-      "community": 105,
-      "community_name": "Access: the app, secrets and variables",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"restricted\"></a>pull requests from forks and dependabot",
-      "source_file": "docs/access.md",
-      "source_location": "L44"
-    },
-    {
-      "id": "docs_access_a_id_scopes_a_what_each_workflow_s_token_can_reach",
-      "label": "<a id=\"scopes\"></a>What each workflow's token can reach",
-      "_origin": "ast",
-      "community": 105,
-      "community_name": "Access: the app, secrets and variables",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"scopes\"></a>what each workflow's token can reach",
-      "source_file": "docs/access.md",
-      "source_location": "L35"
-    },
-    {
-      "id": "docs_access_a_id_setup_a_setting_it_up_once_for_the_organisation",
-      "label": "<a id=\"setup\"></a>Setting it up (once, for the organisation)",
-      "_origin": "ast",
-      "community": 105,
-      "community_name": "Access: the app, secrets and variables",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"setup\"></a>setting it up (once, for the organisation)",
-      "source_file": "docs/access.md",
-      "source_location": "L18"
-    },
-    {
-      "id": "docs_access_a_id_why_a_why_a_github_app",
-      "label": "<a id=\"why\"></a>Why a GitHub App",
-      "_origin": "ast",
-      "community": 105,
-      "community_name": "Access: the app, secrets and variables",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"why\"></a>why a github app",
-      "source_file": "docs/access.md",
-      "source_location": "L7"
-    },
-    {
-      "id": "docs_access_access_the_app_secrets_and_variables",
-      "label": "Access: the app, secrets and variables",
-      "_origin": "ast",
-      "community": 105,
-      "community_name": "Access: the app, secrets and variables",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "access: the app, secrets and variables",
-      "source_file": "docs/access.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "docs_troubleshooting_a_id_checks_a_the_smartcloud_check",
-      "label": "<a id=\"checks\"></a>The smartcloud check",
-      "_origin": "ast",
-      "community": 106,
-      "community_name": "Troubleshooting",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"checks\"></a>the smartcloud check",
-      "source_file": "docs/troubleshooting.md",
-      "source_location": "L18"
-    },
-    {
-      "id": "docs_troubleshooting_a_id_local_a_in_this_repository",
-      "label": "<a id=\"local\"></a>In this repository",
-      "_origin": "ast",
-      "community": 106,
-      "community_name": "Troubleshooting",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"local\"></a>in this repository",
-      "source_file": "docs/troubleshooting.md",
-      "source_location": "L46"
-    },
-    {
-      "id": "docs_troubleshooting_a_id_sync_a_the_sync",
-      "label": "<a id=\"sync\"></a>The sync",
-      "_origin": "ast",
-      "community": 106,
-      "community_name": "Troubleshooting",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"sync\"></a>the sync",
-      "source_file": "docs/troubleshooting.md",
-      "source_location": "L7"
-    },
-    {
-      "id": "docs_troubleshooting_a_id_workflows_a_workflows",
-      "label": "<a id=\"workflows\"></a>Workflows",
-      "_origin": "ast",
-      "community": 106,
-      "community_name": "Troubleshooting",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"workflows\"></a>workflows",
-      "source_file": "docs/troubleshooting.md",
-      "source_location": "L35"
-    },
-    {
-      "id": "docs_troubleshooting_troubleshooting",
-      "label": "Troubleshooting",
-      "_origin": "ast",
-      "community": 106,
-      "community_name": "Troubleshooting",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "troubleshooting",
-      "source_file": "docs/troubleshooting.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "docs_releases",
-      "label": "releases.md",
-      "_origin": "ast",
-      "community": 107,
-      "community_name": "releases.md",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "releases.md",
-      "source_file": "docs/releases.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "docs_releases_a_id_default_a_the_house_default",
-      "label": "<a id=\"default\"></a>The house default",
-      "_origin": "ast",
-      "community": 107,
-      "community_name": "releases.md",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"default\"></a>the house default",
-      "source_file": "docs/releases.md",
-      "source_location": "L7"
-    },
-    {
-      "id": "docs_releases_a_id_future_a_what_the_sync_will_manage_later",
-      "label": "<a id=\"future\"></a>What the sync will manage later",
-      "_origin": "ast",
-      "community": 107,
-      "community_name": "releases.md",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"future\"></a>what the sync will manage later",
-      "source_file": "docs/releases.md",
-      "source_location": "L16"
-    },
-    {
-      "id": "docs_releases_releases_and_changelogs",
-      "label": "Releases and changelogs",
-      "_origin": "ast",
-      "community": 107,
-      "community_name": "releases.md",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "releases and changelogs",
-      "source_file": "docs/releases.md",
       "source_location": "L1"
     },
     {
@@ -2866,7 +2562,7 @@
       "label": "access.md",
       "_origin": "ast",
       "community": 19,
-      "community_name": "preset.md",
+      "community_name": "README.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "access.md",
@@ -2874,11 +2570,191 @@
       "source_location": "L1"
     },
     {
+      "id": "docs_access_a_id_by_hand_a_settings_no_workflow_can_apply",
+      "label": "<a id=\"by-hand\"></a>Settings no workflow can apply",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"by-hand\"></a>settings no workflow can apply",
+      "source_file": "docs/access.md",
+      "source_location": "L67"
+    },
+    {
+      "id": "docs_access_a_id_doctor_a_checking_a_repository",
+      "label": "<a id=\"doctor\"></a>Checking a repository",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"doctor\"></a>checking a repository",
+      "source_file": "docs/access.md",
+      "source_location": "L51"
+    },
+    {
+      "id": "docs_access_a_id_restricted_a_pull_requests_from_forks_and_dependabot",
+      "label": "<a id=\"restricted\"></a>Pull requests from forks and Dependabot",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"restricted\"></a>pull requests from forks and dependabot",
+      "source_file": "docs/access.md",
+      "source_location": "L44"
+    },
+    {
+      "id": "docs_access_a_id_scopes_a_what_each_workflow_s_token_can_reach",
+      "label": "<a id=\"scopes\"></a>What each workflow's token can reach",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"scopes\"></a>what each workflow's token can reach",
+      "source_file": "docs/access.md",
+      "source_location": "L35"
+    },
+    {
+      "id": "docs_access_a_id_setup_a_setting_it_up_once_for_the_organisation",
+      "label": "<a id=\"setup\"></a>Setting it up (once, for the organisation)",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"setup\"></a>setting it up (once, for the organisation)",
+      "source_file": "docs/access.md",
+      "source_location": "L18"
+    },
+    {
+      "id": "docs_access_a_id_why_a_why_a_github_app",
+      "label": "<a id=\"why\"></a>Why a GitHub App",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"why\"></a>why a github app",
+      "source_file": "docs/access.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "docs_access_access_the_app_secrets_and_variables",
+      "label": "Access: the app, secrets and variables",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "access: the app, secrets and variables",
+      "source_file": "docs/access.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_ai_docs",
+      "label": "ai-docs.md",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "ai-docs.md",
+      "source_file": "docs/ai-docs.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_ai_docs_a_id_problems_a_common_problems",
+      "label": "<a id=\"problems\"></a>Common problems",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"problems\"></a>common problems",
+      "source_file": "docs/ai-docs.md",
+      "source_location": "L99"
+    },
+    {
+      "id": "docs_ai_docs_a_id_running_a_what_you_will_see",
+      "label": "<a id=\"running\"></a>What you will see",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"running\"></a>what you will see",
+      "source_file": "docs/ai-docs.md",
+      "source_location": "L86"
+    },
+    {
+      "id": "docs_ai_docs_a_id_setup_a_setting_it_up_in_a_repository",
+      "label": "<a id=\"setup\"></a>Setting it up in a repository",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"setup\"></a>setting it up in a repository",
+      "source_file": "docs/ai-docs.md",
+      "source_location": "L32"
+    },
+    {
+      "id": "docs_ai_docs_a_id_synced_a_what_the_house_gives_you",
+      "label": "<a id=\"synced\"></a>What the house gives you",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"synced\"></a>what the house gives you",
+      "source_file": "docs/ai-docs.md",
+      "source_location": "L19"
+    },
+    {
+      "id": "docs_ai_docs_a_id_what_a_what_it_is",
+      "label": "<a id=\"what\"></a>What it is",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"what\"></a>what it is",
+      "source_file": "docs/ai-docs.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "docs_ai_docs_a_id_writing_a_writing_a_section",
+      "label": "<a id=\"writing\"></a>Writing a section",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"writing\"></a>writing a section",
+      "source_file": "docs/ai-docs.md",
+      "source_location": "L51"
+    },
+    {
+      "id": "docs_ai_docs_ai_docs",
+      "label": "AI docs",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "ai docs",
+      "source_file": "docs/ai-docs.md",
+      "source_location": "L1"
+    },
+    {
       "id": "docs_ci_standards",
       "label": "ci-standards.md",
       "_origin": "ast",
       "community": 19,
-      "community_name": "preset.md",
+      "community_name": "README.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "ci-standards.md",
@@ -2890,7 +2766,7 @@
       "label": "getting-started.md",
       "_origin": "ast",
       "community": 19,
-      "community_name": "preset.md",
+      "community_name": "README.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "getting-started.md",
@@ -2902,7 +2778,7 @@
       "label": "preset.md",
       "_origin": "ast",
       "community": 19,
-      "community_name": "preset.md",
+      "community_name": "README.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "preset.md",
@@ -2910,11 +2786,59 @@
       "source_location": "L1"
     },
     {
+      "id": "docs_releases",
+      "label": "releases.md",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "releases.md",
+      "source_file": "docs/releases.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_releases_a_id_default_a_the_house_default",
+      "label": "<a id=\"default\"></a>The house default",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"default\"></a>the house default",
+      "source_file": "docs/releases.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "docs_releases_a_id_future_a_what_the_sync_will_manage_later",
+      "label": "<a id=\"future\"></a>What the sync will manage later",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"future\"></a>what the sync will manage later",
+      "source_file": "docs/releases.md",
+      "source_location": "L16"
+    },
+    {
+      "id": "docs_releases_releases_and_changelogs",
+      "label": "Releases and changelogs",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "releases and changelogs",
+      "source_file": "docs/releases.md",
+      "source_location": "L1"
+    },
+    {
       "id": "docs_sync",
       "label": "sync.md",
       "_origin": "ast",
       "community": 19,
-      "community_name": "preset.md",
+      "community_name": "README.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "sync.md",
@@ -2926,7 +2850,7 @@
       "label": "synced-files.md",
       "_origin": "ast",
       "community": 19,
-      "community_name": "preset.md",
+      "community_name": "README.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "synced-files.md",
@@ -2938,10 +2862,70 @@
       "label": "troubleshooting.md",
       "_origin": "ast",
       "community": 19,
-      "community_name": "preset.md",
+      "community_name": "README.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "troubleshooting.md",
+      "source_file": "docs/troubleshooting.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_troubleshooting_a_id_checks_a_the_smartcloud_check",
+      "label": "<a id=\"checks\"></a>The smartcloud check",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"checks\"></a>the smartcloud check",
+      "source_file": "docs/troubleshooting.md",
+      "source_location": "L18"
+    },
+    {
+      "id": "docs_troubleshooting_a_id_local_a_in_this_repository",
+      "label": "<a id=\"local\"></a>In this repository",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"local\"></a>in this repository",
+      "source_file": "docs/troubleshooting.md",
+      "source_location": "L46"
+    },
+    {
+      "id": "docs_troubleshooting_a_id_sync_a_the_sync",
+      "label": "<a id=\"sync\"></a>The sync",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"sync\"></a>the sync",
+      "source_file": "docs/troubleshooting.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "docs_troubleshooting_a_id_workflows_a_workflows",
+      "label": "<a id=\"workflows\"></a>Workflows",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"workflows\"></a>workflows",
+      "source_file": "docs/troubleshooting.md",
+      "source_location": "L35"
+    },
+    {
+      "id": "docs_troubleshooting_troubleshooting",
+      "label": "Troubleshooting",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "troubleshooting",
       "source_file": "docs/troubleshooting.md",
       "source_location": "L1"
     },
@@ -2950,12 +2934,108 @@
       "label": "workflows.md",
       "_origin": "ast",
       "community": 19,
-      "community_name": "preset.md",
+      "community_name": "README.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "workflows.md",
       "source_file": "docs/workflows.md",
       "source_location": "L1"
+    },
+    {
+      "id": "readme_a_id_adopting_a_adopting_it_in_a_repository",
+      "label": "<a id=\"adopting\"></a>Adopting it in a repository",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"adopting\"></a>adopting it in a repository",
+      "source_file": "README.md",
+      "source_location": "L42"
+    },
+    {
+      "id": "readme_a_id_changing_a_changing_a_policy_or_template",
+      "label": "<a id=\"changing\"></a>Changing a policy or template",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"changing\"></a>changing a policy or template",
+      "source_file": "README.md",
+      "source_location": "L35"
+    },
+    {
+      "id": "readme_a_id_layout_a_layout",
+      "label": "<a id=\"layout\"></a>Layout",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"layout\"></a>layout",
+      "source_file": "README.md",
+      "source_location": "L8"
+    },
+    {
+      "id": "readme_a_id_managed_blocks_a_documents_and_extendable_configuration",
+      "label": "<a id=\"managed-blocks\"></a>Documents and extendable configuration",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"managed-blocks\"></a>documents and extendable configuration",
+      "source_file": "README.md",
+      "source_location": "L21"
+    },
+    {
+      "id": "readme_a_id_settings_a_repository_settings",
+      "label": "<a id=\"settings\"></a>Repository settings",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"settings\"></a>repository settings",
+      "source_file": "README.md",
+      "source_location": "L75"
+    },
+    {
+      "id": "readme_a_id_sync_app_a_the_sync_app",
+      "label": "<a id=\"sync-app\"></a>The sync app",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"sync-app\"></a>the sync app",
+      "source_file": "README.md",
+      "source_location": "L94"
+    },
+    {
+      "id": "readme_a_id_top_a_resnovas_house_repository",
+      "label": "<a id=\"top\"></a>Resnovas house repository",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"top\"></a>resnovas house repository",
+      "source_file": "README.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "readme_a_id_values_a_values",
+      "label": "<a id=\"values\"></a>Values",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "README.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"values\"></a>values",
+      "source_file": "README.md",
+      "source_location": "L55"
     },
     {
       "id": "templates_tools_graphify_graphify",
@@ -7054,7 +7134,7 @@
       "file_type": "code",
       "norm_label": "mcptargets",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L303"
+      "source_location": "L364"
     },
     {
       "id": "templates_tools_dev_surfaces_renamedsources",
@@ -7088,6 +7168,17 @@
       "norm_label": "root",
       "source_file": "templates/tools/dev/surfaces.mjs",
       "source_location": "L43"
+    },
+    {
+      "id": "templates_tools_dev_surfaces_skilltargets",
+      "label": "skillTargets",
+      "_origin": "ast",
+      "community": 61,
+      "community_name": "templates/tools/dev/surfaces.mjs",
+      "file_type": "code",
+      "norm_label": "skilltargets",
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L248"
     },
     {
       "id": "templates_tools_dev_surfaces_targets",
@@ -7175,7 +7266,7 @@
       "file_type": "code",
       "norm_label": "mcptargets",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L303"
+      "source_location": "L364"
     },
     {
       "id": "tools_dev_surfaces_renamedsources",
@@ -7209,6 +7300,17 @@
       "norm_label": "root",
       "source_file": "tools/dev/surfaces.mjs",
       "source_location": "L43"
+    },
+    {
+      "id": "tools_dev_surfaces_skilltargets",
+      "label": "skillTargets",
+      "_origin": "ast",
+      "community": 62,
+      "community_name": "tools/dev/surfaces.mjs",
+      "file_type": "code",
+      "norm_label": "skilltargets",
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L248"
     },
     {
       "id": "tools_dev_surfaces_targets",
@@ -8474,18 +8576,6 @@
       "source_location": "L231"
     },
     {
-      "id": "llms_what_this_repository_is",
-      "label": "What this repository is",
-      "_origin": "ast",
-      "community": 79,
-      "community_name": "@resnovas/house for agents",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "what this repository is",
-      "source_file": "LLMS.md",
-      "source_location": "L101"
-    },
-    {
       "id": "claude_skills_graphify_skill",
       "label": ".claude/skills/graphify/SKILL.md",
       "_origin": "ast",
@@ -8727,102 +8817,6 @@
       "node_kind": "heading",
       "norm_label": "workflows",
       "source_file": "docs/workflows.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "docs_ai_docs",
-      "label": "ai-docs.md",
-      "_origin": "ast",
-      "community": 82,
-      "community_name": "AI docs",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "ai-docs.md",
-      "source_file": "docs/ai-docs.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "docs_ai_docs_a_id_problems_a_common_problems",
-      "label": "<a id=\"problems\"></a>Common problems",
-      "_origin": "ast",
-      "community": 82,
-      "community_name": "AI docs",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"problems\"></a>common problems",
-      "source_file": "docs/ai-docs.md",
-      "source_location": "L99"
-    },
-    {
-      "id": "docs_ai_docs_a_id_running_a_what_you_will_see",
-      "label": "<a id=\"running\"></a>What you will see",
-      "_origin": "ast",
-      "community": 82,
-      "community_name": "AI docs",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"running\"></a>what you will see",
-      "source_file": "docs/ai-docs.md",
-      "source_location": "L86"
-    },
-    {
-      "id": "docs_ai_docs_a_id_setup_a_setting_it_up_in_a_repository",
-      "label": "<a id=\"setup\"></a>Setting it up in a repository",
-      "_origin": "ast",
-      "community": 82,
-      "community_name": "AI docs",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"setup\"></a>setting it up in a repository",
-      "source_file": "docs/ai-docs.md",
-      "source_location": "L32"
-    },
-    {
-      "id": "docs_ai_docs_a_id_synced_a_what_the_house_gives_you",
-      "label": "<a id=\"synced\"></a>What the house gives you",
-      "_origin": "ast",
-      "community": 82,
-      "community_name": "AI docs",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"synced\"></a>what the house gives you",
-      "source_file": "docs/ai-docs.md",
-      "source_location": "L19"
-    },
-    {
-      "id": "docs_ai_docs_a_id_what_a_what_it_is",
-      "label": "<a id=\"what\"></a>What it is",
-      "_origin": "ast",
-      "community": 82,
-      "community_name": "AI docs",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"what\"></a>what it is",
-      "source_file": "docs/ai-docs.md",
-      "source_location": "L7"
-    },
-    {
-      "id": "docs_ai_docs_a_id_writing_a_writing_a_section",
-      "label": "<a id=\"writing\"></a>Writing a section",
-      "_origin": "ast",
-      "community": 82,
-      "community_name": "AI docs",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"writing\"></a>writing a section",
-      "source_file": "docs/ai-docs.md",
-      "source_location": "L51"
-    },
-    {
-      "id": "docs_ai_docs_ai_docs",
-      "label": "AI docs",
-      "_origin": "ast",
-      "community": 82,
-      "community_name": "AI docs",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "ai docs",
-      "source_file": "docs/ai-docs.md",
       "source_location": "L1"
     },
     {
@@ -10760,134 +10754,6 @@
       "source_location": "L1"
     },
     {
-      "id": "house_yml",
-      "label": "house.yml",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 103,
-      "community_name": "README.md",
-      "contributor": null,
-      "file_type": "concept",
-      "norm_label": "house.yml",
-      "rationale": "File containing the values placeholders resolve to.",
-      "source_file": "README.md",
-      "source_location": "house.yml",
-      "source_url": null
-    },
-    {
-      "id": "policy_yml",
-      "label": "policy.yml",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 103,
-      "community_name": "README.md",
-      "contributor": null,
-      "file_type": "concept",
-      "norm_label": "policy.yml",
-      "rationale": "Reusable workflow for AI disclosure, co-author and sign-off trailers, title and style, and maintainer approvals.",
-      "source_file": "README.md",
-      "source_location": ".github/workflows/policy.yml",
-      "source_url": null
-    },
-    {
-      "id": "root_and_github",
-      "label": "root and .github",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 103,
-      "community_name": "README.md",
-      "contributor": null,
-      "file_type": "concept",
-      "norm_label": "root and .github",
-      "rationale": "Directory containing the files rendered from templates with default values.",
-      "source_file": "README.md",
-      "source_location": "root and .github/",
-      "source_url": null
-    },
-    {
-      "id": "scripts",
-      "label": "scripts",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 103,
-      "community_name": "README.md",
-      "contributor": null,
-      "file_type": "concept",
-      "norm_label": "scripts",
-      "rationale": "Directory containing the renderer and the policy checker.",
-      "source_file": "README.md",
-      "source_location": "scripts/",
-      "source_url": null
-    },
-    {
-      "id": "sync_yml",
-      "label": "sync.yml",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 103,
-      "community_name": "README.md",
-      "contributor": null,
-      "file_type": "concept",
-      "norm_label": "sync.yml",
-      "rationale": "Reusable workflow for rendering templates into a repository and opening a pull request when anything changed.",
-      "source_file": "README.md",
-      "source_location": ".github/workflows/sync.yml",
-      "source_url": null
-    },
-    {
-      "id": "templates",
-      "label": "templates",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 103,
-      "community_name": "README.md",
-      "contributor": null,
-      "file_type": "concept",
-      "norm_label": "templates",
-      "rationale": "Directory containing the source of every governed file with placeholders.",
-      "source_file": "README.md",
-      "source_location": "templates/",
-      "source_url": null
-    },
-    {
-      "id": "test",
-      "label": "test",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 103,
-      "community_name": "README.md",
-      "contributor": null,
-      "file_type": "concept",
-      "norm_label": "test",
-      "rationale": "Directory containing tests for the rules and the renderer.",
-      "source_file": "README.md",
-      "source_location": "test/",
-      "source_url": null
-    },
-    {
-      "id": "readme",
-      "label": "README.md",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 103,
-      "community_name": "README.md",
-      "contributor": null,
-      "file_type": "document",
-      "norm_label": "readme.md",
-      "rationale": "Main document describing the repository and its purpose.",
-      "source_file": "README.md",
-      "source_location": null,
-      "source_url": null
-    },
-    {
       "id": ".github_workflows_ci_yml",
       "label": "CI Workflow",
       "_origin": "semantic",
@@ -11028,6 +10894,134 @@
       "norm_label": "dependabot configuration",
       "rationale": null,
       "source_file": "templates/.github/dependabot.yml",
+      "source_location": null,
+      "source_url": null
+    },
+    {
+      "id": "house_yml",
+      "label": "house.yml",
+      "_origin": "semantic",
+      "author": null,
+      "captured_at": null,
+      "community": 19,
+      "community_name": "README.md",
+      "contributor": null,
+      "file_type": "concept",
+      "norm_label": "house.yml",
+      "rationale": "File containing the values placeholders resolve to.",
+      "source_file": "README.md",
+      "source_location": "house.yml",
+      "source_url": null
+    },
+    {
+      "id": "policy_yml",
+      "label": "policy.yml",
+      "_origin": "semantic",
+      "author": null,
+      "captured_at": null,
+      "community": 19,
+      "community_name": "README.md",
+      "contributor": null,
+      "file_type": "concept",
+      "norm_label": "policy.yml",
+      "rationale": "Reusable workflow for AI disclosure, co-author and sign-off trailers, title and style, and maintainer approvals.",
+      "source_file": "README.md",
+      "source_location": ".github/workflows/policy.yml",
+      "source_url": null
+    },
+    {
+      "id": "root_and_github",
+      "label": "root and .github",
+      "_origin": "semantic",
+      "author": null,
+      "captured_at": null,
+      "community": 19,
+      "community_name": "README.md",
+      "contributor": null,
+      "file_type": "concept",
+      "norm_label": "root and .github",
+      "rationale": "Directory containing the files rendered from templates with default values.",
+      "source_file": "README.md",
+      "source_location": "root and .github/",
+      "source_url": null
+    },
+    {
+      "id": "scripts",
+      "label": "scripts",
+      "_origin": "semantic",
+      "author": null,
+      "captured_at": null,
+      "community": 19,
+      "community_name": "README.md",
+      "contributor": null,
+      "file_type": "concept",
+      "norm_label": "scripts",
+      "rationale": "Directory containing the renderer and the policy checker.",
+      "source_file": "README.md",
+      "source_location": "scripts/",
+      "source_url": null
+    },
+    {
+      "id": "sync_yml",
+      "label": "sync.yml",
+      "_origin": "semantic",
+      "author": null,
+      "captured_at": null,
+      "community": 19,
+      "community_name": "README.md",
+      "contributor": null,
+      "file_type": "concept",
+      "norm_label": "sync.yml",
+      "rationale": "Reusable workflow for rendering templates into a repository and opening a pull request when anything changed.",
+      "source_file": "README.md",
+      "source_location": ".github/workflows/sync.yml",
+      "source_url": null
+    },
+    {
+      "id": "templates",
+      "label": "templates",
+      "_origin": "semantic",
+      "author": null,
+      "captured_at": null,
+      "community": 19,
+      "community_name": "README.md",
+      "contributor": null,
+      "file_type": "concept",
+      "norm_label": "templates",
+      "rationale": "Directory containing the source of every governed file with placeholders.",
+      "source_file": "README.md",
+      "source_location": "templates/",
+      "source_url": null
+    },
+    {
+      "id": "test",
+      "label": "test",
+      "_origin": "semantic",
+      "author": null,
+      "captured_at": null,
+      "community": 19,
+      "community_name": "README.md",
+      "contributor": null,
+      "file_type": "concept",
+      "norm_label": "test",
+      "rationale": "Directory containing tests for the rules and the renderer.",
+      "source_file": "README.md",
+      "source_location": "test/",
+      "source_url": null
+    },
+    {
+      "id": "readme",
+      "label": "README.md",
+      "_origin": "semantic",
+      "author": null,
+      "captured_at": null,
+      "community": 19,
+      "community_name": "README.md",
+      "contributor": null,
+      "file_type": "document",
+      "norm_label": "readme.md",
+      "rationale": "Main document describing the repository and its purpose.",
+      "source_file": "README.md",
       "source_location": null,
       "source_url": null
     },
@@ -11815,22 +11809,6 @@
       "source_url": null
     },
     {
-      "id": "templates_claude_skills_graphify_skill_md",
-      "label": "Graphify Skill Documentation",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 47,
-      "community_name": "Graphify Skill Documentation",
-      "contributor": null,
-      "file_type": "document",
-      "norm_label": "graphify skill documentation",
-      "rationale": "This is the documentation for the Graphify skill, which provides instructions on how to use it within the repository.",
-      "source_file": "templates/.claude/skills/graphify/SKILL.md",
-      "source_location": null,
-      "source_url": null
-    },
-    {
       "id": "templates_dco_md",
       "label": "Developer Certificate of Origin",
       "_origin": "semantic",
@@ -12433,7 +12411,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L279",
+      "source_location": "L340",
       "weight": 1.0
     },
     {
@@ -12445,7 +12423,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L281",
+      "source_location": "L342",
       "weight": 1.0
     },
     {
@@ -12457,7 +12435,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L459",
+      "source_location": "L520",
       "weight": 1.0
     },
     {
@@ -12469,7 +12447,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L468",
+      "source_location": "L529",
       "weight": 1.0
     },
     {
@@ -12481,7 +12459,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L399",
+      "source_location": "L460",
       "weight": 1.0
     },
     {
@@ -12493,7 +12471,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L404",
+      "source_location": "L465",
       "weight": 1.0
     },
     {
@@ -12505,7 +12483,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L408",
+      "source_location": "L469",
       "weight": 1.0
     },
     {
@@ -12517,7 +12495,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L409",
+      "source_location": "L470",
       "weight": 1.0
     },
     {
@@ -12529,7 +12507,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L418",
+      "source_location": "L479",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_surfaces_listfiles",
+      "target": "templates_tools_dev_surfaces_listfiles",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L235",
       "weight": 1.0
     },
     {
@@ -12565,7 +12555,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L227",
+      "source_location": "L288",
       "weight": 1.0
     },
     {
@@ -12589,7 +12579,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L313",
+      "source_location": "L374",
       "weight": 1.0
     },
     {
@@ -12601,7 +12591,31 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L318",
+      "source_location": "L379",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_surfaces_syncskills",
+      "target": "templates_tools_dev_surfaces_listfiles",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L253",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_surfaces_syncskills",
+      "target": "templates_tools_dev_surfaces_pruneempty",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L263",
       "weight": 1.0
     },
     {
@@ -12613,7 +12627,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L267",
+      "source_location": "L328",
       "weight": 1.0
     },
     {
@@ -13381,7 +13395,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L279",
+      "source_location": "L340",
       "weight": 1.0
     },
     {
@@ -13393,7 +13407,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L281",
+      "source_location": "L342",
       "weight": 1.0
     },
     {
@@ -13405,7 +13419,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L459",
+      "source_location": "L520",
       "weight": 1.0
     },
     {
@@ -13417,7 +13431,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L468",
+      "source_location": "L529",
       "weight": 1.0
     },
     {
@@ -13429,7 +13443,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L399",
+      "source_location": "L460",
       "weight": 1.0
     },
     {
@@ -13441,7 +13455,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L404",
+      "source_location": "L465",
       "weight": 1.0
     },
     {
@@ -13453,7 +13467,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L408",
+      "source_location": "L469",
       "weight": 1.0
     },
     {
@@ -13465,7 +13479,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L409",
+      "source_location": "L470",
       "weight": 1.0
     },
     {
@@ -13477,7 +13491,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L418",
+      "source_location": "L479",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_surfaces_listfiles",
+      "target": "tools_dev_surfaces_listfiles",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L235",
       "weight": 1.0
     },
     {
@@ -13513,7 +13539,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L227",
+      "source_location": "L288",
       "weight": 1.0
     },
     {
@@ -13537,7 +13563,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L313",
+      "source_location": "L374",
       "weight": 1.0
     },
     {
@@ -13549,7 +13575,31 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L318",
+      "source_location": "L379",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_surfaces_syncskills",
+      "target": "tools_dev_surfaces_listfiles",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L253",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_surfaces_syncskills",
+      "target": "tools_dev_surfaces_pruneempty",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L263",
       "weight": 1.0
     },
     {
@@ -13561,7 +13611,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L267",
+      "source_location": "L328",
       "weight": 1.0
     },
     {
@@ -21462,83 +21512,6 @@
       "weight": 1.0
     },
     {
-      "source": "templates_claude_skills_graphify_skill",
-      "target": "templates_claude_skills_graphify_skill_graphify_in_this_repository",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/.claude/skills/graphify/SKILL.md",
-      "source_location": "L8",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_claude_skills_graphify_skill_graphify_in_this_repository",
-      "target": "templates_claude_skills_graphify_skill_set_up_once_per_clone",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/.claude/skills/graphify/SKILL.md",
-      "source_location": "L14",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_claude_skills_graphify_skill_graphify_in_this_repository",
-      "target": "templates_claude_skills_graphify_skill_query_before_you_search",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/.claude/skills/graphify/SKILL.md",
-      "source_location": "L25",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_claude_skills_graphify_skill_graphify_in_this_repository",
-      "target": "templates_claude_skills_graphify_skill_keep_the_graph_current",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/.claude/skills/graphify/SKILL.md",
-      "source_location": "L40",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_claude_skills_graphify_skill_graphify_in_this_repository",
-      "target": "templates_claude_skills_graphify_skill_merge_conflicts_in_graph_json",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/.claude/skills/graphify/SKILL.md",
-      "source_location": "L53",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_claude_skills_graphify_skill_graphify_in_this_repository",
-      "target": "templates_claude_skills_graphify_skill_documents_maintainers",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/.claude/skills/graphify/SKILL.md",
-      "source_location": "L64",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_claude_skills_graphify_skill_graphify_in_this_repository",
-      "target": "templates_claude_skills_graphify_skill_do_not",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/.claude/skills/graphify/SKILL.md",
-      "source_location": "L70",
-      "weight": 1.0
-    },
-    {
       "source": "templates_code_of_conduct",
       "target": "templates_code_of_conduct_a_id_top_a_code_of_conduct",
       "relation": "contains",
@@ -22651,13 +22624,57 @@
     },
     {
       "source": "templates_tools_dev_surfaces",
+      "target": "templates_tools_dev_surfaces_listfiles",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L230",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_surfaces",
+      "target": "templates_tools_dev_surfaces_pruneempty",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L240",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_surfaces",
+      "target": "templates_tools_dev_surfaces_skilltargets",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L248",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_surfaces",
+      "target": "templates_tools_dev_surfaces_syncskills",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L251",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_surfaces",
       "target": "templates_tools_dev_surfaces_readservers",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L224",
+      "source_location": "L285",
       "weight": 1.0
     },
     {
@@ -22668,7 +22685,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L239",
+      "source_location": "L300",
       "weight": 1.0
     },
     {
@@ -22679,7 +22696,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L243",
+      "source_location": "L304",
       "weight": 1.0
     },
     {
@@ -22690,7 +22707,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L266",
+      "source_location": "L327",
       "weight": 1.0
     },
     {
@@ -22701,7 +22718,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L267",
+      "source_location": "L328",
       "weight": 1.0
     },
     {
@@ -22712,7 +22729,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L303",
+      "source_location": "L364",
       "weight": 1.0
     },
     {
@@ -22723,7 +22740,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L312",
+      "source_location": "L373",
       "weight": 1.0
     },
     {
@@ -22734,7 +22751,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L335",
+      "source_location": "L396",
       "weight": 1.0
     },
     {
@@ -22745,40 +22762,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L342",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_tools_dev_surfaces",
-      "target": "templates_tools_dev_surfaces_maincheckout",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L383",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_tools_dev_surfaces",
-      "target": "templates_tools_dev_surfaces_samepath",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L391",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_tools_dev_surfaces",
-      "target": "templates_tools_dev_surfaces_installorca",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L398",
+      "source_location": "L403",
       "weight": 1.0
     },
     {
@@ -22794,13 +22778,35 @@
     },
     {
       "source": "templates_tools_dev_surfaces",
-      "target": "templates_tools_dev_surfaces_installopenchamber",
+      "target": "templates_tools_dev_surfaces_maincheckout",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L456",
+      "source_location": "L444",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_surfaces",
+      "target": "templates_tools_dev_surfaces_samepath",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L452",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_surfaces",
+      "target": "templates_tools_dev_surfaces_installorca",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L459",
       "weight": 1.0
     },
     {
@@ -22812,6 +22818,17 @@
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
       "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_surfaces",
+      "target": "templates_tools_dev_surfaces_installopenchamber",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L517",
       "weight": 1.0
     },
     {
@@ -23421,13 +23438,57 @@
     },
     {
       "source": "tools_dev_surfaces",
+      "target": "tools_dev_surfaces_listfiles",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L230",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_surfaces",
+      "target": "tools_dev_surfaces_pruneempty",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L240",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_surfaces",
+      "target": "tools_dev_surfaces_skilltargets",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L248",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_surfaces",
+      "target": "tools_dev_surfaces_syncskills",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L251",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_surfaces",
       "target": "tools_dev_surfaces_readservers",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L224",
+      "source_location": "L285",
       "weight": 1.0
     },
     {
@@ -23438,7 +23499,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L239",
+      "source_location": "L300",
       "weight": 1.0
     },
     {
@@ -23449,7 +23510,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L243",
+      "source_location": "L304",
       "weight": 1.0
     },
     {
@@ -23460,7 +23521,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L266",
+      "source_location": "L327",
       "weight": 1.0
     },
     {
@@ -23471,7 +23532,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L267",
+      "source_location": "L328",
       "weight": 1.0
     },
     {
@@ -23482,7 +23543,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L303",
+      "source_location": "L364",
       "weight": 1.0
     },
     {
@@ -23493,7 +23554,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L312",
+      "source_location": "L373",
       "weight": 1.0
     },
     {
@@ -23504,7 +23565,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L335",
+      "source_location": "L396",
       "weight": 1.0
     },
     {
@@ -23515,40 +23576,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L342",
-      "weight": 1.0
-    },
-    {
-      "source": "tools_dev_surfaces",
-      "target": "tools_dev_surfaces_maincheckout",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L383",
-      "weight": 1.0
-    },
-    {
-      "source": "tools_dev_surfaces",
-      "target": "tools_dev_surfaces_samepath",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L391",
-      "weight": 1.0
-    },
-    {
-      "source": "tools_dev_surfaces",
-      "target": "tools_dev_surfaces_installorca",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L398",
+      "source_location": "L403",
       "weight": 1.0
     },
     {
@@ -23564,13 +23592,35 @@
     },
     {
       "source": "tools_dev_surfaces",
-      "target": "tools_dev_surfaces_installopenchamber",
+      "target": "tools_dev_surfaces_maincheckout",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L456",
+      "source_location": "L444",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_surfaces",
+      "target": "tools_dev_surfaces_samepath",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L452",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_surfaces",
+      "target": "tools_dev_surfaces_installorca",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L459",
       "weight": 1.0
     },
     {
@@ -23582,6 +23632,17 @@
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
       "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_surfaces",
+      "target": "tools_dev_surfaces_installopenchamber",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L517",
       "weight": 1.0
     },
     {
@@ -25189,7 +25250,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L464",
+      "source_location": "L525",
       "weight": 1.0
     },
     {
@@ -25201,7 +25262,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L437",
+      "source_location": "L498",
       "weight": 1.0
     },
     {
@@ -25249,7 +25310,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L464",
+      "source_location": "L525",
       "weight": 1.0
     },
     {
@@ -25261,7 +25322,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L437",
+      "source_location": "L498",
       "weight": 1.0
     },
     {
@@ -25273,7 +25334,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L308",
+      "source_location": "L369",
       "weight": 1.0
     },
     {
@@ -25285,7 +25346,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L308",
+      "source_location": "L369",
       "weight": 1.0
     },
     {
@@ -25297,7 +25358,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L308",
+      "source_location": "L369",
       "weight": 1.0
     },
     {
@@ -25309,7 +25370,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L308",
+      "source_location": "L369",
       "weight": 1.0
     },
     {
@@ -25933,5 +25994,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "9e523146f677fc376771afa7e3d0d9b966b4e735"
+  "built_at_commit": "b3726c8fd038cf442aa8e7dffd66122adb899ae6"
 }
