@@ -182,16 +182,88 @@
       "source_location": "L35"
     },
     {
+      "id": "templates_tools_license_check_headers_checkheaders",
+      "label": "checkHeaders()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "ref_node_url",
+      "file_type": "code",
+      "norm_label": "checkheaders()",
+      "source_file": "templates/tools/license/check-headers.mjs",
+      "source_location": "L49"
+    },
+    {
+      "id": "templates_tools_license_check_headers_headerfor",
+      "label": "headerFor()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "ref_node_url",
+      "file_type": "code",
+      "norm_label": "headerfor()",
+      "source_file": "templates/tools/license/check-headers.mjs",
+      "source_location": "L40"
+    },
+    {
+      "id": "templates_tools_license_check_headers_listfiles",
+      "label": "listFiles()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "ref_node_url",
+      "file_type": "code",
+      "norm_label": "listfiles()",
+      "source_file": "templates/tools/license/check-headers.mjs",
+      "source_location": "L88"
+    },
+    {
+      "id": "templates_tools_license_check_headers_main",
+      "label": "main()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "ref_node_url",
+      "file_type": "code",
+      "norm_label": "main()",
+      "source_file": "templates/tools/license/check-headers.mjs",
+      "source_location": "L100"
+    },
+    {
+      "id": "templates_tools_license_check_headers_walk",
+      "label": "walk()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "ref_node_url",
+      "file_type": "code",
+      "norm_label": "walk()",
+      "source_file": "templates/tools/license/check-headers.mjs",
+      "source_location": "L81"
+    },
+    {
       "id": "test_actions_test_firstparty",
       "label": "firstParty()",
       "_callable": true,
       "_origin": "ast",
       "community": 10,
-      "community_name": "actions.test.mjs",
+      "community_name": "ref_node_url",
       "file_type": "code",
       "norm_label": "firstparty()",
       "source_file": "test/actions.test.mjs",
       "source_location": "L31"
+    },
+    {
+      "id": "test_check_headers_test_repository",
+      "label": "repository()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "ref_node_url",
+      "file_type": "code",
+      "norm_label": "repository()",
+      "source_file": "test/check-headers.test.mjs",
+      "source_location": "L29"
     },
     {
       "id": "test_workflows_test_jobs",
@@ -199,7 +271,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 10,
-      "community_name": "actions.test.mjs",
+      "community_name": "ref_node_url",
       "file_type": "code",
       "norm_label": "jobs()",
       "source_file": "test/workflows.test.mjs",
@@ -1862,78 +1934,6 @@
       "source_location": "L24"
     },
     {
-      "id": "templates_tools_license_check_headers_checkheaders",
-      "label": "checkHeaders()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 639,
-      "community_name": "check-headers.test.mjs",
-      "file_type": "code",
-      "norm_label": "checkheaders()",
-      "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L49"
-    },
-    {
-      "id": "templates_tools_license_check_headers_headerfor",
-      "label": "headerFor()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 639,
-      "community_name": "check-headers.test.mjs",
-      "file_type": "code",
-      "norm_label": "headerfor()",
-      "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L40"
-    },
-    {
-      "id": "templates_tools_license_check_headers_listfiles",
-      "label": "listFiles()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 639,
-      "community_name": "check-headers.test.mjs",
-      "file_type": "code",
-      "norm_label": "listfiles()",
-      "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L88"
-    },
-    {
-      "id": "templates_tools_license_check_headers_main",
-      "label": "main()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 639,
-      "community_name": "check-headers.test.mjs",
-      "file_type": "code",
-      "norm_label": "main()",
-      "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L100"
-    },
-    {
-      "id": "templates_tools_license_check_headers_walk",
-      "label": "walk()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 639,
-      "community_name": "check-headers.test.mjs",
-      "file_type": "code",
-      "norm_label": "walk()",
-      "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L81"
-    },
-    {
-      "id": "test_check_headers_test_repository",
-      "label": "repository()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 639,
-      "community_name": "check-headers.test.mjs",
-      "file_type": "code",
-      "norm_label": "repository()",
-      "source_file": "test/check-headers.test.mjs",
-      "source_location": "L29"
-    },
-    {
       "id": "templates_tools_ci_flaky_tests_cell",
       "label": "cell()",
       "_callable": true,
@@ -2237,7 +2237,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"ci\"></a>this repository's ci",
       "source_file": "docs/workflows.md",
-      "source_location": "L212"
+      "source_location": "L231"
     },
     {
       "id": "llms_what_this_repository_is",
@@ -2249,7 +2249,7 @@
       "node_kind": "heading",
       "norm_label": "what this repository is",
       "source_file": "LLMS.md",
-      "source_location": "L125"
+      "source_location": "L129"
     },
     {
       "id": "ai_policy_a_id_agents_a_autonomous_agents",
@@ -2804,11 +2804,33 @@
       "source_location": "L46"
     },
     {
+      "id": "templates_tools_license_check_headers",
+      "label": "templates/tools/license/check-headers.mjs",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "ref_node_url",
+      "file_type": "code",
+      "norm_label": "templates/tools/license/check-headers.mjs",
+      "source_file": "templates/tools/license/check-headers.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "templates_tools_license_check_headers_ignored_directories",
+      "label": "IGNORED_DIRECTORIES",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "ref_node_url",
+      "file_type": "code",
+      "norm_label": "ignored_directories",
+      "source_file": "templates/tools/license/check-headers.mjs",
+      "source_location": "L31"
+    },
+    {
       "id": "test_actions_test",
       "label": "actions.test.mjs",
       "_origin": "ast",
       "community": 10,
-      "community_name": "actions.test.mjs",
+      "community_name": "ref_node_url",
       "file_type": "code",
       "norm_label": "actions.test.mjs",
       "source_file": "test/actions.test.mjs",
@@ -2819,7 +2841,7 @@
       "label": "directories",
       "_origin": "ast",
       "community": 10,
-      "community_name": "actions.test.mjs",
+      "community_name": "ref_node_url",
       "file_type": "code",
       "norm_label": "directories",
       "source_file": "test/actions.test.mjs",
@@ -2830,40 +2852,62 @@
       "label": "lines",
       "_origin": "ast",
       "community": 10,
-      "community_name": "actions.test.mjs",
+      "community_name": "ref_node_url",
       "file_type": "code",
       "norm_label": "lines",
       "source_file": "test/actions.test.mjs",
       "source_location": "L33"
     },
     {
-      "id": "test_actions_test_references",
-      "label": "references",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "actions.test.mjs",
-      "file_type": "code",
-      "norm_label": "references",
-      "source_file": "test/actions.test.mjs",
-      "source_location": "L44"
-    },
-    {
       "id": "test_actions_test_root",
       "label": "root",
       "_origin": "ast",
       "community": 10,
-      "community_name": "actions.test.mjs",
+      "community_name": "ref_node_url",
       "file_type": "code",
       "norm_label": "root",
       "source_file": "test/actions.test.mjs",
       "source_location": "L23"
     },
     {
+      "id": "test_check_headers_test",
+      "label": "check-headers.test.mjs",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "ref_node_url",
+      "file_type": "code",
+      "norm_label": "check-headers.test.mjs",
+      "source_file": "test/check-headers.test.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "test_check_headers_test_templates",
+      "label": "templates",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "ref_node_url",
+      "file_type": "code",
+      "norm_label": "templates",
+      "source_file": "test/check-headers.test.mjs",
+      "source_location": "L26"
+    },
+    {
+      "id": "test_check_headers_test_year",
+      "label": "year",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "ref_node_url",
+      "file_type": "code",
+      "norm_label": "year",
+      "source_file": "test/check-headers.test.mjs",
+      "source_location": "L27"
+    },
+    {
       "id": "test_commit_check_test",
       "label": "commit-check.test.mjs",
       "_origin": "ast",
       "community": 10,
-      "community_name": "actions.test.mjs",
+      "community_name": "ref_node_url",
       "file_type": "code",
       "norm_label": "commit-check.test.mjs",
       "source_file": "test/commit-check.test.mjs",
@@ -2874,7 +2918,7 @@
       "label": "human",
       "_origin": "ast",
       "community": 10,
-      "community_name": "actions.test.mjs",
+      "community_name": "ref_node_url",
       "file_type": "code",
       "norm_label": "human",
       "source_file": "test/commit-check.test.mjs",
@@ -2885,7 +2929,7 @@
       "label": "script",
       "_origin": "ast",
       "community": 10,
-      "community_name": "actions.test.mjs",
+      "community_name": "ref_node_url",
       "file_type": "code",
       "norm_label": "script",
       "source_file": "test/commit-check.test.mjs",
@@ -2896,7 +2940,7 @@
       "label": "graphify.test.mjs",
       "_origin": "ast",
       "community": 10,
-      "community_name": "actions.test.mjs",
+      "community_name": "ref_node_url",
       "file_type": "code",
       "norm_label": "graphify.test.mjs",
       "source_file": "test/graphify.test.mjs",
@@ -2907,7 +2951,7 @@
       "label": "templates",
       "_origin": "ast",
       "community": 10,
-      "community_name": "actions.test.mjs",
+      "community_name": "ref_node_url",
       "file_type": "code",
       "norm_label": "templates",
       "source_file": "test/graphify.test.mjs",
@@ -2918,7 +2962,7 @@
       "label": "workflows.test.mjs",
       "_origin": "ast",
       "community": 10,
-      "community_name": "actions.test.mjs",
+      "community_name": "ref_node_url",
       "file_type": "code",
       "norm_label": "workflows.test.mjs",
       "source_file": "test/workflows.test.mjs",
@@ -2929,7 +2973,7 @@
       "label": "directories",
       "_origin": "ast",
       "community": 10,
-      "community_name": "actions.test.mjs",
+      "community_name": "ref_node_url",
       "file_type": "code",
       "norm_label": "directories",
       "source_file": "test/workflows.test.mjs",
@@ -2940,7 +2984,7 @@
       "label": "root",
       "_origin": "ast",
       "community": 10,
-      "community_name": "actions.test.mjs",
+      "community_name": "ref_node_url",
       "file_type": "code",
       "norm_label": "root",
       "source_file": "test/workflows.test.mjs",
@@ -2951,7 +2995,7 @@
       "label": "ungated",
       "_origin": "ast",
       "community": 10,
-      "community_name": "actions.test.mjs",
+      "community_name": "ref_node_url",
       "file_type": "code",
       "norm_label": "ungated",
       "source_file": "test/workflows.test.mjs",
@@ -2962,7 +3006,7 @@
       "label": "workflows",
       "_origin": "ast",
       "community": 10,
-      "community_name": "actions.test.mjs",
+      "community_name": "ref_node_url",
       "file_type": "code",
       "norm_label": "workflows",
       "source_file": "test/workflows.test.mjs",
@@ -28128,7 +28172,7 @@
       "label": ".github/instructions/house-workflows.instructions.md",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "frontmatter": {
         "applyTo": ".github/workflows/**,.github/actions/**,action.yml,action.yaml"
@@ -28143,7 +28187,7 @@
       "label": "APPROVAL_POLICY.md",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "approval_policy.md",
@@ -28155,7 +28199,7 @@
       "label": "CONTRIBUTING.md",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "contributing.md",
@@ -28167,7 +28211,7 @@
       "label": ".cursor/BUGBOT.md",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": ".cursor/bugbot.md",
@@ -28179,7 +28223,7 @@
       "label": "Bugbot review rules",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "bugbot review rules",
@@ -28191,7 +28235,7 @@
       "label": "DCO.md",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "dco.md",
@@ -28203,7 +28247,7 @@
       "label": "<a id=\"top\"></a>Developer Certificate of Origin",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "<a id=\"top\"></a>developer certificate of origin",
@@ -28215,7 +28259,7 @@
       "label": ".github/copilot-instructions.md",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": ".github/copilot-instructions.md",
@@ -28227,7 +28271,7 @@
       "label": "GitHub Actions workflows",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "github actions workflows",
@@ -28239,7 +28283,7 @@
       "label": "GOVERNANCE.md",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "governance.md",
@@ -28251,7 +28295,7 @@
       "label": "SECURITY.md",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "security.md",
@@ -28263,7 +28307,7 @@
       "label": "SUPPORT.md",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "support.md",
@@ -28275,7 +28319,7 @@
       "label": "<a id=\"top\"></a>Support",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "<a id=\"top\"></a>support",
@@ -41062,6 +41106,17 @@
       "source_location": "L42"
     },
     {
+      "id": "test_actions_test_references",
+      "label": "references",
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "ref_node_fs",
+      "file_type": "code",
+      "norm_label": "references",
+      "source_file": "test/actions.test.mjs",
+      "source_location": "L44"
+    },
+    {
       "id": "test_render_test",
       "label": "render.test.mjs",
       "_origin": "ast",
@@ -43679,6 +43734,18 @@
       "source_location": "L1"
     },
     {
+      "id": "ai_docs_src_20_templates_and_render_index_issue_forms",
+      "label": "Issue forms",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "managed.mjs",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "issue forms",
+      "source_file": "ai-docs/src/20_templates-and-render/index.md",
+      "source_location": "L50"
+    },
+    {
       "id": "ai_docs_src_20_templates_and_render_index_templates_and_the_renderer",
       "label": "Templates and the renderer",
       "_origin": "ast",
@@ -43736,7 +43803,7 @@
       "node_kind": "heading",
       "norm_label": "document everything twice",
       "source_file": "LLMS.md",
-      "source_location": "L109"
+      "source_location": "L113"
     },
     {
       "id": "llms_files",
@@ -43772,7 +43839,19 @@
       "node_kind": "heading",
       "norm_label": "how the sync reaches other repositories",
       "source_file": "LLMS.md",
-      "source_location": "L217"
+      "source_location": "L240"
+    },
+    {
+      "id": "llms_issue_forms",
+      "label": "Issue forms",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "managed.mjs",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "issue forms",
+      "source_file": "LLMS.md",
+      "source_location": "L219"
     },
     {
       "id": "llms_making_a_change_here",
@@ -43784,7 +43863,7 @@
       "node_kind": "heading",
       "norm_label": "making a change here",
       "source_file": "LLMS.md",
-      "source_location": "L334"
+      "source_location": "L393"
     },
     {
       "id": "llms_resnovas_house_for_agents",
@@ -43808,7 +43887,7 @@
       "node_kind": "heading",
       "norm_label": "reusable workflows",
       "source_file": "LLMS.md",
-      "source_location": "L293"
+      "source_location": "L339"
     },
     {
       "id": "llms_templates_and_the_renderer",
@@ -43820,7 +43899,7 @@
       "node_kind": "heading",
       "norm_label": "templates and the renderer",
       "source_file": "LLMS.md",
-      "source_location": "L166"
+      "source_location": "L170"
     },
     {
       "id": "llms_tests",
@@ -43844,7 +43923,7 @@
       "node_kind": "heading",
       "norm_label": "the house preset",
       "source_file": "LLMS.md",
-      "source_location": "L255"
+      "source_location": "L293"
     },
     {
       "id": "llms_typescript",
@@ -48422,7 +48501,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"by-hand\"></a>settings no workflow can apply",
       "source_file": "docs/access.md",
-      "source_location": "L67"
+      "source_location": "L158"
     },
     {
       "id": "docs_access_a_id_doctor_a_checking_a_repository",
@@ -48434,7 +48513,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"doctor\"></a>checking a repository",
       "source_file": "docs/access.md",
-      "source_location": "L51"
+      "source_location": "L142"
     },
     {
       "id": "docs_access_a_id_restricted_a_pull_requests_from_forks_and_dependabot",
@@ -48446,7 +48525,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"restricted\"></a>pull requests from forks and dependabot",
       "source_file": "docs/access.md",
-      "source_location": "L44"
+      "source_location": "L135"
     },
     {
       "id": "docs_access_a_id_scopes_a_what_each_workflow_s_token_can_reach",
@@ -48458,7 +48537,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"scopes\"></a>what each workflow's token can reach",
       "source_file": "docs/access.md",
-      "source_location": "L35"
+      "source_location": "L124"
     },
     {
       "id": "docs_access_a_id_setup_a_setting_it_up_once_for_the_organisation",
@@ -48469,6 +48548,18 @@
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "<a id=\"setup\"></a>setting it up (once, for the organisation)",
+      "source_file": "docs/access.md",
+      "source_location": "L107"
+    },
+    {
+      "id": "docs_access_a_id_tokens_a_three_tokens_each_with_one_job",
+      "label": "<a id=\"tokens\"></a>Three tokens, each with one job",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "Access: the app, secrets and variables",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"tokens\"></a>three tokens, each with one job",
       "source_file": "docs/access.md",
       "source_location": "L18"
     },
@@ -48495,6 +48586,42 @@
       "norm_label": "access: the app, secrets and variables",
       "source_file": "docs/access.md",
       "source_location": "L1"
+    },
+    {
+      "id": "docs_access_common_problems",
+      "label": "Common problems",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "Access: the app, secrets and variables",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "common problems",
+      "source_file": "docs/access.md",
+      "source_location": "L98"
+    },
+    {
+      "id": "docs_access_setting_it_up_in_a_new_organisation",
+      "label": "Setting it up in a new organisation",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "Access: the app, secrets and variables",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "setting it up in a new organisation",
+      "source_file": "docs/access.md",
+      "source_location": "L42"
+    },
+    {
+      "id": "docs_access_what_you_will_see",
+      "label": "What you will see",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "Access: the app, secrets and variables",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "what you will see",
+      "source_file": "docs/access.md",
+      "source_location": "L36"
     },
     {
       "id": "claude_skills_gan_planner_references_spec_template",
@@ -50978,59 +51105,70 @@
       "source_location": "L98"
     },
     {
-      "id": "templates_tools_license_check_headers",
-      "label": "templates/tools/license/check-headers.mjs",
+      "id": "templates_tools_typecheck_tests",
+      "label": "templates/tools/typecheck/tests.ts",
       "_origin": "ast",
       "community": 639,
-      "community_name": "check-headers.test.mjs",
+      "community_name": "templates/tools/typecheck/tests.ts",
       "file_type": "code",
-      "norm_label": "templates/tools/license/check-headers.mjs",
-      "source_file": "templates/tools/license/check-headers.mjs",
+      "norm_label": "templates/tools/typecheck/tests.ts",
+      "source_file": "templates/tools/typecheck/tests.ts",
       "source_location": "L1"
     },
     {
-      "id": "templates_tools_license_check_headers_ignored_directories",
-      "label": "IGNORED_DIRECTORIES",
+      "id": "templates_tools_typecheck_tests_build",
+      "label": "build",
       "_origin": "ast",
       "community": 639,
-      "community_name": "check-headers.test.mjs",
+      "community_name": "templates/tools/typecheck/tests.ts",
       "file_type": "code",
-      "norm_label": "ignored_directories",
-      "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L31"
-    },
-    {
-      "id": "test_check_headers_test",
-      "label": "check-headers.test.mjs",
-      "_origin": "ast",
-      "community": 639,
-      "community_name": "check-headers.test.mjs",
-      "file_type": "code",
-      "norm_label": "check-headers.test.mjs",
-      "source_file": "test/check-headers.test.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "test_check_headers_test_templates",
-      "label": "templates",
-      "_origin": "ast",
-      "community": 639,
-      "community_name": "check-headers.test.mjs",
-      "file_type": "code",
-      "norm_label": "templates",
-      "source_file": "test/check-headers.test.mjs",
+      "norm_label": "build",
+      "source_file": "templates/tools/typecheck/tests.ts",
       "source_location": "L26"
     },
     {
-      "id": "test_check_headers_test_year",
-      "label": "year",
+      "id": "templates_tools_typecheck_tests_failed",
+      "label": "failed",
       "_origin": "ast",
       "community": 639,
-      "community_name": "check-headers.test.mjs",
+      "community_name": "templates/tools/typecheck/tests.ts",
       "file_type": "code",
-      "norm_label": "year",
-      "source_file": "test/check-headers.test.mjs",
-      "source_location": "L27"
+      "norm_label": "failed",
+      "source_file": "templates/tools/typecheck/tests.ts",
+      "source_location": "L39"
+    },
+    {
+      "id": "templates_tools_typecheck_tests_projects",
+      "label": "projects",
+      "_origin": "ast",
+      "community": 639,
+      "community_name": "templates/tools/typecheck/tests.ts",
+      "file_type": "code",
+      "norm_label": "projects",
+      "source_file": "templates/tools/typecheck/tests.ts",
+      "source_location": "L20"
+    },
+    {
+      "id": "templates_tools_typecheck_tests_root",
+      "label": "root",
+      "_origin": "ast",
+      "community": 639,
+      "community_name": "templates/tools/typecheck/tests.ts",
+      "file_type": "code",
+      "norm_label": "root",
+      "source_file": "templates/tools/typecheck/tests.ts",
+      "source_location": "L17"
+    },
+    {
+      "id": "templates_tools_typecheck_tests_tsc",
+      "label": "tsc",
+      "_origin": "ast",
+      "community": 639,
+      "community_name": "templates/tools/typecheck/tests.ts",
+      "file_type": "code",
+      "norm_label": "tsc",
+      "source_file": "templates/tools/typecheck/tests.ts",
+      "source_location": "L18"
     },
     {
       "id": "templates_agents_prompts_review",
@@ -54806,72 +54944,6 @@
       "source_location": "L48"
     },
     {
-      "id": "templates_tools_typecheck_tests",
-      "label": "templates/tools/typecheck/tests.ts",
-      "_origin": "ast",
-      "community": 79,
-      "community_name": "ref_node_path",
-      "file_type": "code",
-      "norm_label": "templates/tools/typecheck/tests.ts",
-      "source_file": "templates/tools/typecheck/tests.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "templates_tools_typecheck_tests_build",
-      "label": "build",
-      "_origin": "ast",
-      "community": 79,
-      "community_name": "ref_node_path",
-      "file_type": "code",
-      "norm_label": "build",
-      "source_file": "templates/tools/typecheck/tests.ts",
-      "source_location": "L26"
-    },
-    {
-      "id": "templates_tools_typecheck_tests_failed",
-      "label": "failed",
-      "_origin": "ast",
-      "community": 79,
-      "community_name": "ref_node_path",
-      "file_type": "code",
-      "norm_label": "failed",
-      "source_file": "templates/tools/typecheck/tests.ts",
-      "source_location": "L39"
-    },
-    {
-      "id": "templates_tools_typecheck_tests_projects",
-      "label": "projects",
-      "_origin": "ast",
-      "community": 79,
-      "community_name": "ref_node_path",
-      "file_type": "code",
-      "norm_label": "projects",
-      "source_file": "templates/tools/typecheck/tests.ts",
-      "source_location": "L20"
-    },
-    {
-      "id": "templates_tools_typecheck_tests_root",
-      "label": "root",
-      "_origin": "ast",
-      "community": 79,
-      "community_name": "ref_node_path",
-      "file_type": "code",
-      "norm_label": "root",
-      "source_file": "templates/tools/typecheck/tests.ts",
-      "source_location": "L17"
-    },
-    {
-      "id": "templates_tools_typecheck_tests_tsc",
-      "label": "tsc",
-      "_origin": "ast",
-      "community": 79,
-      "community_name": "ref_node_path",
-      "file_type": "code",
-      "norm_label": "tsc",
-      "source_file": "templates/tools/typecheck/tests.ts",
-      "source_location": "L18"
-    },
-    {
       "id": "tools_dev_docs",
       "label": "tools/dev/docs.ts",
       "_origin": "ast",
@@ -55490,7 +55562,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"attest\"></a>attest (for release workflows)",
       "source_file": "docs/workflows.md",
-      "source_location": "L172"
+      "source_location": "L191"
     },
     {
       "id": "docs_workflows_a_id_codeql_a_codeql",
@@ -55514,7 +55586,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"dependency-review\"></a>dependency review",
       "source_file": "docs/workflows.md",
-      "source_location": "L81"
+      "source_location": "L90"
     },
     {
       "id": "docs_workflows_a_id_graphify_a_graphify",
@@ -55526,7 +55598,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"graphify\"></a>graphify",
       "source_file": "docs/workflows.md",
-      "source_location": "L151"
+      "source_location": "L160"
     },
     {
       "id": "docs_workflows_a_id_scorecard_a_openssf_scorecard",
@@ -55538,7 +55610,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"scorecard\"></a>openssf scorecard",
       "source_file": "docs/workflows.md",
-      "source_location": "L107"
+      "source_location": "L116"
     },
     {
       "id": "docs_workflows_a_id_smartcloud_a_smartcloud",
@@ -55574,7 +55646,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"workflow-lint\"></a>workflow lint",
       "source_file": "docs/workflows.md",
-      "source_location": "L126"
+      "source_location": "L135"
     },
     {
       "id": "docs_workflows_workflows",
@@ -56901,6 +56973,18 @@
       "source_location": "L1"
     },
     {
+      "id": "docs_preset_a_id_automerge_a_automerge_dependency_updates_merge_themselves",
+      "label": "<a id=\"automerge\"></a>`autoMerge`: dependency updates merge themselves",
+      "_origin": "ast",
+      "community": 89,
+      "community_name": "The house preset",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"automerge\"></a>`automerge`: dependency updates merge themselves",
+      "source_file": "docs/preset.md",
+      "source_location": "L186"
+    },
+    {
       "id": "docs_preset_a_id_changing_a_changing_the_preset",
       "label": "<a id=\"changing\"></a>Changing the preset",
       "_origin": "ast",
@@ -56910,7 +56994,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"changing\"></a>changing the preset",
       "source_file": "docs/preset.md",
-      "source_location": "L231"
+      "source_location": "L282"
     },
     {
       "id": "docs_preset_a_id_commits_a_commits_sign_off_and_ai_credit",
@@ -56994,7 +57078,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"required\"></a>`required`: one check to require",
       "source_file": "docs/preset.md",
-      "source_location": "L186"
+      "source_location": "L221"
     },
     {
       "id": "docs_preset_a_id_reviews_a_reviews_how_many_approvals",
@@ -57042,7 +57126,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"sync\"></a>`sync`: the house files",
       "source_file": "docs/preset.md",
-      "source_location": "L197"
+      "source_location": "L248"
     },
     {
       "id": "docs_preset_a_id_unset_a_what_a_repository_adds",
@@ -57054,7 +57138,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"unset\"></a>what a repository adds",
       "source_file": "docs/preset.md",
-      "source_location": "L212"
+      "source_location": "L263"
     },
     {
       "id": "docs_preset_actions",
@@ -57910,6 +57994,18 @@
       "source_location": "L28"
     },
     {
+      "id": "docs_getting_started_a_id_own_org_a_a_hub_for_your_own_organisation",
+      "label": "<a id=\"own-org\"></a>A hub for your own organisation",
+      "_origin": "ast",
+      "community": 92,
+      "community_name": "<a id=\"adopting\"></a>Adopting a repository",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"own-org\"></a>a hub for your own organisation",
+      "source_file": "docs/getting-started.md",
+      "source_location": "L167"
+    },
+    {
       "id": "docs_getting_started_a_id_words_a_the_words",
       "label": "<a id=\"words\"></a>The words",
       "_origin": "ast",
@@ -58018,6 +58114,18 @@
       "source_location": "L52"
     },
     {
+      "id": "docs_ci_standards_a_id_release_preview_a_release_preview",
+      "label": "<a id=\"release-preview\"></a>Release preview",
+      "_origin": "ast",
+      "community": 93,
+      "community_name": "CI standards",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"release-preview\"></a>release preview",
+      "source_file": "docs/ci-standards.md",
+      "source_location": "L101"
+    },
+    {
       "id": "docs_ci_standards_a_id_skipping_a_skipping_work_a_change_cannot_affect",
       "label": "<a id=\"skipping\"></a>Skipping work a change cannot affect",
       "_origin": "ast",
@@ -58075,7 +58183,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"ai-docs\"></a>ai docs",
       "source_file": "docs/synced-files.md",
-      "source_location": "L163"
+      "source_location": "L165"
     },
     {
       "id": "docs_synced_files_a_id_documents_a_governance_documents",
@@ -58111,7 +58219,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"graphify\"></a>code graph (graphify)",
       "source_file": "docs/synced-files.md",
-      "source_location": "L134"
+      "source_location": "L136"
     },
     {
       "id": "docs_synced_files_a_id_optional_apps_a_optional_apps",
@@ -58123,7 +58231,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"optional-apps\"></a>optional apps",
       "source_file": "docs/synced-files.md",
-      "source_location": "L90"
+      "source_location": "L92"
     },
     {
       "id": "docs_synced_files_a_id_prettier_a_formatting",
@@ -58135,7 +58243,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"prettier\"></a>formatting",
       "source_file": "docs/synced-files.md",
-      "source_location": "L173"
+      "source_location": "L175"
     },
     {
       "id": "docs_synced_files_a_id_review_bots_a_review_bot_configuration",
@@ -58147,7 +58255,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"review-bots\"></a>review bot configuration",
       "source_file": "docs/synced-files.md",
-      "source_location": "L64"
+      "source_location": "L66"
     },
     {
       "id": "docs_synced_files_a_id_skills_a_house_skills",
@@ -58159,7 +58267,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"skills\"></a>house skills",
       "source_file": "docs/synced-files.md",
-      "source_location": "L147"
+      "source_location": "L149"
     },
     {
       "id": "docs_synced_files_a_id_surfaces_a_editor_and_agent_surfaces",
@@ -58171,7 +58279,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"surfaces\"></a>editor and agent surfaces",
       "source_file": "docs/synced-files.md",
-      "source_location": "L98"
+      "source_location": "L100"
     },
     {
       "id": "docs_synced_files_a_id_tools_a_repository_tools",
@@ -58183,7 +58291,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"tools\"></a>repository tools",
       "source_file": "docs/synced-files.md",
-      "source_location": "L119"
+      "source_location": "L121"
     },
     {
       "id": "docs_synced_files_a_id_workflows_a_workflows",
@@ -58195,7 +58303,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"workflows\"></a>workflows",
       "source_file": "docs/synced-files.md",
-      "source_location": "L48"
+      "source_location": "L50"
     },
     {
       "id": "docs_synced_files_synced_files",
@@ -58255,7 +58363,7 @@
       "node_kind": "heading",
       "norm_label": "document everything twice",
       "source_file": "ai-docs/src/05_house-standards/index.md",
-      "source_location": "L96"
+      "source_location": "L100"
     },
     {
       "id": "ai_docs_src_05_house_standards_index_files",
@@ -58351,7 +58459,7 @@
       "node_kind": "heading",
       "norm_label": "document everything twice",
       "source_file": "templates/ai-docs/src/05_house-standards/index.md",
-      "source_location": "L96"
+      "source_location": "L100"
     },
     {
       "id": "templates_ai_docs_src_05_house_standards_index_files",
@@ -59296,7 +59404,7 @@
       "author": null,
       "captured_at": null,
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "contributor": null,
       "file_type": "document",
       "norm_label": "ai contribution policy",
@@ -59312,7 +59420,7 @@
       "author": null,
       "captured_at": null,
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "contributor": null,
       "file_type": "document",
       "norm_label": "ai contribution policy",
@@ -59328,7 +59436,7 @@
       "author": null,
       "captured_at": null,
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "contributor": null,
       "file_type": "document",
       "norm_label": "code of conduct",
@@ -59344,7 +59452,7 @@
       "author": null,
       "captured_at": null,
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "contributor": null,
       "file_type": "document",
       "norm_label": "eventiva cooperation commitment version 1.2",
@@ -59360,7 +59468,7 @@
       "author": null,
       "captured_at": null,
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "contributor": null,
       "file_type": "document",
       "norm_label": "creative commons attribution-sharealike 4.0 international",
@@ -59376,7 +59484,7 @@
       "author": null,
       "captured_at": null,
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "contributor": null,
       "file_type": "document",
       "norm_label": "developer certificate of origin",
@@ -59392,7 +59500,7 @@
       "author": null,
       "captured_at": null,
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "contributor": null,
       "file_type": "document",
       "norm_label": "eventiva cooperation commitment",
@@ -59408,7 +59516,7 @@
       "author": null,
       "captured_at": null,
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "contributor": null,
       "file_type": "document",
       "norm_label": "gpl cooperation commitment",
@@ -59424,7 +59532,7 @@
       "author": null,
       "captured_at": null,
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "contributor": null,
       "file_type": "document",
       "norm_label": "gpl version 3",
@@ -59645,10 +59753,22 @@
       "label": "ref_node_assert",
       "_origin": "semantic",
       "community": 10,
-      "community_name": "actions.test.mjs",
+      "community_name": "ref_node_url",
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_node_assert",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "ref_node_os",
+      "label": "ref_node_os",
+      "_origin": "semantic",
+      "community": 10,
+      "community_name": "ref_node_url",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_node_os",
       "source_file": "",
       "type": "external"
     },
@@ -59657,10 +59777,22 @@
       "label": "ref_node_test",
       "_origin": "semantic",
       "community": 10,
-      "community_name": "actions.test.mjs",
+      "community_name": "ref_node_url",
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_node_test",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "ref_node_url",
+      "label": "ref_node_url",
+      "_origin": "semantic",
+      "community": 10,
+      "community_name": "ref_node_url",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_node_url",
       "source_file": "",
       "type": "external"
     },
@@ -59689,26 +59821,26 @@
       "type": "external"
     },
     {
-      "id": "ref_node_crypto",
-      "label": "ref_node_crypto",
+      "id": "ref_node_net",
+      "label": "ref_node_net",
       "_origin": "semantic",
       "community": 61,
       "community_name": "templates/tools/dev/surfaces.mjs",
       "external": true,
       "file_type": "concept",
-      "norm_label": "ref_node_crypto",
+      "norm_label": "ref_node_net",
       "source_file": "",
       "type": "external"
     },
     {
-      "id": "ref_node_net",
-      "label": "ref_node_net",
+      "id": "ref_node_crypto",
+      "label": "ref_node_crypto",
       "_origin": "semantic",
       "community": 62,
       "community_name": "tools/dev/surfaces.mjs",
       "external": true,
       "file_type": "concept",
-      "norm_label": "ref_node_net",
+      "norm_label": "ref_node_crypto",
       "source_file": "",
       "type": "external"
     },
@@ -59721,18 +59853,6 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_vitest",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "ref_node_os",
-      "label": "ref_node_os",
-      "_origin": "semantic",
-      "community": 639,
-      "community_name": "check-headers.test.mjs",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "ref_node_os",
       "source_file": "",
       "type": "external"
     },
@@ -59757,18 +59877,6 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_node_path",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "ref_node_url",
-      "label": "ref_node_url",
-      "_origin": "semantic",
-      "community": 79,
-      "community_name": "ref_node_path",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "ref_node_url",
       "source_file": "",
       "type": "external"
     }
@@ -75982,6 +76090,17 @@
     },
     {
       "source": "ai_docs_src_05_house_standards_index_house_standards",
+      "target": "ai_docs_src_05_house_standards_index_document_everything_twice",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ai-docs/src/05_house-standards/index.md",
+      "source_location": "L100",
+      "weight": 1.0
+    },
+    {
+      "source": "ai_docs_src_05_house_standards_index_house_standards",
       "target": "ai_docs_src_05_house_standards_index_tests",
       "relation": "contains",
       "_origin": "ast",
@@ -76025,17 +76144,6 @@
       "weight": 1.0
     },
     {
-      "source": "ai_docs_src_05_house_standards_index_house_standards",
-      "target": "ai_docs_src_05_house_standards_index_document_everything_twice",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "ai-docs/src/05_house-standards/index.md",
-      "source_location": "L96",
-      "weight": 1.0
-    },
-    {
       "source": "ai_docs_src_10_overview_index",
       "target": "ai_docs_src_10_overview_index_what_this_repository_is",
       "relation": "contains",
@@ -76055,6 +76163,17 @@
       "confidence_score": 1.0,
       "source_file": "ai-docs/src/20_templates-and-render/index.md",
       "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "ai_docs_src_20_templates_and_render_index",
+      "target": "ai_docs_src_20_templates_and_render_index_issue_forms",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ai-docs/src/20_templates-and-render/index.md",
+      "source_location": "L50",
       "weight": 1.0
     },
     {
@@ -88334,6 +88453,39 @@
       "weight": 1.0
     },
     {
+      "source": "docs_access_a_id_tokens_a_three_tokens_each_with_one_job",
+      "target": "docs_access_what_you_will_see",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/access.md",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_access_a_id_tokens_a_three_tokens_each_with_one_job",
+      "target": "docs_access_setting_it_up_in_a_new_organisation",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/access.md",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_access_a_id_tokens_a_three_tokens_each_with_one_job",
+      "target": "docs_access_common_problems",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/access.md",
+      "source_location": "L98",
+      "weight": 1.0
+    },
+    {
       "source": "docs_access_access_the_app_secrets_and_variables",
       "target": "docs_access_a_id_setup_a_setting_it_up_once_for_the_organisation",
       "relation": "contains",
@@ -88341,7 +88493,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/access.md",
-      "source_location": "L18",
+      "source_location": "L107",
       "weight": 1.0
     },
     {
@@ -88352,7 +88504,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/access.md",
-      "source_location": "L35",
+      "source_location": "L124",
       "weight": 1.0
     },
     {
@@ -88363,7 +88515,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/access.md",
-      "source_location": "L44",
+      "source_location": "L135",
       "weight": 1.0
     },
     {
@@ -88374,7 +88526,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/access.md",
-      "source_location": "L51",
+      "source_location": "L142",
       "weight": 1.0
     },
     {
@@ -88385,7 +88537,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/access.md",
-      "source_location": "L67",
+      "source_location": "L158",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_access_access_the_app_secrets_and_variables",
+      "target": "docs_access_a_id_tokens_a_three_tokens_each_with_one_job",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/access.md",
+      "source_location": "L18",
       "weight": 1.0
     },
     {
@@ -88496,6 +88659,17 @@
       "confidence_score": 1.0,
       "source_file": "docs/ci-standards.md",
       "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_ci_standards_ci_standards",
+      "target": "docs_ci_standards_a_id_release_preview_a_release_preview",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/ci-standards.md",
+      "source_location": "L101",
       "weight": 1.0
     },
     {
@@ -88698,6 +88872,17 @@
     },
     {
       "source": "docs_getting_started_getting_started",
+      "target": "docs_getting_started_a_id_own_org_a_a_hub_for_your_own_organisation",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/getting-started.md",
+      "source_location": "L167",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_getting_started_getting_started",
       "target": "docs_getting_started_a_id_how_a_how_it_fits_together",
       "relation": "contains",
       "_origin": "ast",
@@ -88819,7 +89004,7 @@
     },
     {
       "source": "docs_preset_the_house_preset",
-      "target": "docs_preset_a_id_required_a_required_one_check_to_require",
+      "target": "docs_preset_a_id_automerge_a_automerge_dependency_updates_merge_themselves",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -88830,13 +89015,24 @@
     },
     {
       "source": "docs_preset_the_house_preset",
+      "target": "docs_preset_a_id_required_a_required_one_check_to_require",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/preset.md",
+      "source_location": "L221",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_preset_the_house_preset",
       "target": "docs_preset_a_id_sync_a_sync_the_house_files",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/preset.md",
-      "source_location": "L197",
+      "source_location": "L248",
       "weight": 1.0
     },
     {
@@ -88847,18 +89043,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/preset.md",
-      "source_location": "L212",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_preset_the_house_preset",
-      "target": "docs_preset_a_id_changing_a_changing_the_preset",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/preset.md",
-      "source_location": "L231",
+      "source_location": "L263",
       "weight": 1.0
     },
     {
@@ -88870,6 +89055,17 @@
       "confidence_score": 1.0,
       "source_file": "docs/preset.md",
       "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_preset_the_house_preset",
+      "target": "docs_preset_a_id_changing_a_changing_the_preset",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/preset.md",
+      "source_location": "L282",
       "weight": 1.0
     },
     {
@@ -89133,7 +89329,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/synced-files.md",
-      "source_location": "L90",
+      "source_location": "L92",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_synced_files_synced_files",
+      "target": "docs_synced_files_a_id_surfaces_a_editor_and_agent_surfaces",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/synced-files.md",
+      "source_location": "L100",
       "weight": 1.0
     },
     {
@@ -89144,7 +89351,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/synced-files.md",
-      "source_location": "L119",
+      "source_location": "L121",
       "weight": 1.0
     },
     {
@@ -89155,7 +89362,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/synced-files.md",
-      "source_location": "L134",
+      "source_location": "L136",
       "weight": 1.0
     },
     {
@@ -89177,7 +89384,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/synced-files.md",
-      "source_location": "L147",
+      "source_location": "L149",
       "weight": 1.0
     },
     {
@@ -89188,7 +89395,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/synced-files.md",
-      "source_location": "L163",
+      "source_location": "L165",
       "weight": 1.0
     },
     {
@@ -89199,7 +89406,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/synced-files.md",
-      "source_location": "L173",
+      "source_location": "L175",
       "weight": 1.0
     },
     {
@@ -89221,7 +89428,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/synced-files.md",
-      "source_location": "L48",
+      "source_location": "L50",
       "weight": 1.0
     },
     {
@@ -89232,18 +89439,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/synced-files.md",
-      "source_location": "L64",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_synced_files_synced_files",
-      "target": "docs_synced_files_a_id_surfaces_a_editor_and_agent_surfaces",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/synced-files.md",
-      "source_location": "L98",
+      "source_location": "L66",
       "weight": 1.0
     },
     {
@@ -89320,7 +89516,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/workflows.md",
-      "source_location": "L107",
+      "source_location": "L116",
       "weight": 1.0
     },
     {
@@ -89331,7 +89527,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/workflows.md",
-      "source_location": "L126",
+      "source_location": "L135",
       "weight": 1.0
     },
     {
@@ -89342,7 +89538,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/workflows.md",
-      "source_location": "L151",
+      "source_location": "L160",
       "weight": 1.0
     },
     {
@@ -89353,7 +89549,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/workflows.md",
-      "source_location": "L172",
+      "source_location": "L191",
       "weight": 1.0
     },
     {
@@ -89364,7 +89560,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/workflows.md",
-      "source_location": "L212",
+      "source_location": "L231",
       "weight": 1.0
     },
     {
@@ -89408,7 +89604,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/workflows.md",
-      "source_location": "L81",
+      "source_location": "L90",
       "weight": 1.0
     },
     {
@@ -89694,7 +89890,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "LLMS.md",
-      "source_location": "L109",
+      "source_location": "L113",
       "weight": 1.0
     },
     {
@@ -89760,7 +89956,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "LLMS.md",
-      "source_location": "L125",
+      "source_location": "L129",
       "weight": 1.0
     },
     {
@@ -89782,7 +89978,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "LLMS.md",
-      "source_location": "L166",
+      "source_location": "L170",
+      "weight": 1.0
+    },
+    {
+      "source": "llms_resnovas_house_for_agents",
+      "target": "llms_issue_forms",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "LLMS.md",
+      "source_location": "L219",
       "weight": 1.0
     },
     {
@@ -89793,7 +90000,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "LLMS.md",
-      "source_location": "L217",
+      "source_location": "L240",
       "weight": 1.0
     },
     {
@@ -89804,7 +90011,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "LLMS.md",
-      "source_location": "L255",
+      "source_location": "L293",
       "weight": 1.0
     },
     {
@@ -89815,7 +90022,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "LLMS.md",
-      "source_location": "L293",
+      "source_location": "L339",
       "weight": 1.0
     },
     {
@@ -89826,7 +90033,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "LLMS.md",
-      "source_location": "L334",
+      "source_location": "L393",
       "weight": 1.0
     },
     {
@@ -105946,6 +106153,17 @@
     },
     {
       "source": "templates_ai_docs_src_05_house_standards_index_house_standards",
+      "target": "templates_ai_docs_src_05_house_standards_index_document_everything_twice",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/ai-docs/src/05_house-standards/index.md",
+      "source_location": "L100",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_ai_docs_src_05_house_standards_index_house_standards",
       "target": "templates_ai_docs_src_05_house_standards_index_tests",
       "relation": "contains",
       "_origin": "ast",
@@ -105986,17 +106204,6 @@
       "confidence_score": 1.0,
       "source_file": "templates/ai-docs/src/05_house-standards/index.md",
       "source_location": "L73",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_ai_docs_src_05_house_standards_index_house_standards",
-      "target": "templates_ai_docs_src_05_house_standards_index_document_everything_twice",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/ai-docs/src/05_house-standards/index.md",
-      "source_location": "L96",
       "weight": 1.0
     },
     {
@@ -110753,6 +110960,17 @@
     },
     {
       "source": "docs_access",
+      "target": "docs_synced_files",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/access.md",
+      "source_location": "L168",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_access",
       "target": "readme",
       "relation": "references",
       "_origin": "ast",
@@ -110760,17 +110978,6 @@
       "confidence_score": 1.0,
       "source_file": "docs/access.md",
       "source_location": "L5",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_access",
-      "target": "docs_synced_files",
-      "relation": "references",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/access.md",
-      "source_location": "L77",
       "weight": 1.0
     },
     {
@@ -110874,6 +111081,17 @@
     },
     {
       "source": "docs_preset",
+      "target": "approval_policy",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/preset.md",
+      "source_location": "L234",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_preset",
       "target": "docs_sync",
       "relation": "references",
       "_origin": "ast",
@@ -110968,7 +111186,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/synced-files.md",
-      "source_location": "L165",
+      "source_location": "L167",
       "weight": 1.0
     },
     {
@@ -111001,7 +111219,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/synced-files.md",
-      "source_location": "L50",
+      "source_location": "L52",
       "weight": 1.0
     },
     {
@@ -111012,7 +111230,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/synced-files.md",
-      "source_location": "L67",
+      "source_location": "L69",
       "weight": 1.0
     },
     {
@@ -111100,7 +111318,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/workflows.md",
-      "source_location": "L220",
+      "source_location": "L239",
       "weight": 1.0
     },
     {
@@ -111734,6 +111952,18 @@
       "weight": 1.0
     },
     {
+      "source": "ai_docs_src_20_templates_and_render_index_issue_forms",
+      "target": "scripts_lib_managed_managedconflicts",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "context": "managedConflicts",
+      "source_file": "ai-docs/src/20_templates-and-render/index.md",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
       "source": "ai_docs_src_20_templates_and_render_index_templates_and_the_renderer",
       "target": "scripts_lib_managed_managedconflicts",
       "relation": "references",
@@ -111746,6 +111976,18 @@
       "weight": 1.0
     },
     {
+      "source": "llms_issue_forms",
+      "target": "scripts_lib_managed_managedconflicts",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "context": "managedConflicts",
+      "source_file": "LLMS.md",
+      "source_location": "L236",
+      "weight": 1.0
+    },
+    {
       "source": "llms_templates_and_the_renderer",
       "target": "scripts_lib_managed_managedconflicts",
       "relation": "references",
@@ -111754,7 +111996,7 @@
       "confidence_score": 0.95,
       "context": "managedConflicts",
       "source_file": "LLMS.md",
-      "source_location": "L194",
+      "source_location": "L198",
       "weight": 1.0
     },
     {
@@ -111778,7 +112020,7 @@
       "confidence_score": 0.95,
       "context": "mergeManaged",
       "source_file": "LLMS.md",
-      "source_location": "L179",
+      "source_location": "L183",
       "weight": 1.0
     },
     {
@@ -111814,7 +112056,7 @@
       "confidence_score": 0.95,
       "context": "rendered",
       "source_file": "docs/workflows.md",
-      "source_location": "L217",
+      "source_location": "L236",
       "weight": 1.0
     },
     {
@@ -111826,7 +112068,7 @@
       "confidence_score": 0.95,
       "context": "rendered",
       "source_file": "LLMS.md",
-      "source_location": "L156",
+      "source_location": "L160",
       "weight": 1.0
     },
     {
