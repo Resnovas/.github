@@ -73,4 +73,4 @@ Commit the new cache files with the graph.
 - Run a paid or remote model backend over the repository. The wrapper clears provider API keys for this reason.
 - Run `graphify install`, `graphify claude install`, `graphify global add` or other commands that write outside the repository or merge it into a shared global graph.
 - Serve the graph over HTTP. Shared remote access for maintainers is a separate, private Graphify Cloud workspace.
-- Treat the graph as memory. It describes the code; decisions and preferences belong in the repository's docs.
+- Treat the committed graph as memory. It describes the code; decisions, gotchas and preferences go to Graphify Cloud memory (`remember` on the `graphify-cloud` MCP server) and to the repository's docs.

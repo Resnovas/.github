@@ -109,7 +109,7 @@ They only call three package scripts every repository has (`setup`, `check` and 
 | `orca.yaml` | Extendable | Orca | Runs `setup` after each new worktree. Add tabs and shared directories after `house:local`. |
 | `.agents/surfaces.jsonc` | Extendable | Orca, OpenChamber | The quick commands and project actions. Your own go in the `actions` list. |
 | `.agents/prompts/verify.md`, `review.md`, `address-review.md` | Whole file | Every agent host | Agent prompts: run the gate and fix failures; review the branch against the house rules; work through review comments. Add your own prompts as other files beside them. |
-| `.agents/mcp.jsonc` | Extendable | Every agent host | The MCP servers agents use (Mem0 gateway, Cognee, the repository's Graphify graph, Graphify Cloud). Your own go under `servers`. No credential is ever written: each host reads them from environment variables. |
+| `.agents/mcp.jsonc` | Extendable | Every agent host | The MCP servers agents use (Mem0 gateway, the repository's Graphify graph, and Graphify Cloud with its memory). Your own go under `servers`. No credential is ever written: each host reads them from environment variables. |
 | `tools/dev/surfaces.mjs` | Whole file | You, and `setup` and `check` | `sync` writes the prompts to `.claude/commands` and `.cursor/commands`, and the MCP servers to `.mcp.json`, `.cursor/mcp.json`, `.vscode/mcp.json` and a block in `.codex/config.toml`. `check` fails when they are out of date. `install` registers the actions in Orca and OpenChamber, which keep them in per-user settings. |
 | `tools/dev/open.mjs` | Whole file | The tasks | Opens a file in the default browser on any platform. |
 
