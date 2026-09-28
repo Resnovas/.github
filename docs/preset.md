@@ -181,7 +181,42 @@ One ruleset, named `house: default branch`, is written in full on every run.
 | --- | --- | --- |
 | `workflowPermissions` | `read` | The workflow token is read-only unless a job asks for more. Every house workflow declares what it needs. |
 | `createPullRequests` | `true` | The workflow token may open pull requests (the code graph refresh falls back to it). |
-| `accessLevel` | `organization` | Other Resnovas repositories may call this repository's reusable workflows while it is private. |
+| `accessLevel` | `organization` | Other Resnovas repositories may call this repository's reusable workflows even if it is made private. |
+
+## <a id="automerge"></a>`autoMerge`: dependency updates merge themselves
+
+```yaml
+autoMerge:
+  rules:
+    dependency-updates:
+      when:
+        condition:
+          - type: dependencyUpdateType
+            condition: [patch, minor]
+```
+
+**What it is.** When Dependabot or Renovate opens a pull request that moves a dependency up a patch or minor version (for example `1.4.1` to `1.4.2`, or `1.4` to `1.5`), smartcloud turns on GitHub auto-merge for it.
+Auto-merge means "merge this as soon as it is allowed": GitHub waits for every required check and review, then puts the pull request in the merge queue.
+So nobody has to come back and press merge on routine updates, and nothing skips CI.
+
+**What it leaves alone.** Major updates (`1.x` to `2.0`) can break things, so they wait for a person. Pull requests from people are never touched.
+
+**What you will see.** On a matching pull request, a comment from smartcloud: "Auto-merge is on (squash), because the `dependency-updates` auto-merge rule matched", and the pull request's merge box shows auto-merge as enabled.
+It merges once the `smartcloud` check and any other required checks pass.
+
+**What it needs.** The repository must allow auto-merge (the preset's `settings.repository.autoMerge: true` does that) and the synced smartcloud workflow's job needs `contents: write`, which it has, so the workflow token can turn auto-merge on in Dependabot's runs, where no app token is minted.
+
+**Adding your own rules.** Add rules with keys of your own after the `house:local` line, for example to let your release bot's pull requests merge themselves. You cannot change `dependency-updates` itself.
+To turn auto-merge off again when a rule stops matching, set `autoMerge.disableWhenUnmatched: true` in your own config.
+Every option is described in [smartcloud's auto-merge page](https://github.com/Resnovas/smartcloud/blob/main/docs/features/auto-merge.mdx).
+
+**If it does not happen.**
+
+| You see | Why | What to do |
+| --- | --- | --- |
+| A warning that auto-merge is not allowed | The repository does not allow auto-merge. | Let the settings feature apply the preset, or tick **Allow auto-merge** in the repository settings. |
+| A warning that the token is read-only | The workflow's job lacks `contents: write`. | Take the house sync of `.github/workflows/smartcloud.yml`. |
+| A notice that the pull request can already be merged | Nothing required was pending, so GitHub refused to wait. | Nothing: merge it, or require a check. |
 
 ## <a id="required"></a>`required`: one check to require
 
@@ -193,6 +228,22 @@ This turns on smartcloud's aggregate check: on a pull request, the `smartcloud` 
 So the ruleset requires one check, `smartcloud`, and adding a CI job never means editing the ruleset.
 It waits up to 60 minutes.
 A repository adds `required.expect` (checks that must appear, such as `'^check$'`), `required.ignore` (checks that do not count) and `required.timeout`.
+
+The preset leaves these unset so each repository can list its own; a list the preset set could not be added to, because presets are locked.
+Every house repository with review bots should ignore their checks, so a bot that is slow, or reports a neutral result, never holds a merge.
+The review bots advise; the findings that block are listed in [AP-31](../APPROVAL_POLICY.md#ap-31) and reach the pull request as review comments or the Graphify check, which still counts.
+The Cursor approval agent waits for the checks, so counting its own check would make the two wait for each other.
+Add this after the `house:local` line of `.github/smartcloud.yml`:
+
+```yaml
+required:
+  ignore:
+    - ^CodeRabbit
+    - '^Cursor '
+```
+
+A pattern matches the start of a check's name, so `'^Cursor '` covers Bugbot and the approval and security agents.
+Keep the quotes: the trailing space is part of the pattern.
 
 ## <a id="sync"></a>`sync`: the house files
 

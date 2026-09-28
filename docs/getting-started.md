@@ -21,7 +21,7 @@ This page explains the ideas behind the house in plain words, then walks you thr
 | **Aggregate check** | A single check that passes only when every other check has. The `smartcloud` check is one, so the ruleset never needs a list of check names. |
 | **Merge queue** | GitHub lines up approved pull requests and tests each one on top of the others before merging it, so the default branch never breaks. |
 | **Reusable workflow** | A GitHub Actions workflow in this repository that other repositories call with one short file, so the logic lives in one place. |
-| **Resnovas Bot** | A GitHub App (`resnovas-smartcloud[bot]`) the house workflows act as. It can do things the normal workflow token cannot, such as reading this private preset and changing settings. |
+| **Resnovas Bot** | A GitHub App (`resnovas-smartcloud[bot]`) the house workflows act as. It can do things the normal workflow token cannot, such as changing settings and syncing workflow files. |
 | **Restricted run** | A run with only the read-only workflow token, such as a pull request from a fork or from Dependabot. It skips what it cannot do instead of failing. |
 | **DCO** | The Developer Certificate of Origin. You agree to it by adding `Signed-off-by: Your Name <you@example.com>` to every commit (`git commit -s`). |
 
@@ -87,7 +87,7 @@ sync:
 ```
 
 Every key you can add is explained in [The house preset](preset.md#unset).
-Check the file before you commit it (the token lets it read the private preset):
+Check the file before you commit it:
 
 ```shell
 GITHUB_TOKEN=$(gh auth token) npx @resnovas/smartcloud validate
@@ -159,7 +159,18 @@ Once it merges, the repository runs every house workflow, and every later sync p
 ### The aggregate check and a second maintainer
 
 On every pull request, the `smartcloud` check waits for every other check on the commit and fails if any of them fails, so it is the only check the ruleset needs to require.
-List the repository's main CI check under `required.expect` too, so a renamed or deleted CI job cannot let it pass with nothing to wait for, and keep that CI check required beside `smartcloud` in the ruleset: a pull request from a fork or Dependabot cannot read the private preset, so its `smartcloud` check does not wait for the others.
+List the repository's main CI check under `required.expect` too, so a renamed or deleted CI job cannot let it pass with nothing to wait for, and keep that CI check required beside `smartcloud` in the ruleset: a pull request from a fork or Dependabot runs restricted, so a required CI check keeps it gated whatever smartcloud can do there.
 
 While the preset lists one maintainer, the owner merges at their discretion: no approval is required.
 Once it lists two or more, pull requests need approvals: one for a maintainer's own, two for an outside contributor's.
+
+## <a id="own-org"></a>A hub for your own organisation
+
+Nothing here is special to Resnovas: any organisation can run its repositories the same way from its own `.github` repository, with its own preset, templates and app.
+The smartcloud documentation walks through it from scratch:
+
+- [Your organisation's sync hub](https://github.com/Resnovas/smartcloud/blob/main/docs/guides/organisation-hub.mdx): create the hub, write a preset and templates with managed blocks and `{{KEY}}` placeholders, connect each repository, read the first sync pull request, and roll a change out to every repository.
+- [Recommended setups](https://github.com/Resnovas/smartcloud/blob/main/docs/guides/recommended-setups.mdx): complete settings files for a small repository, a monorepo, an open-source project and an organisation preset.
+- [Build your settings file](https://github.com/Resnovas/smartcloud/blob/main/docs/guides/settings-file.mdx): every section of `.github/smartcloud.yml`, in the order to add it, and what each does when it runs.
+
+Use this repository as the full-size example: [`smartcloud/house.yml`](../smartcloud/house.yml) is the preset, `templates/` holds the synced files, and [`templates/.github/smartcloud.yml`](../templates/.github/smartcloud.yml) is the settings file every repository starts from.
