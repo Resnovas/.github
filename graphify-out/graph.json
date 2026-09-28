@@ -182,88 +182,16 @@
       "source_location": "L35"
     },
     {
-      "id": "templates_tools_license_check_headers_checkheaders",
-      "label": "checkHeaders()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "ref_node_url",
-      "file_type": "code",
-      "norm_label": "checkheaders()",
-      "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L49"
-    },
-    {
-      "id": "templates_tools_license_check_headers_headerfor",
-      "label": "headerFor()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "ref_node_url",
-      "file_type": "code",
-      "norm_label": "headerfor()",
-      "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L40"
-    },
-    {
-      "id": "templates_tools_license_check_headers_listfiles",
-      "label": "listFiles()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "ref_node_url",
-      "file_type": "code",
-      "norm_label": "listfiles()",
-      "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L88"
-    },
-    {
-      "id": "templates_tools_license_check_headers_main",
-      "label": "main()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "ref_node_url",
-      "file_type": "code",
-      "norm_label": "main()",
-      "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L100"
-    },
-    {
-      "id": "templates_tools_license_check_headers_walk",
-      "label": "walk()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "ref_node_url",
-      "file_type": "code",
-      "norm_label": "walk()",
-      "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L81"
-    },
-    {
       "id": "test_actions_test_firstparty",
       "label": "firstParty()",
       "_callable": true,
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "actions.test.mjs",
       "file_type": "code",
       "norm_label": "firstparty()",
       "source_file": "test/actions.test.mjs",
       "source_location": "L31"
-    },
-    {
-      "id": "test_check_headers_test_repository",
-      "label": "repository()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "ref_node_url",
-      "file_type": "code",
-      "norm_label": "repository()",
-      "source_file": "test/check-headers.test.mjs",
-      "source_location": "L29"
     },
     {
       "id": "test_workflows_test_jobs",
@@ -271,11 +199,95 @@
       "_callable": true,
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "actions.test.mjs",
       "file_type": "code",
       "norm_label": "jobs()",
       "source_file": "test/workflows.test.mjs",
       "source_location": "L36"
+    },
+    {
+      "id": "templates_tools_license_check_headers_checkheaders",
+      "label": "checkHeaders()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 373,
+      "community_name": "templates/tools/license/check-headers.mjs",
+      "file_type": "code",
+      "norm_label": "checkheaders()",
+      "source_file": "templates/tools/license/check-headers.mjs",
+      "source_location": "L53"
+    },
+    {
+      "id": "templates_tools_license_check_headers_generated",
+      "label": "generated()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 373,
+      "community_name": "templates/tools/license/check-headers.mjs",
+      "file_type": "code",
+      "norm_label": "generated()",
+      "source_file": "templates/tools/license/check-headers.mjs",
+      "source_location": "L31"
+    },
+    {
+      "id": "templates_tools_license_check_headers_headerfor",
+      "label": "headerFor()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 373,
+      "community_name": "templates/tools/license/check-headers.mjs",
+      "file_type": "code",
+      "norm_label": "headerfor()",
+      "source_file": "templates/tools/license/check-headers.mjs",
+      "source_location": "L44"
+    },
+    {
+      "id": "templates_tools_license_check_headers_listfiles",
+      "label": "listFiles()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 373,
+      "community_name": "templates/tools/license/check-headers.mjs",
+      "file_type": "code",
+      "norm_label": "listfiles()",
+      "source_file": "templates/tools/license/check-headers.mjs",
+      "source_location": "L92"
+    },
+    {
+      "id": "templates_tools_license_check_headers_main",
+      "label": "main()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 373,
+      "community_name": "templates/tools/license/check-headers.mjs",
+      "file_type": "code",
+      "norm_label": "main()",
+      "source_file": "templates/tools/license/check-headers.mjs",
+      "source_location": "L104"
+    },
+    {
+      "id": "templates_tools_license_check_headers_walk",
+      "label": "walk()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 373,
+      "community_name": "templates/tools/license/check-headers.mjs",
+      "file_type": "code",
+      "norm_label": "walk()",
+      "source_file": "templates/tools/license/check-headers.mjs",
+      "source_location": "L85"
+    },
+    {
+      "id": "test_check_headers_test_repository",
+      "label": "repository()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 373,
+      "community_name": "templates/tools/license/check-headers.mjs",
+      "file_type": "code",
+      "norm_label": "repository()",
+      "source_file": "test/check-headers.test.mjs",
+      "source_location": "L29"
     },
     {
       "id": "scripts_lib_render_listtemplates",
@@ -2087,7 +2099,19 @@
       "file_type": "code",
       "norm_label": "checkheaders()",
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L49"
+      "source_location": "L53"
+    },
+    {
+      "id": "tools_license_check_headers_generated",
+      "label": "generated()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 642,
+      "community_name": "tools/license/check-headers.mjs",
+      "file_type": "code",
+      "norm_label": "generated()",
+      "source_file": "tools/license/check-headers.mjs",
+      "source_location": "L31"
     },
     {
       "id": "tools_license_check_headers_headerfor",
@@ -2099,7 +2123,7 @@
       "file_type": "code",
       "norm_label": "headerfor()",
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L40"
+      "source_location": "L44"
     },
     {
       "id": "tools_license_check_headers_listfiles",
@@ -2111,7 +2135,7 @@
       "file_type": "code",
       "norm_label": "listfiles()",
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L88"
+      "source_location": "L92"
     },
     {
       "id": "tools_license_check_headers_main",
@@ -2123,7 +2147,7 @@
       "file_type": "code",
       "norm_label": "main()",
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L100"
+      "source_location": "L104"
     },
     {
       "id": "tools_license_check_headers_walk",
@@ -2135,7 +2159,7 @@
       "file_type": "code",
       "norm_label": "walk()",
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L81"
+      "source_location": "L85"
     },
     {
       "id": "test_ai_docs_test",
@@ -2804,33 +2828,11 @@
       "source_location": "L46"
     },
     {
-      "id": "templates_tools_license_check_headers",
-      "label": "templates/tools/license/check-headers.mjs",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "ref_node_url",
-      "file_type": "code",
-      "norm_label": "templates/tools/license/check-headers.mjs",
-      "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "templates_tools_license_check_headers_ignored_directories",
-      "label": "IGNORED_DIRECTORIES",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "ref_node_url",
-      "file_type": "code",
-      "norm_label": "ignored_directories",
-      "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L31"
-    },
-    {
       "id": "test_actions_test",
       "label": "actions.test.mjs",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "actions.test.mjs",
       "file_type": "code",
       "norm_label": "actions.test.mjs",
       "source_file": "test/actions.test.mjs",
@@ -2841,7 +2843,7 @@
       "label": "directories",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "actions.test.mjs",
       "file_type": "code",
       "norm_label": "directories",
       "source_file": "test/actions.test.mjs",
@@ -2852,7 +2854,7 @@
       "label": "lines",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "actions.test.mjs",
       "file_type": "code",
       "norm_label": "lines",
       "source_file": "test/actions.test.mjs",
@@ -2863,51 +2865,18 @@
       "label": "root",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "actions.test.mjs",
       "file_type": "code",
       "norm_label": "root",
       "source_file": "test/actions.test.mjs",
       "source_location": "L23"
     },
     {
-      "id": "test_check_headers_test",
-      "label": "check-headers.test.mjs",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "ref_node_url",
-      "file_type": "code",
-      "norm_label": "check-headers.test.mjs",
-      "source_file": "test/check-headers.test.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "test_check_headers_test_templates",
-      "label": "templates",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "ref_node_url",
-      "file_type": "code",
-      "norm_label": "templates",
-      "source_file": "test/check-headers.test.mjs",
-      "source_location": "L26"
-    },
-    {
-      "id": "test_check_headers_test_year",
-      "label": "year",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "ref_node_url",
-      "file_type": "code",
-      "norm_label": "year",
-      "source_file": "test/check-headers.test.mjs",
-      "source_location": "L27"
-    },
-    {
       "id": "test_commit_check_test",
       "label": "commit-check.test.mjs",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "actions.test.mjs",
       "file_type": "code",
       "norm_label": "commit-check.test.mjs",
       "source_file": "test/commit-check.test.mjs",
@@ -2918,7 +2887,7 @@
       "label": "human",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "actions.test.mjs",
       "file_type": "code",
       "norm_label": "human",
       "source_file": "test/commit-check.test.mjs",
@@ -2929,7 +2898,7 @@
       "label": "script",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "actions.test.mjs",
       "file_type": "code",
       "norm_label": "script",
       "source_file": "test/commit-check.test.mjs",
@@ -2940,7 +2909,7 @@
       "label": "graphify.test.mjs",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "actions.test.mjs",
       "file_type": "code",
       "norm_label": "graphify.test.mjs",
       "source_file": "test/graphify.test.mjs",
@@ -2951,7 +2920,7 @@
       "label": "templates",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "actions.test.mjs",
       "file_type": "code",
       "norm_label": "templates",
       "source_file": "test/graphify.test.mjs",
@@ -2962,7 +2931,7 @@
       "label": "workflows.test.mjs",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "actions.test.mjs",
       "file_type": "code",
       "norm_label": "workflows.test.mjs",
       "source_file": "test/workflows.test.mjs",
@@ -2973,7 +2942,7 @@
       "label": "directories",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "actions.test.mjs",
       "file_type": "code",
       "norm_label": "directories",
       "source_file": "test/workflows.test.mjs",
@@ -2984,7 +2953,7 @@
       "label": "root",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "actions.test.mjs",
       "file_type": "code",
       "norm_label": "root",
       "source_file": "test/workflows.test.mjs",
@@ -2995,7 +2964,7 @@
       "label": "ungated",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "actions.test.mjs",
       "file_type": "code",
       "norm_label": "ungated",
       "source_file": "test/workflows.test.mjs",
@@ -3006,7 +2975,7 @@
       "label": "workflows",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "actions.test.mjs",
       "file_type": "code",
       "norm_label": "workflows",
       "source_file": "test/workflows.test.mjs",
@@ -28303,6 +28272,42 @@
       "source_location": "L1"
     },
     {
+      "id": "security_a_id_reporting_a_reporting_a_vulnerability",
+      "label": "<a id=\"reporting\"></a>Reporting a vulnerability",
+      "_origin": "ast",
+      "community": 33,
+      "community_name": "APPROVAL_POLICY.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"reporting\"></a>reporting a vulnerability",
+      "source_file": "SECURITY.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "security_a_id_supported_a_supported_versions",
+      "label": "<a id=\"supported\"></a>Supported versions",
+      "_origin": "ast",
+      "community": 33,
+      "community_name": "APPROVAL_POLICY.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"supported\"></a>supported versions",
+      "source_file": "SECURITY.md",
+      "source_location": "L4"
+    },
+    {
+      "id": "security_a_id_top_a_security_policy",
+      "label": "<a id=\"top\"></a>Security Policy",
+      "_origin": "ast",
+      "community": 33,
+      "community_name": "APPROVAL_POLICY.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"top\"></a>security policy",
+      "source_file": "SECURITY.md",
+      "source_location": "L2"
+    },
+    {
       "id": "support",
       "label": "SUPPORT.md",
       "_origin": "ast",
@@ -30945,40 +30950,59 @@
       "source_location": "L18"
     },
     {
-      "id": "security_a_id_reporting_a_reporting_a_vulnerability",
-      "label": "<a id=\"reporting\"></a>Reporting a vulnerability",
+      "id": "templates_tools_license_check_headers",
+      "label": "templates/tools/license/check-headers.mjs",
       "_origin": "ast",
       "community": 373,
-      "community_name": "<a id=\"top\"></a>Security Policy",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"reporting\"></a>reporting a vulnerability",
-      "source_file": "SECURITY.md",
-      "source_location": "L9"
+      "community_name": "templates/tools/license/check-headers.mjs",
+      "file_type": "code",
+      "norm_label": "templates/tools/license/check-headers.mjs",
+      "source_file": "templates/tools/license/check-headers.mjs",
+      "source_location": "L1"
     },
     {
-      "id": "security_a_id_supported_a_supported_versions",
-      "label": "<a id=\"supported\"></a>Supported versions",
+      "id": "templates_tools_license_check_headers_ignored_directories",
+      "label": "IGNORED_DIRECTORIES",
       "_origin": "ast",
       "community": 373,
-      "community_name": "<a id=\"top\"></a>Security Policy",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"supported\"></a>supported versions",
-      "source_file": "SECURITY.md",
-      "source_location": "L4"
+      "community_name": "templates/tools/license/check-headers.mjs",
+      "file_type": "code",
+      "norm_label": "ignored_directories",
+      "source_file": "templates/tools/license/check-headers.mjs",
+      "source_location": "L35"
     },
     {
-      "id": "security_a_id_top_a_security_policy",
-      "label": "<a id=\"top\"></a>Security Policy",
+      "id": "test_check_headers_test",
+      "label": "check-headers.test.mjs",
       "_origin": "ast",
       "community": 373,
-      "community_name": "<a id=\"top\"></a>Security Policy",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"top\"></a>security policy",
-      "source_file": "SECURITY.md",
-      "source_location": "L2"
+      "community_name": "templates/tools/license/check-headers.mjs",
+      "file_type": "code",
+      "norm_label": "check-headers.test.mjs",
+      "source_file": "test/check-headers.test.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "test_check_headers_test_templates",
+      "label": "templates",
+      "_origin": "ast",
+      "community": 373,
+      "community_name": "templates/tools/license/check-headers.mjs",
+      "file_type": "code",
+      "norm_label": "templates",
+      "source_file": "test/check-headers.test.mjs",
+      "source_location": "L26"
+    },
+    {
+      "id": "test_check_headers_test_year",
+      "label": "year",
+      "_origin": "ast",
+      "community": 373,
+      "community_name": "templates/tools/license/check-headers.mjs",
+      "file_type": "code",
+      "norm_label": "year",
+      "source_file": "test/check-headers.test.mjs",
+      "source_location": "L27"
     },
     {
       "id": "skills_knowledge_graph_skill",
@@ -51105,70 +51129,81 @@
       "source_location": "L98"
     },
     {
-      "id": "templates_tools_typecheck_tests",
-      "label": "templates/tools/typecheck/tests.ts",
+      "id": "tools_test_file",
+      "label": "tools/test/file.ts",
       "_origin": "ast",
       "community": 639,
-      "community_name": "templates/tools/typecheck/tests.ts",
+      "community_name": "tools/test/file.ts",
       "file_type": "code",
-      "norm_label": "templates/tools/typecheck/tests.ts",
-      "source_file": "templates/tools/typecheck/tests.ts",
+      "norm_label": "tools/test/file.ts",
+      "source_file": "tools/test/file.ts",
       "source_location": "L1"
     },
     {
-      "id": "templates_tools_typecheck_tests_build",
-      "label": "build",
+      "id": "tools_test_file_file",
+      "label": "file",
       "_origin": "ast",
       "community": 639,
-      "community_name": "templates/tools/typecheck/tests.ts",
+      "community_name": "tools/test/file.ts",
       "file_type": "code",
-      "norm_label": "build",
-      "source_file": "templates/tools/typecheck/tests.ts",
-      "source_location": "L26"
+      "norm_label": "file",
+      "source_file": "tools/test/file.ts",
+      "source_location": "L28"
     },
     {
-      "id": "templates_tools_typecheck_tests_failed",
-      "label": "failed",
+      "id": "tools_test_file_match",
+      "label": "match",
       "_origin": "ast",
       "community": 639,
-      "community_name": "templates/tools/typecheck/tests.ts",
+      "community_name": "tools/test/file.ts",
       "file_type": "code",
-      "norm_label": "failed",
-      "source_file": "templates/tools/typecheck/tests.ts",
-      "source_location": "L39"
+      "norm_label": "match",
+      "source_file": "tools/test/file.ts",
+      "source_location": "L31"
     },
     {
-      "id": "templates_tools_typecheck_tests_projects",
-      "label": "projects",
+      "id": "tools_test_file_project",
+      "label": "project",
       "_origin": "ast",
       "community": 639,
-      "community_name": "templates/tools/typecheck/tests.ts",
+      "community_name": "tools/test/file.ts",
       "file_type": "code",
-      "norm_label": "projects",
-      "source_file": "templates/tools/typecheck/tests.ts",
-      "source_location": "L20"
+      "norm_label": "project",
+      "source_file": "tools/test/file.ts",
+      "source_location": "L37"
     },
     {
-      "id": "templates_tools_typecheck_tests_root",
+      "id": "tools_test_file_result",
+      "label": "result",
+      "_origin": "ast",
+      "community": 639,
+      "community_name": "tools/test/file.ts",
+      "file_type": "code",
+      "norm_label": "result",
+      "source_file": "tools/test/file.ts",
+      "source_location": "L49"
+    },
+    {
+      "id": "tools_test_file_root",
       "label": "root",
       "_origin": "ast",
       "community": 639,
-      "community_name": "templates/tools/typecheck/tests.ts",
+      "community_name": "tools/test/file.ts",
       "file_type": "code",
       "norm_label": "root",
-      "source_file": "templates/tools/typecheck/tests.ts",
-      "source_location": "L17"
+      "source_file": "tools/test/file.ts",
+      "source_location": "L21"
     },
     {
-      "id": "templates_tools_typecheck_tests_tsc",
-      "label": "tsc",
+      "id": "tools_test_file_vitest",
+      "label": "vitest",
       "_origin": "ast",
       "community": 639,
-      "community_name": "templates/tools/typecheck/tests.ts",
+      "community_name": "tools/test/file.ts",
       "file_type": "code",
-      "norm_label": "tsc",
-      "source_file": "templates/tools/typecheck/tests.ts",
-      "source_location": "L18"
+      "norm_label": "vitest",
+      "source_file": "tools/test/file.ts",
+      "source_location": "L48"
     },
     {
       "id": "templates_agents_prompts_review",
@@ -51250,7 +51285,7 @@
       "file_type": "code",
       "norm_label": "ignored_directories",
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L31"
+      "source_location": "L35"
     },
     {
       "id": "templates_agents_prompts_verify",
@@ -54944,6 +54979,72 @@
       "source_location": "L48"
     },
     {
+      "id": "templates_tools_typecheck_tests",
+      "label": "templates/tools/typecheck/tests.ts",
+      "_origin": "ast",
+      "community": 79,
+      "community_name": "ref_node_path",
+      "file_type": "code",
+      "norm_label": "templates/tools/typecheck/tests.ts",
+      "source_file": "templates/tools/typecheck/tests.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "templates_tools_typecheck_tests_build",
+      "label": "build",
+      "_origin": "ast",
+      "community": 79,
+      "community_name": "ref_node_path",
+      "file_type": "code",
+      "norm_label": "build",
+      "source_file": "templates/tools/typecheck/tests.ts",
+      "source_location": "L26"
+    },
+    {
+      "id": "templates_tools_typecheck_tests_failed",
+      "label": "failed",
+      "_origin": "ast",
+      "community": 79,
+      "community_name": "ref_node_path",
+      "file_type": "code",
+      "norm_label": "failed",
+      "source_file": "templates/tools/typecheck/tests.ts",
+      "source_location": "L39"
+    },
+    {
+      "id": "templates_tools_typecheck_tests_projects",
+      "label": "projects",
+      "_origin": "ast",
+      "community": 79,
+      "community_name": "ref_node_path",
+      "file_type": "code",
+      "norm_label": "projects",
+      "source_file": "templates/tools/typecheck/tests.ts",
+      "source_location": "L20"
+    },
+    {
+      "id": "templates_tools_typecheck_tests_root",
+      "label": "root",
+      "_origin": "ast",
+      "community": 79,
+      "community_name": "ref_node_path",
+      "file_type": "code",
+      "norm_label": "root",
+      "source_file": "templates/tools/typecheck/tests.ts",
+      "source_location": "L17"
+    },
+    {
+      "id": "templates_tools_typecheck_tests_tsc",
+      "label": "tsc",
+      "_origin": "ast",
+      "community": 79,
+      "community_name": "ref_node_path",
+      "file_type": "code",
+      "norm_label": "tsc",
+      "source_file": "templates/tools/typecheck/tests.ts",
+      "source_location": "L18"
+    },
+    {
       "id": "tools_dev_docs",
       "label": "tools/dev/docs.ts",
       "_origin": "ast",
@@ -55008,83 +55109,6 @@
       "norm_label": "isurl",
       "source_file": "tools/dev/open.mjs",
       "source_location": "L19"
-    },
-    {
-      "id": "tools_test_file",
-      "label": "tools/test/file.ts",
-      "_origin": "ast",
-      "community": 79,
-      "community_name": "ref_node_path",
-      "file_type": "code",
-      "norm_label": "tools/test/file.ts",
-      "source_file": "tools/test/file.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "tools_test_file_file",
-      "label": "file",
-      "_origin": "ast",
-      "community": 79,
-      "community_name": "ref_node_path",
-      "file_type": "code",
-      "norm_label": "file",
-      "source_file": "tools/test/file.ts",
-      "source_location": "L28"
-    },
-    {
-      "id": "tools_test_file_match",
-      "label": "match",
-      "_origin": "ast",
-      "community": 79,
-      "community_name": "ref_node_path",
-      "file_type": "code",
-      "norm_label": "match",
-      "source_file": "tools/test/file.ts",
-      "source_location": "L31"
-    },
-    {
-      "id": "tools_test_file_project",
-      "label": "project",
-      "_origin": "ast",
-      "community": 79,
-      "community_name": "ref_node_path",
-      "file_type": "code",
-      "norm_label": "project",
-      "source_file": "tools/test/file.ts",
-      "source_location": "L37"
-    },
-    {
-      "id": "tools_test_file_result",
-      "label": "result",
-      "_origin": "ast",
-      "community": 79,
-      "community_name": "ref_node_path",
-      "file_type": "code",
-      "norm_label": "result",
-      "source_file": "tools/test/file.ts",
-      "source_location": "L49"
-    },
-    {
-      "id": "tools_test_file_root",
-      "label": "root",
-      "_origin": "ast",
-      "community": 79,
-      "community_name": "ref_node_path",
-      "file_type": "code",
-      "norm_label": "root",
-      "source_file": "tools/test/file.ts",
-      "source_location": "L21"
-    },
-    {
-      "id": "tools_test_file_vitest",
-      "label": "vitest",
-      "_origin": "ast",
-      "community": 79,
-      "community_name": "ref_node_path",
-      "file_type": "code",
-      "norm_label": "vitest",
-      "source_file": "tools/test/file.ts",
-      "source_location": "L48"
     },
     {
       "id": "tools_typecheck_tests",
@@ -59753,22 +59777,10 @@
       "label": "ref_node_assert",
       "_origin": "semantic",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "actions.test.mjs",
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_node_assert",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "ref_node_os",
-      "label": "ref_node_os",
-      "_origin": "semantic",
-      "community": 10,
-      "community_name": "ref_node_url",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "ref_node_os",
       "source_file": "",
       "type": "external"
     },
@@ -59777,7 +59789,7 @@
       "label": "ref_node_test",
       "_origin": "semantic",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "actions.test.mjs",
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_node_test",
@@ -59785,14 +59797,14 @@
       "type": "external"
     },
     {
-      "id": "ref_node_url",
-      "label": "ref_node_url",
+      "id": "ref_node_os",
+      "label": "ref_node_os",
       "_origin": "semantic",
-      "community": 10,
-      "community_name": "ref_node_url",
+      "community": 373,
+      "community_name": "templates/tools/license/check-headers.mjs",
       "external": true,
       "file_type": "concept",
-      "norm_label": "ref_node_url",
+      "norm_label": "ref_node_os",
       "source_file": "",
       "type": "external"
     },
@@ -59877,6 +59889,18 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_node_path",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "ref_node_url",
+      "label": "ref_node_url",
+      "_origin": "semantic",
+      "community": 79,
+      "community_name": "ref_node_path",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_node_url",
       "source_file": "",
       "type": "external"
     }
@@ -61276,6 +61300,18 @@
     },
     {
       "source": "templates_tools_license_check_headers_checkheaders",
+      "target": "templates_tools_license_check_headers_generated",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "templates/tools/license/check-headers.mjs",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_license_check_headers_checkheaders",
       "target": "templates_tools_license_check_headers_listfiles",
       "relation": "calls",
       "_origin": "ast",
@@ -61283,7 +61319,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L60",
+      "source_location": "L64",
       "weight": 1.0
     },
     {
@@ -61295,7 +61331,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L69",
+      "source_location": "L73",
       "weight": 1.0
     },
     {
@@ -61307,7 +61343,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L96",
+      "source_location": "L100",
       "weight": 1.0
     },
     {
@@ -61319,7 +61355,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L103",
+      "source_location": "L107",
       "weight": 1.0
     },
     {
@@ -61331,7 +61367,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L84",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -62500,6 +62536,18 @@
     },
     {
       "source": "tools_license_check_headers_checkheaders",
+      "target": "tools_license_check_headers_generated",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tools/license/check-headers.mjs",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_license_check_headers_checkheaders",
       "target": "tools_license_check_headers_listfiles",
       "relation": "calls",
       "_origin": "ast",
@@ -62507,7 +62555,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L60",
+      "source_location": "L64",
       "weight": 1.0
     },
     {
@@ -62519,7 +62567,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L69",
+      "source_location": "L73",
       "weight": 1.0
     },
     {
@@ -62531,7 +62579,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L96",
+      "source_location": "L100",
       "weight": 1.0
     },
     {
@@ -62543,7 +62591,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L103",
+      "source_location": "L107",
       "weight": 1.0
     },
     {
@@ -62555,7 +62603,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L84",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -108623,12 +108671,12 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L100",
+      "source_location": "L104",
       "weight": 1.0
     },
     {
       "source": "templates_tools_license_check_headers",
-      "target": "templates_tools_license_check_headers_ignored_directories",
+      "target": "templates_tools_license_check_headers_generated",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -108639,13 +108687,24 @@
     },
     {
       "source": "templates_tools_license_check_headers",
+      "target": "templates_tools_license_check_headers_ignored_directories",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/tools/license/check-headers.mjs",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_license_check_headers",
       "target": "templates_tools_license_check_headers_headerfor",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L40",
+      "source_location": "L44",
       "weight": 1.0
     },
     {
@@ -108656,7 +108715,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L49",
+      "source_location": "L53",
       "weight": 1.0
     },
     {
@@ -108667,7 +108726,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L81",
+      "source_location": "L85",
       "weight": 1.0
     },
     {
@@ -108678,7 +108737,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L88",
+      "source_location": "L92",
       "weight": 1.0
     },
     {
@@ -109987,12 +110046,12 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L100",
+      "source_location": "L104",
       "weight": 1.0
     },
     {
       "source": "tools_license_check_headers",
-      "target": "tools_license_check_headers_ignored_directories",
+      "target": "tools_license_check_headers_generated",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -110003,13 +110062,24 @@
     },
     {
       "source": "tools_license_check_headers",
+      "target": "tools_license_check_headers_ignored_directories",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/license/check-headers.mjs",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_license_check_headers",
       "target": "tools_license_check_headers_headerfor",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L40",
+      "source_location": "L44",
       "weight": 1.0
     },
     {
@@ -110020,7 +110090,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L49",
+      "source_location": "L53",
       "weight": 1.0
     },
     {
@@ -110031,7 +110101,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L81",
+      "source_location": "L85",
       "weight": 1.0
     },
     {
@@ -110042,7 +110112,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L88",
+      "source_location": "L92",
       "weight": 1.0
     },
     {
