@@ -194,18 +194,6 @@
       "source_location": "L31"
     },
     {
-      "id": "test_workflows_test_jobs",
-      "label": "jobs()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "actions.test.mjs",
-      "file_type": "code",
-      "norm_label": "jobs()",
-      "source_file": "test/workflows.test.mjs",
-      "source_location": "L36"
-    },
-    {
       "id": "templates_tools_license_check_headers_checkheaders",
       "label": "checkHeaders()",
       "_callable": true,
@@ -251,7 +239,7 @@
       "file_type": "code",
       "norm_label": "listfiles()",
       "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L92"
+      "source_location": "L103"
     },
     {
       "id": "templates_tools_license_check_headers_main",
@@ -263,7 +251,19 @@
       "file_type": "code",
       "norm_label": "main()",
       "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L104"
+      "source_location": "L115"
+    },
+    {
+      "id": "templates_tools_license_check_headers_readifexists",
+      "label": "readIfExists()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 373,
+      "community_name": "templates/tools/license/check-headers.mjs",
+      "file_type": "code",
+      "norm_label": "readifexists()",
+      "source_file": "templates/tools/license/check-headers.mjs",
+      "source_location": "L87"
     },
     {
       "id": "templates_tools_license_check_headers_walk",
@@ -275,7 +275,7 @@
       "file_type": "code",
       "norm_label": "walk()",
       "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L85"
+      "source_location": "L96"
     },
     {
       "id": "test_check_headers_test_repository",
@@ -295,7 +295,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "listtemplates()",
       "source_file": "scripts/lib/render.mjs",
@@ -307,7 +307,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "renderall()",
       "source_file": "scripts/lib/render.mjs",
@@ -319,7 +319,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "rendertext()",
       "source_file": "scripts/lib/render.mjs",
@@ -331,7 +331,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "list()",
       "source_file": "scripts/lib/values.mjs",
@@ -343,7 +343,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "loadvalues()",
       "source_file": "scripts/lib/values.mjs",
@@ -355,7 +355,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "parsevalues()",
       "source_file": "scripts/lib/values.mjs",
@@ -367,7 +367,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "block()",
       "source_file": "test/values.test.mjs",
@@ -379,7 +379,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "creatorpatterns()",
       "source_file": "test/values.test.mjs",
@@ -391,7 +391,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "escape()",
       "source_file": "test/values.test.mjs",
@@ -403,7 +403,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "flowlist()",
       "source_file": "test/values.test.mjs",
@@ -415,7 +415,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "syncvalues()",
       "source_file": "test/values.test.mjs",
@@ -659,7 +659,7 @@
       "file_type": "code",
       "norm_label": "checkmessage()",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L102"
+      "source_location": "L104"
     },
     {
       "id": "templates_tools_dev_commit_check_checkstagedtext",
@@ -671,7 +671,7 @@
       "file_type": "code",
       "norm_label": "checkstagedtext()",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L162"
+      "source_location": "L164"
     },
     {
       "id": "templates_tools_dev_commit_check_codeonly",
@@ -683,7 +683,7 @@
       "file_type": "code",
       "norm_label": "codeonly()",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L60"
+      "source_location": "L62"
     },
     {
       "id": "templates_tools_dev_commit_check_git",
@@ -695,7 +695,7 @@
       "file_type": "code",
       "norm_label": "git()",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L205"
+      "source_location": "L207"
     },
     {
       "id": "templates_tools_dev_commit_check_isai",
@@ -710,6 +710,18 @@
       "source_location": "L31"
     },
     {
+      "id": "templates_tools_dev_commit_check_issource",
+      "label": "isSource()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "templates/tools/dev/commit-check.mjs",
+      "file_type": "code",
+      "norm_label": "issource()",
+      "source_file": "templates/tools/dev/commit-check.mjs",
+      "source_location": "L48"
+    },
+    {
       "id": "templates_tools_dev_commit_check_main",
       "label": "main()",
       "_callable": true,
@@ -719,7 +731,7 @@
       "file_type": "code",
       "norm_label": "main()",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L207"
+      "source_location": "L209"
     },
     {
       "id": "templates_tools_dev_commit_check_parseidentity",
@@ -731,7 +743,7 @@
       "file_type": "code",
       "norm_label": "parseidentity()",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L68"
+      "source_location": "L70"
     },
     {
       "id": "templates_tools_dev_commit_check_parsemessage",
@@ -743,7 +755,7 @@
       "file_type": "code",
       "norm_label": "parsemessage()",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L78"
+      "source_location": "L80"
     },
     {
       "id": "templates_tools_dev_commit_check_withoutstrings",
@@ -755,7 +767,7 @@
       "file_type": "code",
       "norm_label": "withoutstrings()",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L58"
+      "source_location": "L60"
     },
     {
       "id": "tools_dev_commit_check_checkmessage",
@@ -767,7 +779,7 @@
       "file_type": "code",
       "norm_label": "checkmessage()",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L102"
+      "source_location": "L104"
     },
     {
       "id": "tools_dev_commit_check_checkstagedtext",
@@ -779,7 +791,7 @@
       "file_type": "code",
       "norm_label": "checkstagedtext()",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L162"
+      "source_location": "L164"
     },
     {
       "id": "tools_dev_commit_check_codeonly",
@@ -791,7 +803,7 @@
       "file_type": "code",
       "norm_label": "codeonly()",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L60"
+      "source_location": "L62"
     },
     {
       "id": "tools_dev_commit_check_git",
@@ -803,7 +815,7 @@
       "file_type": "code",
       "norm_label": "git()",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L205"
+      "source_location": "L207"
     },
     {
       "id": "tools_dev_commit_check_isai",
@@ -818,6 +830,18 @@
       "source_location": "L31"
     },
     {
+      "id": "tools_dev_commit_check_issource",
+      "label": "isSource()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 58,
+      "community_name": "tools/dev/commit-check.mjs",
+      "file_type": "code",
+      "norm_label": "issource()",
+      "source_file": "tools/dev/commit-check.mjs",
+      "source_location": "L48"
+    },
+    {
       "id": "tools_dev_commit_check_main",
       "label": "main()",
       "_callable": true,
@@ -827,7 +851,7 @@
       "file_type": "code",
       "norm_label": "main()",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L207"
+      "source_location": "L209"
     },
     {
       "id": "tools_dev_commit_check_parseidentity",
@@ -839,7 +863,7 @@
       "file_type": "code",
       "norm_label": "parseidentity()",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L68"
+      "source_location": "L70"
     },
     {
       "id": "tools_dev_commit_check_parsemessage",
@@ -851,7 +875,7 @@
       "file_type": "code",
       "norm_label": "parsemessage()",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L78"
+      "source_location": "L80"
     },
     {
       "id": "tools_dev_commit_check_withoutstrings",
@@ -863,7 +887,7 @@
       "file_type": "code",
       "norm_label": "withoutstrings()",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L58"
+      "source_location": "L60"
     },
     {
       "id": "templates_tools_ai_docs_docgen_byprefix",
@@ -875,7 +899,7 @@
       "file_type": "code",
       "norm_label": "byprefix()",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L112"
+      "source_location": "L122"
     },
     {
       "id": "templates_tools_ai_docs_docgen_fail",
@@ -887,7 +911,7 @@
       "file_type": "code",
       "norm_label": "fail()",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L52"
+      "source_location": "L61"
     },
     {
       "id": "templates_tools_ai_docs_docgen_fence",
@@ -899,7 +923,7 @@
       "file_type": "code",
       "norm_label": "fence()",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L118"
+      "source_location": "L128"
     },
     {
       "id": "templates_tools_ai_docs_docgen_generate",
@@ -911,7 +935,7 @@
       "file_type": "code",
       "norm_label": "generate()",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L120"
+      "source_location": "L130"
     },
     {
       "id": "templates_tools_ai_docs_docgen_isdirectory",
@@ -923,7 +947,7 @@
       "file_type": "code",
       "norm_label": "isdirectory()",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L105"
+      "source_location": "L115"
     },
     {
       "id": "templates_tools_ai_docs_docgen_prefix",
@@ -935,7 +959,7 @@
       "file_type": "code",
       "norm_label": "prefix()",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L108"
+      "source_location": "L118"
     },
     {
       "id": "templates_tools_ai_docs_docgen_prose",
@@ -947,7 +971,7 @@
       "file_type": "code",
       "norm_label": "prose()",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L115"
+      "source_location": "L125"
     },
     {
       "id": "templates_tools_ai_docs_docgen_read",
@@ -962,6 +986,18 @@
       "source_location": "L50"
     },
     {
+      "id": "templates_tools_ai_docs_docgen_readifexists",
+      "label": "readIfExists()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 61,
+      "community_name": "templates/tools/dev/surfaces.mjs",
+      "file_type": "code",
+      "norm_label": "readifexists()",
+      "source_file": "templates/tools/ai-docs/docgen.mjs",
+      "source_location": "L52"
+    },
+    {
       "id": "templates_tools_ai_docs_docgen_splitexample",
       "label": "splitExample()",
       "_callable": true,
@@ -971,7 +1007,7 @@
       "file_type": "code",
       "norm_label": "splitexample()",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L78"
+      "source_location": "L88"
     },
     {
       "id": "templates_tools_ai_docs_docgen_title",
@@ -983,7 +1019,7 @@
       "file_type": "code",
       "norm_label": "title()",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L59"
+      "source_location": "L68"
     },
     {
       "id": "templates_tools_ai_docs_docgen_unprefixed",
@@ -995,7 +1031,7 @@
       "file_type": "code",
       "norm_label": "unprefixed()",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L57"
+      "source_location": "L66"
     },
     {
       "id": "templates_tools_ai_docs_docgen_withoutmarkers",
@@ -1007,7 +1043,7 @@
       "file_type": "code",
       "norm_label": "withoutmarkers()",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L69"
+      "source_location": "L79"
     },
     {
       "id": "templates_tools_dev_surfaces_codexconfig",
@@ -1019,7 +1055,7 @@
       "file_type": "code",
       "norm_label": "codexconfig()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L337"
+      "source_location": "L348"
     },
     {
       "id": "templates_tools_dev_surfaces_commandof",
@@ -1031,7 +1067,7 @@
       "file_type": "code",
       "norm_label": "commandof()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L125"
+      "source_location": "L135"
     },
     {
       "id": "templates_tools_dev_surfaces_frontmatter",
@@ -1043,7 +1079,7 @@
       "file_type": "code",
       "norm_label": "frontmatter()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L161"
+      "source_location": "L171"
     },
     {
       "id": "templates_tools_dev_surfaces_installcommithook",
@@ -1055,7 +1091,7 @@
       "file_type": "code",
       "norm_label": "installcommithook()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L559"
+      "source_location": "L571"
     },
     {
       "id": "templates_tools_dev_surfaces_installopenchamber",
@@ -1067,7 +1103,7 @@
       "file_type": "code",
       "norm_label": "installopenchamber()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L517"
+      "source_location": "L528"
     },
     {
       "id": "templates_tools_dev_surfaces_installorca",
@@ -1079,7 +1115,7 @@
       "file_type": "code",
       "norm_label": "installorca()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L459"
+      "source_location": "L470"
     },
     {
       "id": "templates_tools_dev_surfaces_inworkspace",
@@ -1091,7 +1127,7 @@
       "file_type": "code",
       "norm_label": "inworkspace()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L300"
+      "source_location": "L311"
     },
     {
       "id": "templates_tools_dev_surfaces_jsonconfig",
@@ -1103,7 +1139,7 @@
       "file_type": "code",
       "norm_label": "jsonconfig()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L304"
+      "source_location": "L315"
     },
     {
       "id": "templates_tools_dev_surfaces_listfiles",
@@ -1115,7 +1151,7 @@
       "file_type": "code",
       "norm_label": "listfiles()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L230"
+      "source_location": "L240"
     },
     {
       "id": "templates_tools_dev_surfaces_maincheckout",
@@ -1127,7 +1163,7 @@
       "file_type": "code",
       "norm_label": "maincheckout()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L444"
+      "source_location": "L455"
     },
     {
       "id": "templates_tools_dev_surfaces_mergecodexconfig",
@@ -1139,7 +1175,7 @@
       "file_type": "code",
       "norm_label": "mergecodexconfig()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L356"
+      "source_location": "L367"
     },
     {
       "id": "templates_tools_dev_surfaces_migratesources",
@@ -1151,7 +1187,7 @@
       "file_type": "code",
       "norm_label": "migratesources()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L92"
+      "source_location": "L102"
     },
     {
       "id": "templates_tools_dev_surfaces_missingcommithook",
@@ -1163,7 +1199,7 @@
       "file_type": "code",
       "norm_label": "missingcommithook()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L584"
+      "source_location": "L596"
     },
     {
       "id": "templates_tools_dev_surfaces_missingprojectsurfaces",
@@ -1175,7 +1211,19 @@
       "file_type": "code",
       "norm_label": "missingprojectsurfaces()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L598"
+      "source_location": "L611"
+    },
+    {
+      "id": "templates_tools_dev_surfaces_modeof",
+      "label": "modeOf()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 61,
+      "community_name": "templates/tools/dev/surfaces.mjs",
+      "file_type": "code",
+      "norm_label": "modeof()",
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L85"
     },
     {
       "id": "templates_tools_dev_surfaces_orcacall",
@@ -1187,7 +1235,7 @@
       "file_type": "code",
       "norm_label": "orcacall()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L403"
+      "source_location": "L414"
     },
     {
       "id": "templates_tools_dev_surfaces_orcauserdata",
@@ -1199,7 +1247,7 @@
       "file_type": "code",
       "norm_label": "orcauserdata()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L396"
+      "source_location": "L407"
     },
     {
       "id": "templates_tools_dev_surfaces_parsejsonc",
@@ -1223,7 +1271,7 @@
       "file_type": "code",
       "norm_label": "pruneempty()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L240"
+      "source_location": "L250"
     },
     {
       "id": "templates_tools_dev_surfaces_readifexists",
@@ -1247,7 +1295,7 @@
       "file_type": "code",
       "norm_label": "readprompts()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L135"
+      "source_location": "L145"
     },
     {
       "id": "templates_tools_dev_surfaces_readservers",
@@ -1259,7 +1307,7 @@
       "file_type": "code",
       "norm_label": "readservers()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L285"
+      "source_location": "L296"
     },
     {
       "id": "templates_tools_dev_surfaces_samepath",
@@ -1271,7 +1319,7 @@
       "file_type": "code",
       "norm_label": "samepath()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L452"
+      "source_location": "L463"
     },
     {
       "id": "templates_tools_dev_surfaces_sourcepath",
@@ -1283,7 +1331,7 @@
       "file_type": "code",
       "norm_label": "sourcepath()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L115"
+      "source_location": "L125"
     },
     {
       "id": "templates_tools_dev_surfaces_splitmanaged",
@@ -1295,7 +1343,7 @@
       "file_type": "code",
       "norm_label": "splitmanaged()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L84"
+      "source_location": "L94"
     },
     {
       "id": "templates_tools_dev_surfaces_syncprompts",
@@ -1307,7 +1355,7 @@
       "file_type": "code",
       "norm_label": "syncprompts()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L184"
+      "source_location": "L194"
     },
     {
       "id": "templates_tools_dev_surfaces_syncservers",
@@ -1319,7 +1367,7 @@
       "file_type": "code",
       "norm_label": "syncservers()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L373"
+      "source_location": "L384"
     },
     {
       "id": "templates_tools_dev_surfaces_syncskills",
@@ -1331,7 +1379,7 @@
       "file_type": "code",
       "norm_label": "syncskills()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L251"
+      "source_location": "L261"
     },
     {
       "id": "templates_tools_dev_surfaces_tomlkey",
@@ -1343,7 +1391,7 @@
       "file_type": "code",
       "norm_label": "tomlkey()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L328"
+      "source_location": "L339"
     },
     {
       "id": "templates_tools_dev_surfaces_tomlstring",
@@ -1355,7 +1403,7 @@
       "file_type": "code",
       "norm_label": "tomlstring()",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L327"
+      "source_location": "L338"
     },
     {
       "id": "tools_ai_docs_docgen_byprefix",
@@ -1367,7 +1415,7 @@
       "file_type": "code",
       "norm_label": "byprefix()",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L112"
+      "source_location": "L122"
     },
     {
       "id": "tools_ai_docs_docgen_fail",
@@ -1379,7 +1427,7 @@
       "file_type": "code",
       "norm_label": "fail()",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L52"
+      "source_location": "L61"
     },
     {
       "id": "tools_ai_docs_docgen_fence",
@@ -1391,7 +1439,7 @@
       "file_type": "code",
       "norm_label": "fence()",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L118"
+      "source_location": "L128"
     },
     {
       "id": "tools_ai_docs_docgen_generate",
@@ -1403,7 +1451,7 @@
       "file_type": "code",
       "norm_label": "generate()",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L120"
+      "source_location": "L130"
     },
     {
       "id": "tools_ai_docs_docgen_isdirectory",
@@ -1415,7 +1463,7 @@
       "file_type": "code",
       "norm_label": "isdirectory()",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L105"
+      "source_location": "L115"
     },
     {
       "id": "tools_ai_docs_docgen_prefix",
@@ -1427,7 +1475,7 @@
       "file_type": "code",
       "norm_label": "prefix()",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L108"
+      "source_location": "L118"
     },
     {
       "id": "tools_ai_docs_docgen_prose",
@@ -1439,7 +1487,7 @@
       "file_type": "code",
       "norm_label": "prose()",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L115"
+      "source_location": "L125"
     },
     {
       "id": "tools_ai_docs_docgen_read",
@@ -1454,6 +1502,18 @@
       "source_location": "L50"
     },
     {
+      "id": "tools_ai_docs_docgen_readifexists",
+      "label": "readIfExists()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 62,
+      "community_name": "tools/dev/surfaces.mjs",
+      "file_type": "code",
+      "norm_label": "readifexists()",
+      "source_file": "tools/ai-docs/docgen.mjs",
+      "source_location": "L52"
+    },
+    {
       "id": "tools_ai_docs_docgen_splitexample",
       "label": "splitExample()",
       "_callable": true,
@@ -1463,7 +1523,7 @@
       "file_type": "code",
       "norm_label": "splitexample()",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L78"
+      "source_location": "L88"
     },
     {
       "id": "tools_ai_docs_docgen_title",
@@ -1475,7 +1535,7 @@
       "file_type": "code",
       "norm_label": "title()",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L59"
+      "source_location": "L68"
     },
     {
       "id": "tools_ai_docs_docgen_unprefixed",
@@ -1487,7 +1547,7 @@
       "file_type": "code",
       "norm_label": "unprefixed()",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L57"
+      "source_location": "L66"
     },
     {
       "id": "tools_ai_docs_docgen_withoutmarkers",
@@ -1499,7 +1559,7 @@
       "file_type": "code",
       "norm_label": "withoutmarkers()",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L69"
+      "source_location": "L79"
     },
     {
       "id": "tools_dev_surfaces_codexconfig",
@@ -1511,7 +1571,7 @@
       "file_type": "code",
       "norm_label": "codexconfig()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L337"
+      "source_location": "L348"
     },
     {
       "id": "tools_dev_surfaces_commandof",
@@ -1523,7 +1583,7 @@
       "file_type": "code",
       "norm_label": "commandof()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L125"
+      "source_location": "L135"
     },
     {
       "id": "tools_dev_surfaces_frontmatter",
@@ -1535,7 +1595,7 @@
       "file_type": "code",
       "norm_label": "frontmatter()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L161"
+      "source_location": "L171"
     },
     {
       "id": "tools_dev_surfaces_installcommithook",
@@ -1547,7 +1607,7 @@
       "file_type": "code",
       "norm_label": "installcommithook()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L559"
+      "source_location": "L571"
     },
     {
       "id": "tools_dev_surfaces_installopenchamber",
@@ -1559,7 +1619,7 @@
       "file_type": "code",
       "norm_label": "installopenchamber()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L517"
+      "source_location": "L528"
     },
     {
       "id": "tools_dev_surfaces_installorca",
@@ -1571,7 +1631,7 @@
       "file_type": "code",
       "norm_label": "installorca()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L459"
+      "source_location": "L470"
     },
     {
       "id": "tools_dev_surfaces_inworkspace",
@@ -1583,7 +1643,7 @@
       "file_type": "code",
       "norm_label": "inworkspace()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L300"
+      "source_location": "L311"
     },
     {
       "id": "tools_dev_surfaces_jsonconfig",
@@ -1595,7 +1655,7 @@
       "file_type": "code",
       "norm_label": "jsonconfig()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L304"
+      "source_location": "L315"
     },
     {
       "id": "tools_dev_surfaces_listfiles",
@@ -1607,7 +1667,7 @@
       "file_type": "code",
       "norm_label": "listfiles()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L230"
+      "source_location": "L240"
     },
     {
       "id": "tools_dev_surfaces_maincheckout",
@@ -1619,7 +1679,7 @@
       "file_type": "code",
       "norm_label": "maincheckout()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L444"
+      "source_location": "L455"
     },
     {
       "id": "tools_dev_surfaces_mergecodexconfig",
@@ -1631,7 +1691,7 @@
       "file_type": "code",
       "norm_label": "mergecodexconfig()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L356"
+      "source_location": "L367"
     },
     {
       "id": "tools_dev_surfaces_migratesources",
@@ -1643,7 +1703,7 @@
       "file_type": "code",
       "norm_label": "migratesources()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L92"
+      "source_location": "L102"
     },
     {
       "id": "tools_dev_surfaces_missingcommithook",
@@ -1655,7 +1715,7 @@
       "file_type": "code",
       "norm_label": "missingcommithook()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L584"
+      "source_location": "L596"
     },
     {
       "id": "tools_dev_surfaces_missingprojectsurfaces",
@@ -1667,7 +1727,19 @@
       "file_type": "code",
       "norm_label": "missingprojectsurfaces()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L598"
+      "source_location": "L611"
+    },
+    {
+      "id": "tools_dev_surfaces_modeof",
+      "label": "modeOf()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 62,
+      "community_name": "tools/dev/surfaces.mjs",
+      "file_type": "code",
+      "norm_label": "modeof()",
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L85"
     },
     {
       "id": "tools_dev_surfaces_orcacall",
@@ -1679,7 +1751,7 @@
       "file_type": "code",
       "norm_label": "orcacall()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L403"
+      "source_location": "L414"
     },
     {
       "id": "tools_dev_surfaces_orcauserdata",
@@ -1691,7 +1763,7 @@
       "file_type": "code",
       "norm_label": "orcauserdata()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L396"
+      "source_location": "L407"
     },
     {
       "id": "tools_dev_surfaces_parsejsonc",
@@ -1715,7 +1787,7 @@
       "file_type": "code",
       "norm_label": "pruneempty()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L240"
+      "source_location": "L250"
     },
     {
       "id": "tools_dev_surfaces_readifexists",
@@ -1739,7 +1811,7 @@
       "file_type": "code",
       "norm_label": "readprompts()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L135"
+      "source_location": "L145"
     },
     {
       "id": "tools_dev_surfaces_readservers",
@@ -1751,7 +1823,7 @@
       "file_type": "code",
       "norm_label": "readservers()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L285"
+      "source_location": "L296"
     },
     {
       "id": "tools_dev_surfaces_samepath",
@@ -1763,7 +1835,7 @@
       "file_type": "code",
       "norm_label": "samepath()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L452"
+      "source_location": "L463"
     },
     {
       "id": "tools_dev_surfaces_sourcepath",
@@ -1775,7 +1847,7 @@
       "file_type": "code",
       "norm_label": "sourcepath()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L115"
+      "source_location": "L125"
     },
     {
       "id": "tools_dev_surfaces_splitmanaged",
@@ -1787,7 +1859,7 @@
       "file_type": "code",
       "norm_label": "splitmanaged()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L84"
+      "source_location": "L94"
     },
     {
       "id": "tools_dev_surfaces_syncprompts",
@@ -1799,7 +1871,7 @@
       "file_type": "code",
       "norm_label": "syncprompts()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L184"
+      "source_location": "L194"
     },
     {
       "id": "tools_dev_surfaces_syncservers",
@@ -1811,7 +1883,7 @@
       "file_type": "code",
       "norm_label": "syncservers()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L373"
+      "source_location": "L384"
     },
     {
       "id": "tools_dev_surfaces_syncskills",
@@ -1823,7 +1895,7 @@
       "file_type": "code",
       "norm_label": "syncskills()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L251"
+      "source_location": "L261"
     },
     {
       "id": "tools_dev_surfaces_tomlkey",
@@ -1835,7 +1907,7 @@
       "file_type": "code",
       "norm_label": "tomlkey()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L328"
+      "source_location": "L339"
     },
     {
       "id": "tools_dev_surfaces_tomlstring",
@@ -1847,7 +1919,7 @@
       "file_type": "code",
       "norm_label": "tomlstring()",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L327"
+      "source_location": "L338"
     },
     {
       "id": "templates_tools_ci_coverage_goal_coveragegoalreporter_constructor",
@@ -2135,7 +2207,7 @@
       "file_type": "code",
       "norm_label": "listfiles()",
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L92"
+      "source_location": "L103"
     },
     {
       "id": "tools_license_check_headers_main",
@@ -2147,7 +2219,19 @@
       "file_type": "code",
       "norm_label": "main()",
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L104"
+      "source_location": "L115"
+    },
+    {
+      "id": "tools_license_check_headers_readifexists",
+      "label": "readIfExists()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 642,
+      "community_name": "tools/license/check-headers.mjs",
+      "file_type": "code",
+      "norm_label": "readifexists()",
+      "source_file": "tools/license/check-headers.mjs",
+      "source_location": "L87"
     },
     {
       "id": "tools_license_check_headers_walk",
@@ -2159,7 +2243,19 @@
       "file_type": "code",
       "norm_label": "walk()",
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L85"
+      "source_location": "L96"
+    },
+    {
+      "id": "test_workflows_test_jobs",
+      "label": "jobs()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 79,
+      "community_name": "ref_node_path",
+      "file_type": "code",
+      "norm_label": "jobs()",
+      "source_file": "test/workflows.test.mjs",
+      "source_location": "L36"
     },
     {
       "id": "test_ai_docs_test",
@@ -2861,6 +2957,17 @@
       "source_location": "L33"
     },
     {
+      "id": "test_actions_test_references",
+      "label": "references",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "actions.test.mjs",
+      "file_type": "code",
+      "norm_label": "references",
+      "source_file": "test/actions.test.mjs",
+      "source_location": "L44"
+    },
+    {
       "id": "test_actions_test_root",
       "label": "root",
       "_origin": "ast",
@@ -2870,116 +2977,6 @@
       "norm_label": "root",
       "source_file": "test/actions.test.mjs",
       "source_location": "L23"
-    },
-    {
-      "id": "test_commit_check_test",
-      "label": "commit-check.test.mjs",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "actions.test.mjs",
-      "file_type": "code",
-      "norm_label": "commit-check.test.mjs",
-      "source_file": "test/commit-check.test.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "test_commit_check_test_human",
-      "label": "human",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "actions.test.mjs",
-      "file_type": "code",
-      "norm_label": "human",
-      "source_file": "test/commit-check.test.mjs",
-      "source_location": "L24"
-    },
-    {
-      "id": "test_commit_check_test_script",
-      "label": "script",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "actions.test.mjs",
-      "file_type": "code",
-      "norm_label": "script",
-      "source_file": "test/commit-check.test.mjs",
-      "source_location": "L26"
-    },
-    {
-      "id": "test_graphify_test",
-      "label": "graphify.test.mjs",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "actions.test.mjs",
-      "file_type": "code",
-      "norm_label": "graphify.test.mjs",
-      "source_file": "test/graphify.test.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "test_graphify_test_templates",
-      "label": "templates",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "actions.test.mjs",
-      "file_type": "code",
-      "norm_label": "templates",
-      "source_file": "test/graphify.test.mjs",
-      "source_location": "L25"
-    },
-    {
-      "id": "test_workflows_test",
-      "label": "workflows.test.mjs",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "actions.test.mjs",
-      "file_type": "code",
-      "norm_label": "workflows.test.mjs",
-      "source_file": "test/workflows.test.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "test_workflows_test_directories",
-      "label": "directories",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "actions.test.mjs",
-      "file_type": "code",
-      "norm_label": "directories",
-      "source_file": "test/workflows.test.mjs",
-      "source_location": "L24"
-    },
-    {
-      "id": "test_workflows_test_root",
-      "label": "root",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "actions.test.mjs",
-      "file_type": "code",
-      "norm_label": "root",
-      "source_file": "test/workflows.test.mjs",
-      "source_location": "L23"
-    },
-    {
-      "id": "test_workflows_test_ungated",
-      "label": "ungated",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "actions.test.mjs",
-      "file_type": "code",
-      "norm_label": "ungated",
-      "source_file": "test/workflows.test.mjs",
-      "source_location": "L127"
-    },
-    {
-      "id": "test_workflows_test_workflows",
-      "label": "workflows",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "actions.test.mjs",
-      "file_type": "code",
-      "norm_label": "workflows",
-      "source_file": "test/workflows.test.mjs",
-      "source_location": "L26"
     },
     {
       "id": "ai_docs_src_40_preset_index",
@@ -28272,42 +28269,6 @@
       "source_location": "L1"
     },
     {
-      "id": "security_a_id_reporting_a_reporting_a_vulnerability",
-      "label": "<a id=\"reporting\"></a>Reporting a vulnerability",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "APPROVAL_POLICY.md",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"reporting\"></a>reporting a vulnerability",
-      "source_file": "SECURITY.md",
-      "source_location": "L9"
-    },
-    {
-      "id": "security_a_id_supported_a_supported_versions",
-      "label": "<a id=\"supported\"></a>Supported versions",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "APPROVAL_POLICY.md",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"supported\"></a>supported versions",
-      "source_file": "SECURITY.md",
-      "source_location": "L4"
-    },
-    {
-      "id": "security_a_id_top_a_security_policy",
-      "label": "<a id=\"top\"></a>Security Policy",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "APPROVAL_POLICY.md",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"top\"></a>security policy",
-      "source_file": "SECURITY.md",
-      "source_location": "L2"
-    },
-    {
       "id": "support",
       "label": "SUPPORT.md",
       "_origin": "ast",
@@ -41035,7 +40996,7 @@
       "label": "lib/render.mjs",
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "lib/render.mjs",
       "source_file": "scripts/lib/render.mjs",
@@ -41046,7 +41007,7 @@
       "label": "values.mjs",
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "values.mjs",
       "source_file": "scripts/lib/values.mjs",
@@ -41057,7 +41018,7 @@
       "label": "scripts/render.mjs",
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "scripts/render.mjs",
       "source_file": "scripts/render.mjs",
@@ -41068,7 +41029,7 @@
       "label": "excluded",
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "excluded",
       "source_file": "scripts/render.mjs",
@@ -41079,7 +41040,7 @@
       "label": "houseRoot",
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "houseroot",
       "source_file": "scripts/render.mjs",
@@ -41090,7 +41051,7 @@
       "label": "rendered",
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "rendered",
       "source_file": "scripts/render.mjs",
@@ -41101,7 +41062,7 @@
       "label": "stale",
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "stale",
       "source_file": "scripts/render.mjs",
@@ -41112,7 +41073,7 @@
       "label": "values",
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "values",
       "source_file": "scripts/render.mjs",
@@ -41123,29 +41084,18 @@
       "label": "{ values: args }",
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "{ values: args }",
       "source_file": "scripts/render.mjs",
       "source_location": "L42"
     },
     {
-      "id": "test_actions_test_references",
-      "label": "references",
-      "_origin": "ast",
-      "community": 47,
-      "community_name": "ref_node_fs",
-      "file_type": "code",
-      "norm_label": "references",
-      "source_file": "test/actions.test.mjs",
-      "source_location": "L44"
-    },
-    {
       "id": "test_render_test",
       "label": "render.test.mjs",
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "render.test.mjs",
       "source_file": "test/render.test.mjs",
@@ -41156,7 +41106,7 @@
       "label": "values.test.mjs",
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "values.test.mjs",
       "source_file": "test/values.test.mjs",
@@ -41167,7 +41117,7 @@
       "label": "house",
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "house",
       "source_file": "test/values.test.mjs",
@@ -41178,7 +41128,7 @@
       "label": "preset",
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "preset",
       "source_file": "test/values.test.mjs",
@@ -41189,7 +41139,7 @@
       "label": "root",
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "root",
       "source_file": "test/values.test.mjs",
@@ -41200,7 +41150,7 @@
       "label": "ROOT_ONLY",
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "root_only",
       "source_file": "test/values.test.mjs",
@@ -41211,7 +41161,7 @@
       "label": "templates",
       "_origin": "ast",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "templates",
       "source_file": "test/values.test.mjs",
@@ -47774,6 +47724,39 @@
       "source_location": "L34"
     },
     {
+      "id": "test_commit_check_test",
+      "label": "commit-check.test.mjs",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "templates/tools/dev/commit-check.mjs",
+      "file_type": "code",
+      "norm_label": "commit-check.test.mjs",
+      "source_file": "test/commit-check.test.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "test_commit_check_test_human",
+      "label": "human",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "templates/tools/dev/commit-check.mjs",
+      "file_type": "code",
+      "norm_label": "human",
+      "source_file": "test/commit-check.test.mjs",
+      "source_location": "L24"
+    },
+    {
+      "id": "test_commit_check_test_script",
+      "label": "script",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "templates/tools/dev/commit-check.mjs",
+      "file_type": "code",
+      "norm_label": "script",
+      "source_file": "test/commit-check.test.mjs",
+      "source_location": "L26"
+    },
+    {
       "id": "agents_skills_terraform_vendor_handover",
       "label": ".agents/skills/terraform-vendor/HANDOVER.md",
       "_origin": "ast",
@@ -49658,7 +49641,7 @@
       "file_type": "code",
       "norm_label": "{ content, sections, examples }",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L172"
+      "source_location": "L182"
     },
     {
       "id": "templates_tools_ai_docs_docgen_out",
@@ -49713,7 +49696,7 @@
       "file_type": "code",
       "norm_label": "actions",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L121"
+      "source_location": "L131"
     },
     {
       "id": "templates_tools_dev_surfaces_agentnames",
@@ -49724,7 +49707,7 @@
       "file_type": "code",
       "norm_label": "agentnames",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L126"
+      "source_location": "L136"
     },
     {
       "id": "templates_tools_dev_surfaces_command_flags",
@@ -49757,7 +49740,7 @@
       "file_type": "code",
       "norm_label": "manifest",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L120"
+      "source_location": "L130"
     },
     {
       "id": "templates_tools_dev_surfaces_mcptargets",
@@ -49768,7 +49751,7 @@
       "file_type": "code",
       "norm_label": "mcptargets",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L364"
+      "source_location": "L375"
     },
     {
       "id": "templates_tools_dev_surfaces_renamedsources",
@@ -49790,7 +49773,7 @@
       "file_type": "code",
       "norm_label": "retired",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L181"
+      "source_location": "L191"
     },
     {
       "id": "templates_tools_dev_surfaces_root",
@@ -49812,7 +49795,7 @@
       "file_type": "code",
       "norm_label": "skilltargets",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L248"
+      "source_location": "L258"
     },
     {
       "id": "templates_tools_dev_surfaces_targets",
@@ -49823,7 +49806,7 @@
       "file_type": "code",
       "norm_label": "targets",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L167"
+      "source_location": "L177"
     },
     {
       "id": "templates_agents_skills_code_review_handover",
@@ -50205,7 +50188,7 @@
       "file_type": "code",
       "norm_label": "{ content, sections, examples }",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L172"
+      "source_location": "L182"
     },
     {
       "id": "tools_ai_docs_docgen_out",
@@ -50260,7 +50243,7 @@
       "file_type": "code",
       "norm_label": "actions",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L121"
+      "source_location": "L131"
     },
     {
       "id": "tools_dev_surfaces_agentnames",
@@ -50271,7 +50254,7 @@
       "file_type": "code",
       "norm_label": "agentnames",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L126"
+      "source_location": "L136"
     },
     {
       "id": "tools_dev_surfaces_command_flags",
@@ -50304,7 +50287,7 @@
       "file_type": "code",
       "norm_label": "manifest",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L120"
+      "source_location": "L130"
     },
     {
       "id": "tools_dev_surfaces_mcptargets",
@@ -50315,7 +50298,7 @@
       "file_type": "code",
       "norm_label": "mcptargets",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L364"
+      "source_location": "L375"
     },
     {
       "id": "tools_dev_surfaces_renamedsources",
@@ -50337,7 +50320,7 @@
       "file_type": "code",
       "norm_label": "retired",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L181"
+      "source_location": "L191"
     },
     {
       "id": "tools_dev_surfaces_root",
@@ -50359,7 +50342,7 @@
       "file_type": "code",
       "norm_label": "skilltargets",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L248"
+      "source_location": "L258"
     },
     {
       "id": "tools_dev_surfaces_targets",
@@ -50370,7 +50353,7 @@
       "file_type": "code",
       "norm_label": "targets",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L167"
+      "source_location": "L177"
     },
     {
       "id": "templates_agents_skills_neon_vendor_handover",
@@ -51286,6 +51269,42 @@
       "norm_label": "ignored_directories",
       "source_file": "tools/license/check-headers.mjs",
       "source_location": "L35"
+    },
+    {
+      "id": "security_a_id_reporting_a_reporting_a_vulnerability",
+      "label": "<a id=\"reporting\"></a>Reporting a vulnerability",
+      "_origin": "ast",
+      "community": 643,
+      "community_name": "<a id=\"top\"></a>Security Policy",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"reporting\"></a>reporting a vulnerability",
+      "source_file": "SECURITY.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "security_a_id_supported_a_supported_versions",
+      "label": "<a id=\"supported\"></a>Supported versions",
+      "_origin": "ast",
+      "community": 643,
+      "community_name": "<a id=\"top\"></a>Security Policy",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"supported\"></a>supported versions",
+      "source_file": "SECURITY.md",
+      "source_location": "L4"
+    },
+    {
+      "id": "security_a_id_top_a_security_policy",
+      "label": "<a id=\"top\"></a>Security Policy",
+      "_origin": "ast",
+      "community": 643,
+      "community_name": "<a id=\"top\"></a>Security Policy",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"top\"></a>security policy",
+      "source_file": "SECURITY.md",
+      "source_location": "L2"
     },
     {
       "id": "templates_agents_prompts_verify",
@@ -55043,6 +55062,83 @@
       "norm_label": "tsc",
       "source_file": "templates/tools/typecheck/tests.ts",
       "source_location": "L18"
+    },
+    {
+      "id": "test_graphify_test",
+      "label": "graphify.test.mjs",
+      "_origin": "ast",
+      "community": 79,
+      "community_name": "ref_node_path",
+      "file_type": "code",
+      "norm_label": "graphify.test.mjs",
+      "source_file": "test/graphify.test.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "test_graphify_test_templates",
+      "label": "templates",
+      "_origin": "ast",
+      "community": 79,
+      "community_name": "ref_node_path",
+      "file_type": "code",
+      "norm_label": "templates",
+      "source_file": "test/graphify.test.mjs",
+      "source_location": "L25"
+    },
+    {
+      "id": "test_workflows_test",
+      "label": "workflows.test.mjs",
+      "_origin": "ast",
+      "community": 79,
+      "community_name": "ref_node_path",
+      "file_type": "code",
+      "norm_label": "workflows.test.mjs",
+      "source_file": "test/workflows.test.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "test_workflows_test_directories",
+      "label": "directories",
+      "_origin": "ast",
+      "community": 79,
+      "community_name": "ref_node_path",
+      "file_type": "code",
+      "norm_label": "directories",
+      "source_file": "test/workflows.test.mjs",
+      "source_location": "L24"
+    },
+    {
+      "id": "test_workflows_test_root",
+      "label": "root",
+      "_origin": "ast",
+      "community": 79,
+      "community_name": "ref_node_path",
+      "file_type": "code",
+      "norm_label": "root",
+      "source_file": "test/workflows.test.mjs",
+      "source_location": "L23"
+    },
+    {
+      "id": "test_workflows_test_ungated",
+      "label": "ungated",
+      "_origin": "ast",
+      "community": 79,
+      "community_name": "ref_node_path",
+      "file_type": "code",
+      "norm_label": "ungated",
+      "source_file": "test/workflows.test.mjs",
+      "source_location": "L127"
+    },
+    {
+      "id": "test_workflows_test_workflows",
+      "label": "workflows",
+      "_origin": "ast",
+      "community": 79,
+      "community_name": "ref_node_path",
+      "file_type": "code",
+      "norm_label": "workflows",
+      "source_file": "test/workflows.test.mjs",
+      "source_location": "L26"
     },
     {
       "id": "tools_dev_docs",
@@ -59773,30 +59869,6 @@
       "source_url": null
     },
     {
-      "id": "ref_node_assert",
-      "label": "ref_node_assert",
-      "_origin": "semantic",
-      "community": 10,
-      "community_name": "actions.test.mjs",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "ref_node_assert",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "ref_node_test",
-      "label": "ref_node_test",
-      "_origin": "semantic",
-      "community": 10,
-      "community_name": "actions.test.mjs",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "ref_node_test",
-      "source_file": "",
-      "type": "external"
-    },
-    {
       "id": "ref_node_os",
       "label": "ref_node_os",
       "_origin": "semantic",
@@ -59809,14 +59881,26 @@
       "type": "external"
     },
     {
-      "id": "ref_node_fs",
-      "label": "ref_node_fs",
+      "id": "ref_node_assert",
+      "label": "ref_node_assert",
       "_origin": "semantic",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "external": true,
       "file_type": "concept",
-      "norm_label": "ref_node_fs",
+      "norm_label": "ref_node_assert",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "ref_node_test",
+      "label": "ref_node_test",
+      "_origin": "semantic",
+      "community": 47,
+      "community_name": "values.test.mjs",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_node_test",
       "source_file": "",
       "type": "external"
     },
@@ -59825,7 +59909,7 @@
       "label": "ref_node_util",
       "_origin": "semantic",
       "community": 47,
-      "community_name": "ref_node_fs",
+      "community_name": "values.test.mjs",
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_node_util",
@@ -59833,26 +59917,26 @@
       "type": "external"
     },
     {
-      "id": "ref_node_net",
-      "label": "ref_node_net",
+      "id": "ref_node_crypto",
+      "label": "ref_node_crypto",
       "_origin": "semantic",
       "community": 61,
       "community_name": "templates/tools/dev/surfaces.mjs",
       "external": true,
       "file_type": "concept",
-      "norm_label": "ref_node_net",
+      "norm_label": "ref_node_crypto",
       "source_file": "",
       "type": "external"
     },
     {
-      "id": "ref_node_crypto",
-      "label": "ref_node_crypto",
+      "id": "ref_node_net",
+      "label": "ref_node_net",
       "_origin": "semantic",
       "community": 62,
       "community_name": "tools/dev/surfaces.mjs",
       "external": true,
       "file_type": "concept",
-      "norm_label": "ref_node_crypto",
+      "norm_label": "ref_node_net",
       "source_file": "",
       "type": "external"
     },
@@ -59877,6 +59961,18 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_node_child_process",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "ref_node_fs",
+      "label": "ref_node_fs",
+      "_origin": "semantic",
+      "community": 79,
+      "community_name": "ref_node_path",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_node_fs",
       "source_file": "",
       "type": "external"
     },
@@ -60227,7 +60323,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L112",
+      "source_location": "L122",
       "weight": 1.0
     },
     {
@@ -60239,7 +60335,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L121",
+      "source_location": "L131",
       "weight": 1.0
     },
     {
@@ -60251,7 +60347,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L121",
+      "source_location": "L131",
       "weight": 1.0
     },
     {
@@ -60263,7 +60359,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L135",
+      "source_location": "L145",
       "weight": 1.0
     },
     {
@@ -60275,7 +60371,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L149",
+      "source_location": "L159",
       "weight": 1.0
     },
     {
@@ -60287,7 +60383,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L149",
+      "source_location": "L159",
       "weight": 1.0
     },
     {
@@ -60299,7 +60395,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L149",
+      "source_location": "L159",
       "weight": 1.0
     },
     {
@@ -60311,7 +60407,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L156",
+      "source_location": "L166",
       "weight": 1.0
     },
     {
@@ -60323,7 +60419,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L156",
+      "source_location": "L166",
       "weight": 1.0
     },
     {
@@ -60335,7 +60431,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L160",
+      "source_location": "L170",
       "weight": 1.0
     },
     {
@@ -60347,11 +60443,11 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L105",
+      "source_location": "L115",
       "weight": 1.0
     },
     {
-      "source": "templates_tools_ai_docs_docgen_title",
+      "source": "templates_tools_ai_docs_docgen_readifexists",
       "target": "templates_tools_ai_docs_docgen_read",
       "relation": "calls",
       "_origin": "ast",
@@ -60359,7 +60455,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L62",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_ai_docs_docgen_title",
+      "target": "templates_tools_ai_docs_docgen_readifexists",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "templates/tools/ai-docs/docgen.mjs",
+      "source_location": "L70",
       "weight": 1.0
     },
     {
@@ -60455,7 +60563,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L104",
+      "source_location": "L106",
       "weight": 1.0
     },
     {
@@ -60467,7 +60575,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L123",
+      "source_location": "L125",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_commit_check_checkstagedtext",
+      "target": "templates_tools_dev_commit_check_issource",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "templates/tools/dev/commit-check.mjs",
+      "source_location": "L180",
       "weight": 1.0
     },
     {
@@ -60479,7 +60599,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L192",
+      "source_location": "L194",
       "weight": 1.0
     },
     {
@@ -60491,7 +60611,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L60",
+      "source_location": "L62",
       "weight": 1.0
     },
     {
@@ -60503,7 +60623,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L216",
+      "source_location": "L218",
       "weight": 1.0
     },
     {
@@ -60515,7 +60635,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L227",
+      "source_location": "L229",
       "weight": 1.0
     },
     {
@@ -60527,7 +60647,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L233",
+      "source_location": "L235",
       "weight": 1.0
     },
     {
@@ -60539,7 +60659,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L233",
+      "source_location": "L235",
       "weight": 1.0
     },
     {
@@ -60551,7 +60671,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L340",
+      "source_location": "L351",
       "weight": 1.0
     },
     {
@@ -60563,7 +60683,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L342",
+      "source_location": "L353",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_surfaces_installcommithook",
+      "target": "templates_tools_dev_surfaces_readifexists",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L580",
       "weight": 1.0
     },
     {
@@ -60575,7 +60707,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L520",
+      "source_location": "L531",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_surfaces_installopenchamber",
+      "target": "templates_tools_dev_surfaces_readifexists",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L535",
       "weight": 1.0
     },
     {
@@ -60587,7 +60731,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L529",
+      "source_location": "L541",
       "weight": 1.0
     },
     {
@@ -60599,7 +60743,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L460",
+      "source_location": "L471",
       "weight": 1.0
     },
     {
@@ -60611,7 +60755,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L465",
+      "source_location": "L476",
       "weight": 1.0
     },
     {
@@ -60623,7 +60767,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L469",
+      "source_location": "L480",
       "weight": 1.0
     },
     {
@@ -60635,7 +60779,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L470",
+      "source_location": "L481",
       "weight": 1.0
     },
     {
@@ -60647,7 +60791,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L479",
+      "source_location": "L490",
       "weight": 1.0
     },
     {
@@ -60659,7 +60803,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L235",
+      "source_location": "L245",
       "weight": 1.0
     },
     {
@@ -60671,7 +60815,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L101",
+      "source_location": "L111",
       "weight": 1.0
     },
     {
@@ -60683,7 +60827,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L103",
+      "source_location": "L113",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_surfaces_missingcommithook",
+      "target": "templates_tools_dev_surfaces_readifexists",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L601",
       "weight": 1.0
     },
     {
@@ -60695,7 +60851,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L288",
+      "source_location": "L299",
       "weight": 1.0
     },
     {
@@ -60707,7 +60863,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L185",
+      "source_location": "L195",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_surfaces_syncprompts",
+      "target": "templates_tools_dev_surfaces_readifexists",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L208",
       "weight": 1.0
     },
     {
@@ -60719,7 +60887,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L374",
+      "source_location": "L385",
       "weight": 1.0
     },
     {
@@ -60731,7 +60899,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L379",
+      "source_location": "L390",
       "weight": 1.0
     },
     {
@@ -60743,7 +60911,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L253",
+      "source_location": "L263",
       "weight": 1.0
     },
     {
@@ -60755,7 +60923,31 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L263",
+      "source_location": "L273",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_surfaces_syncskills",
+      "target": "templates_tools_dev_surfaces_readifexists",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L281",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_surfaces_syncskills",
+      "target": "templates_tools_dev_surfaces_modeof",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L282",
       "weight": 1.0
     },
     {
@@ -60767,7 +60959,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L328",
+      "source_location": "L339",
       "weight": 1.0
     },
     {
@@ -61324,6 +61516,18 @@
     },
     {
       "source": "templates_tools_license_check_headers_checkheaders",
+      "target": "templates_tools_license_check_headers_readifexists",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "templates/tools/license/check-headers.mjs",
+      "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_license_check_headers_checkheaders",
       "target": "templates_tools_license_check_headers_headerfor",
       "relation": "calls",
       "_origin": "ast",
@@ -61331,7 +61535,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L73",
+      "source_location": "L75",
       "weight": 1.0
     },
     {
@@ -61343,7 +61547,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L100",
+      "source_location": "L111",
       "weight": 1.0
     },
     {
@@ -61355,7 +61559,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L107",
+      "source_location": "L118",
       "weight": 1.0
     },
     {
@@ -61367,7 +61571,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L88",
+      "source_location": "L99",
       "weight": 1.0
     },
     {
@@ -61463,7 +61667,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L112",
+      "source_location": "L122",
       "weight": 1.0
     },
     {
@@ -61475,7 +61679,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L121",
+      "source_location": "L131",
       "weight": 1.0
     },
     {
@@ -61487,7 +61691,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L121",
+      "source_location": "L131",
       "weight": 1.0
     },
     {
@@ -61499,7 +61703,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L135",
+      "source_location": "L145",
       "weight": 1.0
     },
     {
@@ -61511,7 +61715,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L149",
+      "source_location": "L159",
       "weight": 1.0
     },
     {
@@ -61523,7 +61727,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L149",
+      "source_location": "L159",
       "weight": 1.0
     },
     {
@@ -61535,7 +61739,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L149",
+      "source_location": "L159",
       "weight": 1.0
     },
     {
@@ -61547,7 +61751,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L156",
+      "source_location": "L166",
       "weight": 1.0
     },
     {
@@ -61559,7 +61763,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L156",
+      "source_location": "L166",
       "weight": 1.0
     },
     {
@@ -61571,7 +61775,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L160",
+      "source_location": "L170",
       "weight": 1.0
     },
     {
@@ -61583,11 +61787,11 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L105",
+      "source_location": "L115",
       "weight": 1.0
     },
     {
-      "source": "tools_ai_docs_docgen_title",
+      "source": "tools_ai_docs_docgen_readifexists",
       "target": "tools_ai_docs_docgen_read",
       "relation": "calls",
       "_origin": "ast",
@@ -61595,7 +61799,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L62",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_ai_docs_docgen_title",
+      "target": "tools_ai_docs_docgen_readifexists",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tools/ai-docs/docgen.mjs",
+      "source_location": "L70",
       "weight": 1.0
     },
     {
@@ -61691,7 +61907,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L104",
+      "source_location": "L106",
       "weight": 1.0
     },
     {
@@ -61703,7 +61919,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L123",
+      "source_location": "L125",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_commit_check_checkstagedtext",
+      "target": "tools_dev_commit_check_issource",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tools/dev/commit-check.mjs",
+      "source_location": "L180",
       "weight": 1.0
     },
     {
@@ -61715,7 +61943,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L192",
+      "source_location": "L194",
       "weight": 1.0
     },
     {
@@ -61727,7 +61955,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L60",
+      "source_location": "L62",
       "weight": 1.0
     },
     {
@@ -61739,7 +61967,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L216",
+      "source_location": "L218",
       "weight": 1.0
     },
     {
@@ -61751,7 +61979,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L227",
+      "source_location": "L229",
       "weight": 1.0
     },
     {
@@ -61763,7 +61991,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L233",
+      "source_location": "L235",
       "weight": 1.0
     },
     {
@@ -61775,7 +62003,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L233",
+      "source_location": "L235",
       "weight": 1.0
     },
     {
@@ -61787,7 +62015,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L340",
+      "source_location": "L351",
       "weight": 1.0
     },
     {
@@ -61799,7 +62027,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L342",
+      "source_location": "L353",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_surfaces_installcommithook",
+      "target": "tools_dev_surfaces_readifexists",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L580",
       "weight": 1.0
     },
     {
@@ -61811,7 +62051,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L520",
+      "source_location": "L531",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_surfaces_installopenchamber",
+      "target": "tools_dev_surfaces_readifexists",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L535",
       "weight": 1.0
     },
     {
@@ -61823,7 +62075,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L529",
+      "source_location": "L541",
       "weight": 1.0
     },
     {
@@ -61835,7 +62087,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L460",
+      "source_location": "L471",
       "weight": 1.0
     },
     {
@@ -61847,7 +62099,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L465",
+      "source_location": "L476",
       "weight": 1.0
     },
     {
@@ -61859,7 +62111,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L469",
+      "source_location": "L480",
       "weight": 1.0
     },
     {
@@ -61871,7 +62123,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L470",
+      "source_location": "L481",
       "weight": 1.0
     },
     {
@@ -61883,7 +62135,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L479",
+      "source_location": "L490",
       "weight": 1.0
     },
     {
@@ -61895,7 +62147,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L235",
+      "source_location": "L245",
       "weight": 1.0
     },
     {
@@ -61907,7 +62159,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L101",
+      "source_location": "L111",
       "weight": 1.0
     },
     {
@@ -61919,7 +62171,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L103",
+      "source_location": "L113",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_surfaces_missingcommithook",
+      "target": "tools_dev_surfaces_readifexists",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L601",
       "weight": 1.0
     },
     {
@@ -61931,7 +62195,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L288",
+      "source_location": "L299",
       "weight": 1.0
     },
     {
@@ -61943,7 +62207,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L185",
+      "source_location": "L195",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_surfaces_syncprompts",
+      "target": "tools_dev_surfaces_readifexists",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L208",
       "weight": 1.0
     },
     {
@@ -61955,7 +62231,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L374",
+      "source_location": "L385",
       "weight": 1.0
     },
     {
@@ -61967,7 +62243,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L379",
+      "source_location": "L390",
       "weight": 1.0
     },
     {
@@ -61979,7 +62255,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L253",
+      "source_location": "L263",
       "weight": 1.0
     },
     {
@@ -61991,7 +62267,31 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L263",
+      "source_location": "L273",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_surfaces_syncskills",
+      "target": "tools_dev_surfaces_readifexists",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L281",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_surfaces_syncskills",
+      "target": "tools_dev_surfaces_modeof",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L282",
       "weight": 1.0
     },
     {
@@ -62003,7 +62303,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L328",
+      "source_location": "L339",
       "weight": 1.0
     },
     {
@@ -62560,6 +62860,18 @@
     },
     {
       "source": "tools_license_check_headers_checkheaders",
+      "target": "tools_license_check_headers_readifexists",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tools/license/check-headers.mjs",
+      "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_license_check_headers_checkheaders",
       "target": "tools_license_check_headers_headerfor",
       "relation": "calls",
       "_origin": "ast",
@@ -62567,7 +62879,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L73",
+      "source_location": "L75",
       "weight": 1.0
     },
     {
@@ -62579,7 +62891,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L100",
+      "source_location": "L111",
       "weight": 1.0
     },
     {
@@ -62591,7 +62903,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L107",
+      "source_location": "L118",
       "weight": 1.0
     },
     {
@@ -62603,7 +62915,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L88",
+      "source_location": "L99",
       "weight": 1.0
     },
     {
@@ -107769,7 +108081,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L105",
+      "source_location": "L115",
       "weight": 1.0
     },
     {
@@ -107780,7 +108092,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L108",
+      "source_location": "L118",
       "weight": 1.0
     },
     {
@@ -107791,7 +108103,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L112",
+      "source_location": "L122",
       "weight": 1.0
     },
     {
@@ -107802,7 +108114,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L115",
+      "source_location": "L125",
       "weight": 1.0
     },
     {
@@ -107813,7 +108125,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L118",
+      "source_location": "L128",
       "weight": 1.0
     },
     {
@@ -107824,7 +108136,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L120",
+      "source_location": "L130",
       "weight": 1.0
     },
     {
@@ -107835,7 +108147,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L172",
+      "source_location": "L182",
       "weight": 1.0
     },
     {
@@ -107884,7 +108196,7 @@
     },
     {
       "source": "templates_tools_ai_docs_docgen",
-      "target": "templates_tools_ai_docs_docgen_fail",
+      "target": "templates_tools_ai_docs_docgen_readifexists",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -107895,13 +108207,24 @@
     },
     {
       "source": "templates_tools_ai_docs_docgen",
+      "target": "templates_tools_ai_docs_docgen_fail",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/tools/ai-docs/docgen.mjs",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_ai_docs_docgen",
       "target": "templates_tools_ai_docs_docgen_unprefixed",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L57",
+      "source_location": "L66",
       "weight": 1.0
     },
     {
@@ -107912,7 +108235,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L59",
+      "source_location": "L68",
       "weight": 1.0
     },
     {
@@ -107923,7 +108246,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L69",
+      "source_location": "L79",
       "weight": 1.0
     },
     {
@@ -107934,7 +108257,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L78",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -108088,7 +108411,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L102",
+      "source_location": "L104",
       "weight": 1.0
     },
     {
@@ -108099,7 +108422,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L162",
+      "source_location": "L164",
       "weight": 1.0
     },
     {
@@ -108110,7 +108433,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L205",
+      "source_location": "L207",
       "weight": 1.0
     },
     {
@@ -108121,7 +108444,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L207",
+      "source_location": "L209",
       "weight": 1.0
     },
     {
@@ -108148,18 +108471,18 @@
     },
     {
       "source": "templates_tools_dev_commit_check",
-      "target": "templates_tools_dev_commit_check_withoutstrings",
+      "target": "templates_tools_dev_commit_check_issource",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L58",
+      "source_location": "L48",
       "weight": 1.0
     },
     {
       "source": "templates_tools_dev_commit_check",
-      "target": "templates_tools_dev_commit_check_codeonly",
+      "target": "templates_tools_dev_commit_check_withoutstrings",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -108170,13 +108493,24 @@
     },
     {
       "source": "templates_tools_dev_commit_check",
+      "target": "templates_tools_dev_commit_check_codeonly",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/tools/dev/commit-check.mjs",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_commit_check",
       "target": "templates_tools_dev_commit_check_parseidentity",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L68",
+      "source_location": "L70",
       "weight": 1.0
     },
     {
@@ -108187,7 +108521,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L78",
+      "source_location": "L80",
       "weight": 1.0
     },
     {
@@ -108236,40 +108570,18 @@
     },
     {
       "source": "templates_tools_dev_surfaces",
+      "target": "templates_tools_dev_surfaces_migratesources",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L102",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_surfaces",
       "target": "templates_tools_dev_surfaces_sourcepath",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L115",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_tools_dev_surfaces",
-      "target": "templates_tools_dev_surfaces_manifest",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L120",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_tools_dev_surfaces",
-      "target": "templates_tools_dev_surfaces_actions",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L121",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_tools_dev_surfaces",
-      "target": "templates_tools_dev_surfaces_commandof",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -108280,18 +108592,29 @@
     },
     {
       "source": "templates_tools_dev_surfaces",
-      "target": "templates_tools_dev_surfaces_agentnames",
+      "target": "templates_tools_dev_surfaces_manifest",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L126",
+      "source_location": "L130",
       "weight": 1.0
     },
     {
       "source": "templates_tools_dev_surfaces",
-      "target": "templates_tools_dev_surfaces_readprompts",
+      "target": "templates_tools_dev_surfaces_actions",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L131",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_surfaces",
+      "target": "templates_tools_dev_surfaces_commandof",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -108302,13 +108625,35 @@
     },
     {
       "source": "templates_tools_dev_surfaces",
+      "target": "templates_tools_dev_surfaces_agentnames",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L136",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_surfaces",
+      "target": "templates_tools_dev_surfaces_readprompts",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L145",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_surfaces",
       "target": "templates_tools_dev_surfaces_frontmatter",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L161",
+      "source_location": "L171",
       "weight": 1.0
     },
     {
@@ -108319,7 +108664,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L167",
+      "source_location": "L177",
       "weight": 1.0
     },
     {
@@ -108330,7 +108675,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L181",
+      "source_location": "L191",
       "weight": 1.0
     },
     {
@@ -108341,7 +108686,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L184",
+      "source_location": "L194",
       "weight": 1.0
     },
     {
@@ -108352,7 +108697,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L230",
+      "source_location": "L240",
       "weight": 1.0
     },
     {
@@ -108363,7 +108708,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L240",
+      "source_location": "L250",
       "weight": 1.0
     },
     {
@@ -108374,7 +108719,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L248",
+      "source_location": "L258",
       "weight": 1.0
     },
     {
@@ -108385,7 +108730,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L251",
+      "source_location": "L261",
       "weight": 1.0
     },
     {
@@ -108396,7 +108741,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L285",
+      "source_location": "L296",
       "weight": 1.0
     },
     {
@@ -108407,7 +108752,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L300",
+      "source_location": "L311",
       "weight": 1.0
     },
     {
@@ -108418,7 +108763,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L304",
+      "source_location": "L315",
       "weight": 1.0
     },
     {
@@ -108429,7 +108774,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L327",
+      "source_location": "L338",
       "weight": 1.0
     },
     {
@@ -108440,7 +108785,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L328",
+      "source_location": "L339",
       "weight": 1.0
     },
     {
@@ -108451,7 +108796,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L364",
+      "source_location": "L375",
       "weight": 1.0
     },
     {
@@ -108462,7 +108807,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L373",
+      "source_location": "L384",
       "weight": 1.0
     },
     {
@@ -108473,7 +108818,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L396",
+      "source_location": "L407",
       "weight": 1.0
     },
     {
@@ -108484,7 +108829,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L403",
+      "source_location": "L414",
       "weight": 1.0
     },
     {
@@ -108506,29 +108851,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L444",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_tools_dev_surfaces",
-      "target": "templates_tools_dev_surfaces_samepath",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L452",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_tools_dev_surfaces",
-      "target": "templates_tools_dev_surfaces_installorca",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L459",
+      "source_location": "L455",
       "weight": 1.0
     },
     {
@@ -108544,13 +108867,35 @@
     },
     {
       "source": "templates_tools_dev_surfaces",
+      "target": "templates_tools_dev_surfaces_samepath",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L463",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_surfaces",
+      "target": "templates_tools_dev_surfaces_installorca",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L470",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_surfaces",
       "target": "templates_tools_dev_surfaces_installopenchamber",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L517",
+      "source_location": "L528",
       "weight": 1.0
     },
     {
@@ -108561,7 +108906,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L559",
+      "source_location": "L571",
       "weight": 1.0
     },
     {
@@ -108572,7 +108917,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L584",
+      "source_location": "L596",
       "weight": 1.0
     },
     {
@@ -108583,7 +108928,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L598",
+      "source_location": "L611",
       "weight": 1.0
     },
     {
@@ -108632,24 +108977,24 @@
     },
     {
       "source": "templates_tools_dev_surfaces",
+      "target": "templates_tools_dev_surfaces_modeof",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L85",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_surfaces",
       "target": "templates_tools_dev_surfaces_splitmanaged",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L84",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_tools_dev_surfaces",
-      "target": "templates_tools_dev_surfaces_migratesources",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L92",
+      "source_location": "L94",
       "weight": 1.0
     },
     {
@@ -108665,13 +109010,24 @@
     },
     {
       "source": "templates_tools_license_check_headers",
+      "target": "templates_tools_license_check_headers_listfiles",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/tools/license/check-headers.mjs",
+      "source_location": "L103",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_license_check_headers",
       "target": "templates_tools_license_check_headers_main",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L104",
+      "source_location": "L115",
       "weight": 1.0
     },
     {
@@ -108720,24 +109076,24 @@
     },
     {
       "source": "templates_tools_license_check_headers",
+      "target": "templates_tools_license_check_headers_readifexists",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/tools/license/check-headers.mjs",
+      "source_location": "L87",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_license_check_headers",
       "target": "templates_tools_license_check_headers_walk",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L85",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_tools_license_check_headers",
-      "target": "templates_tools_license_check_headers_listfiles",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/tools/license/check-headers.mjs",
-      "source_location": "L92",
+      "source_location": "L96",
       "weight": 1.0
     },
     {
@@ -109144,7 +109500,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L105",
+      "source_location": "L115",
       "weight": 1.0
     },
     {
@@ -109155,7 +109511,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L108",
+      "source_location": "L118",
       "weight": 1.0
     },
     {
@@ -109166,7 +109522,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L112",
+      "source_location": "L122",
       "weight": 1.0
     },
     {
@@ -109177,7 +109533,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L115",
+      "source_location": "L125",
       "weight": 1.0
     },
     {
@@ -109188,7 +109544,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L118",
+      "source_location": "L128",
       "weight": 1.0
     },
     {
@@ -109199,7 +109555,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L120",
+      "source_location": "L130",
       "weight": 1.0
     },
     {
@@ -109210,7 +109566,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L172",
+      "source_location": "L182",
       "weight": 1.0
     },
     {
@@ -109259,7 +109615,7 @@
     },
     {
       "source": "tools_ai_docs_docgen",
-      "target": "tools_ai_docs_docgen_fail",
+      "target": "tools_ai_docs_docgen_readifexists",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -109270,13 +109626,24 @@
     },
     {
       "source": "tools_ai_docs_docgen",
+      "target": "tools_ai_docs_docgen_fail",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/ai-docs/docgen.mjs",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_ai_docs_docgen",
       "target": "tools_ai_docs_docgen_unprefixed",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L57",
+      "source_location": "L66",
       "weight": 1.0
     },
     {
@@ -109287,7 +109654,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L59",
+      "source_location": "L68",
       "weight": 1.0
     },
     {
@@ -109298,7 +109665,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L69",
+      "source_location": "L79",
       "weight": 1.0
     },
     {
@@ -109309,7 +109676,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L78",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -109463,7 +109830,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L102",
+      "source_location": "L104",
       "weight": 1.0
     },
     {
@@ -109474,7 +109841,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L162",
+      "source_location": "L164",
       "weight": 1.0
     },
     {
@@ -109485,7 +109852,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L205",
+      "source_location": "L207",
       "weight": 1.0
     },
     {
@@ -109496,7 +109863,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L207",
+      "source_location": "L209",
       "weight": 1.0
     },
     {
@@ -109523,18 +109890,18 @@
     },
     {
       "source": "tools_dev_commit_check",
-      "target": "tools_dev_commit_check_withoutstrings",
+      "target": "tools_dev_commit_check_issource",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L58",
+      "source_location": "L48",
       "weight": 1.0
     },
     {
       "source": "tools_dev_commit_check",
-      "target": "tools_dev_commit_check_codeonly",
+      "target": "tools_dev_commit_check_withoutstrings",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -109545,13 +109912,24 @@
     },
     {
       "source": "tools_dev_commit_check",
+      "target": "tools_dev_commit_check_codeonly",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/dev/commit-check.mjs",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_commit_check",
       "target": "tools_dev_commit_check_parseidentity",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L68",
+      "source_location": "L70",
       "weight": 1.0
     },
     {
@@ -109562,7 +109940,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L78",
+      "source_location": "L80",
       "weight": 1.0
     },
     {
@@ -109611,40 +109989,18 @@
     },
     {
       "source": "tools_dev_surfaces",
+      "target": "tools_dev_surfaces_migratesources",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L102",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_surfaces",
       "target": "tools_dev_surfaces_sourcepath",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L115",
-      "weight": 1.0
-    },
-    {
-      "source": "tools_dev_surfaces",
-      "target": "tools_dev_surfaces_manifest",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L120",
-      "weight": 1.0
-    },
-    {
-      "source": "tools_dev_surfaces",
-      "target": "tools_dev_surfaces_actions",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L121",
-      "weight": 1.0
-    },
-    {
-      "source": "tools_dev_surfaces",
-      "target": "tools_dev_surfaces_commandof",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -109655,18 +110011,29 @@
     },
     {
       "source": "tools_dev_surfaces",
-      "target": "tools_dev_surfaces_agentnames",
+      "target": "tools_dev_surfaces_manifest",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L126",
+      "source_location": "L130",
       "weight": 1.0
     },
     {
       "source": "tools_dev_surfaces",
-      "target": "tools_dev_surfaces_readprompts",
+      "target": "tools_dev_surfaces_actions",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L131",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_surfaces",
+      "target": "tools_dev_surfaces_commandof",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -109677,13 +110044,35 @@
     },
     {
       "source": "tools_dev_surfaces",
+      "target": "tools_dev_surfaces_agentnames",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L136",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_surfaces",
+      "target": "tools_dev_surfaces_readprompts",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L145",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_surfaces",
       "target": "tools_dev_surfaces_frontmatter",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L161",
+      "source_location": "L171",
       "weight": 1.0
     },
     {
@@ -109694,7 +110083,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L167",
+      "source_location": "L177",
       "weight": 1.0
     },
     {
@@ -109705,7 +110094,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L181",
+      "source_location": "L191",
       "weight": 1.0
     },
     {
@@ -109716,7 +110105,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L184",
+      "source_location": "L194",
       "weight": 1.0
     },
     {
@@ -109727,7 +110116,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L230",
+      "source_location": "L240",
       "weight": 1.0
     },
     {
@@ -109738,7 +110127,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L240",
+      "source_location": "L250",
       "weight": 1.0
     },
     {
@@ -109749,7 +110138,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L248",
+      "source_location": "L258",
       "weight": 1.0
     },
     {
@@ -109760,7 +110149,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L251",
+      "source_location": "L261",
       "weight": 1.0
     },
     {
@@ -109771,7 +110160,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L285",
+      "source_location": "L296",
       "weight": 1.0
     },
     {
@@ -109782,7 +110171,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L300",
+      "source_location": "L311",
       "weight": 1.0
     },
     {
@@ -109793,7 +110182,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L304",
+      "source_location": "L315",
       "weight": 1.0
     },
     {
@@ -109804,7 +110193,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L327",
+      "source_location": "L338",
       "weight": 1.0
     },
     {
@@ -109815,7 +110204,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L328",
+      "source_location": "L339",
       "weight": 1.0
     },
     {
@@ -109826,7 +110215,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L364",
+      "source_location": "L375",
       "weight": 1.0
     },
     {
@@ -109837,7 +110226,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L373",
+      "source_location": "L384",
       "weight": 1.0
     },
     {
@@ -109848,7 +110237,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L396",
+      "source_location": "L407",
       "weight": 1.0
     },
     {
@@ -109859,7 +110248,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L403",
+      "source_location": "L414",
       "weight": 1.0
     },
     {
@@ -109881,29 +110270,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L444",
-      "weight": 1.0
-    },
-    {
-      "source": "tools_dev_surfaces",
-      "target": "tools_dev_surfaces_samepath",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L452",
-      "weight": 1.0
-    },
-    {
-      "source": "tools_dev_surfaces",
-      "target": "tools_dev_surfaces_installorca",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L459",
+      "source_location": "L455",
       "weight": 1.0
     },
     {
@@ -109919,13 +110286,35 @@
     },
     {
       "source": "tools_dev_surfaces",
+      "target": "tools_dev_surfaces_samepath",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L463",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_surfaces",
+      "target": "tools_dev_surfaces_installorca",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L470",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_surfaces",
       "target": "tools_dev_surfaces_installopenchamber",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L517",
+      "source_location": "L528",
       "weight": 1.0
     },
     {
@@ -109936,7 +110325,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L559",
+      "source_location": "L571",
       "weight": 1.0
     },
     {
@@ -109947,7 +110336,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L584",
+      "source_location": "L596",
       "weight": 1.0
     },
     {
@@ -109958,7 +110347,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L598",
+      "source_location": "L611",
       "weight": 1.0
     },
     {
@@ -110007,24 +110396,24 @@
     },
     {
       "source": "tools_dev_surfaces",
+      "target": "tools_dev_surfaces_modeof",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L85",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_surfaces",
       "target": "tools_dev_surfaces_splitmanaged",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L84",
-      "weight": 1.0
-    },
-    {
-      "source": "tools_dev_surfaces",
-      "target": "tools_dev_surfaces_migratesources",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L92",
+      "source_location": "L94",
       "weight": 1.0
     },
     {
@@ -110040,13 +110429,24 @@
     },
     {
       "source": "tools_license_check_headers",
+      "target": "tools_license_check_headers_listfiles",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/license/check-headers.mjs",
+      "source_location": "L103",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_license_check_headers",
       "target": "tools_license_check_headers_main",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L104",
+      "source_location": "L115",
       "weight": 1.0
     },
     {
@@ -110095,24 +110495,24 @@
     },
     {
       "source": "tools_license_check_headers",
+      "target": "tools_license_check_headers_readifexists",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/license/check-headers.mjs",
+      "source_location": "L87",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_license_check_headers",
       "target": "tools_license_check_headers_walk",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L85",
-      "weight": 1.0
-    },
-    {
-      "source": "tools_license_check_headers",
-      "target": "tools_license_check_headers_listfiles",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "tools/license/check-headers.mjs",
-      "source_location": "L92",
+      "source_location": "L96",
       "weight": 1.0
     },
     {
@@ -111862,7 +112262,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "templates/tools/ai-docs/docgen.mjs",
-      "source_location": "L126",
+      "source_location": "L136",
       "weight": 1.0
     },
     {
@@ -111874,7 +112274,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L128",
+      "source_location": "L130",
       "weight": 1.0
     },
     {
@@ -111886,7 +112286,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L525",
+      "source_location": "L537",
       "weight": 1.0
     },
     {
@@ -111898,7 +112298,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L498",
+      "source_location": "L509",
       "weight": 1.0
     },
     {
@@ -111934,7 +112334,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "tools/ai-docs/docgen.mjs",
-      "source_location": "L126",
+      "source_location": "L136",
       "weight": 1.0
     },
     {
@@ -111946,7 +112346,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L128",
+      "source_location": "L130",
       "weight": 1.0
     },
     {
@@ -111958,7 +112358,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L525",
+      "source_location": "L537",
       "weight": 1.0
     },
     {
@@ -111970,7 +112370,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L498",
+      "source_location": "L509",
       "weight": 1.0
     },
     {
@@ -111982,7 +112382,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L369",
+      "source_location": "L380",
       "weight": 1.0
     },
     {
@@ -111994,7 +112394,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "templates/tools/dev/surfaces.mjs",
-      "source_location": "L369",
+      "source_location": "L380",
       "weight": 1.0
     },
     {
@@ -112006,7 +112406,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L369",
+      "source_location": "L380",
       "weight": 1.0
     },
     {
@@ -112018,7 +112418,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "tools/dev/surfaces.mjs",
-      "source_location": "L369",
+      "source_location": "L380",
       "weight": 1.0
     },
     {
