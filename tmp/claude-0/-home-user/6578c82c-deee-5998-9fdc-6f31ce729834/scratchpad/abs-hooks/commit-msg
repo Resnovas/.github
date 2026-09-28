@@ -1,0 +1,3 @@
+#!/bin/sh
+# house:commit-check - installed by tools/dev/surfaces.mjs install. Runs the house commit rules; see tools/dev/commit-check.mjs.
+exec node "$(git rev-parse --show-toplevel)/tools/dev/commit-check.mjs" "$1"
