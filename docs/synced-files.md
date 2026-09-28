@@ -110,7 +110,7 @@ They only call three package scripts every repository has (`setup`, `check` and 
 | `.agents/surfaces.jsonc` | Extendable | Orca, OpenChamber | The quick commands and project actions. Your own go in the `actions` list. |
 | `.agents/prompts/verify.md`, `review.md`, `address-review.md` | Whole file | Every agent host | Agent prompts: run the gate and fix failures; review the branch against the house rules; work through review comments. Add your own prompts as other files beside them. |
 | `.agents/mcp.jsonc` | Extendable | Every agent host | The MCP servers agents use (Mem0 gateway, the repository's Graphify graph, and Graphify Cloud with its memory). Your own go under `servers`. No credential is ever written: each host reads them from environment variables. |
-| `tools/dev/surfaces.mjs` | Whole file | You, and `setup` and `check` | `sync` writes the prompts to `.claude/commands` and `.cursor/commands`, and the MCP servers to `.mcp.json`, `.cursor/mcp.json`, `.vscode/mcp.json` and a block in `.codex/config.toml`. `check` fails when they are out of date. `install` registers the actions in Orca and OpenChamber, which keep them in per-user settings. |
+| `tools/dev/surfaces.mjs` | Whole file | You, and `setup` and `check` | `sync` writes the prompts to `.claude/commands` and `.cursor/commands`, the skills to `.claude/skills`, and the MCP servers to `.mcp.json`, `.cursor/mcp.json`, `.vscode/mcp.json` and a block in `.codex/config.toml`. `check` fails when they are out of date. `install` registers the actions in Orca and OpenChamber, which keep them in per-user settings. |
 | `tools/dev/open.mjs` | Whole file | The tasks | Opens a file in the default browser on any platform. |
 
 JSON files here are JSON with comments, so their markers are `//` lines, and a local entry may not reuse a synced `label`, `name` or `id`.
@@ -125,7 +125,7 @@ Building it uses local parsers only: no model, no network, no cost.
 | `tools/graphify/graphify` | Whole file | The wrapper: `setup` installs Graphify (with [uv](https://docs.astral.sh/uv/)) and the git hooks, `update` rebuilds the graph, `check` fails when it is stale, `query "<question>"` asks it. |
 | `graphify-out/.gitignore` | Whole file | Commits only the graph and the paid-for semantic cache. |
 | `graphify-out/.gitattributes` | Whole file | Marks the output as generated and merges `graph.json` with Graphify's own merge driver. |
-| `.agents/skills/graphify/SKILL.md`, `.claude/skills/graphify/SKILL.md` | Whole file | Teaches agents when and how to query the graph. |
+| `.agents/skills/graphify/` | Whole file | Teaches agents when and how to query the graph. `tools/dev/surfaces.mjs sync` mirrors every skill under `.agents/skills/` to `.claude/skills/`, so Claude Code reads the same copy. |
 | `.graphifyignore` | Extendable | See [Review bot configuration](#review-bots). |
 
 ## <a id="ai-docs"></a>AI docs

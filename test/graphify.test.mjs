@@ -8,8 +8,11 @@ import { fileURLToPath } from 'node:url'
 
 const templates = fileURLToPath(new URL('../templates/', import.meta.url))
 
-test('the Claude Code skill is the same as the .agents skill', () => {
-  const body = (path) => readFileSync(join(templates, path), 'utf8').replace(/^<!-- Synced from .*-->$/m, '')
+// surfaces.mjs sync mirrors .agents/skills to .claude/skills in the rendered
+// root, so Claude Code reads the same copy as every other host.
+test('the generated Claude Code skill is the same as the .agents skill', () => {
+  const root = join(templates, '..')
+  const body = (path) => readFileSync(join(root, path), 'utf8')
   assert.equal(body('.claude/skills/graphify/SKILL.md'), body('.agents/skills/graphify/SKILL.md'))
 })
 

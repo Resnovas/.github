@@ -158,10 +158,10 @@ Every step is idempotent: re-run it whenever a sync pull request changes a tools
 | Path | Host | What it gives you |
 | --- | --- | --- |
 | `.agents/prompts/*.md` | Every agent (the source) | Each slash command written once: the house `review`, `verify` and `address-review`, plus the repository's own. Edit prompts here only. |
-| `.agents/skills/` | Codex and other hosts that read `.agents/skills` | Repository skills, such as `graphify`. |
+| `.agents/skills/` | Every agent (the source) | Each skill once: the house skills, synced, and the repository's own beside them. `sync` mirrors the directory to `.claude/skills`. |
 | `.agents/mcp.jsonc` | Every MCP host (the source) | The MCP servers; see MCP servers below. |
 | `.agents/surfaces.jsonc` | Orca and OpenChamber | The action list: the synced `house` actions (setup, check, test, graph) and the repository's own `actions`. |
-| `CLAUDE.md`, `.mcp.json`, `.claude/commands/`, `.claude/skills/` | Claude Code | `CLAUDE.md` imports this file; `.mcp.json` and the commands are generated from `.agents` (`/review`, `/verify`, ...); `graphify` is the skill. `.claude/settings.local.json` is per-user and not committed. |
+| `CLAUDE.md`, `.mcp.json`, `.claude/commands/`, `.claude/skills/` | Claude Code | `CLAUDE.md` imports this file; `.mcp.json`, the commands (`/review`, `/verify`, ...) and the skills are generated from `.agents`. `.claude/settings.local.json` is per-user and not committed. |
 | `.codex/environments/environment.toml`, `.codex/config.toml` | Codex | The environment runs `node --run setup` when Codex desktop creates the local environment and adds Check, Test and code graph actions (Codex cloud does not read it). `config.toml` holds the generated MCP servers; Codex loads it once the project is trusted. |
 | `.cursor/commands/`, `.cursor/mcp.json` | Cursor | The same commands and MCP servers, generated from `.agents`. Cursor also reads `.vscode/`. |
 | `.vscode/tasks.json`, `.vscode/launch.json`, `.vscode/mcp.json` | VS Code and Cursor | Tasks: setup, check, test, graph open/update/check, agents sync/install, plus the repository's own. Launch configs debug the current file and a dry-run surfaces install, plus the repository's own. `mcp.json` is generated from `.agents/mcp.jsonc`. |
@@ -192,7 +192,7 @@ No config holds a credential. Take the values from Proton Pass (AI Agents Vault)
 ### Changing a toolset
 
 - Synced files carry a `house:managed` block. Put repository-specific tasks, actions, debug configurations and Orca settings after the `house:local` line; never edit inside the managed block. The managed content comes from `templates/` in `Resnovas/.github`; change it there (its `change-template` command) and the next sync pull request carries it here.
-- `.claude/commands/`, `.cursor/commands/` and the MCP configs are generated. Edit `.agents/prompts/` or `.agents/mcp.jsonc`, then run `node tools/dev/surfaces.mjs sync`; `check` fails while they are out of date.
+- `.claude/commands/`, `.claude/skills/`, `.cursor/commands/` and the MCP configs are generated. Edit `.agents/prompts/`, `.agents/skills/` or `.agents/mcp.jsonc`, then run `node tools/dev/surfaces.mjs sync`; `check` fails while they are out of date.
 - After changing `.agents/surfaces.jsonc`, re-run `node --run setup` so Orca and OpenChamber pick it up.
 
 ## Context7 (always)

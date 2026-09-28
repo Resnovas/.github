@@ -30,7 +30,7 @@
 // runtime token from Orca's own metadata file at run time and never stores it.
 
 import { execFileSync } from 'node:child_process'
-import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { chmodSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs'
 import { createConnection } from 'node:net'
 import { homedir } from 'node:os'
 import { dirname, join } from 'node:path'
@@ -214,6 +214,67 @@ const syncPrompts = (write) => {
       rmSync(directory, { recursive: true })
       const parent = dirname(directory)
       if (readdirSync(parent).length === 0) rmSync(parent, { recursive: true })
+    }
+  }
+  return stale
+}
+
+// --- Skills ------------------------------------------------------------------
+
+// `.agents/skills/<name>/` holds each skill once, the house ones synced and
+// the repository's own beside them; `sync` mirrors the whole directory to
+// `.claude/skills`, which this tool owns outright, so Claude Code reads the
+// same files as every other host.
+
+// Every file under a directory, as paths relative to it, in a stable order.
+const listFiles = (directory, prefix = '') =>
+  readdirSync(directory, { withFileTypes: true })
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .flatMap((entry) =>
+      entry.isDirectory()
+        ? listFiles(join(directory, entry.name), `${prefix}${entry.name}/`)
+        : [`${prefix}${entry.name}`],
+    )
+
+// Removes a directory once it is empty, and its empty parents up to `stop`.
+const pruneEmpty = (directory, stop) => {
+  let current = directory
+  while (current !== stop && existsSync(current) && readdirSync(current).length === 0) {
+    rmSync(current, { recursive: true })
+    current = dirname(current)
+  }
+}
+
+const skillTargets = ['.claude/skills']
+
+// Returns the files that differ from the skills in .agents/skills.
+const syncSkills = (write) => {
+  const source = join(root, '.agents/skills')
+  const files = existsSync(source) ? listFiles(source) : []
+  const stale = []
+  for (const target of skillTargets) {
+    const directory = join(root, target)
+    const present = existsSync(directory) ? listFiles(directory) : []
+    for (const file of present) {
+      if (files.includes(file)) continue
+      stale.push(`${target}/${file}`)
+      if (write) {
+        rmSync(join(directory, file))
+        pruneEmpty(dirname(join(directory, file)), root)
+      }
+    }
+    for (const file of files) {
+      const from = join(source, file)
+      const to = join(directory, file)
+      const content = readFileSync(from)
+      const mode = statSync(from).mode & 0o777
+      if (existsSync(to) && readFileSync(to).equals(content) && (statSync(to).mode & 0o777) === mode) continue
+      stale.push(`${target}/${file}`)
+      if (write) {
+        mkdirSync(dirname(to), { recursive: true })
+        writeFileSync(to, content)
+        chmodSync(to, mode)
+      }
     }
   }
   return stale
@@ -489,19 +550,31 @@ const installOpenChamber = () => {
 // --- Commands ----------------------------------------------------------------
 
 if (command === 'sync' || command === 'check') {
-  const stale = [...(command === 'sync' ? migrated : migrateSources(false)), ...syncPrompts(command === 'sync'), ...syncServers(command === 'sync')]
+  const stale = [
+    ...(command === 'sync' ? migrated : migrateSources(false)),
+    ...syncPrompts(command === 'sync'),
+    ...syncSkills(command === 'sync'),
+    ...syncServers(command === 'sync'),
+  ]
   if (command === 'check' && stale.length > 0) {
     console.error(
-      `Agent commands or MCP configs are out of date with .agents (run node tools/dev/surfaces.mjs sync):\n  ${stale.join('\n  ')}`,
+      `Agent commands, skills or MCP configs are out of date with .agents (run node tools/dev/surfaces.mjs sync):\n  ${stale.join('\n  ')}`,
     )
     process.exit(1)
   }
   console.log(
-    stale.length === 0 ? 'Agent commands and MCP configs are up to date.' : `Updated ${stale.length} agent command and MCP config files.`,
+    stale.length === 0
+      ? 'Agent commands, skills and MCP configs are up to date.'
+      : `Updated ${stale.length} agent command, skill and MCP config files.`,
   )
 } else if (command === 'install') {
-  if (migrateSources(false).length > 0 || syncPrompts(false).length > 0 || syncServers(false).length > 0) {
-    console.warn('Agent commands or MCP configs are out of date; run node tools/dev/surfaces.mjs sync.')
+  if (
+    migrateSources(false).length > 0 ||
+    syncPrompts(false).length > 0 ||
+    syncSkills(false).length > 0 ||
+    syncServers(false).length > 0
+  ) {
+    console.warn('Agent commands, skills or MCP configs are out of date; run node tools/dev/surfaces.mjs sync.')
   }
   const prompts = readPrompts()
   console.log(await installOrca(prompts))

@@ -3,7 +3,7 @@ name: graphify
 description: Query and maintain this repository's committed Graphify knowledge graph (graphify-out/graph.json). Use before broad code searches, when asked what depends on, calls or touches something, when orienting in an unfamiliar area, after changing code (to refresh the graph), and when graph.json conflicts in a merge.
 ---
 
-<!-- Synced from Resnovas/.github templates/.agents/skills/graphify/SKILL.md (this copy is for Claude Code). Edit it there. -->
+<!-- Synced from Resnovas/.github templates/.agents/skills/graphify/SKILL.md. Edit it there. -->
 
 # Graphify in this repository
 
