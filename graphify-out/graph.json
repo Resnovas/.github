@@ -4,6 +4,42 @@
   "graph": {},
   "nodes": [
     {
+      "id": "scripts_lib_render_listtemplates",
+      "label": "listTemplates()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "ai-docs.test.mjs",
+      "file_type": "code",
+      "norm_label": "listtemplates()",
+      "source_file": "scripts/lib/render.mjs",
+      "source_location": "L21"
+    },
+    {
+      "id": "scripts_lib_render_renderall",
+      "label": "renderAll()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "ai-docs.test.mjs",
+      "file_type": "code",
+      "norm_label": "renderall()",
+      "source_file": "scripts/lib/render.mjs",
+      "source_location": "L36"
+    },
+    {
+      "id": "scripts_lib_render_rendertext",
+      "label": "renderText()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "ai-docs.test.mjs",
+      "file_type": "code",
+      "norm_label": "rendertext()",
+      "source_file": "scripts/lib/render.mjs",
+      "source_location": "L13"
+    },
+    {
       "id": "test_ai_docs_test_docgen",
       "label": "docgen()",
       "_callable": true,
@@ -28,12 +64,24 @@
       "source_location": "L33"
     },
     {
+      "id": "test_ai_docs_test_rendered",
+      "label": "rendered()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "ai-docs.test.mjs",
+      "file_type": "code",
+      "norm_label": "rendered()",
+      "source_file": "test/ai-docs.test.mjs",
+      "source_location": "L15"
+    },
+    {
       "id": "test_actions_test_firstparty",
       "label": "firstParty()",
       "_callable": true,
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "ref_node_path",
       "file_type": "code",
       "norm_label": "firstparty()",
       "source_file": "test/actions.test.mjs",
@@ -45,79 +93,31 @@
       "_callable": true,
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "ref_node_path",
       "file_type": "code",
       "norm_label": "jobs()",
       "source_file": "test/workflows.test.mjs",
       "source_location": "L20"
     },
     {
-      "id": "test_ai_docs_test_rendered",
-      "label": "rendered()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 138,
-      "community_name": "rendered",
-      "file_type": "code",
-      "norm_label": "rendered()",
-      "source_file": "test/ai-docs.test.mjs",
-      "source_location": "L15"
-    },
-    {
       "id": "test_ai_docs_test_repository",
       "label": "repository()",
       "_callable": true,
       "_origin": "ast",
-      "community": 138,
-      "community_name": "rendered",
+      "community": 137,
+      "community_name": "Editor and tool surfaces",
       "file_type": "code",
       "norm_label": "repository()",
       "source_file": "test/ai-docs.test.mjs",
       "source_location": "L19"
     },
     {
-      "id": "scripts_lib_render_listtemplates",
-      "label": "listTemplates()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 40,
-      "community_name": "scripts/render.mjs",
-      "file_type": "code",
-      "norm_label": "listtemplates()",
-      "source_file": "scripts/lib/render.mjs",
-      "source_location": "L21"
-    },
-    {
-      "id": "scripts_lib_render_renderall",
-      "label": "renderAll()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 40,
-      "community_name": "scripts/render.mjs",
-      "file_type": "code",
-      "norm_label": "renderall()",
-      "source_file": "scripts/lib/render.mjs",
-      "source_location": "L36"
-    },
-    {
-      "id": "scripts_lib_render_rendertext",
-      "label": "renderText()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 40,
-      "community_name": "scripts/render.mjs",
-      "file_type": "code",
-      "norm_label": "rendertext()",
-      "source_file": "scripts/lib/render.mjs",
-      "source_location": "L13"
-    },
-    {
       "id": "scripts_lib_values_list",
       "label": "list()",
       "_callable": true,
       "_origin": "ast",
-      "community": 40,
-      "community_name": "scripts/render.mjs",
+      "community": 47,
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "list()",
       "source_file": "scripts/lib/values.mjs",
@@ -128,8 +128,8 @@
       "label": "loadValues()",
       "_callable": true,
       "_origin": "ast",
-      "community": 40,
-      "community_name": "scripts/render.mjs",
+      "community": 47,
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "loadvalues()",
       "source_file": "scripts/lib/values.mjs",
@@ -140,8 +140,8 @@
       "label": "parseValues()",
       "_callable": true,
       "_origin": "ast",
-      "community": 40,
-      "community_name": "scripts/render.mjs",
+      "community": 47,
+      "community_name": "values.test.mjs",
       "file_type": "code",
       "norm_label": "parsevalues()",
       "source_file": "scripts/lib/values.mjs",
@@ -904,6 +904,18 @@
       "source_location": "L584"
     },
     {
+      "id": "templates_tools_dev_surfaces_missingprojectsurfaces",
+      "label": "missingProjectSurfaces()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 61,
+      "community_name": "templates/tools/dev/surfaces.mjs",
+      "file_type": "code",
+      "norm_label": "missingprojectsurfaces()",
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L598"
+    },
+    {
       "id": "templates_tools_dev_surfaces_orcacall",
       "label": "orcaCall()",
       "_callable": true,
@@ -1384,6 +1396,18 @@
       "source_location": "L584"
     },
     {
+      "id": "tools_dev_surfaces_missingprojectsurfaces",
+      "label": "missingProjectSurfaces()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 62,
+      "community_name": "tools/dev/surfaces.mjs",
+      "file_type": "code",
+      "norm_label": "missingprojectsurfaces()",
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L598"
+    },
+    {
       "id": "tools_dev_surfaces_orcacall",
       "label": "orcaCall()",
       "_callable": true,
@@ -1564,26 +1588,15 @@
       "source_location": "L327"
     },
     {
-      "id": "templates_tools_dev_open",
-      "label": "templates/tools/dev/open.mjs",
+      "id": "scripts_lib_render",
+      "label": "lib/render.mjs",
       "_origin": "ast",
       "community": 0,
       "community_name": "ai-docs.test.mjs",
       "file_type": "code",
-      "norm_label": "templates/tools/dev/open.mjs",
-      "source_file": "templates/tools/dev/open.mjs",
+      "norm_label": "lib/render.mjs",
+      "source_file": "scripts/lib/render.mjs",
       "source_location": "L1"
-    },
-    {
-      "id": "templates_tools_dev_open_isurl",
-      "label": "isUrl",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "ai-docs.test.mjs",
-      "file_type": "code",
-      "norm_label": "isurl",
-      "source_file": "templates/tools/dev/open.mjs",
-      "source_location": "L19"
     },
     {
       "id": "test_ai_docs_test",
@@ -1652,26 +1665,64 @@
       "source_location": "L14"
     },
     {
-      "id": "tools_dev_open",
-      "label": "tools/dev/open.mjs",
+      "id": "ai_docs_src_10_overview_index",
+      "label": "10_overview/index.md",
       "_origin": "ast",
       "community": 0,
       "community_name": "ai-docs.test.mjs",
-      "file_type": "code",
-      "norm_label": "tools/dev/open.mjs",
-      "source_file": "tools/dev/open.mjs",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "10_overview/index.md",
+      "source_file": "ai-docs/src/10_overview/index.md",
       "source_location": "L1"
     },
     {
-      "id": "tools_dev_open_isurl",
-      "label": "isUrl",
+      "id": "ai_docs_src_10_overview_index_what_this_repository_is",
+      "label": "What this repository is",
       "_origin": "ast",
       "community": 0,
       "community_name": "ai-docs.test.mjs",
-      "file_type": "code",
-      "norm_label": "isurl",
-      "source_file": "tools/dev/open.mjs",
-      "source_location": "L19"
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "what this repository is",
+      "source_file": "ai-docs/src/10_overview/index.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_sync_a_id_source_a_in_this_repository",
+      "label": "<a id=\"source\"></a>In this repository",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "ai-docs.test.mjs",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"source\"></a>in this repository",
+      "source_file": "docs/sync.md",
+      "source_location": "L192"
+    },
+    {
+      "id": "docs_workflows_a_id_ci_a_this_repository_s_ci",
+      "label": "<a id=\"ci\"></a>This repository's CI",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "ai-docs.test.mjs",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"ci\"></a>this repository's ci",
+      "source_file": "docs/workflows.md",
+      "source_location": "L212"
+    },
+    {
+      "id": "llms_what_this_repository_is",
+      "label": "What this repository is",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "ai-docs.test.mjs",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "what this repository is",
+      "source_file": "LLMS.md",
+      "source_location": "L105"
     },
     {
       "id": "ai_policy_a_id_agents_a_autonomous_agents",
@@ -2226,11 +2277,33 @@
       "source_location": "L46"
     },
     {
+      "id": "templates_tools_dev_open",
+      "label": "templates/tools/dev/open.mjs",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "ref_node_path",
+      "file_type": "code",
+      "norm_label": "templates/tools/dev/open.mjs",
+      "source_file": "templates/tools/dev/open.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "templates_tools_dev_open_isurl",
+      "label": "isUrl",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "ref_node_path",
+      "file_type": "code",
+      "norm_label": "isurl",
+      "source_file": "templates/tools/dev/open.mjs",
+      "source_location": "L19"
+    },
+    {
       "id": "test_actions_test",
       "label": "actions.test.mjs",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "ref_node_path",
       "file_type": "code",
       "norm_label": "actions.test.mjs",
       "source_file": "test/actions.test.mjs",
@@ -2241,7 +2314,7 @@
       "label": "directories",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "ref_node_path",
       "file_type": "code",
       "norm_label": "directories",
       "source_file": "test/actions.test.mjs",
@@ -2252,18 +2325,29 @@
       "label": "lines",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "ref_node_path",
       "file_type": "code",
       "norm_label": "lines",
       "source_file": "test/actions.test.mjs",
       "source_location": "L17"
     },
     {
+      "id": "test_actions_test_references",
+      "label": "references",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "ref_node_path",
+      "file_type": "code",
+      "norm_label": "references",
+      "source_file": "test/actions.test.mjs",
+      "source_location": "L28"
+    },
+    {
       "id": "test_actions_test_root",
       "label": "root",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "ref_node_path",
       "file_type": "code",
       "norm_label": "root",
       "source_file": "test/actions.test.mjs",
@@ -2274,7 +2358,7 @@
       "label": "commit-check.test.mjs",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "ref_node_path",
       "file_type": "code",
       "norm_label": "commit-check.test.mjs",
       "source_file": "test/commit-check.test.mjs",
@@ -2285,7 +2369,7 @@
       "label": "human",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "ref_node_path",
       "file_type": "code",
       "norm_label": "human",
       "source_file": "test/commit-check.test.mjs",
@@ -2296,7 +2380,7 @@
       "label": "script",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "ref_node_path",
       "file_type": "code",
       "norm_label": "script",
       "source_file": "test/commit-check.test.mjs",
@@ -2307,7 +2391,7 @@
       "label": "graphify.test.mjs",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "ref_node_path",
       "file_type": "code",
       "norm_label": "graphify.test.mjs",
       "source_file": "test/graphify.test.mjs",
@@ -2318,7 +2402,7 @@
       "label": "templates",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "ref_node_path",
       "file_type": "code",
       "norm_label": "templates",
       "source_file": "test/graphify.test.mjs",
@@ -2329,7 +2413,7 @@
       "label": "workflows.test.mjs",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "ref_node_path",
       "file_type": "code",
       "norm_label": "workflows.test.mjs",
       "source_file": "test/workflows.test.mjs",
@@ -2340,7 +2424,7 @@
       "label": "directories",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "ref_node_path",
       "file_type": "code",
       "norm_label": "directories",
       "source_file": "test/workflows.test.mjs",
@@ -2351,7 +2435,7 @@
       "label": "root",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "ref_node_path",
       "file_type": "code",
       "norm_label": "root",
       "source_file": "test/workflows.test.mjs",
@@ -2362,7 +2446,7 @@
       "label": "ungated",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "ref_node_path",
       "file_type": "code",
       "norm_label": "ungated",
       "source_file": "test/workflows.test.mjs",
@@ -2373,11 +2457,33 @@
       "label": "workflows",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "ref_node_path",
       "file_type": "code",
       "norm_label": "workflows",
       "source_file": "test/workflows.test.mjs",
       "source_location": "L10"
+    },
+    {
+      "id": "tools_dev_open",
+      "label": "tools/dev/open.mjs",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "ref_node_path",
+      "file_type": "code",
+      "norm_label": "tools/dev/open.mjs",
+      "source_file": "tools/dev/open.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "tools_dev_open_isurl",
+      "label": "isUrl",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "ref_node_path",
+      "file_type": "code",
+      "norm_label": "isurl",
+      "source_file": "tools/dev/open.mjs",
+      "source_location": "L19"
     },
     {
       "id": "ai_docs_src_40_preset_index",
@@ -8279,6 +8385,18 @@
       "source_location": "L20"
     },
     {
+      "id": "agents_skills_project_dev_surfaces_references_editor_surfaces_the_surfaces_tool",
+      "label": "The surfaces tool",
+      "_origin": "ast",
+      "community": 137,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "the surfaces tool",
+      "source_file": ".agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L32"
+    },
+    {
       "id": "agents_skills_project_dev_surfaces_references_editor_surfaces_vs_code_and_cursor_vscode",
       "label": "VS Code and Cursor (`.vscode/`)",
       "_origin": "ast",
@@ -8303,47 +8421,107 @@
       "source_location": "L12"
     },
     {
-      "id": "agents_skills_project_dev_surfaces_references_editor_surfaces_the_surfaces_tool",
-      "label": "The surfaces tool",
+      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces",
+      "label": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
       "_origin": "ast",
-      "community": 138,
-      "community_name": "rendered",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "the surfaces tool",
-      "source_file": ".agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L32"
-    },
-    {
-      "id": "ai_docs_src_10_overview_index",
-      "label": "10_overview/index.md",
-      "_origin": "ast",
-      "community": 138,
-      "community_name": "rendered",
+      "community": 137,
+      "community_name": "Editor and tool surfaces",
       "file_type": "document",
       "node_kind": "page",
-      "norm_label": "10_overview/index.md",
-      "source_file": "ai-docs/src/10_overview/index.md",
+      "norm_label": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
       "source_location": "L1"
     },
     {
-      "id": "ai_docs_src_10_overview_index_what_this_repository_is",
-      "label": "What this repository is",
+      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_agent_prompts",
+      "label": "Agent prompts",
       "_origin": "ast",
-      "community": 138,
-      "community_name": "rendered",
+      "community": 137,
+      "community_name": "Editor and tool surfaces",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "what this repository is",
-      "source_file": "ai-docs/src/10_overview/index.md",
+      "norm_label": "agent prompts",
+      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L40"
+    },
+    {
+      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_codex_desktop_codex_environments_environment_toml",
+      "label": "Codex desktop (`.codex/environments/environment.toml`)",
+      "_origin": "ast",
+      "community": 137,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "codex desktop (`.codex/environments/environment.toml`)",
+      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L36"
+    },
+    {
+      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_editor_and_tool_surfaces",
+      "label": "Editor and tool surfaces",
+      "_origin": "ast",
+      "community": 137,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "editor and tool surfaces",
+      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
       "source_location": "L1"
+    },
+    {
+      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_jetbrains_run",
+      "label": "JetBrains (`.run/`)",
+      "_origin": "ast",
+      "community": 137,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "jetbrains (`.run/`)",
+      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L16"
+    },
+    {
+      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_odoo_projects",
+      "label": "Odoo projects",
+      "_origin": "ast",
+      "community": 137,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "odoo projects",
+      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L44"
+    },
+    {
+      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_openchamber",
+      "label": "OpenChamber",
+      "_origin": "ast",
+      "community": 137,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "openchamber",
+      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L28"
+    },
+    {
+      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_orca_orca_yaml",
+      "label": "Orca (`orca.yaml`)",
+      "_origin": "ast",
+      "community": 137,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "orca (`orca.yaml`)",
+      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L20"
     },
     {
       "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_the_surfaces_tool",
       "label": "The surfaces tool",
       "_origin": "ast",
-      "community": 138,
-      "community_name": "rendered",
+      "community": 137,
+      "community_name": "Editor and tool surfaces",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "the surfaces tool",
@@ -8351,52 +8529,244 @@
       "source_location": "L32"
     },
     {
-      "id": "docs_sync_a_id_source_a_in_this_repository",
-      "label": "<a id=\"source\"></a>In this repository",
+      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_vs_code_and_cursor_vscode",
+      "label": "VS Code and Cursor (`.vscode/`)",
       "_origin": "ast",
-      "community": 138,
-      "community_name": "rendered",
+      "community": 137,
+      "community_name": "Editor and tool surfaces",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "<a id=\"source\"></a>in this repository",
-      "source_file": "docs/sync.md",
-      "source_location": "L192"
+      "norm_label": "vs code and cursor (`.vscode/`)",
+      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L5"
     },
     {
-      "id": "docs_workflows_a_id_ci_a_this_repository_s_ci",
-      "label": "<a id=\"ci\"></a>This repository's CI",
+      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_zed_zed",
+      "label": "Zed (`.zed/`)",
       "_origin": "ast",
-      "community": 138,
-      "community_name": "rendered",
+      "community": 137,
+      "community_name": "Editor and tool surfaces",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "<a id=\"ci\"></a>this repository's ci",
-      "source_file": "docs/workflows.md",
-      "source_location": "L212"
+      "norm_label": "zed (`.zed/`)",
+      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L12"
     },
     {
-      "id": "llms_what_this_repository_is",
-      "label": "What this repository is",
+      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces",
+      "label": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
       "_origin": "ast",
-      "community": 138,
-      "community_name": "rendered",
+      "community": 137,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_agent_prompts",
+      "label": "Agent prompts",
+      "_origin": "ast",
+      "community": 137,
+      "community_name": "Editor and tool surfaces",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "what this repository is",
-      "source_file": "LLMS.md",
-      "source_location": "L105"
+      "norm_label": "agent prompts",
+      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L40"
+    },
+    {
+      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_codex_desktop_codex_environments_environment_toml",
+      "label": "Codex desktop (`.codex/environments/environment.toml`)",
+      "_origin": "ast",
+      "community": 137,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "codex desktop (`.codex/environments/environment.toml`)",
+      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L36"
+    },
+    {
+      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_editor_and_tool_surfaces",
+      "label": "Editor and tool surfaces",
+      "_origin": "ast",
+      "community": 137,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "editor and tool surfaces",
+      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_jetbrains_run",
+      "label": "JetBrains (`.run/`)",
+      "_origin": "ast",
+      "community": 137,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "jetbrains (`.run/`)",
+      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L16"
+    },
+    {
+      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_odoo_projects",
+      "label": "Odoo projects",
+      "_origin": "ast",
+      "community": 137,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "odoo projects",
+      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L44"
+    },
+    {
+      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_openchamber",
+      "label": "OpenChamber",
+      "_origin": "ast",
+      "community": 137,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "openchamber",
+      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L28"
+    },
+    {
+      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_orca_orca_yaml",
+      "label": "Orca (`orca.yaml`)",
+      "_origin": "ast",
+      "community": 137,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "orca (`orca.yaml`)",
+      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L20"
     },
     {
       "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_the_surfaces_tool",
       "label": "The surfaces tool",
       "_origin": "ast",
-      "community": 138,
-      "community_name": "rendered",
+      "community": 137,
+      "community_name": "Editor and tool surfaces",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "the surfaces tool",
       "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
       "source_location": "L32"
+    },
+    {
+      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_vs_code_and_cursor_vscode",
+      "label": "VS Code and Cursor (`.vscode/`)",
+      "_origin": "ast",
+      "community": 137,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "vs code and cursor (`.vscode/`)",
+      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_zed_zed",
+      "label": "Zed (`.zed/`)",
+      "_origin": "ast",
+      "community": 137,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "zed (`.zed/`)",
+      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L12"
+    },
+    {
+      "id": "agent_setup",
+      "label": "AGENT-SETUP.md",
+      "_origin": "ast",
+      "community": 138,
+      "community_name": "AGENT-SETUP",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "agent-setup.md",
+      "source_file": "AGENT-SETUP.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "agent_setup_agent_setup",
+      "label": "AGENT-SETUP",
+      "_origin": "ast",
+      "community": 138,
+      "community_name": "AGENT-SETUP",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "agent-setup",
+      "source_file": "AGENT-SETUP.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "agent_setup_breaks",
+      "label": "Breaks",
+      "_origin": "ast",
+      "community": 138,
+      "community_name": "AGENT-SETUP",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "breaks",
+      "source_file": "AGENT-SETUP.md",
+      "source_location": "L29"
+    },
+    {
+      "id": "agent_setup_env",
+      "label": "Env",
+      "_origin": "ast",
+      "community": 138,
+      "community_name": "AGENT-SETUP",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "env",
+      "source_file": "AGENT-SETUP.md",
+      "source_location": "L10"
+    },
+    {
+      "id": "agent_setup_needs",
+      "label": "Needs",
+      "_origin": "ast",
+      "community": 138,
+      "community_name": "AGENT-SETUP",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "needs",
+      "source_file": "AGENT-SETUP.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "agent_setup_run",
+      "label": "Run",
+      "_origin": "ast",
+      "community": 138,
+      "community_name": "AGENT-SETUP",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "run",
+      "source_file": "AGENT-SETUP.md",
+      "source_location": "L19"
+    },
+    {
+      "id": "agent_setup_setup",
+      "label": "Setup",
+      "_origin": "ast",
+      "community": 138,
+      "community_name": "AGENT-SETUP",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "setup",
+      "source_file": "AGENT-SETUP.md",
+      "source_location": "L14"
     },
     {
       "id": "claude_skills_coding_preferences_references_language",
@@ -8639,124 +9009,34 @@
       "source_location": "L49"
     },
     {
-      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces",
-      "label": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "id": "scripts_agent_setup",
+      "label": "agent-setup",
       "_origin": "ast",
       "community": 141,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "community_name": "agent-setup",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "norm_label": "agent-setup",
+      "source_file": "scripts/agent-setup",
       "source_location": "L1"
     },
     {
-      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_agent_prompts",
-      "label": "Agent prompts",
+      "id": "scripts_agent_setup__entry",
+      "label": "agent-setup script",
       "_origin": "ast",
       "community": 141,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "agent prompts",
-      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L40"
-    },
-    {
-      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_codex_desktop_codex_environments_environment_toml",
-      "label": "Codex desktop (`.codex/environments/environment.toml`)",
-      "_origin": "ast",
-      "community": 141,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "codex desktop (`.codex/environments/environment.toml`)",
-      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L36"
-    },
-    {
-      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_editor_and_tool_surfaces",
-      "label": "Editor and tool surfaces",
-      "_origin": "ast",
-      "community": 141,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "editor and tool surfaces",
-      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "community_name": "agent-setup",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "norm_label": "agent-setup script",
+      "source_file": "scripts/agent-setup",
       "source_location": "L1"
-    },
-    {
-      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_jetbrains_run",
-      "label": "JetBrains (`.run/`)",
-      "_origin": "ast",
-      "community": 141,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "jetbrains (`.run/`)",
-      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L16"
-    },
-    {
-      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_odoo_projects",
-      "label": "Odoo projects",
-      "_origin": "ast",
-      "community": 141,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "odoo projects",
-      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L44"
-    },
-    {
-      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_openchamber",
-      "label": "OpenChamber",
-      "_origin": "ast",
-      "community": 141,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "openchamber",
-      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L28"
-    },
-    {
-      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_orca_orca_yaml",
-      "label": "Orca (`orca.yaml`)",
-      "_origin": "ast",
-      "community": 141,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "orca (`orca.yaml`)",
-      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L20"
-    },
-    {
-      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_vs_code_and_cursor_vscode",
-      "label": "VS Code and Cursor (`.vscode/`)",
-      "_origin": "ast",
-      "community": 141,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "vs code and cursor (`.vscode/`)",
-      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L5"
-    },
-    {
-      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_zed_zed",
-      "label": "Zed (`.zed/`)",
-      "_origin": "ast",
-      "community": 141,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "zed (`.zed/`)",
-      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L12"
     },
     {
       "id": "templates_agents_skills_coding_preferences_references_language",
@@ -8997,126 +9277,6 @@
       "norm_label": "when this applies",
       "source_file": "templates/.agents/skills/coding-preferences/references/telemetry.md",
       "source_location": "L49"
-    },
-    {
-      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces",
-      "label": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "_origin": "ast",
-      "community": 144,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_agent_prompts",
-      "label": "Agent prompts",
-      "_origin": "ast",
-      "community": 144,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "agent prompts",
-      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L40"
-    },
-    {
-      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_codex_desktop_codex_environments_environment_toml",
-      "label": "Codex desktop (`.codex/environments/environment.toml`)",
-      "_origin": "ast",
-      "community": 144,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "codex desktop (`.codex/environments/environment.toml`)",
-      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L36"
-    },
-    {
-      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_editor_and_tool_surfaces",
-      "label": "Editor and tool surfaces",
-      "_origin": "ast",
-      "community": 144,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "editor and tool surfaces",
-      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_jetbrains_run",
-      "label": "JetBrains (`.run/`)",
-      "_origin": "ast",
-      "community": 144,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "jetbrains (`.run/`)",
-      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L16"
-    },
-    {
-      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_odoo_projects",
-      "label": "Odoo projects",
-      "_origin": "ast",
-      "community": 144,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "odoo projects",
-      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L44"
-    },
-    {
-      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_openchamber",
-      "label": "OpenChamber",
-      "_origin": "ast",
-      "community": 144,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "openchamber",
-      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L28"
-    },
-    {
-      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_orca_orca_yaml",
-      "label": "Orca (`orca.yaml`)",
-      "_origin": "ast",
-      "community": 144,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "orca (`orca.yaml`)",
-      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L20"
-    },
-    {
-      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_vs_code_and_cursor_vscode",
-      "label": "VS Code and Cursor (`.vscode/`)",
-      "_origin": "ast",
-      "community": 144,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "vs code and cursor (`.vscode/`)",
-      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L5"
-    },
-    {
-      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_zed_zed",
-      "label": "Zed (`.zed/`)",
-      "_origin": "ast",
-      "community": 144,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "zed (`.zed/`)",
-      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L12"
     },
     {
       "id": "agents_skills_apify_vendor_skill",
@@ -24457,7 +24617,7 @@
       "node_kind": "heading",
       "norm_label": "changing a toolset",
       "source_file": "AGENTS.md",
-      "source_location": "L121"
+      "source_location": "L129"
     },
     {
       "id": "agents_code_knowledge_and_memory_graphify",
@@ -24469,7 +24629,7 @@
       "node_kind": "heading",
       "norm_label": "code knowledge and memory (graphify)",
       "source_file": "AGENTS.md",
-      "source_location": "L131"
+      "source_location": "L139"
     },
     {
       "id": "agents_external_tools",
@@ -24481,7 +24641,7 @@
       "node_kind": "heading",
       "norm_label": "external tools",
       "source_file": "AGENTS.md",
-      "source_location": "L156"
+      "source_location": "L164"
     },
     {
       "id": "agents_final_message",
@@ -24493,7 +24653,7 @@
       "node_kind": "heading",
       "norm_label": "final message",
       "source_file": "AGENTS.md",
-      "source_location": "L205"
+      "source_location": "L213"
     },
     {
       "id": "agents_house_standards",
@@ -24505,7 +24665,7 @@
       "node_kind": "heading",
       "norm_label": "house standards",
       "source_file": "AGENTS.md",
-      "source_location": "L48"
+      "source_location": "L56"
     },
     {
       "id": "agents_how_orca_sets_itself_up",
@@ -24517,7 +24677,7 @@
       "node_kind": "heading",
       "norm_label": "how orca sets itself up",
       "source_file": "AGENTS.md",
-      "source_location": "L103"
+      "source_location": "L111"
     },
     {
       "id": "agents_issues_and_handoff",
@@ -24529,7 +24689,7 @@
       "node_kind": "heading",
       "norm_label": "issues and handoff",
       "source_file": "AGENTS.md",
-      "source_location": "L172"
+      "source_location": "L180"
     },
     {
       "id": "agents_mcp_servers",
@@ -24541,7 +24701,7 @@
       "node_kind": "heading",
       "norm_label": "mcp servers",
       "source_file": "AGENTS.md",
-      "source_location": "L109"
+      "source_location": "L117"
     },
     {
       "id": "agents_mission",
@@ -24565,7 +24725,7 @@
       "node_kind": "heading",
       "norm_label": "on a clean clone",
       "source_file": "AGENTS.md",
-      "source_location": "L75"
+      "source_location": "L83"
     },
     {
       "id": "agents_session_start",
@@ -24589,7 +24749,7 @@
       "node_kind": "heading",
       "norm_label": "source availability",
       "source_file": "AGENTS.md",
-      "source_location": "L127"
+      "source_location": "L135"
     },
     {
       "id": "agents_the_law",
@@ -24613,7 +24773,7 @@
       "node_kind": "heading",
       "norm_label": "the repository workspace",
       "source_file": "AGENTS.md",
-      "source_location": "L71"
+      "source_location": "L79"
     },
     {
       "id": "agents_this_repository",
@@ -24625,7 +24785,7 @@
       "node_kind": "heading",
       "norm_label": "this repository",
       "source_file": "AGENTS.md",
-      "source_location": "L211"
+      "source_location": "L219"
     },
     {
       "id": "agents_when_a_tool_is_unavailable",
@@ -24649,7 +24809,19 @@
       "node_kind": "heading",
       "norm_label": "when asked",
       "source_file": "AGENTS.md",
-      "source_location": "L198"
+      "source_location": "L206"
+    },
+    {
+      "id": "agents_when_the_task_and_a_rule_disagree",
+      "label": "When the task and a rule disagree",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "AGENTS.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "when the task and a rule disagree",
+      "source_file": "AGENTS.md",
+      "source_location": "L48"
     },
     {
       "id": "agents_which_toolset_each_host_reads",
@@ -24661,7 +24833,7 @@
       "node_kind": "heading",
       "norm_label": "which toolset each host reads",
       "source_file": "AGENTS.md",
-      "source_location": "L84"
+      "source_location": "L92"
     },
     {
       "id": "agents_workspace_defaults",
@@ -24673,7 +24845,7 @@
       "node_kind": "heading",
       "norm_label": "workspace defaults",
       "source_file": "AGENTS.md",
-      "source_location": "L183"
+      "source_location": "L191"
     },
     {
       "id": "claude",
@@ -31867,28 +32039,6 @@
       "source_location": "L115"
     },
     {
-      "id": "scripts_lib_render",
-      "label": "lib/render.mjs",
-      "_origin": "ast",
-      "community": 40,
-      "community_name": "scripts/render.mjs",
-      "file_type": "code",
-      "norm_label": "lib/render.mjs",
-      "source_file": "scripts/lib/render.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "scripts_lib_values",
-      "label": "values.mjs",
-      "_origin": "ast",
-      "community": 40,
-      "community_name": "scripts/render.mjs",
-      "file_type": "code",
-      "norm_label": "values.mjs",
-      "source_file": "scripts/lib/values.mjs",
-      "source_location": "L1"
-    },
-    {
       "id": "scripts_render",
       "label": "scripts/render.mjs",
       "_origin": "ast",
@@ -31964,17 +32114,6 @@
       "norm_label": "{ values: args }",
       "source_file": "scripts/render.mjs",
       "source_location": "L26"
-    },
-    {
-      "id": "test_render_test",
-      "label": "render.test.mjs",
-      "_origin": "ast",
-      "community": 40,
-      "community_name": "scripts/render.mjs",
-      "file_type": "code",
-      "norm_label": "render.test.mjs",
-      "source_file": "test/render.test.mjs",
-      "source_location": "L1"
     },
     {
       "id": "claude_skills_lean_build_skill",
@@ -40535,15 +40674,26 @@
       "source_location": "L1"
     },
     {
-      "id": "test_actions_test_references",
-      "label": "references",
+      "id": "scripts_lib_values",
+      "label": "values.mjs",
       "_origin": "ast",
       "community": 47,
       "community_name": "values.test.mjs",
       "file_type": "code",
-      "norm_label": "references",
-      "source_file": "test/actions.test.mjs",
-      "source_location": "L28"
+      "norm_label": "values.mjs",
+      "source_file": "scripts/lib/values.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "test_render_test",
+      "label": "render.test.mjs",
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "values.test.mjs",
+      "file_type": "code",
+      "norm_label": "render.test.mjs",
+      "source_file": "test/render.test.mjs",
+      "source_location": "L1"
     },
     {
       "id": "test_values_test",
@@ -51285,7 +51435,7 @@
       "node_kind": "heading",
       "norm_label": "changing a toolset",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L121"
+      "source_location": "L129"
     },
     {
       "id": "templates_agents_code_knowledge_and_memory_graphify",
@@ -51297,7 +51447,7 @@
       "node_kind": "heading",
       "norm_label": "code knowledge and memory (graphify)",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L131"
+      "source_location": "L139"
     },
     {
       "id": "templates_agents_external_tools",
@@ -51309,7 +51459,7 @@
       "node_kind": "heading",
       "norm_label": "external tools",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L156"
+      "source_location": "L164"
     },
     {
       "id": "templates_agents_final_message",
@@ -51321,7 +51471,7 @@
       "node_kind": "heading",
       "norm_label": "final message",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L205"
+      "source_location": "L213"
     },
     {
       "id": "templates_agents_house_standards",
@@ -51333,7 +51483,7 @@
       "node_kind": "heading",
       "norm_label": "house standards",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L48"
+      "source_location": "L56"
     },
     {
       "id": "templates_agents_how_orca_sets_itself_up",
@@ -51345,7 +51495,7 @@
       "node_kind": "heading",
       "norm_label": "how orca sets itself up",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L103"
+      "source_location": "L111"
     },
     {
       "id": "templates_agents_issues_and_handoff",
@@ -51357,7 +51507,7 @@
       "node_kind": "heading",
       "norm_label": "issues and handoff",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L172"
+      "source_location": "L180"
     },
     {
       "id": "templates_agents_mcp_servers",
@@ -51369,7 +51519,7 @@
       "node_kind": "heading",
       "norm_label": "mcp servers",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L109"
+      "source_location": "L117"
     },
     {
       "id": "templates_agents_mission",
@@ -51393,7 +51543,7 @@
       "node_kind": "heading",
       "norm_label": "on a clean clone",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L75"
+      "source_location": "L83"
     },
     {
       "id": "templates_agents_session_start",
@@ -51417,7 +51567,7 @@
       "node_kind": "heading",
       "norm_label": "source availability",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L127"
+      "source_location": "L135"
     },
     {
       "id": "templates_agents_the_law",
@@ -51441,7 +51591,7 @@
       "node_kind": "heading",
       "norm_label": "the repository workspace",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L71"
+      "source_location": "L79"
     },
     {
       "id": "templates_agents_when_a_tool_is_unavailable",
@@ -51465,7 +51615,19 @@
       "node_kind": "heading",
       "norm_label": "when asked",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L198"
+      "source_location": "L206"
+    },
+    {
+      "id": "templates_agents_when_the_task_and_a_rule_disagree",
+      "label": "When the task and a rule disagree",
+      "_origin": "ast",
+      "community": 71,
+      "community_name": "templates/AGENTS.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "when the task and a rule disagree",
+      "source_file": "templates/AGENTS.md",
+      "source_location": "L48"
     },
     {
       "id": "templates_agents_which_toolset_each_host_reads",
@@ -51477,7 +51639,7 @@
       "node_kind": "heading",
       "norm_label": "which toolset each host reads",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L84"
+      "source_location": "L92"
     },
     {
       "id": "templates_agents_workspace_defaults",
@@ -51489,7 +51651,7 @@
       "node_kind": "heading",
       "norm_label": "workspace defaults",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L183"
+      "source_location": "L191"
     },
     {
       "id": "templates_claude",
@@ -58284,38 +58446,26 @@
       "source_url": null
     },
     {
-      "id": "ref_node_child_process",
-      "label": "ref_node_child_process",
-      "_origin": "semantic",
-      "community": 0,
-      "community_name": "ai-docs.test.mjs",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "ref_node_child_process",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "ref_node_path",
-      "label": "ref_node_path",
-      "_origin": "semantic",
-      "community": 0,
-      "community_name": "ai-docs.test.mjs",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "ref_node_path",
-      "source_file": "",
-      "type": "external"
-    },
-    {
       "id": "ref_node_assert",
       "label": "ref_node_assert",
       "_origin": "semantic",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "ref_node_path",
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_node_assert",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "ref_node_child_process",
+      "label": "ref_node_child_process",
+      "_origin": "semantic",
+      "community": 10,
+      "community_name": "ref_node_path",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_node_child_process",
       "source_file": "",
       "type": "external"
     },
@@ -58324,10 +58474,22 @@
       "label": "ref_node_os",
       "_origin": "semantic",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "ref_node_path",
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_node_os",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "ref_node_path",
+      "label": "ref_node_path",
+      "_origin": "semantic",
+      "community": 10,
+      "community_name": "ref_node_path",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_node_path",
       "source_file": "",
       "type": "external"
     },
@@ -58336,7 +58498,7 @@
       "label": "ref_node_test",
       "_origin": "semantic",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "ref_node_path",
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_node_test",
@@ -58348,22 +58510,10 @@
       "label": "ref_node_url",
       "_origin": "semantic",
       "community": 10,
-      "community_name": "ref_node_url",
+      "community_name": "ref_node_path",
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_node_url",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "ref_node_fs",
-      "label": "ref_node_fs",
-      "_origin": "semantic",
-      "community": 40,
-      "community_name": "scripts/render.mjs",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "ref_node_fs",
       "source_file": "",
       "type": "external"
     },
@@ -58380,11 +58530,23 @@
       "type": "external"
     },
     {
+      "id": "ref_node_fs",
+      "label": "ref_node_fs",
+      "_origin": "semantic",
+      "community": 47,
+      "community_name": "values.test.mjs",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_node_fs",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "ref_node_crypto",
       "label": "ref_node_crypto",
       "_origin": "semantic",
-      "community": 62,
-      "community_name": "tools/dev/surfaces.mjs",
+      "community": 61,
+      "community_name": "templates/tools/dev/surfaces.mjs",
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_node_crypto",
@@ -62307,6 +62469,72 @@
       "weight": 1.0
     },
     {
+      "source": "agent_setup",
+      "target": "agent_setup_agent_setup",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENT-SETUP.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_setup_agent_setup",
+      "target": "agent_setup_env",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENT-SETUP.md",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_setup_agent_setup",
+      "target": "agent_setup_setup",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENT-SETUP.md",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_setup_agent_setup",
+      "target": "agent_setup_run",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENT-SETUP.md",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_setup_agent_setup",
+      "target": "agent_setup_breaks",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENT-SETUP.md",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "agent_setup_agent_setup",
+      "target": "agent_setup_needs",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENT-SETUP.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
       "source": "agents",
       "target": "agents_session_start",
       "relation": "contains",
@@ -62325,7 +62553,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L131",
+      "source_location": "L139",
       "weight": 1.0
     },
     {
@@ -62336,18 +62564,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L156",
-      "weight": 1.0
-    },
-    {
-      "source": "agents",
-      "target": "agents_issues_and_handoff",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "AGENTS.md",
-      "source_location": "L172",
+      "source_location": "L164",
       "weight": 1.0
     },
     {
@@ -62363,24 +62580,24 @@
     },
     {
       "source": "agents",
+      "target": "agents_issues_and_handoff",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "L180",
+      "weight": 1.0
+    },
+    {
+      "source": "agents",
       "target": "agents_workspace_defaults",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L183",
-      "weight": 1.0
-    },
-    {
-      "source": "agents",
-      "target": "agents_when_asked",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "AGENTS.md",
-      "source_location": "L198",
+      "source_location": "L191",
       "weight": 1.0
     },
     {
@@ -62396,13 +62613,24 @@
     },
     {
       "source": "agents",
+      "target": "agents_when_asked",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "L206",
+      "weight": 1.0
+    },
+    {
+      "source": "agents",
       "target": "agents_final_message",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L205",
+      "source_location": "L213",
       "weight": 1.0
     },
     {
@@ -62413,7 +62641,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L211",
+      "source_location": "L219",
       "weight": 1.0
     },
     {
@@ -62440,13 +62668,24 @@
     },
     {
       "source": "agents",
-      "target": "agents_house_standards",
+      "target": "agents_when_the_task_and_a_rule_disagree",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
       "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "agents",
+      "target": "agents_house_standards",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "L56",
       "weight": 1.0
     },
     {
@@ -62468,7 +62707,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L71",
+      "source_location": "L79",
       "weight": 1.0
     },
     {
@@ -73424,7 +73663,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L103",
+      "source_location": "L111",
       "weight": 1.0
     },
     {
@@ -73435,7 +73674,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L109",
+      "source_location": "L117",
       "weight": 1.0
     },
     {
@@ -73446,7 +73685,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L121",
+      "source_location": "L129",
       "weight": 1.0
     },
     {
@@ -73457,7 +73696,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L127",
+      "source_location": "L135",
       "weight": 1.0
     },
     {
@@ -73468,7 +73707,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L75",
+      "source_location": "L83",
       "weight": 1.0
     },
     {
@@ -73479,7 +73718,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L84",
+      "source_location": "L92",
       "weight": 1.0
     },
     {
@@ -87640,6 +87879,17 @@
       "weight": 1.0
     },
     {
+      "source": "scripts_agent_setup",
+      "target": "scripts_agent_setup__entry",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/agent-setup",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
       "source": "scripts_lib_managed",
       "target": "scripts_lib_managed_tomltables",
       "relation": "contains",
@@ -92201,7 +92451,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L131",
+      "source_location": "L139",
       "weight": 1.0
     },
     {
@@ -92212,18 +92462,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L156",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_agents",
-      "target": "templates_agents_issues_and_handoff",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/AGENTS.md",
-      "source_location": "L172",
+      "source_location": "L164",
       "weight": 1.0
     },
     {
@@ -92239,24 +92478,24 @@
     },
     {
       "source": "templates_agents",
+      "target": "templates_agents_issues_and_handoff",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/AGENTS.md",
+      "source_location": "L180",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_agents",
       "target": "templates_agents_workspace_defaults",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L183",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_agents",
-      "target": "templates_agents_when_asked",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/AGENTS.md",
-      "source_location": "L198",
+      "source_location": "L191",
       "weight": 1.0
     },
     {
@@ -92272,13 +92511,24 @@
     },
     {
       "source": "templates_agents",
+      "target": "templates_agents_when_asked",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/AGENTS.md",
+      "source_location": "L206",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_agents",
       "target": "templates_agents_final_message",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L205",
+      "source_location": "L213",
       "weight": 1.0
     },
     {
@@ -92305,13 +92555,24 @@
     },
     {
       "source": "templates_agents",
-      "target": "templates_agents_house_standards",
+      "target": "templates_agents_when_the_task_and_a_rule_disagree",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
       "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_agents",
+      "target": "templates_agents_house_standards",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/AGENTS.md",
+      "source_location": "L56",
       "weight": 1.0
     },
     {
@@ -92333,7 +92594,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L71",
+      "source_location": "L79",
       "weight": 1.0
     },
     {
@@ -103289,7 +103550,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L103",
+      "source_location": "L111",
       "weight": 1.0
     },
     {
@@ -103300,7 +103561,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L109",
+      "source_location": "L117",
       "weight": 1.0
     },
     {
@@ -103311,7 +103572,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L121",
+      "source_location": "L129",
       "weight": 1.0
     },
     {
@@ -103322,7 +103583,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L127",
+      "source_location": "L135",
       "weight": 1.0
     },
     {
@@ -103333,7 +103594,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L75",
+      "source_location": "L83",
       "weight": 1.0
     },
     {
@@ -103344,7 +103605,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L84",
+      "source_location": "L92",
       "weight": 1.0
     },
     {
@@ -105593,6 +105854,17 @@
     },
     {
       "source": "templates_tools_dev_surfaces",
+      "target": "templates_tools_dev_surfaces_missingprojectsurfaces",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/tools/dev/surfaces.mjs",
+      "source_location": "L598",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_surfaces",
       "target": "templates_tools_dev_surfaces_command_flags",
       "relation": "contains",
       "_origin": "ast",
@@ -106535,6 +106807,17 @@
       "confidence_score": 1.0,
       "source_file": "tools/dev/surfaces.mjs",
       "source_location": "L584",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_surfaces",
+      "target": "tools_dev_surfaces_missingprojectsurfaces",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/dev/surfaces.mjs",
+      "source_location": "L598",
       "weight": 1.0
     },
     {
@@ -108957,5 +109240,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "b06247c563489e41875d5594edece5b8e5bfefb8"
+  "built_at_commit": "b2633e980c94cf50744dc2583b121b14cc8806bf"
 }
