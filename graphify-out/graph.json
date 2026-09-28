@@ -3238,7 +3238,7 @@
       "node_kind": "heading",
       "norm_label": "external tools",
       "source_file": "AGENTS.md",
-      "source_location": "L158"
+      "source_location": "L156"
     },
     {
       "id": "agents_final_message",
@@ -3250,7 +3250,7 @@
       "node_kind": "heading",
       "norm_label": "final message",
       "source_file": "AGENTS.md",
-      "source_location": "L213"
+      "source_location": "L205"
     },
     {
       "id": "agents_house_standards",
@@ -3286,7 +3286,7 @@
       "node_kind": "heading",
       "norm_label": "issues and handoff",
       "source_file": "AGENTS.md",
-      "source_location": "L176"
+      "source_location": "L172"
     },
     {
       "id": "agents_mcp_servers",
@@ -3382,7 +3382,7 @@
       "node_kind": "heading",
       "norm_label": "this repository",
       "source_file": "AGENTS.md",
-      "source_location": "L219"
+      "source_location": "L211"
     },
     {
       "id": "agents_when_a_tool_is_unavailable",
@@ -3406,7 +3406,7 @@
       "node_kind": "heading",
       "norm_label": "when asked",
       "source_file": "AGENTS.md",
-      "source_location": "L203"
+      "source_location": "L198"
     },
     {
       "id": "agents_which_toolset_each_host_reads",
@@ -3430,7 +3430,7 @@
       "node_kind": "heading",
       "norm_label": "workspace defaults",
       "source_file": "AGENTS.md",
-      "source_location": "L187"
+      "source_location": "L183"
     },
     {
       "id": "claude",
@@ -7510,7 +7510,7 @@
       "node_kind": "heading",
       "norm_label": "external tools",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L158"
+      "source_location": "L156"
     },
     {
       "id": "templates_agents_final_message",
@@ -7522,7 +7522,7 @@
       "node_kind": "heading",
       "norm_label": "final message",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L213"
+      "source_location": "L205"
     },
     {
       "id": "templates_agents_house_standards",
@@ -7558,7 +7558,7 @@
       "node_kind": "heading",
       "norm_label": "issues and handoff",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L176"
+      "source_location": "L172"
     },
     {
       "id": "templates_agents_mcp_servers",
@@ -7666,7 +7666,7 @@
       "node_kind": "heading",
       "norm_label": "when asked",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L203"
+      "source_location": "L198"
     },
     {
       "id": "templates_agents_which_toolset_each_host_reads",
@@ -7690,7 +7690,7 @@
       "node_kind": "heading",
       "norm_label": "workspace defaults",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L187"
+      "source_location": "L183"
     },
     {
       "id": "templates_claude",
@@ -15258,7 +15258,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L158",
+      "source_location": "L156",
       "weight": 1.0
     },
     {
@@ -15269,7 +15269,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L176",
+      "source_location": "L172",
       "weight": 1.0
     },
     {
@@ -15291,7 +15291,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L187",
+      "source_location": "L183",
+      "weight": 1.0
+    },
+    {
+      "source": "agents",
+      "target": "agents_when_asked",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "L198",
       "weight": 1.0
     },
     {
@@ -15307,24 +15318,13 @@
     },
     {
       "source": "agents",
-      "target": "agents_when_asked",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "AGENTS.md",
-      "source_location": "L203",
-      "weight": 1.0
-    },
-    {
-      "source": "agents",
       "target": "agents_final_message",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L213",
+      "source_location": "L205",
       "weight": 1.0
     },
     {
@@ -15335,7 +15335,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L219",
+      "source_location": "L211",
       "weight": 1.0
     },
     {
@@ -19251,7 +19251,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L158",
+      "source_location": "L156",
       "weight": 1.0
     },
     {
@@ -19262,7 +19262,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L176",
+      "source_location": "L172",
       "weight": 1.0
     },
     {
@@ -19284,7 +19284,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L187",
+      "source_location": "L183",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_agents",
+      "target": "templates_agents_when_asked",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/AGENTS.md",
+      "source_location": "L198",
       "weight": 1.0
     },
     {
@@ -19300,24 +19311,13 @@
     },
     {
       "source": "templates_agents",
-      "target": "templates_agents_when_asked",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/AGENTS.md",
-      "source_location": "L203",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_agents",
       "target": "templates_agents_final_message",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L213",
+      "source_location": "L205",
       "weight": 1.0
     },
     {
@@ -25081,5 +25081,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "cba0357cd5abbc0a15b6cc9d0af4d2c67f9f91cb"
+  "built_at_commit": "6796ad3c1b58ae84de635530bfa5367e6f09ad11"
 }
