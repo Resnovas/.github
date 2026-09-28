@@ -264,6 +264,18 @@ settings:
     createPullRequests: true
     accessLevel: organization
 
+# Dependency updates merge themselves once the required checks pass: a
+# Dependabot or Renovate patch or minor update gets GitHub auto-merge turned
+# on, and the merge queue lands it. Major updates wait for a person. A
+# repository adds its own rules under autoMerge.rules with keys of its own.
+autoMerge:
+  rules:
+    dependency-updates:
+      when:
+        condition:
+          - type: dependencyUpdateType
+            condition: [patch, minor]
+
 # One aggregate check: on pull requests, the smartcloud job waits for every
 # other check on the head commit and fails if any of them fails, so the
 # ruleset requires the smartcloud check alone instead of a list of names.

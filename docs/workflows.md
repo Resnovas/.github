@@ -32,8 +32,8 @@ On a push to the default branch, weekly and by hand, it syncs the labels, applie
 In the merge queue the job is skipped, which GitHub counts as passing: the pull request was already checked.
 A newer run for the same pull request, issue or branch cancels the older one.
 
-**Access.** It mints a short-lived Resnovas Bot token that reaches only the repository and `Resnovas/.github` (see [Access](access.md)).
-Forks and Dependabot get no token, so smartcloud runs restricted: it skips the preset, settings and sync, and lists what it skipped in the job summary.
+**Access.** It uses three tokens, each for its own job (see [Access](access.md#tokens)): the workflow token for checks, comments and labels; a read-only Resnovas Bot token for reading the preset and templates in `Resnovas/.github`; and, only on pushes, the weekly run and manual runs, a full Resnovas Bot token that reaches only the repository, for settings and sync.
+Forks and Dependabot get no app token, so smartcloud runs restricted: it skips the preset, settings and sync, and lists what it skipped in the job summary.
 
 **What you will see.**
 
@@ -58,7 +58,16 @@ GitHub allows 50 re-runs of one run; after that, push a commit.
 ## <a id="codeql"></a>CodeQL
 
 **What it does.** Finds security problems in the code with [CodeQL](https://codeql.github.com/).
-A first job maps the repository's languages to CodeQL's (C and C++, C#, Go, Java and Kotlin, JavaScript and TypeScript, Python, Ruby, Rust), always adding `actions` for the workflows; a second job analyses each with the `security-extended` queries.
+A first job works out which languages to scan, and a second job analyses each with the `security-extended` queries.
+The languages are CodeQL's (C and C++, C#, Go, Java and Kotlin, JavaScript and TypeScript, Python, Ruby, Rust), taken from two places:
+
+- the languages GitHub lists for the repository, which describe the default branch;
+- on a pull request or merge queue entry, the languages of the files it adds or changes, by file extension.
+
+So a pull request that brings the repository's first Python file is scanned for Python before it merges, not only after.
+Files under `externals/`, `vendor/`, `node_modules/` and `dist/` do not add a language, because a language with nothing left to analyse would fail its job.
+`actions` is always scanned, for the workflows themselves.
+If the list of changed files cannot be read, the job warns "Could not list the changed files" and scans the repository's languages only.
 
 **When it runs.** Pull requests, the merge queue, pushes to `main`, Mondays at 04:27 UTC, and by hand.
 
@@ -166,8 +175,18 @@ In a repository without `tools/graphify/graphify` both do nothing.
 | `private-key` | secret | no | The app's private key (`RESNOVAS_BOT_PRIVATE_KEY`). The synced caller passes it only outside pull requests. Without it, the workflow token opens the pull request. |
 | `token` | secret | no | Deprecated. A fallback for callers not yet synced. Pass `private-key` instead. |
 
-**What you will see.** On pull requests, a `check` job and, when the graph is behind, a notice "Graphify graph is behind the code".
-On the default branch, a pull request titled `chore(graphify): refresh the code graph` from the `house/graphify` branch, labelled `house-sync`.
+**What you will see.** On pull requests, a `check` job that always passes, and a `refresh (default branch only)` job shown as skipped, because it only runs after merge.
+When the graph is behind, `check` adds a notice "Graphify graph is behind the code (no action needed)" and the same explanation in the job summary, with the counts of nodes and edges that differ.
+You do not need to do anything: after the pull request merges, `refresh` runs on the default branch and opens a pull request titled `chore(graphify): refresh the code graph` from the `house/graphify` branch, labelled `house-sync`.
+If you would rather ship the rebuilt graph in your own pull request, run `sh tools/graphify/graphify update` and commit `graphify-out/`.
+
+**Common problems.**
+
+| You see | Why | What to do |
+| --- | --- | --- |
+| "Graphify graph is behind the code" on a pull request, and `refresh` skipped | Expected: the graph is refreshed after merge, not on pull requests. | Nothing, or update and commit the graph yourself. |
+| No refresh pull request after a merge | The graph already matched the code, or the default branch has no `tools/graphify/graphify`. | Check the `refresh` job's log on the default branch. |
+| The refresh pull request conflicts | The default branch moved again before it merged. | Close it; the next push to the default branch opens a fresh one. |
 
 ## <a id="attest"></a>Attest (for release workflows)
 

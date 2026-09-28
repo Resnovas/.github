@@ -97,3 +97,12 @@ Give the config inline, turn telemetry off and grant only read scopes, so it run
 The runner sets `GITHUB_EVENT_NAME`, `GITHUB_EVENT_PATH` and `GITHUB_STEP_SUMMARY` for an action over the step's `env`, so point them at the recording from a small preload in `NODE_OPTIONS` (`--import=<preload>`) that fails when its inputs are missing.
 Run the check step with `if: ${{ !cancelled() }}` and add the job to the aggregate job's `needs`.
 smartcloud does this in its `smoke` job, with everything in `tools/ci/smoke`.
+
+## <a id="release-preview"></a>Release preview
+
+A repository that releases from conventional commits shows each pull request the release it would lead to: the next version, the bump its own commit calls for and the release notes, in the job summary and in one comment that each run updates (find it by a hidden marker on its first line).
+Preview the commit that would land, not the branch: with squash merges, that is the pull request's title with its number over its commits' messages, so rebuild it on the merge commit's tree before asking the release tool for a dry run, with full history and tags (`fetch-depth: 0`).
+Keep it in its own workflow on `pull_request` (`opened`, `synchronize`, `reopened`, and `edited` when the title or base changed), so a rename updates the preview without rerunning CI. It reports rather than checks, so it needs no `merge_group` and stays out of the aggregate job's `needs`.
+It never fails a pull request: turn a preview error into a warning, and set `continue-on-error` on its jobs.
+Run the release tool with only `contents: read`, and post the comment from a second job with only `pull-requests: write` that checks out and runs nothing, taking the report from the first job's output. Skip that job for forks and Dependabot, whose token cannot write; they get the job summary.
+smartcloud does this in `.github/workflows/release-preview.yml` with `tools/release/release-preview.ts`.

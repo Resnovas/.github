@@ -96,6 +96,10 @@ with them. The sections after this one describe this repository itself.
   line (house skill `commits-and-rd-evidence`). `tools/dev/commit-check.mjs`,
   installed as the commit-msg hook by setup, refuses a commit that breaks
   these rules.
+- A pull request an agent opens is a draft (`AI_POLICY.md` AI-20) and states
+  `AI level: autonomous` and every tool and model used (AI-01); the
+  accountable human fills in `Accountable human` and `Human review` when
+  marking it ready (AI-21). No "Generated with" footer or session link.
 - One pull request per batch of work: one stacked branch per issue, each
   squashed to one conventional, signed-off commit naming its issue, all opened
   as a single pull request. Once a maintainer approves it, it lands as an owner
@@ -212,6 +216,25 @@ A new synced file needs three things besides the template itself: an entry in
 `templates/.prettierignore` if Prettier can format it (a test fails otherwise),
 a row in `docs/synced-files.md`, and a render so the root copy exists.
 
+## Issue forms
+
+`templates/.github/ISSUE_TEMPLATE/` holds one form per kind of issue, matching
+the Linear issue templates so an issue reads the same on either tracker:
+
+| Form | Title prefix | Label | Linear template |
+| --- | --- | --- | --- |
+| `bug_report.yml` | `fix: ` | `bug` | Bug report |
+| `feature_request.yml` | `feat: ` | `enhancement` | General |
+| `documentation.yml` | `docs: ` | `documentation` | Documentation review |
+| `performance.yml` | `perf: ` | `performance` | Bug report (measured) |
+
+Every form ends with the same three required fields, in this order:
+`duplicates`, `ai-level` (a dropdown of the AI policy levels) and `ai-tools`,
+because smartcloud's disclosure check and AI-01 read them. `config.yml` turns
+off blank issues, so a new kind of issue needs a new form. Keep field ids
+stable: a downstream repository adds its own fields after `house:local`, and
+`managedConflicts` rejects a local field that reuses a managed id.
+
 ---
 
 ## How the sync reaches other repositories
@@ -228,8 +251,23 @@ from the `house/sync` branch.
 - A repository skips a template with `sync.exclude` in its
   `.github/smartcloud.yml`; an excluded template needs no values.
 - The sync runs on `schedule` (Mondays 07:00 UTC), `workflow_dispatch` and
-  `push` to `main`, with the Resnovas Bot app token. Restricted runs (forks,
-  Dependabot, only the workflow token) skip it.
+  `push` to `main`, with the Resnovas Bot app token, which the synced workflow
+  mints only for those events (and for a merged pull request's `closed`
+  event, for backports, whose pull requests must start CI) and scopes to the
+  repository alone. The
+  templates are read with a separate read-only token (`houseToken`,
+  `permission-contents: read` on `.github`), so the app token never needs
+  `Resnovas/.github`. Restricted runs (forks, Dependabot, only the workflow
+  token) skip the sync; a pull request run with the house token still runs
+  the `SYNC` edit check below.
+- `Resnovas/.github` is public, so any token can read it; the read-only
+  house token exists so no privileged token touches it and its reads use
+  the app's rate limit.
+- Never widen the synced workflow's app token back to `.github` or mint it on
+  an open `pull_request` or `issue_comment` run: a pull request controls its own workflow file, and the
+  token split is what stops a leaf repository writing to this one. A new
+  smartcloud input must be optional, because repositories run the released
+  `v2`, which ignores inputs it does not know.
 - On pull requests, `sync.check: true` makes smartcloud flag edits to synced
   content (rule `SYNC`): a changed synced document or managed block, removed
   markers, a deleted synced file, or a local rule that redefines a synced one.
@@ -280,6 +318,7 @@ entries beyond `smartcloud`, `settings.ruleset.codeScanning.ESLint`,
 | `disclosure` | The AI disclosure in the pull request body; AI-assisted pull requests open as drafts. |
 | `reviews.gate` | Two maintainer approvals for an outside author, one for a maintainer; open while fewer than two maintainers are listed. |
 | `settings` | The repository baseline: merge options, features, security, the default branch ruleset with a squash merge queue, and Actions defaults. |
+| `autoMerge` | Rule `dependency-updates`: Dependabot and Renovate patch and minor updates get GitHub auto-merge; repositories add rules under their own keys. Needs `contents: write` on the synced workflow job. |
 | `required` | Turns on the aggregate check: the `smartcloud` job waits for every other check. |
 | `sync` | Where templates come from, the `house/sync` branch, the edit check and the placeholder values. |
 
@@ -287,6 +326,13 @@ When you change the preset, keep it valid against smartcloud's schema (the
 `yaml-language-server` line names it), and remember it applies to every
 repository on its next run. Changing a locked value can make a repository's
 own config, which restated the old value, fail; search the organisation first.
+
+`required.ignore` stays out of the preset on purpose: a list the preset set
+could not be extended, because presets are locked. Each house repository with
+review bots lists `^CodeRabbit` and `'^Cursor '` (quoted; the trailing space
+matters) under `required.ignore` after its `house:local` line, so bot checks
+never gate the aggregate and the Cursor approval agent cannot deadlock with it.
+Graphify is not ignored: its check is an AP-31 gate.
 
 ---
 
@@ -328,6 +374,19 @@ The synced callers also pass actionlint and zizmor (`.github/zizmor.yml` lets
 `Resnovas/*` follow a branch). Untrusted input reaches `run:` only through
 `env:`, and `actions/checkout` sets `persist-credentials: false` unless a later
 step pushes.
+
+Graphify's `check` job never fails a pull request: a graph one commit behind
+is expected, because `refresh` (named `refresh (default branch only)` so its
+skip on pull requests explains itself) rebuilds it after merge. When stale,
+`check` writes one notice and a job summary saying no action is needed; do not
+reintroduce the tool's "update, then commit" advice as the only guidance.
+
+CodeQL's `languages` job unions the repository's GitHub languages (default
+branch) with the extensions of the files a pull request or merge queue entry
+adds or changes (compare API, `base...head`), skipping `externals/`,
+`vendor/`, `node_modules/` and `dist/`, and always adds `actions`. A failed
+comparison warns and falls back to the repository languages; never let it fail
+the scan. Keep the extension map in step with the language map above it.
 
 ---
 

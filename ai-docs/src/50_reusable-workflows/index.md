@@ -36,3 +36,16 @@ The synced callers also pass actionlint and zizmor (`.github/zizmor.yml` lets
 `Resnovas/*` follow a branch). Untrusted input reaches `run:` only through
 `env:`, and `actions/checkout` sets `persist-credentials: false` unless a later
 step pushes.
+
+Graphify's `check` job never fails a pull request: a graph one commit behind
+is expected, because `refresh` (named `refresh (default branch only)` so its
+skip on pull requests explains itself) rebuilds it after merge. When stale,
+`check` writes one notice and a job summary saying no action is needed; do not
+reintroduce the tool's "update, then commit" advice as the only guidance.
+
+CodeQL's `languages` job unions the repository's GitHub languages (default
+branch) with the extensions of the files a pull request or merge queue entry
+adds or changes (compare API, `base...head`), skipping `externals/`,
+`vendor/`, `node_modules/` and `dist/`, and always adds `actions`. A failed
+comparison warns and falls back to the repository languages; never let it fail
+the scan. Keep the extension map in step with the language map above it.

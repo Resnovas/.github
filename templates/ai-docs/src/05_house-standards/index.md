@@ -83,6 +83,10 @@ with them. The sections after this one describe this repository itself.
   line (house skill `commits-and-rd-evidence`). `tools/dev/commit-check.mjs`,
   installed as the commit-msg hook by setup, refuses a commit that breaks
   these rules.
+- A pull request an agent opens is a draft (`AI_POLICY.md` AI-20) and states
+  `AI level: autonomous` and every tool and model used (AI-01); the
+  accountable human fills in `Accountable human` and `Human review` when
+  marking it ready (AI-21). No "Generated with" footer or session link.
 - One pull request per batch of work: one stacked branch per issue, each
   squashed to one conventional, signed-off commit naming its issue, all opened
   as a single pull request. Once a maintainer approves it, it lands as an owner

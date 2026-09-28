@@ -46,3 +46,22 @@ template paths) skips templates, as a downstream `sync.exclude` does.
 A new synced file needs three things besides the template itself: an entry in
 `templates/.prettierignore` if Prettier can format it (a test fails otherwise),
 a row in `docs/synced-files.md`, and a render so the root copy exists.
+
+## Issue forms
+
+`templates/.github/ISSUE_TEMPLATE/` holds one form per kind of issue, matching
+the Linear issue templates so an issue reads the same on either tracker:
+
+| Form | Title prefix | Label | Linear template |
+| --- | --- | --- | --- |
+| `bug_report.yml` | `fix: ` | `bug` | Bug report |
+| `feature_request.yml` | `feat: ` | `enhancement` | General |
+| `documentation.yml` | `docs: ` | `documentation` | Documentation review |
+| `performance.yml` | `perf: ` | `performance` | Bug report (measured) |
+
+Every form ends with the same three required fields, in this order:
+`duplicates`, `ai-level` (a dropdown of the AI policy levels) and `ai-tools`,
+because smartcloud's disclosure check and AI-01 read them. `config.yml` turns
+off blank issues, so a new kind of issue needs a new form. Keep field ids
+stable: a downstream repository adds its own fields after `house:local`, and
+`managedConflicts` rejects a local field that reuses a managed id.
