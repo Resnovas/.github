@@ -215,4 +215,4 @@ End every task with a message a reader who did not watch you work can act on: wh
 - Change a governed file or house default under `templates/` or in `house.yml`, never a rendered copy in the root or `.github/`, then run `npm run render`, `npm test` and `npm run check`. The `change-template` command walks through it.
 - This file and `CLAUDE.md` are rendered too: the house part comes from `templates/AGENTS.md` and `templates/CLAUDE.md`, and only this section is local.
 - The repository's own surfaces add a `render` action and task, render and test debug configurations, and an Orca `claude` tab.
-- The house skills under `templates/.agents/skills/` are the source; the published catalogue is a mirror kept for version history by the `skills-upstream-sync` skill, never edited directly.
+- The house skills under `templates/.agents/skills/` sync to every repository; `skills/` holds the ones that do not sync. Both are published to the catalogue, a mirror kept for version history by the `skills-upstream-sync` skill and never edited directly.

@@ -126,8 +126,24 @@ Building it uses local parsers only: no model, no network, no cost.
 | `tools/graphify/graphify` | Whole file | The wrapper: `setup` installs Graphify (with [uv](https://docs.astral.sh/uv/)) and the git hooks, `update` rebuilds the graph, `check` fails when it is stale, `query "<question>"` asks it. |
 | `graphify-out/.gitignore` | Whole file | Commits only the graph and the paid-for semantic cache. |
 | `graphify-out/.gitattributes` | Whole file | Marks the output as generated and merges `graph.json` with Graphify's own merge driver. |
-| `.agents/skills/graphify/` | Whole file | Teaches agents when and how to query the graph. `tools/dev/surfaces.mjs sync` mirrors every skill under `.agents/skills/` to `.claude/skills/`, so Claude Code reads the same copy. |
+| `.agents/skills/graphify/` | Whole file | Teaches agents when and how to query the graph. See [House skills](#skills) for the rest of the skills and how they reach Claude Code. |
 | `.graphifyignore` | Extendable | See [Review bot configuration](#review-bots). |
+
+## <a id="skills"></a>House skills
+
+Every directory under `templates/.agents/skills/` is a skill in the [Agent Skills](https://agentskills.io) format (`SKILL.md` plus reference files), synced whole into `.agents/skills/` of every repository. `tools/dev/surfaces.mjs sync` mirrors the whole of `.agents/skills/` to `.claude/skills/`, so Claude Code reads the same copy, and `check` fails while the mirror is out of date. A repository adds its own skills beside the house ones; a house skill is changed in this repository, never in a copy.
+
+The house skills, by what they are for:
+
+| Group | Skills |
+| --- | --- |
+| House standards | `coding-preferences`, `commits-and-rd-evidence`, `commit`, `creating-pull-requests`, `no-em-or-en-dashes`, `whitelabel-customer-facing-copy`, `feature-flags`, `extendable-module-architecture`, `project-dev-surfaces`, `documentation-writing-standards`, `writing-specifications`, `gitbutler`, `gitbutler-instead-worktrees`, `graphify`, `graphify-vendor` |
+| Changing code | `investigate-first`, `surgical-patch`, `safe-refactor`, `migration`, `lean-build`, `build-error-resolver`, `react-build-resolver` |
+| Reviewing | `code-review`, `silent-failure-hunter`, `type-design-analyzer`, `typescript-reviewer`, `python-reviewer`, `database-reviewer`, `react-reviewer`, `agent-self-evaluation`, `eval-harness`, `harness-optimizer`, `gan-planner`, `gan-generator`, `gan-evaluator` |
+| Thinking and writing | `research`, `eli5`, `archify`, `grilling`, `cross-critique`, `frontend-design-hard-rules`, `convert-documents-to-markdown`, `skills-spec`, `skills-best-practices` |
+| Vendors | `odoo-enterprise`, `odoo-module-separation`, `twilio`, `neon-vendor`, `clerk-vendor`, `convex-vendor`, `terraform-vendor`, `apify-vendor`, `cloudflare-workers`, `ai-sdk-vendor`, `chat-sdk-vendor`, `workflow-sdk-vendor`, `flags-sdk-vendor`, `vendor-llms-indexes` |
+
+Skills that apply only on one host, or only to this repository's own jobs, live in [`skills/`](../skills/) and are published to the catalogue without syncing.
 
 ## <a id="ai-docs"></a>AI docs
 
