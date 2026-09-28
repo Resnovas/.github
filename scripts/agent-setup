@@ -1,0 +1,14 @@
+#!/bin/sh
+# Sets up this checkout for an agent on a clean machine. Idempotent, no
+# network: the repository has no dependencies. Windows: run the two node
+# commands below by hand.
+set -eu
+cd "$(dirname "$0")/.."
+major=$(node -p 'process.versions.node.split(".")[0]' 2>/dev/null || echo 0)
+if [ "$major" -lt 24 ]; then
+  echo "agent-setup: Node 24 or newer is required. Install it (nvm, fnm or nodejs.org) and run again." >&2
+  exit 1
+fi
+node --run setup
+node --run check
+echo "agent-setup: ok"

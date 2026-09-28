@@ -592,6 +592,14 @@ const missingCommitHook = () => {
   }
 }
 
+// project-dev-surfaces: a project with a package.json ships one idempotent
+// scripts/agent-setup that every surface calls, and a machine-only
+// AGENT-SETUP.md for cloud agents. check names what is missing.
+const missingProjectSurfaces = () =>
+  existsSync(join(root, 'package.json'))
+    ? ['scripts/agent-setup', 'AGENT-SETUP.md'].filter((file) => !existsSync(join(root, file)))
+    : []
+
 // --- Commands ----------------------------------------------------------------
 
 if (command === 'sync' || command === 'check') {
@@ -601,13 +609,18 @@ if (command === 'sync' || command === 'check') {
     ...syncSkills(command === 'sync'),
     ...syncServers(command === 'sync'),
   ]
-  const missing = command === 'check' ? missingCommitHook() : []
-  if (command === 'check' && (stale.length > 0 || missing.length > 0)) {
+  const missingHook = command === 'check' ? missingCommitHook() : []
+  const missingSurfaces = command === 'check' ? missingProjectSurfaces() : []
+  if (command === 'check' && (stale.length > 0 || missingHook.length > 0 || missingSurfaces.length > 0)) {
     if (stale.length > 0)
       console.error(
         `Agent commands, skills or MCP configs are out of date with .agents (run node tools/dev/surfaces.mjs sync):\n  ${stale.join('\n  ')}`,
       )
-    if (missing.length > 0) console.error(`The house commit hook is not installed in this checkout:\n  ${missing.join('\n  ')}`)
+    if (missingHook.length > 0) console.error(`The house commit hook is not installed in this checkout:\n  ${missingHook.join('\n  ')}`)
+    if (missingSurfaces.length > 0)
+      console.error(
+        `The project setup files every project ships are missing (house standard project-dev-surfaces):\n  ${missingSurfaces.join('\n  ')}`,
+      )
     process.exit(1)
   }
   console.log(
