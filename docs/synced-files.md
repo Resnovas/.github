@@ -116,6 +116,21 @@ They only call three package scripts every repository has (`setup`, `check` and 
 
 JSON files here are JSON with comments, so their markers are `//` lines, and a local entry may not reuse a synced `label`, `name` or `id`.
 
+## <a id="tools"></a>Repository tools
+
+Plain scripts every repository runs the same way, synced whole. They need only Node and the house stack (Nx, Vitest, Mintlify); none carries a licence header, because the sync would overwrite it, and each starts with a "Synced from" line so the header check skips it. Wire them up as package scripts with these names, so the editor tasks, the docs and the agents find them:
+
+| File | Package script | What it does |
+| --- | --- | --- |
+| `tools/license/check-headers.mjs`, `tools/license/header.txt` | `headers`, `headers:fix` (`--fix`) | Every source file (`.ts`, `.tsx`, `.js`, `.mjs`, `.cjs` and their variants) starts with the FCL-1.0-MIT header from `header.txt`, with its own path in the `@file` line and the current year in the copyright line. `headers` fails on a missing or outdated header; `headers:fix` writes it. Each January the check fails until `headers:fix` has moved every file to the new year: one commit, then green. Generated and vendored directories, `.d.ts` files and synced files are skipped; a repository lists further paths in `tools/license/ignore`, one regular expression a line. Run `headers` from `check`. |
+| `tools/ci/coverage-goal.ts` | none (a Vitest reporter) | Warns, as a CI annotation, when a test project covers less than the goal (100%) while still passing the enforced minimum ({{COVERAGE_MIN}}%), so a gap is never silent. Add it to the reporters in the shared Vitest config. |
+| `tools/ci/flaky-tests.ts` | none (a Vitest reporter) | Reports every test that failed and then passed on a retry, as an annotation and a job summary table, so a retry never hides a flaky test. |
+| `tools/test/file.ts` | `test:file` | Runs the tests for one file, for the editors' "debug the current test" configurations: a spec under `tests/<name>/src`, or a source file whose mirrored spec runs. Coverage off. |
+| `tools/typecheck/tests.ts` | `typecheck:tests` | Type-checks every test project under `tests/`, which Nx does not, after building the packages they reference. |
+| `tools/dev/docs.ts` | `docs:dev` | Serves the Mintlify docs under `docs/` locally, fetching the pinned Mintlify CLI once into pnpm's cache. |
+
+The release pipeline (Nx release, changelog rendering, source map upload, the attest workflow) stays in the repository that ships releases until a second repository needs it; see the smartcloud repository for the reference implementation.
+
 ## <a id="graphify"></a>Code graph (Graphify)
 
 A [Graphify](https://github.com/Graphify-Labs/graphify) graph of the code is committed in `graphify-out/graph.json`, so people and agents can ask what a change touches without reading the whole codebase.

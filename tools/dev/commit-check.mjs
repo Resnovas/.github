@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+// Synced from Resnovas/.github templates/tools/dev/commit-check.mjs. Edit it
+// there, not here: the next house sync overwrites local edits.
+//
 // Checks a commit message, and the staged text, against the house commit
 // rules before the commit exists (house standard commits-and-rd-evidence,
 // AI_POLICY.md AI-02, AI-03 and AI-09, CONTRIBUTING.md#Commits), and added
@@ -15,8 +18,6 @@
 // .git/hooks/commit-msg. It has no dependencies and never talks to the
 // network. HOUSE_SKIP_COMMIT_CHECK=1 skips it for one emergency commit; the
 // smartcloud check on the pull request still applies every rule.
-//
-// Synced from Resnovas/.github templates/tools/dev/commit-check.mjs.
 
 import { execFileSync } from 'node:child_process'
 import { readFileSync } from 'node:fs'

@@ -10,7 +10,7 @@
 
 ### Canonical header
 
-The header is identical in every file except the file-specific lines, meaning the file name and the last-modified date. There is no variation in the license text itself; copy it exactly rather than paraphrasing.
+The header is `tools/license/header.txt`, synced from the house, and identical in every file except two lines: the `@file` line, which carries the file's path from the repository root, and the copyright line, which carries the current year. Never type it: `node tools/license/check-headers.mjs --fix` (the `headers:fix` package script) writes it, and the `headers` script in the repository's `check` fails on a missing or outdated one. Files synced from the house carry no header. The year is the current year on purpose: the check fails each January until `headers:fix` has moved every file forward, which is one commit.
 
 ### When this applies
 

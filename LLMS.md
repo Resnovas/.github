@@ -75,8 +75,10 @@ with them. The sections after this one describe this repository itself.
 
 ### Files
 
-- Every source file carries the FCL-1.0-MIT licence header; the repository's
-  header check adds and verifies it.
+- Every source file carries the FCL-1.0-MIT licence header from
+  `tools/license/header.txt`, with its own path on the second line and the
+  current year. `node tools/license/check-headers.mjs` (the `headers` package
+  script) verifies it and `--fix` writes it; synced house tools carry none.
 - ASCII hyphen-minus only in text an agent writes: no em or en dashes, and no
   emoji in titles or descriptions (house skill `no-em-or-en-dashes`,
   `AI_POLICY.md` AI-09).

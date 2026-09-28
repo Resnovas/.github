@@ -40,6 +40,12 @@ tools/graphify/
 tools/dev/surfaces.mjs
 tools/dev/open.mjs
 tools/dev/commit-check.mjs
+tools/dev/docs.ts
+tools/license/
+tools/ci/coverage-goal.ts
+tools/ci/flaky-tests.ts
+tools/test/file.ts
+tools/typecheck/tests.ts
 tools/ai-docs/
 ai-docs/README.md
 ai-docs/src/05_house-standards/
