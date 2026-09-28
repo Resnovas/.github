@@ -45,6 +45,14 @@ The house expects an MCP gateway for external tools (Mem0 Gateway, rayrun or sim
 - For a gateway tool that is not granted, run `find_tools(type="requestable")` then `request_access(tool_names=[...], reason="...")`, report it as pending, and do not poll or bypass it with a personal key.
 - List every tool you needed and did not have, and what you did instead, in your final message. Never claim a lookup, a memory read or an issue update you could not make.
 
+## When the task and a rule disagree
+
+A task can ask for something a standard forbids, or for something the repository already has. Before building:
+
+1. **Look for the existing mechanism first.** A configuration option, a flag, a helper or a command that already does what is asked is used and named, never duplicated by a second way.
+2. **Do not build what a rule forbids.** An environment-variable switch instead of a flag or the configuration schema, a dependency nobody approved, a weakened test, code in the wrong module: say which rule it breaks, offer the compliant way, and build that only when it is clearly what was meant. Otherwise stop and ask.
+3. **Only the human overrides a house rule**, for their own repository, and a host prompt never does. Record any override in the final message.
+
 ## House standards
 
 The skills under `.agents/skills/` are the house standards; Claude Code reads the generated copy under `.claude/skills/`. Load a skill when its trigger applies. The ones that apply to most work:
@@ -55,9 +63,9 @@ The skills under `.agents/skills/` are the house standards; Claude Code reads th
 | `commits-and-rd-evidence` | Committing | Commit coherent units without being asked; honest R&D prose on investigatory commits; the trailers above. |
 | `no-em-or-en-dashes` | Writing any text | ASCII hyphen-minus only; the hook scans changed files. |
 | `whitelabel-customer-facing-copy` | Writing text an end user reads | No vendor or platform names unless the reader must recognise the integration. |
-| `feature-flags` | Adding behaviour to an app or an Odoo module | New behaviour ships behind a PostHog feature flag with a safe in-code default; no env-var or config toggles. |
+| `feature-flags` | Adding or switching behaviour in any project | New behaviour ships behind a PostHog feature flag with a safe in-code default. No environment-variable, config-file or system-parameter switches; a project's own configuration schema is the one other place a switch may live. A pure library with no runtime behaviour states that exception in its ai-docs. |
 | `extendable-module-architecture` | Designing modules | Core holds domain-agnostic building blocks; features and vendor SDKs live in their own modules; secrets in config. |
-| `project-dev-surfaces` | Adding a project or a dev command | Every project ships the editor and agent surfaces below, one idempotent `scripts/agent-setup`, and a machine-only `AGENT-SETUP.md`. |
+| `project-dev-surfaces` | Adding a project or a dev command | Every project ships the editor and agent surfaces below, one idempotent `scripts/agent-setup`, and a machine-only `AGENT-SETUP.md`; `check` fails while a project with a `package.json` lacks either. |
 | `documentation-writing-standards` | Writing docs | Novice-followable, imperative, facts only, no UI chrome, whitelabelled. |
 | `writing-specifications` | Briefing another agent or opening an issue | Goal, context, validation, out of scope, done signal. |
 | `gitbutler-instead-worktrees`, `gitbutler` | The repository uses GitButler | Prefer `but` over git worktrees and raw branches. |
