@@ -150,7 +150,9 @@ export const checkStagedText = (diff) => {
   return problems
 }
 
-const git = (...args) => execFileSync('git', args, { encoding: 'utf8' })
+// A staged diff can run to many megabytes when a batch adds documentation,
+// so the buffer is well above Node's default of one megabyte.
+const git = (...args) => execFileSync('git', args, { encoding: 'utf8', maxBuffer: 512 * 1024 * 1024 })
 
 const main = () => {
   if (process.env['HOUSE_SKIP_COMMIT_CHECK'] === '1') return 0
