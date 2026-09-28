@@ -188,6 +188,70 @@ If you would rather ship the rebuilt graph in your own pull request, run `sh too
 | No refresh pull request after a merge | The graph already matched the code, or the default branch has no `tools/graphify/graphify`. | Check the `refresh` job's log on the default branch. |
 | The refresh pull request conflicts | The default branch moved again before it merged. | Close it; the next push to the default branch opens a fresh one. |
 
+## <a id="release"></a>Release
+
+**What it does.** Cuts a release with [Nx release](https://nx.dev/docs/features/manage-releases) from the default branch, started by hand from the Actions tab. The synced `house-release.yml` calls the house `release.yml`, which reads `release.config.json` at the repository root to learn what the repository ships. In order:
+
+1. Nx reads the conventional commits since the last `v*` tag and picks the bump (`feat` minor, `fix`, `perf` and `revert` patch, a breaking change major); `specifier` overrides it.
+2. Nx writes the version to the released projects' `package.json` files, and each bundle in `bundles` is built from that source. Its source map goes to error tracking (see `posthog`) and is deleted.
+3. The release commit holds the bundles and the versions, leaves out `dropFromReleaseCommit`, and is signed off by `github-actions[bot]`. It is on no branch: only the `v<version>` tag is pushed, so the default branch never carries a release commit or a bundle. With `majorTag`, `v<major>` moves to it (what workflows pin a GitHub Action by).
+4. The release notes go to a draft GitHub release. The same notes go to `CHANGELOG.md` and to `<app>/CHANGELOG.md` for each entry in `apps`, which the `changelogs` job brings to the default branch in a pull request committed through the GitHub API as the house app, so the commit is signed by GitHub.
+5. The `artifacts` job checks out the tag, rebuilds each bundle and stops unless it matches the tagged one, writes an SPDX SBOM per shipped package, and with an `npm` section builds, prepares and publishes the package to npm with provenance through trusted publishing.
+6. `attest.yml` (below) signs build provenance for the bundles and attaches the SBOMs to the draft release, and `publish-release` publishes it. It stays a draft until then, because house releases are immutable once published.
+
+**Setup.** Write `release.config.json` at the repository root. Every key is optional except where the feature needs it:
+
+| Key | Default | Meaning |
+| --- | --- | --- |
+| `name` | the `package.json` name without its scope | The release name, used for the error tracking release and temporary directories. |
+| `firstRelease` | `1.0.0` | The version the first stable release takes; the preview shows it until a stable `v*` tag exists. |
+| `majorTag` | `false` | Move `v<major>` to each stable release. Set it for a GitHub Action, which workflows pin by major. |
+| `bundles` | `[]` | `{ target, output, project }` per bundle: the Nx target that builds it, its path, and the package that owns it (whose SBOM is bound to it). Bundles are committed to the release commit, verified from the tag and attested. |
+| `dropFromReleaseCommit` | `[]` | Paths the release commit leaves out, for example vendored source under `externals/` that every download of the tag would otherwise carry. |
+| `apps` | `[]` | Directories whose `package.json` a nightly stamps with the version and whose `CHANGELOG.md` the changelog pull request carries. |
+| `nightly` | none | `{ major }`: cut nightly pre-releases previewing that major (see Nightly). Absent, the nightly workflow stops before installing anything. |
+| `posthog` | none | `{ host, projectId }`: the error tracking project the source maps go to (`host` defaults to `https://eu.posthog.com`). Absent, or without the `POSTHOG_CLI_API_KEY` secret, the maps are deleted without uploading. |
+| `npm` | none | `{ prepare, directory, bundleTargets, sbomProjects }`: publish `directory` to npm after running `bundleTargets` and the `prepare` command (a `node`, `pnpm` or `npm` command) from the tag; `sbomProjects` get an SBOM beside the bundles' own. |
+| `versionGlobal` | `__APP_VERSION__` | The global `tools/release/bundle.ts` defines with the version, which the app reads at start-up. |
+
+A complete example, for a repository that ships a GitHub Action and a CLI on npm:
+
+```json
+{
+  "name": "smartcloud",
+  "firstRelease": "2.0.0",
+  "majorTag": true,
+  "bundles": [{ "target": "@resnovas/action:bundle", "output": "dist/index.js", "project": "@resnovas/action" }],
+  "dropFromReleaseCommit": ["externals"],
+  "apps": ["apps/action", "apps/cli", "apps/mcp"],
+  "nightly": { "major": 2 },
+  "posthog": { "projectId": "285077" },
+  "npm": {
+    "prepare": "node tools/release/prepare-cli.ts",
+    "directory": "apps/cli/release",
+    "bundleTargets": ["@resnovas/smartcloud:bundle", "@resnovas/smartcloud-mcp:bundle"],
+    "sbomProjects": ["@resnovas/smartcloud", "@resnovas/smartcloud-mcp"]
+  },
+  "versionGlobal": "__SMARTCLOUD_VERSION__"
+}
+```
+
+Then point `nx.json` at the synced renderer (`release.changelog.workspaceChangelog.renderer` and `projectChangelogs.renderer`: `{workspaceRoot}/tools/release/changelog-renderer.ts`), keep `release.git` off (`commit`, `tag` and `stageChanges` false) and `releaseTag.strictPreid` on, and add the package scripts `release:dry-run` (`node tools/release/release.ts --dry-run`) and `release:preview` (`node tools/release/release-preview.ts`). A real release needs the organisation variable `RESNOVAS_BOT_APP_ID` and secret `RESNOVAS_BOT_PRIVATE_KEY` (the house app, installed on the repository with contents and pull requests write), and the workflow token allowed to create `v*` tags if a tag ruleset protects them. Trusted publishing needs the npm package to trust the repository's `house-release.yml` workflow.
+
+**Running it.** Open Actions, choose House release, then Run workflow on the default branch. `dry-run` is ticked by default and prints the version, the notes and the change to each changelog file without tagging or publishing; run it once, check the notes, then run it again with `dry-run` cleared. The first release has no `v*` tag to count from: give it a `specifier` and tick `first-release`. Never run `nx release` by hand without `--dry-run`; the workflow is the only release path.
+
+**What you will see.** The `v<version>` tag, a GitHub release with the notes, the SBOMs and attestations, a `chore(release): changelogs for v<version>` pull request to merge before the next release, and with an `npm` section the package on npm. When no commit since the last tag calls for a release, the workflow says so and stops.
+
+**Common problems.** "release.config.json is missing": the repository has not been set up, see above. "set the RESNOVAS_BOT_APP_ID variable": a real release stops before tagging until the house app is configured. "does not match its source": the tagged bundle differs from a rebuild of the tag, so the tag's source is not what was released; investigate before publishing anything. A job after the tag fails: fix the cause and re-run the failed jobs; the tag and the draft release are reused.
+
+## <a id="nightly"></a>Nightly
+
+**What it does.** `house-nightly.yml` runs every night and cuts a `v<version>-nightly.<yyyymmdd>` pre-release from the default branch when it has moved since the last one, in a repository whose `release.config.json` has a `nightly` section; elsewhere it reads the file and stops before installing anything. The version is the next patch of the newest stable release of `nightly.major`, or `<major>.0.0` before the first one, so a nightly always sorts before the release it previews. It is built like a release (a commit on no branch holding the bundles) and gets a GitHub pre-release with generated notes, never marked latest. Nothing goes to npm and no changelog is written. With `majorTag`, `v<major>` follows the nightlies until that major's first stable release. Start it by hand from the Actions tab for a nightly now, or with `dry-run` ticked for the version only.
+
+## <a id="release-preview"></a>Release preview
+
+**What it does.** `house-release-preview.yml` leaves one comment on every pull request saying which version the next release would be if the pull request were merged now, what its own commit adds (it lands as a squash of its title and number, so the title decides the bump), and the release notes that release would carry. It is the same dry run as `node --run release:dry-run`, run for you; nothing is released, it is not part of the required check, and a problem making it becomes a warning. A repository without `release.config.json` skips it. Forks and Dependabot get the job summary only, since their token cannot comment.
+
 ## <a id="attest"></a>Attest (for release workflows)
 
 **What it does.** Signs [build provenance](https://docs.github.com/actions/security-for-github-actions/using-artifact-attestations) for the files a release ships, binds an SBOM (a list of what is inside them) to them, and attaches the SBOMs to the GitHub release.

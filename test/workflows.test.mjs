@@ -124,7 +124,7 @@ test('no workflow filters pull requests or the merge queue by path', () => {
 // required checks on every queued group, so a workflow that checks pull
 // requests also runs on merge_group. Graphify only reports a notice on pull
 // requests and gates nothing, so the queue does not need it.
-const ungated = new Set(['house-graphify.yml'])
+const ungated = new Set(['house-graphify.yml', 'house-release-preview.yml'])
 
 test('every workflow that checks pull requests also runs in the merge queue', () => {
   const missing = workflows

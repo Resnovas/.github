@@ -49,6 +49,8 @@ These Markdown documents sit at the root of every repository. GitHub links sever
 
 ## <a id="workflows"></a>Workflows
 
+The release workflows (`house-release.yml`, `house-nightly.yml`, `house-release-preview.yml`) are synced too; what they do, and the `release.config.json` a repository writes to use them, are in [Workflows](workflows.md#release).
+
 Each is described in full in [Workflows](workflows.md).
 
 | File | Kind | What it does |
@@ -130,8 +132,7 @@ Plain scripts every repository runs the same way, synced whole. They need only N
 | `tools/test/file.ts` | `test:file` | Runs the tests for one file, for the editors' "debug the current test" configurations: a spec under `tests/<name>/src`, or a source file whose mirrored spec runs. Coverage off. |
 | `tools/typecheck/tests.ts` | `typecheck:tests` | Type-checks every test project under `tests/`, which Nx does not, after building the packages they reference. |
 | `tools/dev/docs.ts` | `docs:dev` | Serves the Mintlify docs under `docs/` locally, fetching the pinned Mintlify CLI once into pnpm's cache. |
-
-The release pipeline (Nx release, changelog rendering, source map upload, the attest workflow) stays in the repository that ships releases until a second repository needs it; see the smartcloud repository for the reference implementation.
+| `tools/release/*.ts` | `release:dry-run` (`release.ts --dry-run`), `release:preview` (`release-preview.ts`) | The release tooling the house release workflows run: `config.ts` reads `release.config.json`, `release.ts` and `nightly.ts` cut a release or a nightly, `bundle.ts` bundles an app with esbuild, `sourcemaps.ts` uploads source maps to error tracking, `changelog-renderer.ts` renders the notes in the house style, `preview.ts` and `release-preview.ts` make the pull request preview. See [Workflows: Release](workflows.md#release). |
 
 ## <a id="graphify"></a>Code graph (Graphify)
 

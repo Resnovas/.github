@@ -96,6 +96,12 @@ with them. The sections after this one describe this repository itself.
   debugger.
 - Deterministic gates (the repository's checks and the `smartcloud` check)
   decide a merge. AI review bots are advisory.
+- Releases are cut by the synced house release workflow from `release.config.json`
+  at the repository root (what the repository ships: bundles, apps, the major
+  tag, error tracking project, npm package); the tools under `tools/release/`
+  are synced too. Never run `nx release` without `--dry-run`; the workflow is
+  the only release path, and its first run in a repository takes a specifier
+  with first-release ticked.
 
 ### Document everything twice
 
