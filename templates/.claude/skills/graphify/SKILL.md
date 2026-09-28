@@ -43,6 +43,7 @@ The server runs over stdio only.
 1. After changing code, run `sh tools/graphify/graphify update`.
    It uses local parsers only: no model, no network, no cost.
    It keeps document nodes already in the graph.
+   Run it in a checkout without build output: with `dist/` present, workspace imports resolve into the ignored build files and the graph drifts from the one `check` and CI build from a clean archive, so `check` reports it stale however often you update. Delete the build output first, or build the graph from `git archive HEAD` the way `check` does.
 2. Commit the changes under `graphify-out/` in the same pull request, as their own commit (`chore(graphify): refresh the code graph`).
    `graphify-out/.gitignore` decides what is committed; do not force-add anything it ignores.
 3. `sh tools/graphify/graphify check` exits 1 when the last commit's graph does not match its code.
