@@ -578,6 +578,20 @@ const installCommitHook = () => {
   return `Commit hook: ${dryRun ? 'would install' : 'installed'} ${hooks}/commit-msg.`
 }
 
+// The hook is per checkout, so a fresh clone has none until setup runs. On a
+// developer's or an agent's machine, check says so; CI never commits and has
+// no hook to install.
+const missingCommitHook = () => {
+  if (process.env['CI'] !== undefined) return []
+  try {
+    const hooks = execFileSync('git', ['rev-parse', '--git-path', 'hooks'], { cwd: root, encoding: 'utf8' }).trim()
+    const path = join(root, hooks, 'commit-msg')
+    return existsSync(path) && readFileSync(path, 'utf8').includes(HOOK_MARKER) ? [] : [`${hooks}/commit-msg (run node --run setup)`]
+  } catch {
+    return []
+  }
+}
+
 // --- Commands ----------------------------------------------------------------
 
 if (command === 'sync' || command === 'check') {
@@ -587,10 +601,13 @@ if (command === 'sync' || command === 'check') {
     ...syncSkills(command === 'sync'),
     ...syncServers(command === 'sync'),
   ]
-  if (command === 'check' && stale.length > 0) {
-    console.error(
-      `Agent commands, skills or MCP configs are out of date with .agents (run node tools/dev/surfaces.mjs sync):\n  ${stale.join('\n  ')}`,
-    )
+  const missing = command === 'check' ? missingCommitHook() : []
+  if (command === 'check' && (stale.length > 0 || missing.length > 0)) {
+    if (stale.length > 0)
+      console.error(
+        `Agent commands, skills or MCP configs are out of date with .agents (run node tools/dev/surfaces.mjs sync):\n  ${stale.join('\n  ')}`,
+      )
+    if (missing.length > 0) console.error(`The house commit hook is not installed in this checkout:\n  ${missing.join('\n  ')}`)
     process.exit(1)
   }
   console.log(
