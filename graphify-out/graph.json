@@ -2418,6 +2418,306 @@
       "source_location": "L1"
     },
     {
+      "id": "code_of_conduct_a_id_ai_a_ai_assisted_contributions",
+      "label": "<a id=\"ai\"></a>AI-assisted contributions",
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "<a id=\"top\"></a>Code of Conduct",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"ai\"></a>ai-assisted contributions",
+      "source_file": "CODE_OF_CONDUCT.md",
+      "source_location": "L30"
+    },
+    {
+      "id": "code_of_conduct_a_id_attribution_a_attribution",
+      "label": "<a id=\"attribution\"></a>Attribution",
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "<a id=\"top\"></a>Code of Conduct",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"attribution\"></a>attribution",
+      "source_file": "CODE_OF_CONDUCT.md",
+      "source_location": "L100"
+    },
+    {
+      "id": "code_of_conduct_a_id_correction_a_1_correction",
+      "label": "<a id=\"correction\"></a>1. Correction",
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "<a id=\"top\"></a>Code of Conduct",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"correction\"></a>1. correction",
+      "source_file": "CODE_OF_CONDUCT.md",
+      "source_location": "L59"
+    },
+    {
+      "id": "code_of_conduct_a_id_enforcement_a_enforcement",
+      "label": "<a id=\"enforcement\"></a>Enforcement",
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "<a id=\"top\"></a>Code of Conduct",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"enforcement\"></a>enforcement",
+      "source_file": "CODE_OF_CONDUCT.md",
+      "source_location": "L48"
+    },
+    {
+      "id": "code_of_conduct_a_id_enforcement_guidelines_a_enforcement_guidelines",
+      "label": "<a id=\"enforcement-guidelines\"></a>Enforcement Guidelines",
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "<a id=\"top\"></a>Code of Conduct",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"enforcement-guidelines\"></a>enforcement guidelines",
+      "source_file": "CODE_OF_CONDUCT.md",
+      "source_location": "L55"
+    },
+    {
+      "id": "code_of_conduct_a_id_permanent_ban_a_4_permanent_ban",
+      "label": "<a id=\"permanent-ban\"></a>4. Permanent Ban",
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "<a id=\"top\"></a>Code of Conduct",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"permanent-ban\"></a>4. permanent ban",
+      "source_file": "CODE_OF_CONDUCT.md",
+      "source_location": "L85"
+    },
+    {
+      "id": "code_of_conduct_a_id_pledge_a_our_pledge",
+      "label": "<a id=\"pledge\"></a>Our Pledge",
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "<a id=\"top\"></a>Code of Conduct",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"pledge\"></a>our pledge",
+      "source_file": "CODE_OF_CONDUCT.md",
+      "source_location": "L4"
+    },
+    {
+      "id": "code_of_conduct_a_id_related_a_related_documents",
+      "label": "<a id=\"related\"></a>Related documents",
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "<a id=\"top\"></a>Code of Conduct",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"related\"></a>related documents",
+      "source_file": "CODE_OF_CONDUCT.md",
+      "source_location": "L92"
+    },
+    {
+      "id": "code_of_conduct_a_id_responsibilities_a_enforcement_responsibilities",
+      "label": "<a id=\"responsibilities\"></a>Enforcement Responsibilities",
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "<a id=\"top\"></a>Code of Conduct",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"responsibilities\"></a>enforcement responsibilities",
+      "source_file": "CODE_OF_CONDUCT.md",
+      "source_location": "L36"
+    },
+    {
+      "id": "code_of_conduct_a_id_scope_a_scope",
+      "label": "<a id=\"scope\"></a>Scope",
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "<a id=\"top\"></a>Code of Conduct",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"scope\"></a>scope",
+      "source_file": "CODE_OF_CONDUCT.md",
+      "source_location": "L42"
+    },
+    {
+      "id": "code_of_conduct_a_id_standards_a_our_standards",
+      "label": "<a id=\"standards\"></a>Our Standards",
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "<a id=\"top\"></a>Code of Conduct",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"standards\"></a>our standards",
+      "source_file": "CODE_OF_CONDUCT.md",
+      "source_location": "L10"
+    },
+    {
+      "id": "code_of_conduct_a_id_temporary_ban_a_3_temporary_ban",
+      "label": "<a id=\"temporary-ban\"></a>3. Temporary Ban",
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "<a id=\"top\"></a>Code of Conduct",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"temporary-ban\"></a>3. temporary ban",
+      "source_file": "CODE_OF_CONDUCT.md",
+      "source_location": "L77"
+    },
+    {
+      "id": "code_of_conduct_a_id_top_a_code_of_conduct",
+      "label": "<a id=\"top\"></a>Code of Conduct",
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "<a id=\"top\"></a>Code of Conduct",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"top\"></a>code of conduct",
+      "source_file": "CODE_OF_CONDUCT.md",
+      "source_location": "L2"
+    },
+    {
+      "id": "code_of_conduct_a_id_warning_a_2_warning",
+      "label": "<a id=\"warning\"></a>2. Warning",
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "<a id=\"top\"></a>Code of Conduct",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"warning\"></a>2. warning",
+      "source_file": "CODE_OF_CONDUCT.md",
+      "source_location": "L67"
+    },
+    {
+      "id": "docs_access_a_id_by_hand_a_settings_no_workflow_can_apply",
+      "label": "<a id=\"by-hand\"></a>Settings no workflow can apply",
+      "_origin": "ast",
+      "community": 104,
+      "community_name": "Access: the app, secrets and variables",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"by-hand\"></a>settings no workflow can apply",
+      "source_file": "docs/access.md",
+      "source_location": "L158"
+    },
+    {
+      "id": "docs_access_a_id_doctor_a_checking_a_repository",
+      "label": "<a id=\"doctor\"></a>Checking a repository",
+      "_origin": "ast",
+      "community": 104,
+      "community_name": "Access: the app, secrets and variables",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"doctor\"></a>checking a repository",
+      "source_file": "docs/access.md",
+      "source_location": "L142"
+    },
+    {
+      "id": "docs_access_a_id_restricted_a_pull_requests_from_forks_and_dependabot",
+      "label": "<a id=\"restricted\"></a>Pull requests from forks and Dependabot",
+      "_origin": "ast",
+      "community": 104,
+      "community_name": "Access: the app, secrets and variables",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"restricted\"></a>pull requests from forks and dependabot",
+      "source_file": "docs/access.md",
+      "source_location": "L135"
+    },
+    {
+      "id": "docs_access_a_id_scopes_a_what_each_workflow_s_token_can_reach",
+      "label": "<a id=\"scopes\"></a>What each workflow's token can reach",
+      "_origin": "ast",
+      "community": 104,
+      "community_name": "Access: the app, secrets and variables",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"scopes\"></a>what each workflow's token can reach",
+      "source_file": "docs/access.md",
+      "source_location": "L124"
+    },
+    {
+      "id": "docs_access_a_id_setup_a_setting_it_up_once_for_the_organisation",
+      "label": "<a id=\"setup\"></a>Setting it up (once, for the organisation)",
+      "_origin": "ast",
+      "community": 104,
+      "community_name": "Access: the app, secrets and variables",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"setup\"></a>setting it up (once, for the organisation)",
+      "source_file": "docs/access.md",
+      "source_location": "L107"
+    },
+    {
+      "id": "docs_access_a_id_tokens_a_three_tokens_each_with_one_job",
+      "label": "<a id=\"tokens\"></a>Three tokens, each with one job",
+      "_origin": "ast",
+      "community": 104,
+      "community_name": "Access: the app, secrets and variables",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"tokens\"></a>three tokens, each with one job",
+      "source_file": "docs/access.md",
+      "source_location": "L18"
+    },
+    {
+      "id": "docs_access_a_id_why_a_why_a_github_app",
+      "label": "<a id=\"why\"></a>Why a GitHub App",
+      "_origin": "ast",
+      "community": 104,
+      "community_name": "Access: the app, secrets and variables",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"why\"></a>why a github app",
+      "source_file": "docs/access.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "docs_access_access_the_app_secrets_and_variables",
+      "label": "Access: the app, secrets and variables",
+      "_origin": "ast",
+      "community": 104,
+      "community_name": "Access: the app, secrets and variables",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "access: the app, secrets and variables",
+      "source_file": "docs/access.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_access_common_problems",
+      "label": "Common problems",
+      "_origin": "ast",
+      "community": 104,
+      "community_name": "Access: the app, secrets and variables",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "common problems",
+      "source_file": "docs/access.md",
+      "source_location": "L98"
+    },
+    {
+      "id": "docs_access_setting_it_up_in_a_new_organisation",
+      "label": "Setting it up in a new organisation",
+      "_origin": "ast",
+      "community": 104,
+      "community_name": "Access: the app, secrets and variables",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "setting it up in a new organisation",
+      "source_file": "docs/access.md",
+      "source_location": "L42"
+    },
+    {
+      "id": "docs_access_what_you_will_see",
+      "label": "What you will see",
+      "_origin": "ast",
+      "community": 104,
+      "community_name": "Access: the app, secrets and variables",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "what you will see",
+      "source_file": "docs/access.md",
+      "source_location": "L36"
+    },
+    {
       "id": "github_pull_request_template",
       "label": ".github/PULL_REQUEST_TEMPLATE.md",
       "_origin": "ast",
@@ -2546,90 +2846,6 @@
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "access.md",
-      "source_file": "docs/access.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "docs_access_a_id_by_hand_a_settings_no_workflow_can_apply",
-      "label": "<a id=\"by-hand\"></a>Settings no workflow can apply",
-      "_origin": "ast",
-      "community": 19,
-      "community_name": "README.md",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"by-hand\"></a>settings no workflow can apply",
-      "source_file": "docs/access.md",
-      "source_location": "L67"
-    },
-    {
-      "id": "docs_access_a_id_doctor_a_checking_a_repository",
-      "label": "<a id=\"doctor\"></a>Checking a repository",
-      "_origin": "ast",
-      "community": 19,
-      "community_name": "README.md",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"doctor\"></a>checking a repository",
-      "source_file": "docs/access.md",
-      "source_location": "L51"
-    },
-    {
-      "id": "docs_access_a_id_restricted_a_pull_requests_from_forks_and_dependabot",
-      "label": "<a id=\"restricted\"></a>Pull requests from forks and Dependabot",
-      "_origin": "ast",
-      "community": 19,
-      "community_name": "README.md",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"restricted\"></a>pull requests from forks and dependabot",
-      "source_file": "docs/access.md",
-      "source_location": "L44"
-    },
-    {
-      "id": "docs_access_a_id_scopes_a_what_each_workflow_s_token_can_reach",
-      "label": "<a id=\"scopes\"></a>What each workflow's token can reach",
-      "_origin": "ast",
-      "community": 19,
-      "community_name": "README.md",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"scopes\"></a>what each workflow's token can reach",
-      "source_file": "docs/access.md",
-      "source_location": "L35"
-    },
-    {
-      "id": "docs_access_a_id_setup_a_setting_it_up_once_for_the_organisation",
-      "label": "<a id=\"setup\"></a>Setting it up (once, for the organisation)",
-      "_origin": "ast",
-      "community": 19,
-      "community_name": "README.md",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"setup\"></a>setting it up (once, for the organisation)",
-      "source_file": "docs/access.md",
-      "source_location": "L18"
-    },
-    {
-      "id": "docs_access_a_id_why_a_why_a_github_app",
-      "label": "<a id=\"why\"></a>Why a GitHub App",
-      "_origin": "ast",
-      "community": 19,
-      "community_name": "README.md",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"why\"></a>why a github app",
-      "source_file": "docs/access.md",
-      "source_location": "L7"
-    },
-    {
-      "id": "docs_access_access_the_app_secrets_and_variables",
-      "label": "Access: the app, secrets and variables",
-      "_origin": "ast",
-      "community": 19,
-      "community_name": "README.md",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "access: the app, secrets and variables",
       "source_file": "docs/access.md",
       "source_location": "L1"
     },
@@ -3537,7 +3753,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"attest\"></a>attest (for release workflows)",
       "source_file": "docs/workflows.md",
-      "source_location": "L172"
+      "source_location": "L191"
     },
     {
       "id": "docs_workflows_a_id_ci_a_this_repository_s_ci",
@@ -3549,7 +3765,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"ci\"></a>this repository's ci",
       "source_file": "docs/workflows.md",
-      "source_location": "L212"
+      "source_location": "L231"
     },
     {
       "id": "docs_workflows_a_id_codeql_a_codeql",
@@ -3573,7 +3789,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"dependency-review\"></a>dependency review",
       "source_file": "docs/workflows.md",
-      "source_location": "L81"
+      "source_location": "L90"
     },
     {
       "id": "docs_workflows_a_id_graphify_a_graphify",
@@ -3585,7 +3801,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"graphify\"></a>graphify",
       "source_file": "docs/workflows.md",
-      "source_location": "L151"
+      "source_location": "L160"
     },
     {
       "id": "docs_workflows_a_id_scorecard_a_openssf_scorecard",
@@ -3597,7 +3813,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"scorecard\"></a>openssf scorecard",
       "source_file": "docs/workflows.md",
-      "source_location": "L107"
+      "source_location": "L116"
     },
     {
       "id": "docs_workflows_a_id_smartcloud_a_smartcloud",
@@ -3633,7 +3849,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"workflow-lint\"></a>workflow lint",
       "source_file": "docs/workflows.md",
-      "source_location": "L126"
+      "source_location": "L135"
     },
     {
       "id": "docs_workflows_workflows",
@@ -3648,150 +3864,6 @@
       "source_location": "L1"
     },
     {
-      "id": "llms",
-      "label": "LLMS.md",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "Workflows",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "llms.md",
-      "source_file": "LLMS.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "llms_code",
-      "label": "Code",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "Workflows",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "code",
-      "source_file": "LLMS.md",
-      "source_location": "L23"
-    },
-    {
-      "id": "llms_commits_and_pull_requests",
-      "label": "Commits and pull requests",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "Workflows",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "commits and pull requests",
-      "source_file": "LLMS.md",
-      "source_location": "L66"
-    },
-    {
-      "id": "llms_document_everything_twice",
-      "label": "Document everything twice",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "Workflows",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "document everything twice",
-      "source_file": "LLMS.md",
-      "source_location": "L85"
-    },
-    {
-      "id": "llms_files",
-      "label": "Files",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "Workflows",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "files",
-      "source_file": "LLMS.md",
-      "source_location": "L58"
-    },
-    {
-      "id": "llms_house_standards",
-      "label": "House standards",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "Workflows",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "house standards",
-      "source_file": "LLMS.md",
-      "source_location": "L15"
-    },
-    {
-      "id": "llms_how_the_sync_reaches_other_repositories",
-      "label": "How the sync reaches other repositories",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "Workflows",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "how the sync reaches other repositories",
-      "source_file": "LLMS.md",
-      "source_location": "L193"
-    },
-    {
-      "id": "llms_making_a_change_here",
-      "label": "Making a change here",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "Workflows",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "making a change here",
-      "source_file": "LLMS.md",
-      "source_location": "L310"
-    },
-    {
-      "id": "llms_resnovas_house_for_agents",
-      "label": "@resnovas/house for agents",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "Workflows",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "@resnovas/house for agents",
-      "source_file": "LLMS.md",
-      "source_location": "L6"
-    },
-    {
-      "id": "llms_reusable_workflows",
-      "label": "Reusable workflows",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "Workflows",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "reusable workflows",
-      "source_file": "LLMS.md",
-      "source_location": "L269"
-    },
-    {
-      "id": "llms_tests",
-      "label": "Tests",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "Workflows",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "tests",
-      "source_file": "LLMS.md",
-      "source_location": "L50"
-    },
-    {
-      "id": "llms_the_house_preset",
-      "label": "The house preset",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "Workflows",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "the house preset",
-      "source_file": "LLMS.md",
-      "source_location": "L231"
-    },
-    {
       "id": "llms_what_this_repository_is",
       "label": "What this repository is",
       "_origin": "ast",
@@ -3801,7 +3873,7 @@
       "node_kind": "heading",
       "norm_label": "what this repository is",
       "source_file": "LLMS.md",
-      "source_location": "L101"
+      "source_location": "L104"
     },
     {
       "id": "agents_agent_instructions_portable",
@@ -4516,7 +4588,7 @@
       "label": ".github/instructions/house-workflows.instructions.md",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "frontmatter": {
         "applyTo": ".github/workflows/**,.github/actions/**,action.yml,action.yaml"
@@ -4531,7 +4603,7 @@
       "label": "APPROVAL_POLICY.md",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "approval_policy.md",
@@ -4539,179 +4611,11 @@
       "source_location": "L1"
     },
     {
-      "id": "code_of_conduct_a_id_ai_a_ai_assisted_contributions",
-      "label": "<a id=\"ai\"></a>AI-assisted contributions",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"ai\"></a>ai-assisted contributions",
-      "source_file": "CODE_OF_CONDUCT.md",
-      "source_location": "L30"
-    },
-    {
-      "id": "code_of_conduct_a_id_attribution_a_attribution",
-      "label": "<a id=\"attribution\"></a>Attribution",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"attribution\"></a>attribution",
-      "source_file": "CODE_OF_CONDUCT.md",
-      "source_location": "L100"
-    },
-    {
-      "id": "code_of_conduct_a_id_correction_a_1_correction",
-      "label": "<a id=\"correction\"></a>1. Correction",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"correction\"></a>1. correction",
-      "source_file": "CODE_OF_CONDUCT.md",
-      "source_location": "L59"
-    },
-    {
-      "id": "code_of_conduct_a_id_enforcement_a_enforcement",
-      "label": "<a id=\"enforcement\"></a>Enforcement",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"enforcement\"></a>enforcement",
-      "source_file": "CODE_OF_CONDUCT.md",
-      "source_location": "L48"
-    },
-    {
-      "id": "code_of_conduct_a_id_enforcement_guidelines_a_enforcement_guidelines",
-      "label": "<a id=\"enforcement-guidelines\"></a>Enforcement Guidelines",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"enforcement-guidelines\"></a>enforcement guidelines",
-      "source_file": "CODE_OF_CONDUCT.md",
-      "source_location": "L55"
-    },
-    {
-      "id": "code_of_conduct_a_id_permanent_ban_a_4_permanent_ban",
-      "label": "<a id=\"permanent-ban\"></a>4. Permanent Ban",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"permanent-ban\"></a>4. permanent ban",
-      "source_file": "CODE_OF_CONDUCT.md",
-      "source_location": "L85"
-    },
-    {
-      "id": "code_of_conduct_a_id_pledge_a_our_pledge",
-      "label": "<a id=\"pledge\"></a>Our Pledge",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"pledge\"></a>our pledge",
-      "source_file": "CODE_OF_CONDUCT.md",
-      "source_location": "L4"
-    },
-    {
-      "id": "code_of_conduct_a_id_related_a_related_documents",
-      "label": "<a id=\"related\"></a>Related documents",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"related\"></a>related documents",
-      "source_file": "CODE_OF_CONDUCT.md",
-      "source_location": "L92"
-    },
-    {
-      "id": "code_of_conduct_a_id_responsibilities_a_enforcement_responsibilities",
-      "label": "<a id=\"responsibilities\"></a>Enforcement Responsibilities",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"responsibilities\"></a>enforcement responsibilities",
-      "source_file": "CODE_OF_CONDUCT.md",
-      "source_location": "L36"
-    },
-    {
-      "id": "code_of_conduct_a_id_scope_a_scope",
-      "label": "<a id=\"scope\"></a>Scope",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"scope\"></a>scope",
-      "source_file": "CODE_OF_CONDUCT.md",
-      "source_location": "L42"
-    },
-    {
-      "id": "code_of_conduct_a_id_standards_a_our_standards",
-      "label": "<a id=\"standards\"></a>Our Standards",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"standards\"></a>our standards",
-      "source_file": "CODE_OF_CONDUCT.md",
-      "source_location": "L10"
-    },
-    {
-      "id": "code_of_conduct_a_id_temporary_ban_a_3_temporary_ban",
-      "label": "<a id=\"temporary-ban\"></a>3. Temporary Ban",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"temporary-ban\"></a>3. temporary ban",
-      "source_file": "CODE_OF_CONDUCT.md",
-      "source_location": "L77"
-    },
-    {
-      "id": "code_of_conduct_a_id_top_a_code_of_conduct",
-      "label": "<a id=\"top\"></a>Code of Conduct",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"top\"></a>code of conduct",
-      "source_file": "CODE_OF_CONDUCT.md",
-      "source_location": "L2"
-    },
-    {
-      "id": "code_of_conduct_a_id_warning_a_2_warning",
-      "label": "<a id=\"warning\"></a>2. Warning",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"warning\"></a>2. warning",
-      "source_file": "CODE_OF_CONDUCT.md",
-      "source_location": "L67"
-    },
-    {
       "id": "contributing",
       "label": "CONTRIBUTING.md",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "contributing.md",
@@ -4723,7 +4627,7 @@
       "label": "<a id=\"contributions\"></a>Contributions made with AI tools",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "<a id=\"contributions\"></a>contributions made with ai tools",
@@ -4735,7 +4639,7 @@
       "label": "<a id=\"definitions\"></a>Definitions",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "<a id=\"definitions\"></a>definitions",
@@ -4747,7 +4651,7 @@
       "label": "<a id=\"licence\"></a>Licence",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "<a id=\"licence\"></a>licence",
@@ -4759,7 +4663,7 @@
       "label": "<a id=\"top\"></a>Eventiva Cooperation Commitment Version 1.2",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "<a id=\"top\"></a>eventiva cooperation commitment version 1.2",
@@ -4771,7 +4675,7 @@
       "label": ".cursor/BUGBOT.md",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": ".cursor/bugbot.md",
@@ -4783,7 +4687,7 @@
       "label": "Bugbot review rules",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "bugbot review rules",
@@ -4795,7 +4699,7 @@
       "label": "DCO.md",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "dco.md",
@@ -4807,7 +4711,7 @@
       "label": "<a id=\"top\"></a>Developer Certificate of Origin",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "<a id=\"top\"></a>developer certificate of origin",
@@ -4819,7 +4723,7 @@
       "label": ".github/copilot-instructions.md",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": ".github/copilot-instructions.md",
@@ -4831,7 +4735,7 @@
       "label": "Blocking",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "blocking",
@@ -4843,7 +4747,7 @@
       "label": "Code review",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "code review",
@@ -4855,7 +4759,7 @@
       "label": "Copilot instructions",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "copilot instructions",
@@ -4867,7 +4771,7 @@
       "label": "What not to do",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "what not to do",
@@ -4879,7 +4783,7 @@
       "label": "What to review",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "what to review",
@@ -4891,7 +4795,7 @@
       "label": "GitHub Actions workflows",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "github actions workflows",
@@ -4903,7 +4807,7 @@
       "label": "GOVERNANCE.md",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "governance.md",
@@ -4915,7 +4819,7 @@
       "label": "SECURITY.md",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "security.md",
@@ -4927,7 +4831,7 @@
       "label": "<a id=\"reporting\"></a>Reporting a vulnerability",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "<a id=\"reporting\"></a>reporting a vulnerability",
@@ -4939,7 +4843,7 @@
       "label": "<a id=\"supported\"></a>Supported versions",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "<a id=\"supported\"></a>supported versions",
@@ -4951,7 +4855,7 @@
       "label": "<a id=\"top\"></a>Security Policy",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "<a id=\"top\"></a>security policy",
@@ -4963,7 +4867,7 @@
       "label": "SUPPORT.md",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "support.md",
@@ -4975,7 +4879,7 @@
       "label": "<a id=\"top\"></a>Support",
       "_origin": "ast",
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "<a id=\"top\"></a>support",
@@ -6913,6 +6817,18 @@
       "source_location": "L1"
     },
     {
+      "id": "ai_docs_src_20_templates_and_render_index_issue_forms",
+      "label": "Issue forms",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "managed.mjs",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "issue forms",
+      "source_file": "ai-docs/src/20_templates-and-render/index.md",
+      "source_location": "L50"
+    },
+    {
       "id": "ai_docs_src_20_templates_and_render_index_templates_and_the_renderer",
       "label": "Templates and the renderer",
       "_origin": "ast",
@@ -6925,6 +6841,138 @@
       "source_location": "L1"
     },
     {
+      "id": "llms",
+      "label": "LLMS.md",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "managed.mjs",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "llms.md",
+      "source_file": "LLMS.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "llms_code",
+      "label": "Code",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "managed.mjs",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "code",
+      "source_file": "LLMS.md",
+      "source_location": "L23"
+    },
+    {
+      "id": "llms_commits_and_pull_requests",
+      "label": "Commits and pull requests",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "managed.mjs",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "commits and pull requests",
+      "source_file": "LLMS.md",
+      "source_location": "L66"
+    },
+    {
+      "id": "llms_document_everything_twice",
+      "label": "Document everything twice",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "managed.mjs",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "document everything twice",
+      "source_file": "LLMS.md",
+      "source_location": "L88"
+    },
+    {
+      "id": "llms_files",
+      "label": "Files",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "managed.mjs",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "files",
+      "source_file": "LLMS.md",
+      "source_location": "L58"
+    },
+    {
+      "id": "llms_house_standards",
+      "label": "House standards",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "managed.mjs",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "house standards",
+      "source_file": "LLMS.md",
+      "source_location": "L15"
+    },
+    {
+      "id": "llms_how_the_sync_reaches_other_repositories",
+      "label": "How the sync reaches other repositories",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "managed.mjs",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "how the sync reaches other repositories",
+      "source_file": "LLMS.md",
+      "source_location": "L215"
+    },
+    {
+      "id": "llms_issue_forms",
+      "label": "Issue forms",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "managed.mjs",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "issue forms",
+      "source_file": "LLMS.md",
+      "source_location": "L194"
+    },
+    {
+      "id": "llms_making_a_change_here",
+      "label": "Making a change here",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "managed.mjs",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "making a change here",
+      "source_file": "LLMS.md",
+      "source_location": "L368"
+    },
+    {
+      "id": "llms_resnovas_house_for_agents",
+      "label": "@resnovas/house for agents",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "managed.mjs",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "@resnovas/house for agents",
+      "source_file": "LLMS.md",
+      "source_location": "L6"
+    },
+    {
+      "id": "llms_reusable_workflows",
+      "label": "Reusable workflows",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "managed.mjs",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "reusable workflows",
+      "source_file": "LLMS.md",
+      "source_location": "L314"
+    },
+    {
       "id": "llms_templates_and_the_renderer",
       "label": "Templates and the renderer",
       "_origin": "ast",
@@ -6934,7 +6982,31 @@
       "node_kind": "heading",
       "norm_label": "templates and the renderer",
       "source_file": "LLMS.md",
-      "source_location": "L142"
+      "source_location": "L145"
+    },
+    {
+      "id": "llms_tests",
+      "label": "Tests",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "managed.mjs",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "tests",
+      "source_file": "LLMS.md",
+      "source_location": "L50"
+    },
+    {
+      "id": "llms_the_house_preset",
+      "label": "The house preset",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "managed.mjs",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "the house preset",
+      "source_file": "LLMS.md",
+      "source_location": "L268"
     },
     {
       "id": "claude_commands_change_template",
@@ -9870,6 +9942,18 @@
       "source_location": "L1"
     },
     {
+      "id": "docs_preset_a_id_automerge_a_automerge_dependency_updates_merge_themselves",
+      "label": "<a id=\"automerge\"></a>`autoMerge`: dependency updates merge themselves",
+      "_origin": "ast",
+      "community": 89,
+      "community_name": "The house preset",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"automerge\"></a>`automerge`: dependency updates merge themselves",
+      "source_file": "docs/preset.md",
+      "source_location": "L186"
+    },
+    {
       "id": "docs_preset_a_id_changing_a_changing_the_preset",
       "label": "<a id=\"changing\"></a>Changing the preset",
       "_origin": "ast",
@@ -9879,7 +9963,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"changing\"></a>changing the preset",
       "source_file": "docs/preset.md",
-      "source_location": "L231"
+      "source_location": "L282"
     },
     {
       "id": "docs_preset_a_id_commits_a_commits_sign_off_and_ai_credit",
@@ -9963,7 +10047,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"required\"></a>`required`: one check to require",
       "source_file": "docs/preset.md",
-      "source_location": "L186"
+      "source_location": "L221"
     },
     {
       "id": "docs_preset_a_id_reviews_a_reviews_how_many_approvals",
@@ -10011,7 +10095,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"sync\"></a>`sync`: the house files",
       "source_file": "docs/preset.md",
-      "source_location": "L197"
+      "source_location": "L248"
     },
     {
       "id": "docs_preset_a_id_unset_a_what_a_repository_adds",
@@ -10023,7 +10107,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"unset\"></a>what a repository adds",
       "source_file": "docs/preset.md",
-      "source_location": "L212"
+      "source_location": "L263"
     },
     {
       "id": "docs_preset_actions",
@@ -10428,6 +10512,18 @@
       "source_location": "L28"
     },
     {
+      "id": "docs_getting_started_a_id_own_org_a_a_hub_for_your_own_organisation",
+      "label": "<a id=\"own-org\"></a>A hub for your own organisation",
+      "_origin": "ast",
+      "community": 92,
+      "community_name": "<a id=\"adopting\"></a>Adopting a repository",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"own-org\"></a>a hub for your own organisation",
+      "source_file": "docs/getting-started.md",
+      "source_location": "L167"
+    },
+    {
       "id": "docs_getting_started_a_id_words_a_the_words",
       "label": "<a id=\"words\"></a>The words",
       "_origin": "ast",
@@ -10536,6 +10632,18 @@
       "source_location": "L52"
     },
     {
+      "id": "docs_ci_standards_a_id_release_preview_a_release_preview",
+      "label": "<a id=\"release-preview\"></a>Release preview",
+      "_origin": "ast",
+      "community": 93,
+      "community_name": "CI standards",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"release-preview\"></a>release preview",
+      "source_file": "docs/ci-standards.md",
+      "source_location": "L101"
+    },
+    {
       "id": "docs_ci_standards_a_id_skipping_a_skipping_work_a_change_cannot_affect",
       "label": "<a id=\"skipping\"></a>Skipping work a change cannot affect",
       "_origin": "ast",
@@ -10593,7 +10701,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"ai-docs\"></a>ai docs",
       "source_file": "docs/synced-files.md",
-      "source_location": "L131"
+      "source_location": "L133"
     },
     {
       "id": "docs_synced_files_a_id_documents_a_governance_documents",
@@ -10629,7 +10737,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"graphify\"></a>code graph (graphify)",
       "source_file": "docs/synced-files.md",
-      "source_location": "L118"
+      "source_location": "L120"
     },
     {
       "id": "docs_synced_files_a_id_optional_apps_a_optional_apps",
@@ -10641,7 +10749,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"optional-apps\"></a>optional apps",
       "source_file": "docs/synced-files.md",
-      "source_location": "L90"
+      "source_location": "L92"
     },
     {
       "id": "docs_synced_files_a_id_prettier_a_formatting",
@@ -10653,7 +10761,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"prettier\"></a>formatting",
       "source_file": "docs/synced-files.md",
-      "source_location": "L141"
+      "source_location": "L143"
     },
     {
       "id": "docs_synced_files_a_id_review_bots_a_review_bot_configuration",
@@ -10665,7 +10773,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"review-bots\"></a>review bot configuration",
       "source_file": "docs/synced-files.md",
-      "source_location": "L64"
+      "source_location": "L66"
     },
     {
       "id": "docs_synced_files_a_id_surfaces_a_editor_and_agent_surfaces",
@@ -10677,7 +10785,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"surfaces\"></a>editor and agent surfaces",
       "source_file": "docs/synced-files.md",
-      "source_location": "L98"
+      "source_location": "L100"
     },
     {
       "id": "docs_synced_files_a_id_workflows_a_workflows",
@@ -10689,7 +10797,7 @@
       "node_kind": "heading",
       "norm_label": "<a id=\"workflows\"></a>workflows",
       "source_file": "docs/synced-files.md",
-      "source_location": "L48"
+      "source_location": "L50"
     },
     {
       "id": "docs_synced_files_synced_files",
@@ -10749,7 +10857,7 @@
       "node_kind": "heading",
       "norm_label": "document everything twice",
       "source_file": "ai-docs/src/05_house-standards/index.md",
-      "source_location": "L72"
+      "source_location": "L75"
     },
     {
       "id": "ai_docs_src_05_house_standards_index_files",
@@ -10833,7 +10941,7 @@
       "node_kind": "heading",
       "norm_label": "document everything twice",
       "source_file": "templates/ai-docs/src/05_house-standards/index.md",
-      "source_location": "L72"
+      "source_location": "L75"
     },
     {
       "id": "templates_ai_docs_src_05_house_standards_index_files",
@@ -11894,7 +12002,7 @@
       "author": null,
       "captured_at": null,
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "contributor": null,
       "file_type": "document",
       "norm_label": "ai contribution policy",
@@ -11910,7 +12018,7 @@
       "author": null,
       "captured_at": null,
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "contributor": null,
       "file_type": "document",
       "norm_label": "ai contribution policy",
@@ -11926,7 +12034,7 @@
       "author": null,
       "captured_at": null,
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "contributor": null,
       "file_type": "document",
       "norm_label": "code of conduct",
@@ -11942,7 +12050,7 @@
       "author": null,
       "captured_at": null,
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "contributor": null,
       "file_type": "document",
       "norm_label": "eventiva cooperation commitment version 1.2",
@@ -11958,7 +12066,7 @@
       "author": null,
       "captured_at": null,
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "contributor": null,
       "file_type": "document",
       "norm_label": "creative commons attribution-sharealike 4.0 international",
@@ -11974,7 +12082,7 @@
       "author": null,
       "captured_at": null,
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "contributor": null,
       "file_type": "document",
       "norm_label": "developer certificate of origin",
@@ -11990,7 +12098,7 @@
       "author": null,
       "captured_at": null,
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "contributor": null,
       "file_type": "document",
       "norm_label": "eventiva cooperation commitment",
@@ -12006,7 +12114,7 @@
       "author": null,
       "captured_at": null,
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "contributor": null,
       "file_type": "document",
       "norm_label": "gpl cooperation commitment",
@@ -12022,7 +12130,7 @@
       "author": null,
       "captured_at": null,
       "community": 33,
-      "community_name": "Eventiva Cooperation Commitment Version 1.2",
+      "community_name": "APPROVAL_POLICY.md",
       "contributor": null,
       "file_type": "document",
       "norm_label": "gpl version 3",
@@ -12223,26 +12331,26 @@
       "type": "external"
     },
     {
-      "id": "ref_node_crypto",
-      "label": "ref_node_crypto",
+      "id": "ref_node_net",
+      "label": "ref_node_net",
       "_origin": "semantic",
       "community": 61,
       "community_name": "templates/tools/dev/surfaces.mjs",
       "external": true,
       "file_type": "concept",
-      "norm_label": "ref_node_crypto",
+      "norm_label": "ref_node_net",
       "source_file": "",
       "type": "external"
     },
     {
-      "id": "ref_node_net",
-      "label": "ref_node_net",
+      "id": "ref_node_crypto",
+      "label": "ref_node_crypto",
       "_origin": "semantic",
       "community": 62,
       "community_name": "tools/dev/surfaces.mjs",
       "external": true,
       "file_type": "concept",
-      "norm_label": "ref_node_net",
+      "norm_label": "ref_node_crypto",
       "source_file": "",
       "type": "external"
     }
@@ -16746,7 +16854,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "ai-docs/src/05_house-standards/index.md",
-      "source_location": "L72",
+      "source_location": "L75",
       "weight": 1.0
     },
     {
@@ -16769,6 +16877,17 @@
       "confidence_score": 1.0,
       "source_file": "ai-docs/src/20_templates-and-render/index.md",
       "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "ai_docs_src_20_templates_and_render_index",
+      "target": "ai_docs_src_20_templates_and_render_index_issue_forms",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ai-docs/src/20_templates-and-render/index.md",
+      "source_location": "L50",
       "weight": 1.0
     },
     {
@@ -18180,6 +18299,39 @@
       "weight": 1.0
     },
     {
+      "source": "docs_access_a_id_tokens_a_three_tokens_each_with_one_job",
+      "target": "docs_access_what_you_will_see",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/access.md",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_access_a_id_tokens_a_three_tokens_each_with_one_job",
+      "target": "docs_access_setting_it_up_in_a_new_organisation",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/access.md",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_access_a_id_tokens_a_three_tokens_each_with_one_job",
+      "target": "docs_access_common_problems",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/access.md",
+      "source_location": "L98",
+      "weight": 1.0
+    },
+    {
       "source": "docs_access_access_the_app_secrets_and_variables",
       "target": "docs_access_a_id_setup_a_setting_it_up_once_for_the_organisation",
       "relation": "contains",
@@ -18187,7 +18339,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/access.md",
-      "source_location": "L18",
+      "source_location": "L107",
       "weight": 1.0
     },
     {
@@ -18198,7 +18350,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/access.md",
-      "source_location": "L35",
+      "source_location": "L124",
       "weight": 1.0
     },
     {
@@ -18209,7 +18361,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/access.md",
-      "source_location": "L44",
+      "source_location": "L135",
       "weight": 1.0
     },
     {
@@ -18220,7 +18372,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/access.md",
-      "source_location": "L51",
+      "source_location": "L142",
       "weight": 1.0
     },
     {
@@ -18231,7 +18383,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/access.md",
-      "source_location": "L67",
+      "source_location": "L158",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_access_access_the_app_secrets_and_variables",
+      "target": "docs_access_a_id_tokens_a_three_tokens_each_with_one_job",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/access.md",
+      "source_location": "L18",
       "weight": 1.0
     },
     {
@@ -18342,6 +18505,17 @@
       "confidence_score": 1.0,
       "source_file": "docs/ci-standards.md",
       "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_ci_standards_ci_standards",
+      "target": "docs_ci_standards_a_id_release_preview_a_release_preview",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/ci-standards.md",
+      "source_location": "L101",
       "weight": 1.0
     },
     {
@@ -18544,6 +18718,17 @@
     },
     {
       "source": "docs_getting_started_getting_started",
+      "target": "docs_getting_started_a_id_own_org_a_a_hub_for_your_own_organisation",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/getting-started.md",
+      "source_location": "L167",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_getting_started_getting_started",
       "target": "docs_getting_started_a_id_how_a_how_it_fits_together",
       "relation": "contains",
       "_origin": "ast",
@@ -18665,7 +18850,7 @@
     },
     {
       "source": "docs_preset_the_house_preset",
-      "target": "docs_preset_a_id_required_a_required_one_check_to_require",
+      "target": "docs_preset_a_id_automerge_a_automerge_dependency_updates_merge_themselves",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -18676,13 +18861,24 @@
     },
     {
       "source": "docs_preset_the_house_preset",
+      "target": "docs_preset_a_id_required_a_required_one_check_to_require",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/preset.md",
+      "source_location": "L221",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_preset_the_house_preset",
       "target": "docs_preset_a_id_sync_a_sync_the_house_files",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/preset.md",
-      "source_location": "L197",
+      "source_location": "L248",
       "weight": 1.0
     },
     {
@@ -18693,18 +18889,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/preset.md",
-      "source_location": "L212",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_preset_the_house_preset",
-      "target": "docs_preset_a_id_changing_a_changing_the_preset",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/preset.md",
-      "source_location": "L231",
+      "source_location": "L263",
       "weight": 1.0
     },
     {
@@ -18716,6 +18901,17 @@
       "confidence_score": 1.0,
       "source_file": "docs/preset.md",
       "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_preset_the_house_preset",
+      "target": "docs_preset_a_id_changing_a_changing_the_preset",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/preset.md",
+      "source_location": "L282",
       "weight": 1.0
     },
     {
@@ -18979,7 +19175,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/synced-files.md",
-      "source_location": "L90",
+      "source_location": "L92",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_synced_files_synced_files",
+      "target": "docs_synced_files_a_id_surfaces_a_editor_and_agent_surfaces",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/synced-files.md",
+      "source_location": "L100",
       "weight": 1.0
     },
     {
@@ -18990,7 +19197,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/synced-files.md",
-      "source_location": "L118",
+      "source_location": "L120",
       "weight": 1.0
     },
     {
@@ -19001,7 +19208,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/synced-files.md",
-      "source_location": "L131",
+      "source_location": "L133",
       "weight": 1.0
     },
     {
@@ -19023,7 +19230,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/synced-files.md",
-      "source_location": "L141",
+      "source_location": "L143",
       "weight": 1.0
     },
     {
@@ -19045,7 +19252,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/synced-files.md",
-      "source_location": "L48",
+      "source_location": "L50",
       "weight": 1.0
     },
     {
@@ -19056,18 +19263,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/synced-files.md",
-      "source_location": "L64",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_synced_files_synced_files",
-      "target": "docs_synced_files_a_id_surfaces_a_editor_and_agent_surfaces",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/synced-files.md",
-      "source_location": "L98",
+      "source_location": "L66",
       "weight": 1.0
     },
     {
@@ -19144,7 +19340,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/workflows.md",
-      "source_location": "L107",
+      "source_location": "L116",
       "weight": 1.0
     },
     {
@@ -19155,7 +19351,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/workflows.md",
-      "source_location": "L126",
+      "source_location": "L135",
       "weight": 1.0
     },
     {
@@ -19166,7 +19362,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/workflows.md",
-      "source_location": "L151",
+      "source_location": "L160",
       "weight": 1.0
     },
     {
@@ -19177,7 +19373,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/workflows.md",
-      "source_location": "L172",
+      "source_location": "L191",
       "weight": 1.0
     },
     {
@@ -19188,7 +19384,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/workflows.md",
-      "source_location": "L212",
+      "source_location": "L231",
       "weight": 1.0
     },
     {
@@ -19232,7 +19428,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/workflows.md",
-      "source_location": "L81",
+      "source_location": "L90",
       "weight": 1.0
     },
     {
@@ -19562,7 +19758,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "LLMS.md",
-      "source_location": "L85",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -19573,7 +19769,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "LLMS.md",
-      "source_location": "L101",
+      "source_location": "L104",
       "weight": 1.0
     },
     {
@@ -19584,7 +19780,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "LLMS.md",
-      "source_location": "L142",
+      "source_location": "L145",
       "weight": 1.0
     },
     {
@@ -19600,13 +19796,24 @@
     },
     {
       "source": "llms_resnovas_house_for_agents",
+      "target": "llms_issue_forms",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "LLMS.md",
+      "source_location": "L194",
+      "weight": 1.0
+    },
+    {
+      "source": "llms_resnovas_house_for_agents",
       "target": "llms_how_the_sync_reaches_other_repositories",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "LLMS.md",
-      "source_location": "L193",
+      "source_location": "L215",
       "weight": 1.0
     },
     {
@@ -19617,7 +19824,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "LLMS.md",
-      "source_location": "L231",
+      "source_location": "L268",
       "weight": 1.0
     },
     {
@@ -19628,7 +19835,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "LLMS.md",
-      "source_location": "L269",
+      "source_location": "L314",
       "weight": 1.0
     },
     {
@@ -19639,7 +19846,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "LLMS.md",
-      "source_location": "L310",
+      "source_location": "L368",
       "weight": 1.0
     },
     {
@@ -21245,7 +21452,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/ai-docs/src/05_house-standards/index.md",
-      "source_location": "L72",
+      "source_location": "L75",
       "weight": 1.0
     },
     {
@@ -24847,6 +25054,17 @@
     },
     {
       "source": "docs_access",
+      "target": "docs_synced_files",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/access.md",
+      "source_location": "L168",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_access",
       "target": "readme",
       "relation": "references",
       "_origin": "ast",
@@ -24854,17 +25072,6 @@
       "confidence_score": 1.0,
       "source_file": "docs/access.md",
       "source_location": "L5",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_access",
-      "target": "docs_synced_files",
-      "relation": "references",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/access.md",
-      "source_location": "L77",
       "weight": 1.0
     },
     {
@@ -24968,6 +25175,17 @@
     },
     {
       "source": "docs_preset",
+      "target": "approval_policy",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/preset.md",
+      "source_location": "L234",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_preset",
       "target": "docs_sync",
       "relation": "references",
       "_origin": "ast",
@@ -25062,7 +25280,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/synced-files.md",
-      "source_location": "L133",
+      "source_location": "L135",
       "weight": 1.0
     },
     {
@@ -25095,7 +25313,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/synced-files.md",
-      "source_location": "L50",
+      "source_location": "L52",
       "weight": 1.0
     },
     {
@@ -25106,7 +25324,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/synced-files.md",
-      "source_location": "L67",
+      "source_location": "L69",
       "weight": 1.0
     },
     {
@@ -25194,7 +25412,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/workflows.md",
-      "source_location": "L220",
+      "source_location": "L239",
       "weight": 1.0
     },
     {
@@ -25837,6 +26055,18 @@
       "weight": 1.0
     },
     {
+      "source": "ai_docs_src_20_templates_and_render_index_issue_forms",
+      "target": "scripts_lib_managed_managedconflicts",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "context": "managedConflicts",
+      "source_file": "ai-docs/src/20_templates-and-render/index.md",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
       "source": "ai_docs_src_20_templates_and_render_index_templates_and_the_renderer",
       "target": "scripts_lib_managed_managedconflicts",
       "relation": "references",
@@ -25849,6 +26079,18 @@
       "weight": 1.0
     },
     {
+      "source": "llms_issue_forms",
+      "target": "scripts_lib_managed_managedconflicts",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "context": "managedConflicts",
+      "source_file": "LLMS.md",
+      "source_location": "L211",
+      "weight": 1.0
+    },
+    {
       "source": "llms_templates_and_the_renderer",
       "target": "scripts_lib_managed_managedconflicts",
       "relation": "references",
@@ -25857,7 +26099,7 @@
       "confidence_score": 0.95,
       "context": "managedConflicts",
       "source_file": "LLMS.md",
-      "source_location": "L170",
+      "source_location": "L173",
       "weight": 1.0
     },
     {
@@ -25881,7 +26123,7 @@
       "confidence_score": 0.95,
       "context": "mergeManaged",
       "source_file": "LLMS.md",
-      "source_location": "L155",
+      "source_location": "L158",
       "weight": 1.0
     },
     {
@@ -25917,7 +26159,7 @@
       "confidence_score": 0.95,
       "context": "rendered",
       "source_file": "docs/workflows.md",
-      "source_location": "L217",
+      "source_location": "L236",
       "weight": 1.0
     },
     {
@@ -25929,7 +26171,7 @@
       "confidence_score": 0.95,
       "context": "rendered",
       "source_file": "LLMS.md",
-      "source_location": "L132",
+      "source_location": "L135",
       "weight": 1.0
     },
     {
@@ -26457,5 +26699,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "ec432e79adef7050538c063bc9fa6f5ba2164241"
+  "built_at_commit": "fe31a09b0d842bf0f22386e52def930e1aac1e57"
 }
