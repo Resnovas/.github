@@ -20,10 +20,11 @@ import { execFileSync } from 'node:child_process'
 import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 
 const templates = fileURLToPath(new URL('../templates/', import.meta.url))
-const config = join(templates, 'tools/release/config.ts')
+// An import specifier must be a URL: a Windows path such as D:\... reads as a d: scheme.
+const config = pathToFileURL(join(templates, 'tools/release/config.ts')).href
 
 // The tools run on Node's own TypeScript support; the flag is a no-op where stripping is on by default.
 const node = (script) =>

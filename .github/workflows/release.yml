@@ -68,6 +68,8 @@ jobs:
       bundles: ${{ steps.read.outputs.bundles }}
       npm: ${{ steps.read.outputs.npm }}
       apps: ${{ steps.read.outputs.apps }}
+      # The first bundle's project as an SBOM file stem (see sbomFileName in tools/release/config.ts), or empty.
+      sbom: ${{ steps.read.outputs.sbom }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -79,9 +81,12 @@ jobs:
           set -euo pipefail
           test -f release.config.json || { echo '::error::release.config.json is missing; the house release workflow needs it (see docs/workflows.md in Resnovas/.github)'; exit 1; }
           jq -e 'type == "object"' release.config.json > /dev/null
-          echo "bundles=$(jq -c '.bundles // []' release.config.json)" >> "$GITHUB_OUTPUT"
-          echo "npm=$(jq -c '.npm // {}' release.config.json)" >> "$GITHUB_OUTPUT"
-          echo "apps=$(jq -c '.apps // []' release.config.json)" >> "$GITHUB_OUTPUT"
+          {
+            echo "bundles=$(jq -c '.bundles // []' release.config.json)"
+            echo "npm=$(jq -c '.npm // {}' release.config.json)"
+            echo "apps=$(jq -c '.apps // []' release.config.json)"
+            echo "sbom=$(jq -r '(.bundles // [])[0].project // "" | ltrimstr("@") | gsub("/"; "-")' release.config.json)"
+          } >> "$GITHUB_OUTPUT"
 
   release:
     needs: config
@@ -359,6 +364,11 @@ jobs:
           path: ${{ runner.temp }}/release-files
           if-no-files-found: error
 
+      # Trusted publishing needs npm 11.5 or later, newer than the runner's.
+      - name: Update npm for trusted publishing
+        if: needs.config.outputs.npm != '{}'
+        run: npm install --global npm@latest # zizmor: ignore[adhoc-packages]
+
       # The tag's package.json files carry the released version, which the bundles stamp in.
       - name: Build, prepare and publish the npm package
         if: needs.config.outputs.npm != '{}'
@@ -381,12 +391,11 @@ jobs:
           fi
           prepare=$(jq -r '.prepare // empty' <<<"$NPM")
           if [ -n "$prepare" ]; then
-            [[ "$prepare" =~ ^(node|pnpm|npm)\ [A-Za-z0-9_./:@ -]+$ ]] || { echo "::error::npm.prepare must be a node, pnpm or npm command: $prepare"; exit 1; }
+            allowed='^(node|pnpm|npm) [A-Za-z0-9_./:@ -]+$'
+            [[ "$prepare" =~ $allowed ]] || { echo "::error::npm.prepare must be a node, pnpm or npm command: $prepare"; exit 1; }
             # shellcheck disable=SC2086
             $prepare
           fi
-          # Trusted publishing needs npm 11.5 or later, newer than the runner's.
-          npm install --global npm@latest # zizmor: ignore[adhoc-packages]
           cd "$directory"
           npm publish --provenance --access public
 
@@ -404,7 +413,7 @@ jobs:
       artifact: release-files
       subject-path: ${{ join(fromJSON(needs.config.outputs.bundles).*.output, '
         ') }}
-      sbom-path: ${{ fromJSON(needs.config.outputs.bundles)[0].project && format('{0}-{1}.spdx.json', replace(replace(fromJSON(needs.config.outputs.bundles)[0].project, '@', ''), '/', '-'), needs.release.outputs.version) || '' }}
+      sbom-path: ${{ needs.config.outputs.sbom && format('{0}-{1}.spdx.json', needs.config.outputs.sbom, needs.release.outputs.version) || '' }}
       release: ${{ needs.release.outputs.tag }}
       release-assets: '*.spdx.json'
 
