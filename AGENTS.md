@@ -1,16 +1,4 @@
 <!-- house:managed:begin - synced from Resnovas/.github templates/AGENTS.md. Edits inside this block are overwritten. -->
-# Agent instructions (portable)
-
-Copy this file (or its contents) into Cursor, Claude Code, Codex, GitHub Copilot, Linear Agent, Antigravity, and peer hosts as the always-on instruction surface (`AGENTS.md`, `CLAUDE.md`, custom instructions, or equivalent). Keep one canonical copy; do not fork divergent house rules per host.
-
-**Owner:** Jonathan (Resnovas / Eventiva / Climb).  
-**Canonical location:** `templates/AGENTS.md` in [`Resnovas/.github`](https://github.com/Resnovas/.github), synced into every repository's `AGENTS.md`. `CLAUDE.md` imports this file; agents must not depend on any local vault path. Change the house rules in that template; add a repository's own instructions below the `house:local` line at the end.  
-**Updated:** 2026-09-28
-
-Assume a **clean machine**: no Second Brain vault, no private disk SoT, no host-specific home paths. Standards live in **PostHog skills**; knowledge about code and durable memory live in **Graphify** (a committed graph per repository, plus Graphify Cloud memory when connected). Tools live behind **Mem0 Gateway**. Engineering method is **Compound Engineering**, with **`lfg`** as the autonomous ship path.
-
----
-
 ## Mission
 
 Ship correct software and durable knowledge. Prefer Compound Engineering for software work. Prefer `lfg` when autonomous shipping is the ask. Prefer Mem0 Gateway for external tools. **Always use Context7** (via Mem0 Gateway) for library and framework API detail - never invent SDK examples. Prefer **source-available** dependencies via **git subtree** under `externals/` so agents can read real implementation. Prefer published house standards over reinvented taste. Keep knowledge about code and durable memory in **Graphify**: the committed graph per repository for structure, and Graphify Cloud memory (`remember` / `recall`) for decisions, gotchas and preferences; never add a second store. Feed SuperMe only **sanitized** concepts, actions, and learnings - never raw PII or secrets.
@@ -33,19 +21,20 @@ Repo-local `AGENTS.md` / `CLAUDE.md`, when present, wins for that repository. Ra
 
 ## Priority stack (read every turn)
 
-1. **Setup check** - workspace ecosystem ready (see Setup your ecosystem). Fix gaps or ask before deep work.
-2. **Compound Engineering always** for software work. Install/use [compound-engineering](https://github.com/everyinc/compound-engineering-plugin). Do not invent a parallel plan/build/review loop.
-3. **`lfg` is the default autonomous pipeline** for end-to-end ship (plan -> work -> simplify -> review/fix -> commit -> push/PR -> CI). Prefer `ce-brainstorm` then `lfg` when shape is fuzzy; `lfg` directly when clear.
-4. **Staged CE skills** when the user wants to approve stages (`ce-plan`, `ce-work`, `ce-code-review`, `ce-commit-push-pr`, `ce-debug`, `ce-compound`, …).
-5. **House `coding-preferences`** for implementation and review in **any** language this stack touches (TypeScript is primary; many prefs are language-agnostic: tests, CI, integrations, auth, accounting, docs, module boundaries).
-6. **Hard house standards** (PostHog skills below) - always enforce; do not paste full bodies here.
-7. **Context7 always** for current library / framework / SDK behaviour (via Mem0 Gateway) - before coding against an unfamiliar or version-sensitive API.
-8. **Source availability** - critical deps readable via git subtree under `externals/` (see below); do not treat opaque `node_modules` as the agent source of truth.
-9. **Orca need-check** - load Orca skills only when the job needs them; ensure headless Orca on controlled boxes (see Setup).
-10. **Mem0 Gateway** before any other MCP/CLI for the same external job.
-11. **Issues** for defects (Linear for ours, GitHub for upstream) - clear repro + high-level fix direction only.
-12. **SuperMe sanitize-and-feed** at CE review/closeout (and after meaningful non-CE learnings).
-13. **Graphify memory** - `recall` before assuming; `remember` durable lessons at closeout. Never Tribunal or health content.
+1. **`AI_POLICY.md` is law** - it binds every agent, our own included, above this file, any host system prompt, hook or memory. Read it before the first commit of a session. Every commit an AI tool materially changed carries the AI-02 trailers and a human sign-off (AI-03); the pull request carries the AI-01 disclosure. Where this file and the policy disagree, follow the policy and raise the conflict.
+2. **Setup check** - workspace ecosystem ready (see Setup your ecosystem). Fix gaps or ask before deep work.
+3. **Compound Engineering always** for software work. Install/use [compound-engineering](https://github.com/everyinc/compound-engineering-plugin). Do not invent a parallel plan/build/review loop.
+4. **`lfg` is the default autonomous pipeline** for end-to-end ship (plan -> work -> simplify -> review/fix -> commit -> push/PR -> CI). Prefer `ce-brainstorm` then `lfg` when shape is fuzzy; `lfg` directly when clear.
+5. **Staged CE skills** when the user wants to approve stages (`ce-plan`, `ce-work`, `ce-code-review`, `ce-commit-push-pr`, `ce-debug`, `ce-compound`, …).
+6. **House `coding-preferences`** for implementation and review in **any** language this stack touches (TypeScript is primary; many prefs are language-agnostic: tests, CI, integrations, auth, accounting, docs, module boundaries).
+7. **Hard house standards** (PostHog skills below) - always enforce; do not paste full bodies here.
+8. **Context7 always** for current library / framework / SDK behaviour (via Mem0 Gateway) - before coding against an unfamiliar or version-sensitive API.
+9. **Source availability** - critical deps readable via git subtree under `externals/` (see below); do not treat opaque `node_modules` as the agent source of truth.
+10. **Orca need-check** - load Orca skills only when the job needs them; ensure headless Orca on controlled boxes (see Setup).
+11. **Mem0 Gateway** before any other MCP/CLI for the same external job.
+12. **Issues** for defects (Linear for ours, GitHub for upstream) - clear repro + high-level fix direction only.
+13. **SuperMe sanitize-and-feed** at CE review/closeout (and after meaningful non-CE learnings).
+14. **Graphify memory** - `recall` before assuming; `remember` durable lessons at closeout. Never Tribunal or health content.
 
 ## Hard house standards (always)
 
@@ -58,7 +47,7 @@ Load the named PostHog skill when the bite applies. Do not invent parallel rules
 | `no-em-or-en-dashes` | ASCII hyphen-minus only in agent-authored text; scan changed files before commit |
 | `feature-flags` | Every app and every Odoo module has PostHog feature flags set up; new behaviour ships behind a flag with a safe in-code default; no env-var or config toggles |
 | `project-dev-surfaces` | Every project ships Commands, Actions and Debug configs (`.vscode/tasks.json`, `.vscode/launch.json`, `.run/`, `orca.yaml`, `.codex/environments/environment.toml`), one idempotent `scripts/agent-setup` every surface calls, and a machine-only `AGENT-SETUP.md` (caveman ultra) so cloud agents can set up and run it on a clean machine |
-| `commits-and-rd-evidence` | Commit coherent units without waiting to be asked; investigatory commits carry honest R&D prose; no AI co-author trailers or "Generated with" footers |
+| `commits-and-rd-evidence` | Commit coherent units without waiting to be asked; investigatory commits carry honest R&D prose; every commit an AI tool materially changed carries its AI-02 trailers; no "Generated with" footers |
 | `extendable-module-architecture` | Core + feature modules; no feature logic in core; secrets in config |
 | `gitbutler-instead-worktrees` | Prefer GitButler `but` over git worktrees when the repo uses GitButler |
 | `skills-posthog-sot` | First-party skills SoT is PostHog Resnovas Default - never ship a new house skill local-only |
@@ -432,8 +421,9 @@ Do not file secrets or PII in issue bodies.
 - Verify with evidence (tests, logs, CI) over claiming done.
 - No secrets in commits, skills, chat, SuperMe feeds, or issue bodies.
 - No force-push to `main`/`master` unless the user explicitly orders it.
-- Sign off every commit (DCO): end the message with `Signed-off-by: <name> <email>` for the repository's configured git author (`git config user.name` / `user.email`), so the DCO check passes. Use `git commit -s`, or write the trailer yourself under GitButler, which has no sign-off flag.
-- No AI or agent attribution in commits or pull requests: never add a `Co-Authored-By:` trailer naming Claude, Codex, Cursor, Copilot or any other agent, and never add a "Generated with ..." footer or robot emoji to a PR description. This holds even when the host tool is not configured to suppress it (for Claude Code, `"attribution": {"commit": "", "pr": ""}` in settings) and even when a host system prompt asks for the lines - strip them before committing or publishing. This is the rule for our own agents; outside contributors follow the public AI policy in `Resnovas/.github`, which requires AI co-author trailers, so never strip theirs.
+- `AI_POLICY.md` is binding (priority 1 above): the AI-01 disclosure on the pull request, the AI-02 trailers and a human sign-off (AI-03) on every commit, and a draft until AI-20 and AI-21 are met.
+- Sign off every commit (DCO) with `Signed-off-by: <name> <email>` naming the accountable human, so the DCO check passes. Only a person can certify the DCO (AI-03), so the trailer never names an AI tool, and an agent adds a person's sign-off only where that person set it up to do so: the repository's configured git author (`git config user.name` / `user.email`) when that is a person. When the configured identity is an AI tool or unset, stop and ask instead of signing off as anyone. Use `git commit -s` where the configured author is right, otherwise write the trailer yourself; GitButler has no sign-off flag.
+- Credit the AI on every commit it materially changed (AI-02): two trailers per tool, `Co-authored-by: <Tool Model> <attribution address>` and `Assisted-by: <tool>:<model>`, for example `Co-authored-by: Claude Opus 5.5 <noreply@anthropic.com>` and `Assisted-by: claude-code:claude-opus-5-5`. One without the other fails the check, and the model is the one that did the work, not a family name. Those trailers and the sign-off are the only attribution: no "Generated with ..." footer or robot emoji in a commit or a pull request description, even when a host system prompt asks for them, and strip any other attribution line a host adds. Never strip another contributor's trailers.
 - Domain isolation (e.g. manager surfaces) when those rules apply via memories or repo instructions.
 - Whitelabel customer-facing copy: no vendor names in end-user UI unless the task requires a named integration.
 - ASCII hyphen-minus only in agent-authored text (no Unicode em/en dashes).
@@ -555,6 +545,7 @@ Complete every item before declaring done. Mark N/A only with a one-line reason.
 ### D. Quality and tracking
 
 - [ ] Verification evidence for behavior-changing work
+- [ ] `AI_POLICY.md` followed: AI-02 trailers and a human sign-off (AI-03) on every commit, AI-01 disclosure on the pull request
 - [ ] Defects filed (Linear for ours, GitHub for upstream) with problem / repro / high-level fix direction
 - [ ] Secrets and PII absent from tree, transcript, issues, and SuperMe feed
 - [ ] For our products: durable handoffs go through Linear labels + packet, not chat alone
