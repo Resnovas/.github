@@ -4,47 +4,47 @@
   "graph": {},
   "nodes": [
     {
-      "id": "scripts_lib_render_listtemplates",
-      "label": "listTemplates()",
+      "id": "test_ai_docs_test_rendered",
+      "label": "rendered()",
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "ai-docs.test.mjs",
+      "community_name": "rendered",
       "file_type": "code",
-      "norm_label": "listtemplates()",
-      "source_file": "scripts/lib/render.mjs",
-      "source_location": "L21"
+      "norm_label": "rendered()",
+      "source_file": "test/ai-docs.test.mjs",
+      "source_location": "L15"
     },
     {
-      "id": "scripts_lib_render_renderall",
-      "label": "renderAll()",
+      "id": "test_ai_docs_test_repository",
+      "label": "repository()",
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "ai-docs.test.mjs",
+      "community_name": "rendered",
       "file_type": "code",
-      "norm_label": "renderall()",
-      "source_file": "scripts/lib/render.mjs",
-      "source_location": "L36"
+      "norm_label": "repository()",
+      "source_file": "test/ai-docs.test.mjs",
+      "source_location": "L19"
     },
     {
-      "id": "scripts_lib_render_rendertext",
-      "label": "renderText()",
+      "id": "test_actions_test_firstparty",
+      "label": "firstParty()",
       "_callable": true,
       "_origin": "ast",
-      "community": 0,
+      "community": 10,
       "community_name": "ai-docs.test.mjs",
       "file_type": "code",
-      "norm_label": "rendertext()",
-      "source_file": "scripts/lib/render.mjs",
-      "source_location": "L13"
+      "norm_label": "firstparty()",
+      "source_file": "test/actions.test.mjs",
+      "source_location": "L15"
     },
     {
       "id": "test_ai_docs_test_docgen",
       "label": "docgen()",
       "_callable": true,
       "_origin": "ast",
-      "community": 0,
+      "community": 10,
       "community_name": "ai-docs.test.mjs",
       "file_type": "code",
       "norm_label": "docgen()",
@@ -56,7 +56,7 @@
       "label": "llms()",
       "_callable": true,
       "_origin": "ast",
-      "community": 0,
+      "community": 10,
       "community_name": "ai-docs.test.mjs",
       "file_type": "code",
       "norm_label": "llms()",
@@ -64,52 +64,52 @@
       "source_location": "L33"
     },
     {
-      "id": "test_ai_docs_test_rendered",
-      "label": "rendered()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "ai-docs.test.mjs",
-      "file_type": "code",
-      "norm_label": "rendered()",
-      "source_file": "test/ai-docs.test.mjs",
-      "source_location": "L15"
-    },
-    {
-      "id": "test_actions_test_firstparty",
-      "label": "firstParty()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "ref_node_path",
-      "file_type": "code",
-      "norm_label": "firstparty()",
-      "source_file": "test/actions.test.mjs",
-      "source_location": "L15"
-    },
-    {
       "id": "test_workflows_test_jobs",
       "label": "jobs()",
       "_callable": true,
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "file_type": "code",
       "norm_label": "jobs()",
       "source_file": "test/workflows.test.mjs",
       "source_location": "L20"
     },
     {
-      "id": "test_ai_docs_test_repository",
-      "label": "repository()",
+      "id": "scripts_lib_render_listtemplates",
+      "label": "listTemplates()",
       "_callable": true,
       "_origin": "ast",
-      "community": 137,
-      "community_name": "Editor and tool surfaces",
+      "community": 47,
+      "community_name": "values.test.mjs",
       "file_type": "code",
-      "norm_label": "repository()",
-      "source_file": "test/ai-docs.test.mjs",
-      "source_location": "L19"
+      "norm_label": "listtemplates()",
+      "source_file": "scripts/lib/render.mjs",
+      "source_location": "L21"
+    },
+    {
+      "id": "scripts_lib_render_renderall",
+      "label": "renderAll()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "values.test.mjs",
+      "file_type": "code",
+      "norm_label": "renderall()",
+      "source_file": "scripts/lib/render.mjs",
+      "source_location": "L36"
+    },
+    {
+      "id": "scripts_lib_render_rendertext",
+      "label": "renderText()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "values.test.mjs",
+      "file_type": "code",
+      "norm_label": "rendertext()",
+      "source_file": "scripts/lib/render.mjs",
+      "source_location": "L13"
     },
     {
       "id": "scripts_lib_values_list",
@@ -445,7 +445,7 @@
       "file_type": "code",
       "norm_label": "checkmessage()",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L77"
+      "source_location": "L93"
     },
     {
       "id": "templates_tools_dev_commit_check_checkstagedtext",
@@ -457,7 +457,7 @@
       "file_type": "code",
       "norm_label": "checkstagedtext()",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L134"
+      "source_location": "L152"
     },
     {
       "id": "templates_tools_dev_commit_check_git",
@@ -469,7 +469,7 @@
       "file_type": "code",
       "norm_label": "git()",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L155"
+      "source_location": "L195"
     },
     {
       "id": "templates_tools_dev_commit_check_isai",
@@ -481,7 +481,7 @@
       "file_type": "code",
       "norm_label": "isai()",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L26"
+      "source_location": "L29"
     },
     {
       "id": "templates_tools_dev_commit_check_main",
@@ -493,7 +493,7 @@
       "file_type": "code",
       "norm_label": "main()",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L157"
+      "source_location": "L197"
     },
     {
       "id": "templates_tools_dev_commit_check_parseidentity",
@@ -505,7 +505,7 @@
       "file_type": "code",
       "norm_label": "parseidentity()",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L44"
+      "source_location": "L60"
     },
     {
       "id": "templates_tools_dev_commit_check_parsemessage",
@@ -517,7 +517,19 @@
       "file_type": "code",
       "norm_label": "parsemessage()",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L54"
+      "source_location": "L70"
+    },
+    {
+      "id": "templates_tools_dev_commit_check_withoutstrings",
+      "label": "withoutStrings()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "templates/tools/dev/commit-check.mjs",
+      "file_type": "code",
+      "norm_label": "withoutstrings()",
+      "source_file": "templates/tools/dev/commit-check.mjs",
+      "source_location": "L52"
     },
     {
       "id": "tools_dev_commit_check_checkmessage",
@@ -529,7 +541,7 @@
       "file_type": "code",
       "norm_label": "checkmessage()",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L77"
+      "source_location": "L93"
     },
     {
       "id": "tools_dev_commit_check_checkstagedtext",
@@ -541,7 +553,7 @@
       "file_type": "code",
       "norm_label": "checkstagedtext()",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L134"
+      "source_location": "L152"
     },
     {
       "id": "tools_dev_commit_check_git",
@@ -553,7 +565,7 @@
       "file_type": "code",
       "norm_label": "git()",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L155"
+      "source_location": "L195"
     },
     {
       "id": "tools_dev_commit_check_isai",
@@ -565,7 +577,7 @@
       "file_type": "code",
       "norm_label": "isai()",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L26"
+      "source_location": "L29"
     },
     {
       "id": "tools_dev_commit_check_main",
@@ -577,7 +589,7 @@
       "file_type": "code",
       "norm_label": "main()",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L157"
+      "source_location": "L197"
     },
     {
       "id": "tools_dev_commit_check_parseidentity",
@@ -589,7 +601,7 @@
       "file_type": "code",
       "norm_label": "parseidentity()",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L44"
+      "source_location": "L60"
     },
     {
       "id": "tools_dev_commit_check_parsemessage",
@@ -601,7 +613,19 @@
       "file_type": "code",
       "norm_label": "parsemessage()",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L54"
+      "source_location": "L70"
+    },
+    {
+      "id": "tools_dev_commit_check_withoutstrings",
+      "label": "withoutStrings()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 58,
+      "community_name": "tools/dev/commit-check.mjs",
+      "file_type": "code",
+      "norm_label": "withoutstrings()",
+      "source_file": "tools/dev/commit-check.mjs",
+      "source_location": "L52"
     },
     {
       "id": "templates_tools_ai_docs_docgen_byprefix",
@@ -1588,88 +1612,23 @@
       "source_location": "L327"
     },
     {
-      "id": "scripts_lib_render",
-      "label": "lib/render.mjs",
+      "id": "agents_skills_project_dev_surfaces_references_editor_surfaces_the_surfaces_tool",
+      "label": "The surfaces tool",
       "_origin": "ast",
       "community": 0,
-      "community_name": "ai-docs.test.mjs",
-      "file_type": "code",
-      "norm_label": "lib/render.mjs",
-      "source_file": "scripts/lib/render.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "test_ai_docs_test",
-      "label": "ai-docs.test.mjs",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "ai-docs.test.mjs",
-      "file_type": "code",
-      "norm_label": "ai-docs.test.mjs",
-      "source_file": "test/ai-docs.test.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "test_ai_docs_test_example",
-      "label": "example",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "ai-docs.test.mjs",
-      "file_type": "code",
-      "norm_label": "example",
-      "source_file": "test/ai-docs.test.mjs",
-      "source_location": "L35"
-    },
-    {
-      "id": "test_ai_docs_test_root",
-      "label": "root",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "ai-docs.test.mjs",
-      "file_type": "code",
-      "norm_label": "root",
-      "source_file": "test/ai-docs.test.mjs",
-      "source_location": "L12"
-    },
-    {
-      "id": "test_ai_docs_test_sample",
-      "label": "sample",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "ai-docs.test.mjs",
-      "file_type": "code",
-      "norm_label": "sample",
-      "source_file": "test/ai-docs.test.mjs",
-      "source_location": "L52"
-    },
-    {
-      "id": "test_ai_docs_test_templates",
-      "label": "templates",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "ai-docs.test.mjs",
-      "file_type": "code",
-      "norm_label": "templates",
-      "source_file": "test/ai-docs.test.mjs",
-      "source_location": "L13"
-    },
-    {
-      "id": "test_ai_docs_test_values",
-      "label": "values",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "ai-docs.test.mjs",
-      "file_type": "code",
-      "norm_label": "values",
-      "source_file": "test/ai-docs.test.mjs",
-      "source_location": "L14"
+      "community_name": "rendered",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "the surfaces tool",
+      "source_file": ".agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L32"
     },
     {
       "id": "ai_docs_src_10_overview_index",
       "label": "10_overview/index.md",
       "_origin": "ast",
       "community": 0,
-      "community_name": "ai-docs.test.mjs",
+      "community_name": "rendered",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "10_overview/index.md",
@@ -1681,7 +1640,7 @@
       "label": "What this repository is",
       "_origin": "ast",
       "community": 0,
-      "community_name": "ai-docs.test.mjs",
+      "community_name": "rendered",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "what this repository is",
@@ -1689,11 +1648,23 @@
       "source_location": "L1"
     },
     {
+      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_the_surfaces_tool",
+      "label": "The surfaces tool",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "rendered",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "the surfaces tool",
+      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L32"
+    },
+    {
       "id": "docs_sync_a_id_source_a_in_this_repository",
       "label": "<a id=\"source\"></a>In this repository",
       "_origin": "ast",
       "community": 0,
-      "community_name": "ai-docs.test.mjs",
+      "community_name": "rendered",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "<a id=\"source\"></a>in this repository",
@@ -1705,7 +1676,7 @@
       "label": "<a id=\"ci\"></a>This repository's CI",
       "_origin": "ast",
       "community": 0,
-      "community_name": "ai-docs.test.mjs",
+      "community_name": "rendered",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "<a id=\"ci\"></a>this repository's ci",
@@ -1717,12 +1688,24 @@
       "label": "What this repository is",
       "_origin": "ast",
       "community": 0,
-      "community_name": "ai-docs.test.mjs",
+      "community_name": "rendered",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "what this repository is",
       "source_file": "LLMS.md",
-      "source_location": "L105"
+      "source_location": "L123"
+    },
+    {
+      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_the_surfaces_tool",
+      "label": "The surfaces tool",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "rendered",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "the surfaces tool",
+      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L32"
     },
     {
       "id": "ai_policy_a_id_agents_a_autonomous_agents",
@@ -2281,7 +2264,7 @@
       "label": "templates/tools/dev/open.mjs",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "file_type": "code",
       "norm_label": "templates/tools/dev/open.mjs",
       "source_file": "templates/tools/dev/open.mjs",
@@ -2292,7 +2275,7 @@
       "label": "isUrl",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "file_type": "code",
       "norm_label": "isurl",
       "source_file": "templates/tools/dev/open.mjs",
@@ -2303,7 +2286,7 @@
       "label": "actions.test.mjs",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "file_type": "code",
       "norm_label": "actions.test.mjs",
       "source_file": "test/actions.test.mjs",
@@ -2314,7 +2297,7 @@
       "label": "directories",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "file_type": "code",
       "norm_label": "directories",
       "source_file": "test/actions.test.mjs",
@@ -2325,40 +2308,95 @@
       "label": "lines",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "file_type": "code",
       "norm_label": "lines",
       "source_file": "test/actions.test.mjs",
       "source_location": "L17"
     },
     {
-      "id": "test_actions_test_references",
-      "label": "references",
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "ref_node_path",
-      "file_type": "code",
-      "norm_label": "references",
-      "source_file": "test/actions.test.mjs",
-      "source_location": "L28"
-    },
-    {
       "id": "test_actions_test_root",
       "label": "root",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "file_type": "code",
       "norm_label": "root",
       "source_file": "test/actions.test.mjs",
       "source_location": "L7"
     },
     {
+      "id": "test_ai_docs_test",
+      "label": "ai-docs.test.mjs",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "ai-docs.test.mjs",
+      "file_type": "code",
+      "norm_label": "ai-docs.test.mjs",
+      "source_file": "test/ai-docs.test.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "test_ai_docs_test_example",
+      "label": "example",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "ai-docs.test.mjs",
+      "file_type": "code",
+      "norm_label": "example",
+      "source_file": "test/ai-docs.test.mjs",
+      "source_location": "L35"
+    },
+    {
+      "id": "test_ai_docs_test_root",
+      "label": "root",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "ai-docs.test.mjs",
+      "file_type": "code",
+      "norm_label": "root",
+      "source_file": "test/ai-docs.test.mjs",
+      "source_location": "L12"
+    },
+    {
+      "id": "test_ai_docs_test_sample",
+      "label": "sample",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "ai-docs.test.mjs",
+      "file_type": "code",
+      "norm_label": "sample",
+      "source_file": "test/ai-docs.test.mjs",
+      "source_location": "L52"
+    },
+    {
+      "id": "test_ai_docs_test_templates",
+      "label": "templates",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "ai-docs.test.mjs",
+      "file_type": "code",
+      "norm_label": "templates",
+      "source_file": "test/ai-docs.test.mjs",
+      "source_location": "L13"
+    },
+    {
+      "id": "test_ai_docs_test_values",
+      "label": "values",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "ai-docs.test.mjs",
+      "file_type": "code",
+      "norm_label": "values",
+      "source_file": "test/ai-docs.test.mjs",
+      "source_location": "L14"
+    },
+    {
       "id": "test_commit_check_test",
       "label": "commit-check.test.mjs",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "file_type": "code",
       "norm_label": "commit-check.test.mjs",
       "source_file": "test/commit-check.test.mjs",
@@ -2369,7 +2407,7 @@
       "label": "human",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "file_type": "code",
       "norm_label": "human",
       "source_file": "test/commit-check.test.mjs",
@@ -2380,7 +2418,7 @@
       "label": "script",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "file_type": "code",
       "norm_label": "script",
       "source_file": "test/commit-check.test.mjs",
@@ -2391,7 +2429,7 @@
       "label": "graphify.test.mjs",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "file_type": "code",
       "norm_label": "graphify.test.mjs",
       "source_file": "test/graphify.test.mjs",
@@ -2402,7 +2440,7 @@
       "label": "templates",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "file_type": "code",
       "norm_label": "templates",
       "source_file": "test/graphify.test.mjs",
@@ -2413,7 +2451,7 @@
       "label": "workflows.test.mjs",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "file_type": "code",
       "norm_label": "workflows.test.mjs",
       "source_file": "test/workflows.test.mjs",
@@ -2424,7 +2462,7 @@
       "label": "directories",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "file_type": "code",
       "norm_label": "directories",
       "source_file": "test/workflows.test.mjs",
@@ -2435,7 +2473,7 @@
       "label": "root",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "file_type": "code",
       "norm_label": "root",
       "source_file": "test/workflows.test.mjs",
@@ -2446,7 +2484,7 @@
       "label": "ungated",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "file_type": "code",
       "norm_label": "ungated",
       "source_file": "test/workflows.test.mjs",
@@ -2457,7 +2495,7 @@
       "label": "workflows",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "file_type": "code",
       "norm_label": "workflows",
       "source_file": "test/workflows.test.mjs",
@@ -2468,7 +2506,7 @@
       "label": "tools/dev/open.mjs",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "file_type": "code",
       "norm_label": "tools/dev/open.mjs",
       "source_file": "tools/dev/open.mjs",
@@ -2479,7 +2517,7 @@
       "label": "isUrl",
       "_origin": "ast",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "file_type": "code",
       "norm_label": "isurl",
       "source_file": "tools/dev/open.mjs",
@@ -8385,18 +8423,6 @@
       "source_location": "L20"
     },
     {
-      "id": "agents_skills_project_dev_surfaces_references_editor_surfaces_the_surfaces_tool",
-      "label": "The surfaces tool",
-      "_origin": "ast",
-      "community": 137,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "the surfaces tool",
-      "source_file": ".agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L32"
-    },
-    {
       "id": "agents_skills_project_dev_surfaces_references_editor_surfaces_vs_code_and_cursor_vscode",
       "label": "VS Code and Cursor (`.vscode/`)",
       "_origin": "ast",
@@ -8418,270 +8444,6 @@
       "node_kind": "heading",
       "norm_label": "zed (`.zed/`)",
       "source_file": ".agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L12"
-    },
-    {
-      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces",
-      "label": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "_origin": "ast",
-      "community": 137,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_agent_prompts",
-      "label": "Agent prompts",
-      "_origin": "ast",
-      "community": 137,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "agent prompts",
-      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L40"
-    },
-    {
-      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_codex_desktop_codex_environments_environment_toml",
-      "label": "Codex desktop (`.codex/environments/environment.toml`)",
-      "_origin": "ast",
-      "community": 137,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "codex desktop (`.codex/environments/environment.toml`)",
-      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L36"
-    },
-    {
-      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_editor_and_tool_surfaces",
-      "label": "Editor and tool surfaces",
-      "_origin": "ast",
-      "community": 137,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "editor and tool surfaces",
-      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_jetbrains_run",
-      "label": "JetBrains (`.run/`)",
-      "_origin": "ast",
-      "community": 137,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "jetbrains (`.run/`)",
-      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L16"
-    },
-    {
-      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_odoo_projects",
-      "label": "Odoo projects",
-      "_origin": "ast",
-      "community": 137,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "odoo projects",
-      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L44"
-    },
-    {
-      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_openchamber",
-      "label": "OpenChamber",
-      "_origin": "ast",
-      "community": 137,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "openchamber",
-      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L28"
-    },
-    {
-      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_orca_orca_yaml",
-      "label": "Orca (`orca.yaml`)",
-      "_origin": "ast",
-      "community": 137,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "orca (`orca.yaml`)",
-      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L20"
-    },
-    {
-      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_the_surfaces_tool",
-      "label": "The surfaces tool",
-      "_origin": "ast",
-      "community": 137,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "the surfaces tool",
-      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L32"
-    },
-    {
-      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_vs_code_and_cursor_vscode",
-      "label": "VS Code and Cursor (`.vscode/`)",
-      "_origin": "ast",
-      "community": 137,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "vs code and cursor (`.vscode/`)",
-      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L5"
-    },
-    {
-      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_zed_zed",
-      "label": "Zed (`.zed/`)",
-      "_origin": "ast",
-      "community": 137,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "zed (`.zed/`)",
-      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L12"
-    },
-    {
-      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces",
-      "label": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "_origin": "ast",
-      "community": 137,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_agent_prompts",
-      "label": "Agent prompts",
-      "_origin": "ast",
-      "community": 137,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "agent prompts",
-      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L40"
-    },
-    {
-      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_codex_desktop_codex_environments_environment_toml",
-      "label": "Codex desktop (`.codex/environments/environment.toml`)",
-      "_origin": "ast",
-      "community": 137,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "codex desktop (`.codex/environments/environment.toml`)",
-      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L36"
-    },
-    {
-      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_editor_and_tool_surfaces",
-      "label": "Editor and tool surfaces",
-      "_origin": "ast",
-      "community": 137,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "editor and tool surfaces",
-      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_jetbrains_run",
-      "label": "JetBrains (`.run/`)",
-      "_origin": "ast",
-      "community": 137,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "jetbrains (`.run/`)",
-      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L16"
-    },
-    {
-      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_odoo_projects",
-      "label": "Odoo projects",
-      "_origin": "ast",
-      "community": 137,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "odoo projects",
-      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L44"
-    },
-    {
-      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_openchamber",
-      "label": "OpenChamber",
-      "_origin": "ast",
-      "community": 137,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "openchamber",
-      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L28"
-    },
-    {
-      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_orca_orca_yaml",
-      "label": "Orca (`orca.yaml`)",
-      "_origin": "ast",
-      "community": 137,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "orca (`orca.yaml`)",
-      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L20"
-    },
-    {
-      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_the_surfaces_tool",
-      "label": "The surfaces tool",
-      "_origin": "ast",
-      "community": 137,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "the surfaces tool",
-      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L32"
-    },
-    {
-      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_vs_code_and_cursor_vscode",
-      "label": "VS Code and Cursor (`.vscode/`)",
-      "_origin": "ast",
-      "community": 137,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "vs code and cursor (`.vscode/`)",
-      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
-      "source_location": "L5"
-    },
-    {
-      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_zed_zed",
-      "label": "Zed (`.zed/`)",
-      "_origin": "ast",
-      "community": 137,
-      "community_name": "Editor and tool surfaces",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "zed (`.zed/`)",
-      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
       "source_location": "L12"
     },
     {
@@ -9277,6 +9039,126 @@
       "norm_label": "when this applies",
       "source_file": "templates/.agents/skills/coding-preferences/references/telemetry.md",
       "source_location": "L49"
+    },
+    {
+      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces",
+      "label": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "_origin": "ast",
+      "community": 144,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_agent_prompts",
+      "label": "Agent prompts",
+      "_origin": "ast",
+      "community": 144,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "agent prompts",
+      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L40"
+    },
+    {
+      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_codex_desktop_codex_environments_environment_toml",
+      "label": "Codex desktop (`.codex/environments/environment.toml`)",
+      "_origin": "ast",
+      "community": 144,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "codex desktop (`.codex/environments/environment.toml`)",
+      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L36"
+    },
+    {
+      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_editor_and_tool_surfaces",
+      "label": "Editor and tool surfaces",
+      "_origin": "ast",
+      "community": 144,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "editor and tool surfaces",
+      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_jetbrains_run",
+      "label": "JetBrains (`.run/`)",
+      "_origin": "ast",
+      "community": 144,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "jetbrains (`.run/`)",
+      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L16"
+    },
+    {
+      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_odoo_projects",
+      "label": "Odoo projects",
+      "_origin": "ast",
+      "community": 144,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "odoo projects",
+      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L44"
+    },
+    {
+      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_openchamber",
+      "label": "OpenChamber",
+      "_origin": "ast",
+      "community": 144,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "openchamber",
+      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L28"
+    },
+    {
+      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_orca_orca_yaml",
+      "label": "Orca (`orca.yaml`)",
+      "_origin": "ast",
+      "community": 144,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "orca (`orca.yaml`)",
+      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L20"
+    },
+    {
+      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_vs_code_and_cursor_vscode",
+      "label": "VS Code and Cursor (`.vscode/`)",
+      "_origin": "ast",
+      "community": 144,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "vs code and cursor (`.vscode/`)",
+      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "templates_agents_skills_project_dev_surfaces_references_editor_surfaces_zed_zed",
+      "label": "Zed (`.zed/`)",
+      "_origin": "ast",
+      "community": 144,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "zed (`.zed/`)",
+      "source_file": "templates/.agents/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L12"
     },
     {
       "id": "agents_skills_apify_vendor_skill",
@@ -24593,7 +24475,7 @@
       "node_kind": "heading",
       "norm_label": "before a pull request",
       "source_file": "AGENTS.md",
-      "source_location": "L33"
+      "source_location": "L35"
     },
     {
       "id": "agents_before_every_commit",
@@ -24605,7 +24487,7 @@
       "node_kind": "heading",
       "norm_label": "before every commit",
       "source_file": "AGENTS.md",
-      "source_location": "L18"
+      "source_location": "L19"
     },
     {
       "id": "agents_changing_a_toolset",
@@ -24617,7 +24499,7 @@
       "node_kind": "heading",
       "norm_label": "changing a toolset",
       "source_file": "AGENTS.md",
-      "source_location": "L129"
+      "source_location": "L131"
     },
     {
       "id": "agents_code_knowledge_and_memory_graphify",
@@ -24629,7 +24511,7 @@
       "node_kind": "heading",
       "norm_label": "code knowledge and memory (graphify)",
       "source_file": "AGENTS.md",
-      "source_location": "L139"
+      "source_location": "L141"
     },
     {
       "id": "agents_external_tools",
@@ -24641,7 +24523,7 @@
       "node_kind": "heading",
       "norm_label": "external tools",
       "source_file": "AGENTS.md",
-      "source_location": "L164"
+      "source_location": "L166"
     },
     {
       "id": "agents_final_message",
@@ -24653,7 +24535,7 @@
       "node_kind": "heading",
       "norm_label": "final message",
       "source_file": "AGENTS.md",
-      "source_location": "L213"
+      "source_location": "L215"
     },
     {
       "id": "agents_house_standards",
@@ -24665,7 +24547,7 @@
       "node_kind": "heading",
       "norm_label": "house standards",
       "source_file": "AGENTS.md",
-      "source_location": "L56"
+      "source_location": "L58"
     },
     {
       "id": "agents_how_orca_sets_itself_up",
@@ -24677,7 +24559,7 @@
       "node_kind": "heading",
       "norm_label": "how orca sets itself up",
       "source_file": "AGENTS.md",
-      "source_location": "L111"
+      "source_location": "L113"
     },
     {
       "id": "agents_issues_and_handoff",
@@ -24689,7 +24571,7 @@
       "node_kind": "heading",
       "norm_label": "issues and handoff",
       "source_file": "AGENTS.md",
-      "source_location": "L180"
+      "source_location": "L182"
     },
     {
       "id": "agents_mcp_servers",
@@ -24701,7 +24583,7 @@
       "node_kind": "heading",
       "norm_label": "mcp servers",
       "source_file": "AGENTS.md",
-      "source_location": "L117"
+      "source_location": "L119"
     },
     {
       "id": "agents_mission",
@@ -24725,7 +24607,7 @@
       "node_kind": "heading",
       "norm_label": "on a clean clone",
       "source_file": "AGENTS.md",
-      "source_location": "L83"
+      "source_location": "L85"
     },
     {
       "id": "agents_session_start",
@@ -24749,7 +24631,7 @@
       "node_kind": "heading",
       "norm_label": "source availability",
       "source_file": "AGENTS.md",
-      "source_location": "L135"
+      "source_location": "L137"
     },
     {
       "id": "agents_the_law",
@@ -24773,7 +24655,7 @@
       "node_kind": "heading",
       "norm_label": "the repository workspace",
       "source_file": "AGENTS.md",
-      "source_location": "L79"
+      "source_location": "L81"
     },
     {
       "id": "agents_this_repository",
@@ -24785,7 +24667,7 @@
       "node_kind": "heading",
       "norm_label": "this repository",
       "source_file": "AGENTS.md",
-      "source_location": "L219"
+      "source_location": "L221"
     },
     {
       "id": "agents_when_a_tool_is_unavailable",
@@ -24797,7 +24679,7 @@
       "node_kind": "heading",
       "norm_label": "when a tool is unavailable",
       "source_file": "AGENTS.md",
-      "source_location": "L40"
+      "source_location": "L42"
     },
     {
       "id": "agents_when_asked",
@@ -24809,7 +24691,7 @@
       "node_kind": "heading",
       "norm_label": "when asked",
       "source_file": "AGENTS.md",
-      "source_location": "L206"
+      "source_location": "L208"
     },
     {
       "id": "agents_when_the_task_and_a_rule_disagree",
@@ -24821,7 +24703,7 @@
       "node_kind": "heading",
       "norm_label": "when the task and a rule disagree",
       "source_file": "AGENTS.md",
-      "source_location": "L48"
+      "source_location": "L50"
     },
     {
       "id": "agents_which_toolset_each_host_reads",
@@ -24833,7 +24715,7 @@
       "node_kind": "heading",
       "norm_label": "which toolset each host reads",
       "source_file": "AGENTS.md",
-      "source_location": "L92"
+      "source_location": "L94"
     },
     {
       "id": "agents_workspace_defaults",
@@ -24845,7 +24727,7 @@
       "node_kind": "heading",
       "norm_label": "workspace defaults",
       "source_file": "AGENTS.md",
-      "source_location": "L191"
+      "source_location": "L193"
     },
     {
       "id": "claude",
@@ -29291,18 +29173,6 @@
       "source_location": "L10"
     },
     {
-      "id": "templates_contributing_a_id_branchprefixes_a_branch_prefixes",
-      "label": "<a id=\"BranchPrefixes\"></a>Branch prefixes",
-      "_origin": "ast",
-      "community": 35,
-      "community_name": "<a id=\"WhyTheGuidelines\"></a>Contributing Guidelines",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"branchprefixes\"></a>branch prefixes",
-      "source_file": "templates/CONTRIBUTING.md",
-      "source_location": "L107"
-    },
-    {
       "id": "templates_contributing_a_id_bugreports_a_bug_reports",
       "label": "<a id=\"BugReports\"></a>Bug reports",
       "_origin": "ast",
@@ -29313,18 +29183,6 @@
       "norm_label": "<a id=\"bugreports\"></a>bug reports",
       "source_file": "templates/CONTRIBUTING.md",
       "source_location": "L79"
-    },
-    {
-      "id": "templates_contributing_a_id_codegraph_a_code_graph",
-      "label": "<a id=\"CodeGraph\"></a>Code graph",
-      "_origin": "ast",
-      "community": 35,
-      "community_name": "<a id=\"WhyTheGuidelines\"></a>Contributing Guidelines",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"codegraph\"></a>code graph",
-      "source_file": "templates/CONTRIBUTING.md",
-      "source_location": "L187"
     },
     {
       "id": "templates_contributing_a_id_codereviewprocess_a_code_review_process",
@@ -29339,30 +29197,6 @@
       "source_location": "L207"
     },
     {
-      "id": "templates_contributing_a_id_comments_a_code_comments",
-      "label": "<a id=\"Comments\"></a>Code comments",
-      "_origin": "ast",
-      "community": 35,
-      "community_name": "<a id=\"WhyTheGuidelines\"></a>Contributing Guidelines",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"comments\"></a>code comments",
-      "source_file": "templates/CONTRIBUTING.md",
-      "source_location": "L176"
-    },
-    {
-      "id": "templates_contributing_a_id_commits_a_commits",
-      "label": "<a id=\"Commits\"></a>Commits",
-      "_origin": "ast",
-      "community": 35,
-      "community_name": "<a id=\"WhyTheGuidelines\"></a>Contributing Guidelines",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"commits\"></a>commits",
-      "source_file": "templates/CONTRIBUTING.md",
-      "source_location": "L123"
-    },
-    {
       "id": "templates_contributing_a_id_dco_a_developer_certificate_of_origin",
       "label": "<a id=\"dco\"></a>Developer Certificate of Origin",
       "_origin": "ast",
@@ -29373,42 +29207,6 @@
       "norm_label": "<a id=\"dco\"></a>developer certificate of origin",
       "source_file": "templates/CONTRIBUTING.md",
       "source_location": "L32"
-    },
-    {
-      "id": "templates_contributing_a_id_dependencies_a_dependencies",
-      "label": "<a id=\"Dependencies\"></a>Dependencies",
-      "_origin": "ast",
-      "community": 35,
-      "community_name": "<a id=\"WhyTheGuidelines\"></a>Contributing Guidelines",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"dependencies\"></a>dependencies",
-      "source_file": "templates/CONTRIBUTING.md",
-      "source_location": "L161"
-    },
-    {
-      "id": "templates_contributing_a_id_description_a_describing_your_change",
-      "label": "<a id=\"Description\"></a>Describing your change",
-      "_origin": "ast",
-      "community": 35,
-      "community_name": "<a id=\"WhyTheGuidelines\"></a>Contributing Guidelines",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"description\"></a>describing your change",
-      "source_file": "templates/CONTRIBUTING.md",
-      "source_location": "L130"
-    },
-    {
-      "id": "templates_contributing_a_id_draftpullrequest_a_draft_pull_requests",
-      "label": "<a id=\"DraftPullRequest\"></a>Draft pull requests",
-      "_origin": "ast",
-      "community": 35,
-      "community_name": "<a id=\"WhyTheGuidelines\"></a>Contributing Guidelines",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"draftpullrequest\"></a>draft pull requests",
-      "source_file": "templates/CONTRIBUTING.md",
-      "source_location": "L144"
     },
     {
       "id": "templates_contributing_a_id_featurerequests_a_feature_requests",
@@ -29459,54 +29257,6 @@
       "source_location": "L202"
     },
     {
-      "id": "templates_contributing_a_id_moduleboundaries_a_module_boundaries",
-      "label": "<a id=\"ModuleBoundaries\"></a>Module boundaries",
-      "_origin": "ast",
-      "community": 35,
-      "community_name": "<a id=\"WhyTheGuidelines\"></a>Contributing Guidelines",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"moduleboundaries\"></a>module boundaries",
-      "source_file": "templates/CONTRIBUTING.md",
-      "source_location": "L166"
-    },
-    {
-      "id": "templates_contributing_a_id_pr_title_a_titling_your_pull_request",
-      "label": "<a id=\"pr-title\"></a>Titling your pull request",
-      "_origin": "ast",
-      "community": 35,
-      "community_name": "<a id=\"WhyTheGuidelines\"></a>Contributing Guidelines",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"pr-title\"></a>titling your pull request",
-      "source_file": "templates/CONTRIBUTING.md",
-      "source_location": "L100"
-    },
-    {
-      "id": "templates_contributing_a_id_pullrequests_a_pull_requests",
-      "label": "<a id=\"PullRequests\"></a>Pull requests",
-      "_origin": "ast",
-      "community": 35,
-      "community_name": "<a id=\"WhyTheGuidelines\"></a>Contributing Guidelines",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"pullrequests\"></a>pull requests",
-      "source_file": "templates/CONTRIBUTING.md",
-      "source_location": "L98"
-    },
-    {
-      "id": "templates_contributing_a_id_quality_a_quality_over_speed",
-      "label": "<a id=\"Quality\"></a>Quality over speed",
-      "_origin": "ast",
-      "community": 35,
-      "community_name": "<a id=\"WhyTheGuidelines\"></a>Contributing Guidelines",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"quality\"></a>quality over speed",
-      "source_file": "templates/CONTRIBUTING.md",
-      "source_location": "L182"
-    },
-    {
       "id": "templates_contributing_a_id_responsibilities_a_responsibilities",
       "label": "<a id=\"Responsibilities\"></a>Responsibilities",
       "_origin": "ast",
@@ -29541,30 +29291,6 @@
       "norm_label": "<a id=\"securityissues\"></a>security issues",
       "source_file": "templates/CONTRIBUTING.md",
       "source_location": "L19"
-    },
-    {
-      "id": "templates_contributing_a_id_standards_a_code_standards",
-      "label": "<a id=\"Standards\"></a>Code standards",
-      "_origin": "ast",
-      "community": 35,
-      "community_name": "<a id=\"WhyTheGuidelines\"></a>Contributing Guidelines",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"standards\"></a>code standards",
-      "source_file": "templates/CONTRIBUTING.md",
-      "source_location": "L150"
-    },
-    {
-      "id": "templates_contributing_a_id_tests_a_tests",
-      "label": "<a id=\"Tests\"></a>Tests",
-      "_origin": "ast",
-      "community": 35,
-      "community_name": "<a id=\"WhyTheGuidelines\"></a>Contributing Guidelines",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "<a id=\"tests\"></a>tests",
-      "source_file": "templates/CONTRIBUTING.md",
-      "source_location": "L152"
     },
     {
       "id": "templates_contributing_a_id_whytheguidelines_a_contributing_guidelines",
@@ -30027,6 +29753,21 @@
       "source_location": "L482"
     },
     {
+      "id": "templates_github_instructions_house_workflows_instructions",
+      "label": "templates/.github/instructions/house-workflows.instructions.md",
+      "_origin": "ast",
+      "community": 36,
+      "community_name": "templates/APPROVAL_POLICY.md",
+      "file_type": "document",
+      "frontmatter": {
+        "applyTo": ".github/workflows/**,.github/actions/**,action.yml,action.yaml"
+      },
+      "node_kind": "page",
+      "norm_label": "templates/.github/instructions/house-workflows.instructions.md",
+      "source_file": "templates/.github/instructions/house-workflows.instructions.md",
+      "source_location": "L1"
+    },
+    {
       "id": "templates_ai_policy",
       "label": "AI_POLICY.md",
       "_origin": "ast",
@@ -30145,6 +29886,18 @@
       "norm_label": "templates/.github/copilot-instructions.md",
       "source_file": "templates/.github/copilot-instructions.md",
       "source_location": "L1"
+    },
+    {
+      "id": "templates_github_instructions_house_workflows_instructions_github_actions_workflows",
+      "label": "GitHub Actions workflows",
+      "_origin": "ast",
+      "community": 36,
+      "community_name": "templates/APPROVAL_POLICY.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "github actions workflows",
+      "source_file": "templates/.github/instructions/house-workflows.instructions.md",
+      "source_location": "L7"
     },
     {
       "id": "templates_security",
@@ -32039,81 +31792,124 @@
       "source_location": "L115"
     },
     {
-      "id": "scripts_render",
-      "label": "scripts/render.mjs",
+      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces",
+      "label": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
       "_origin": "ast",
       "community": 40,
-      "community_name": "scripts/render.mjs",
-      "file_type": "code",
-      "norm_label": "scripts/render.mjs",
-      "source_file": "scripts/render.mjs",
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
       "source_location": "L1"
     },
     {
-      "id": "scripts_render_excluded",
-      "label": "excluded",
+      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_agent_prompts",
+      "label": "Agent prompts",
       "_origin": "ast",
       "community": 40,
-      "community_name": "scripts/render.mjs",
-      "file_type": "code",
-      "norm_label": "excluded",
-      "source_file": "scripts/render.mjs",
-      "source_location": "L43"
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "agent prompts",
+      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L40"
     },
     {
-      "id": "scripts_render_houseroot",
-      "label": "houseRoot",
+      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_codex_desktop_codex_environments_environment_toml",
+      "label": "Codex desktop (`.codex/environments/environment.toml`)",
       "_origin": "ast",
       "community": 40,
-      "community_name": "scripts/render.mjs",
-      "file_type": "code",
-      "norm_label": "houseroot",
-      "source_file": "scripts/render.mjs",
-      "source_location": "L24"
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "codex desktop (`.codex/environments/environment.toml`)",
+      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L36"
     },
     {
-      "id": "scripts_render_rendered",
-      "label": "rendered",
+      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_editor_and_tool_surfaces",
+      "label": "Editor and tool surfaces",
       "_origin": "ast",
       "community": 40,
-      "community_name": "scripts/render.mjs",
-      "file_type": "code",
-      "norm_label": "rendered",
-      "source_file": "scripts/render.mjs",
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "editor and tool surfaces",
+      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_jetbrains_run",
+      "label": "JetBrains (`.run/`)",
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "jetbrains (`.run/`)",
+      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L16"
+    },
+    {
+      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_odoo_projects",
+      "label": "Odoo projects",
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "odoo projects",
+      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
       "source_location": "L44"
     },
     {
-      "id": "scripts_render_stale",
-      "label": "stale",
+      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_openchamber",
+      "label": "OpenChamber",
       "_origin": "ast",
       "community": 40,
-      "community_name": "scripts/render.mjs",
-      "file_type": "code",
-      "norm_label": "stale",
-      "source_file": "scripts/render.mjs",
-      "source_location": "L45"
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "openchamber",
+      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L28"
     },
     {
-      "id": "scripts_render_values",
-      "label": "values",
+      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_orca_orca_yaml",
+      "label": "Orca (`orca.yaml`)",
       "_origin": "ast",
       "community": 40,
-      "community_name": "scripts/render.mjs",
-      "file_type": "code",
-      "norm_label": "values",
-      "source_file": "scripts/render.mjs",
-      "source_location": "L35"
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "orca (`orca.yaml`)",
+      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L20"
     },
     {
-      "id": "scripts_render_values_args",
-      "label": "{ values: args }",
+      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_vs_code_and_cursor_vscode",
+      "label": "VS Code and Cursor (`.vscode/`)",
       "_origin": "ast",
       "community": 40,
-      "community_name": "scripts/render.mjs",
-      "file_type": "code",
-      "norm_label": "{ values: args }",
-      "source_file": "scripts/render.mjs",
-      "source_location": "L26"
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "vs code and cursor (`.vscode/`)",
+      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "claude_skills_project_dev_surfaces_references_editor_surfaces_zed_zed",
+      "label": "Zed (`.zed/`)",
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "Editor and tool surfaces",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "zed (`.zed/`)",
+      "source_file": ".claude/skills/project-dev-surfaces/references/editor-surfaces.md",
+      "source_location": "L12"
     },
     {
       "id": "claude_skills_lean_build_skill",
@@ -40674,6 +40470,17 @@
       "source_location": "L1"
     },
     {
+      "id": "scripts_lib_render",
+      "label": "lib/render.mjs",
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "values.test.mjs",
+      "file_type": "code",
+      "norm_label": "lib/render.mjs",
+      "source_file": "scripts/lib/render.mjs",
+      "source_location": "L1"
+    },
+    {
       "id": "scripts_lib_values",
       "label": "values.mjs",
       "_origin": "ast",
@@ -40683,6 +40490,94 @@
       "norm_label": "values.mjs",
       "source_file": "scripts/lib/values.mjs",
       "source_location": "L1"
+    },
+    {
+      "id": "scripts_render",
+      "label": "scripts/render.mjs",
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "values.test.mjs",
+      "file_type": "code",
+      "norm_label": "scripts/render.mjs",
+      "source_file": "scripts/render.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "scripts_render_excluded",
+      "label": "excluded",
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "values.test.mjs",
+      "file_type": "code",
+      "norm_label": "excluded",
+      "source_file": "scripts/render.mjs",
+      "source_location": "L43"
+    },
+    {
+      "id": "scripts_render_houseroot",
+      "label": "houseRoot",
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "values.test.mjs",
+      "file_type": "code",
+      "norm_label": "houseroot",
+      "source_file": "scripts/render.mjs",
+      "source_location": "L24"
+    },
+    {
+      "id": "scripts_render_rendered",
+      "label": "rendered",
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "values.test.mjs",
+      "file_type": "code",
+      "norm_label": "rendered",
+      "source_file": "scripts/render.mjs",
+      "source_location": "L44"
+    },
+    {
+      "id": "scripts_render_stale",
+      "label": "stale",
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "values.test.mjs",
+      "file_type": "code",
+      "norm_label": "stale",
+      "source_file": "scripts/render.mjs",
+      "source_location": "L45"
+    },
+    {
+      "id": "scripts_render_values",
+      "label": "values",
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "values.test.mjs",
+      "file_type": "code",
+      "norm_label": "values",
+      "source_file": "scripts/render.mjs",
+      "source_location": "L35"
+    },
+    {
+      "id": "scripts_render_values_args",
+      "label": "{ values: args }",
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "values.test.mjs",
+      "file_type": "code",
+      "norm_label": "{ values: args }",
+      "source_file": "scripts/render.mjs",
+      "source_location": "L26"
+    },
+    {
+      "id": "test_actions_test_references",
+      "label": "references",
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "values.test.mjs",
+      "file_type": "code",
+      "norm_label": "references",
+      "source_file": "test/actions.test.mjs",
+      "source_location": "L28"
     },
     {
       "id": "test_render_test",
@@ -43323,7 +43218,7 @@
       "node_kind": "heading",
       "norm_label": "templates and the renderer",
       "source_file": "LLMS.md",
-      "source_location": "L146"
+      "source_location": "L164"
     },
     {
       "id": "claude_commands_change_template",
@@ -47135,7 +47030,7 @@
       "file_type": "code",
       "norm_label": "conventional",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L29"
+      "source_location": "L32"
     },
     {
       "id": "agents_skills_terraform_vendor_handover",
@@ -47517,7 +47412,7 @@
       "file_type": "code",
       "norm_label": "conventional",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L29"
+      "source_location": "L32"
     },
     {
       "id": "claude_skills_clerk_vendor_handover",
@@ -50223,31 +50118,232 @@
       "source_location": "L1"
     },
     {
-      "id": "templates_github_instructions_house_workflows_instructions",
-      "label": "templates/.github/instructions/house-workflows.instructions.md",
+      "id": "templates_contributing_a_id_codegraph_a_code_graph",
+      "label": "<a id=\"CodeGraph\"></a>Code graph",
       "_origin": "ast",
       "community": 636,
-      "community_name": "templates/.github/instructions/house-workflows.instructions.md",
+      "community_name": "<a id=\"Standards\"></a>Code standards",
       "file_type": "document",
-      "frontmatter": {
-        "applyTo": ".github/workflows/**,.github/actions/**,action.yml,action.yaml"
-      },
+      "node_kind": "heading",
+      "norm_label": "<a id=\"codegraph\"></a>code graph",
+      "source_file": "templates/CONTRIBUTING.md",
+      "source_location": "L187"
+    },
+    {
+      "id": "templates_contributing_a_id_comments_a_code_comments",
+      "label": "<a id=\"Comments\"></a>Code comments",
+      "_origin": "ast",
+      "community": 636,
+      "community_name": "<a id=\"Standards\"></a>Code standards",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"comments\"></a>code comments",
+      "source_file": "templates/CONTRIBUTING.md",
+      "source_location": "L176"
+    },
+    {
+      "id": "templates_contributing_a_id_dependencies_a_dependencies",
+      "label": "<a id=\"Dependencies\"></a>Dependencies",
+      "_origin": "ast",
+      "community": 636,
+      "community_name": "<a id=\"Standards\"></a>Code standards",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"dependencies\"></a>dependencies",
+      "source_file": "templates/CONTRIBUTING.md",
+      "source_location": "L161"
+    },
+    {
+      "id": "templates_contributing_a_id_moduleboundaries_a_module_boundaries",
+      "label": "<a id=\"ModuleBoundaries\"></a>Module boundaries",
+      "_origin": "ast",
+      "community": 636,
+      "community_name": "<a id=\"Standards\"></a>Code standards",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"moduleboundaries\"></a>module boundaries",
+      "source_file": "templates/CONTRIBUTING.md",
+      "source_location": "L166"
+    },
+    {
+      "id": "templates_contributing_a_id_quality_a_quality_over_speed",
+      "label": "<a id=\"Quality\"></a>Quality over speed",
+      "_origin": "ast",
+      "community": 636,
+      "community_name": "<a id=\"Standards\"></a>Code standards",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"quality\"></a>quality over speed",
+      "source_file": "templates/CONTRIBUTING.md",
+      "source_location": "L182"
+    },
+    {
+      "id": "templates_contributing_a_id_standards_a_code_standards",
+      "label": "<a id=\"Standards\"></a>Code standards",
+      "_origin": "ast",
+      "community": 636,
+      "community_name": "<a id=\"Standards\"></a>Code standards",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"standards\"></a>code standards",
+      "source_file": "templates/CONTRIBUTING.md",
+      "source_location": "L150"
+    },
+    {
+      "id": "templates_contributing_a_id_tests_a_tests",
+      "label": "<a id=\"Tests\"></a>Tests",
+      "_origin": "ast",
+      "community": 636,
+      "community_name": "<a id=\"Standards\"></a>Code standards",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"tests\"></a>tests",
+      "source_file": "templates/CONTRIBUTING.md",
+      "source_location": "L152"
+    },
+    {
+      "id": "llms",
+      "label": "LLMS.md",
+      "_origin": "ast",
+      "community": 637,
+      "community_name": "@resnovas/house for agents",
+      "file_type": "document",
       "node_kind": "page",
-      "norm_label": "templates/.github/instructions/house-workflows.instructions.md",
-      "source_file": "templates/.github/instructions/house-workflows.instructions.md",
+      "norm_label": "llms.md",
+      "source_file": "LLMS.md",
       "source_location": "L1"
     },
     {
-      "id": "templates_github_instructions_house_workflows_instructions_github_actions_workflows",
-      "label": "GitHub Actions workflows",
+      "id": "llms_how_the_sync_reaches_other_repositories",
+      "label": "How the sync reaches other repositories",
       "_origin": "ast",
-      "community": 636,
-      "community_name": "templates/.github/instructions/house-workflows.instructions.md",
+      "community": 637,
+      "community_name": "@resnovas/house for agents",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "github actions workflows",
-      "source_file": "templates/.github/instructions/house-workflows.instructions.md",
-      "source_location": "L7"
+      "norm_label": "how the sync reaches other repositories",
+      "source_file": "LLMS.md",
+      "source_location": "L215"
+    },
+    {
+      "id": "llms_making_a_change_here",
+      "label": "Making a change here",
+      "_origin": "ast",
+      "community": 637,
+      "community_name": "@resnovas/house for agents",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "making a change here",
+      "source_file": "LLMS.md",
+      "source_location": "L332"
+    },
+    {
+      "id": "llms_resnovas_house_for_agents",
+      "label": "@resnovas/house for agents",
+      "_origin": "ast",
+      "community": 637,
+      "community_name": "@resnovas/house for agents",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "@resnovas/house for agents",
+      "source_file": "LLMS.md",
+      "source_location": "L6"
+    },
+    {
+      "id": "llms_reusable_workflows",
+      "label": "Reusable workflows",
+      "_origin": "ast",
+      "community": 637,
+      "community_name": "@resnovas/house for agents",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "reusable workflows",
+      "source_file": "LLMS.md",
+      "source_location": "L291"
+    },
+    {
+      "id": "llms_the_house_preset",
+      "label": "The house preset",
+      "_origin": "ast",
+      "community": 637,
+      "community_name": "@resnovas/house for agents",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "the house preset",
+      "source_file": "LLMS.md",
+      "source_location": "L253"
+    },
+    {
+      "id": "templates_contributing_a_id_branchprefixes_a_branch_prefixes",
+      "label": "<a id=\"BranchPrefixes\"></a>Branch prefixes",
+      "_origin": "ast",
+      "community": 638,
+      "community_name": "<a id=\"PullRequests\"></a>Pull requests",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"branchprefixes\"></a>branch prefixes",
+      "source_file": "templates/CONTRIBUTING.md",
+      "source_location": "L107"
+    },
+    {
+      "id": "templates_contributing_a_id_commits_a_commits",
+      "label": "<a id=\"Commits\"></a>Commits",
+      "_origin": "ast",
+      "community": 638,
+      "community_name": "<a id=\"PullRequests\"></a>Pull requests",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"commits\"></a>commits",
+      "source_file": "templates/CONTRIBUTING.md",
+      "source_location": "L123"
+    },
+    {
+      "id": "templates_contributing_a_id_description_a_describing_your_change",
+      "label": "<a id=\"Description\"></a>Describing your change",
+      "_origin": "ast",
+      "community": 638,
+      "community_name": "<a id=\"PullRequests\"></a>Pull requests",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"description\"></a>describing your change",
+      "source_file": "templates/CONTRIBUTING.md",
+      "source_location": "L130"
+    },
+    {
+      "id": "templates_contributing_a_id_draftpullrequest_a_draft_pull_requests",
+      "label": "<a id=\"DraftPullRequest\"></a>Draft pull requests",
+      "_origin": "ast",
+      "community": 638,
+      "community_name": "<a id=\"PullRequests\"></a>Pull requests",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"draftpullrequest\"></a>draft pull requests",
+      "source_file": "templates/CONTRIBUTING.md",
+      "source_location": "L144"
+    },
+    {
+      "id": "templates_contributing_a_id_pr_title_a_titling_your_pull_request",
+      "label": "<a id=\"pr-title\"></a>Titling your pull request",
+      "_origin": "ast",
+      "community": 638,
+      "community_name": "<a id=\"PullRequests\"></a>Pull requests",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"pr-title\"></a>titling your pull request",
+      "source_file": "templates/CONTRIBUTING.md",
+      "source_location": "L100"
+    },
+    {
+      "id": "templates_contributing_a_id_pullrequests_a_pull_requests",
+      "label": "<a id=\"PullRequests\"></a>Pull requests",
+      "_origin": "ast",
+      "community": 638,
+      "community_name": "<a id=\"PullRequests\"></a>Pull requests",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "<a id=\"pullrequests\"></a>pull requests",
+      "source_file": "templates/CONTRIBUTING.md",
+      "source_location": "L98"
     },
     {
       "id": "templates_agents_prompts_review",
@@ -50303,7 +50399,19 @@
       "node_kind": "heading",
       "norm_label": "batching and caching",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L163"
+      "source_location": "L172"
+    },
+    {
+      "id": "agents_skills_coding_preferences_references_effect_boundaries_and_what_the_commit_hook_refuses",
+      "label": "Boundaries, and what the commit hook refuses",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "Effect-TS",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "boundaries, and what the commit hook refuses",
+      "source_file": ".agents/skills/coding-preferences/references/effect.md",
+      "source_location": "L36"
     },
     {
       "id": "agents_skills_coding_preferences_references_effect_conflict_resolution",
@@ -50315,7 +50423,7 @@
       "node_kind": "heading",
       "norm_label": "conflict resolution",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L118"
+      "source_location": "L127"
     },
     {
       "id": "agents_skills_coding_preferences_references_effect_current_decisions",
@@ -50327,7 +50435,7 @@
       "node_kind": "heading",
       "norm_label": "current decisions",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L60"
+      "source_location": "L69"
     },
     {
       "id": "agents_skills_coding_preferences_references_effect_effect_configuration",
@@ -50339,7 +50447,7 @@
       "node_kind": "heading",
       "norm_label": "effect configuration",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L138"
+      "source_location": "L147"
     },
     {
       "id": "agents_skills_coding_preferences_references_effect_effect_first_never_at_the_cost_of_functionality",
@@ -50351,7 +50459,7 @@
       "node_kind": "heading",
       "norm_label": "effect first, never at the cost of functionality",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L54"
+      "source_location": "L63"
     },
     {
       "id": "agents_skills_coding_preferences_references_effect_effect_language_service_and_dev_tools",
@@ -50363,7 +50471,7 @@
       "node_kind": "heading",
       "norm_label": "effect language service and dev tools",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L36"
+      "source_location": "L45"
     },
     {
       "id": "agents_skills_coding_preferences_references_effect_effect_platform",
@@ -50375,7 +50483,7 @@
       "node_kind": "heading",
       "norm_label": "effect platform",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L112"
+      "source_location": "L121"
     },
     {
       "id": "agents_skills_coding_preferences_references_effect_effect_schema",
@@ -50387,7 +50495,7 @@
       "node_kind": "heading",
       "norm_label": "effect schema",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L85"
+      "source_location": "L94"
     },
     {
       "id": "agents_skills_coding_preferences_references_effect_effect_style_guidelines",
@@ -50399,7 +50507,7 @@
       "node_kind": "heading",
       "norm_label": "effect style guidelines",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L73"
+      "source_location": "L82"
     },
     {
       "id": "agents_skills_coding_preferences_references_effect_effect_ts",
@@ -50438,7 +50546,7 @@
       "source_location": "L13"
     },
     {
-      "id": "agents_skills_coding_preferences_references_effect_implementation_42",
+      "id": "agents_skills_coding_preferences_references_effect_implementation_51",
       "label": "Implementation",
       "_origin": "ast",
       "community": 66,
@@ -50447,7 +50555,7 @@
       "node_kind": "heading",
       "norm_label": "implementation",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L42"
+      "source_location": "L51"
     },
     {
       "id": "agents_skills_coding_preferences_references_effect_module_resolution",
@@ -50459,7 +50567,7 @@
       "node_kind": "heading",
       "norm_label": "module resolution",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L199"
+      "source_location": "L208"
     },
     {
       "id": "agents_skills_coding_preferences_references_effect_prefer_functions_over_methods",
@@ -50471,7 +50579,7 @@
       "node_kind": "heading",
       "norm_label": "prefer functions over methods",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L79"
+      "source_location": "L88"
     },
     {
       "id": "agents_skills_coding_preferences_references_effect_roundtrip_consistency",
@@ -50483,7 +50591,7 @@
       "node_kind": "heading",
       "norm_label": "roundtrip consistency",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L91"
+      "source_location": "L100"
     },
     {
       "id": "agents_skills_coding_preferences_references_effect_test_location",
@@ -50495,7 +50603,7 @@
       "node_kind": "heading",
       "norm_label": "test location",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L195"
+      "source_location": "L204"
     },
     {
       "id": "agents_skills_coding_preferences_references_effect_testing_with_effect",
@@ -50507,7 +50615,7 @@
       "node_kind": "heading",
       "norm_label": "testing with effect",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L185"
+      "source_location": "L194"
     },
     {
       "id": "agents_skills_coding_preferences_references_effect_the_golden_rule",
@@ -50519,7 +50627,7 @@
       "node_kind": "heading",
       "norm_label": "the golden rule",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L191"
+      "source_location": "L200"
     },
     {
       "id": "agents_skills_coding_preferences_references_effect_use_runmain_for_entry_points",
@@ -50531,7 +50639,7 @@
       "node_kind": "heading",
       "norm_label": "use `runmain` for entry points",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L75"
+      "source_location": "L84"
     },
     {
       "id": "agents_skills_coding_preferences_references_effect_when_it_does_not_apply",
@@ -50546,7 +50654,7 @@
       "source_location": "L28"
     },
     {
-      "id": "agents_skills_coding_preferences_references_effect_when_it_does_not_apply_104",
+      "id": "agents_skills_coding_preferences_references_effect_when_it_does_not_apply_113",
       "label": "When it does not apply",
       "_origin": "ast",
       "community": 66,
@@ -50555,10 +50663,10 @@
       "node_kind": "heading",
       "norm_label": "when it does not apply",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L104"
+      "source_location": "L113"
     },
     {
-      "id": "agents_skills_coding_preferences_references_effect_when_it_does_not_apply_130",
+      "id": "agents_skills_coding_preferences_references_effect_when_it_does_not_apply_139",
       "label": "When it does not apply",
       "_origin": "ast",
       "community": 66,
@@ -50567,10 +50675,10 @@
       "node_kind": "heading",
       "norm_label": "when it does not apply",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L130"
+      "source_location": "L139"
     },
     {
-      "id": "agents_skills_coding_preferences_references_effect_when_it_does_not_apply_155",
+      "id": "agents_skills_coding_preferences_references_effect_when_it_does_not_apply_164",
       "label": "When it does not apply",
       "_origin": "ast",
       "community": 66,
@@ -50579,10 +50687,10 @@
       "node_kind": "heading",
       "norm_label": "when it does not apply",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L155"
+      "source_location": "L164"
     },
     {
-      "id": "agents_skills_coding_preferences_references_effect_when_it_does_not_apply_177",
+      "id": "agents_skills_coding_preferences_references_effect_when_it_does_not_apply_186",
       "label": "When it does not apply",
       "_origin": "ast",
       "community": 66,
@@ -50591,10 +50699,10 @@
       "node_kind": "heading",
       "norm_label": "when it does not apply",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L177"
+      "source_location": "L186"
     },
     {
-      "id": "agents_skills_coding_preferences_references_effect_when_it_does_not_apply_211",
+      "id": "agents_skills_coding_preferences_references_effect_when_it_does_not_apply_220",
       "label": "When it does not apply",
       "_origin": "ast",
       "community": 66,
@@ -50603,7 +50711,7 @@
       "node_kind": "heading",
       "norm_label": "when it does not apply",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L211"
+      "source_location": "L220"
     },
     {
       "id": "agents_skills_coding_preferences_references_effect_when_this_applies",
@@ -50618,7 +50726,7 @@
       "source_location": "L20"
     },
     {
-      "id": "agents_skills_coding_preferences_references_effect_when_this_applies_122",
+      "id": "agents_skills_coding_preferences_references_effect_when_this_applies_104",
       "label": "When this applies",
       "_origin": "ast",
       "community": 66,
@@ -50627,10 +50735,10 @@
       "node_kind": "heading",
       "norm_label": "when this applies",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L122"
+      "source_location": "L104"
     },
     {
-      "id": "agents_skills_coding_preferences_references_effect_when_this_applies_146",
+      "id": "agents_skills_coding_preferences_references_effect_when_this_applies_131",
       "label": "When this applies",
       "_origin": "ast",
       "community": 66,
@@ -50639,10 +50747,10 @@
       "node_kind": "heading",
       "norm_label": "when this applies",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L146"
+      "source_location": "L131"
     },
     {
-      "id": "agents_skills_coding_preferences_references_effect_when_this_applies_169",
+      "id": "agents_skills_coding_preferences_references_effect_when_this_applies_155",
       "label": "When this applies",
       "_origin": "ast",
       "community": 66,
@@ -50651,10 +50759,10 @@
       "node_kind": "heading",
       "norm_label": "when this applies",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L169"
+      "source_location": "L155"
     },
     {
-      "id": "agents_skills_coding_preferences_references_effect_when_this_applies_203",
+      "id": "agents_skills_coding_preferences_references_effect_when_this_applies_178",
       "label": "When this applies",
       "_origin": "ast",
       "community": 66,
@@ -50663,10 +50771,10 @@
       "node_kind": "heading",
       "norm_label": "when this applies",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L203"
+      "source_location": "L178"
     },
     {
-      "id": "agents_skills_coding_preferences_references_effect_when_this_applies_95",
+      "id": "agents_skills_coding_preferences_references_effect_when_this_applies_212",
       "label": "When this applies",
       "_origin": "ast",
       "community": 66,
@@ -50675,7 +50783,7 @@
       "node_kind": "heading",
       "norm_label": "when this applies",
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L95"
+      "source_location": "L212"
     },
     {
       "id": "docs_access",
@@ -50819,7 +50927,19 @@
       "node_kind": "heading",
       "norm_label": "batching and caching",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L163"
+      "source_location": "L172"
+    },
+    {
+      "id": "claude_skills_coding_preferences_references_effect_boundaries_and_what_the_commit_hook_refuses",
+      "label": "Boundaries, and what the commit hook refuses",
+      "_origin": "ast",
+      "community": 68,
+      "community_name": "Effect-TS",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "boundaries, and what the commit hook refuses",
+      "source_file": ".claude/skills/coding-preferences/references/effect.md",
+      "source_location": "L36"
     },
     {
       "id": "claude_skills_coding_preferences_references_effect_conflict_resolution",
@@ -50831,7 +50951,7 @@
       "node_kind": "heading",
       "norm_label": "conflict resolution",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L118"
+      "source_location": "L127"
     },
     {
       "id": "claude_skills_coding_preferences_references_effect_current_decisions",
@@ -50843,7 +50963,7 @@
       "node_kind": "heading",
       "norm_label": "current decisions",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L60"
+      "source_location": "L69"
     },
     {
       "id": "claude_skills_coding_preferences_references_effect_effect_configuration",
@@ -50855,7 +50975,7 @@
       "node_kind": "heading",
       "norm_label": "effect configuration",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L138"
+      "source_location": "L147"
     },
     {
       "id": "claude_skills_coding_preferences_references_effect_effect_first_never_at_the_cost_of_functionality",
@@ -50867,7 +50987,7 @@
       "node_kind": "heading",
       "norm_label": "effect first, never at the cost of functionality",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L54"
+      "source_location": "L63"
     },
     {
       "id": "claude_skills_coding_preferences_references_effect_effect_language_service_and_dev_tools",
@@ -50879,7 +50999,7 @@
       "node_kind": "heading",
       "norm_label": "effect language service and dev tools",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L36"
+      "source_location": "L45"
     },
     {
       "id": "claude_skills_coding_preferences_references_effect_effect_platform",
@@ -50891,7 +51011,7 @@
       "node_kind": "heading",
       "norm_label": "effect platform",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L112"
+      "source_location": "L121"
     },
     {
       "id": "claude_skills_coding_preferences_references_effect_effect_schema",
@@ -50903,7 +51023,7 @@
       "node_kind": "heading",
       "norm_label": "effect schema",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L85"
+      "source_location": "L94"
     },
     {
       "id": "claude_skills_coding_preferences_references_effect_effect_style_guidelines",
@@ -50915,7 +51035,7 @@
       "node_kind": "heading",
       "norm_label": "effect style guidelines",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L73"
+      "source_location": "L82"
     },
     {
       "id": "claude_skills_coding_preferences_references_effect_effect_ts",
@@ -50954,7 +51074,7 @@
       "source_location": "L13"
     },
     {
-      "id": "claude_skills_coding_preferences_references_effect_implementation_42",
+      "id": "claude_skills_coding_preferences_references_effect_implementation_51",
       "label": "Implementation",
       "_origin": "ast",
       "community": 68,
@@ -50963,7 +51083,7 @@
       "node_kind": "heading",
       "norm_label": "implementation",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L42"
+      "source_location": "L51"
     },
     {
       "id": "claude_skills_coding_preferences_references_effect_module_resolution",
@@ -50975,7 +51095,7 @@
       "node_kind": "heading",
       "norm_label": "module resolution",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L199"
+      "source_location": "L208"
     },
     {
       "id": "claude_skills_coding_preferences_references_effect_prefer_functions_over_methods",
@@ -50987,7 +51107,7 @@
       "node_kind": "heading",
       "norm_label": "prefer functions over methods",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L79"
+      "source_location": "L88"
     },
     {
       "id": "claude_skills_coding_preferences_references_effect_roundtrip_consistency",
@@ -50999,7 +51119,7 @@
       "node_kind": "heading",
       "norm_label": "roundtrip consistency",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L91"
+      "source_location": "L100"
     },
     {
       "id": "claude_skills_coding_preferences_references_effect_test_location",
@@ -51011,7 +51131,7 @@
       "node_kind": "heading",
       "norm_label": "test location",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L195"
+      "source_location": "L204"
     },
     {
       "id": "claude_skills_coding_preferences_references_effect_testing_with_effect",
@@ -51023,7 +51143,7 @@
       "node_kind": "heading",
       "norm_label": "testing with effect",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L185"
+      "source_location": "L194"
     },
     {
       "id": "claude_skills_coding_preferences_references_effect_the_golden_rule",
@@ -51035,7 +51155,7 @@
       "node_kind": "heading",
       "norm_label": "the golden rule",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L191"
+      "source_location": "L200"
     },
     {
       "id": "claude_skills_coding_preferences_references_effect_use_runmain_for_entry_points",
@@ -51047,7 +51167,7 @@
       "node_kind": "heading",
       "norm_label": "use `runmain` for entry points",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L75"
+      "source_location": "L84"
     },
     {
       "id": "claude_skills_coding_preferences_references_effect_when_it_does_not_apply",
@@ -51062,7 +51182,7 @@
       "source_location": "L28"
     },
     {
-      "id": "claude_skills_coding_preferences_references_effect_when_it_does_not_apply_104",
+      "id": "claude_skills_coding_preferences_references_effect_when_it_does_not_apply_113",
       "label": "When it does not apply",
       "_origin": "ast",
       "community": 68,
@@ -51071,10 +51191,10 @@
       "node_kind": "heading",
       "norm_label": "when it does not apply",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L104"
+      "source_location": "L113"
     },
     {
-      "id": "claude_skills_coding_preferences_references_effect_when_it_does_not_apply_130",
+      "id": "claude_skills_coding_preferences_references_effect_when_it_does_not_apply_139",
       "label": "When it does not apply",
       "_origin": "ast",
       "community": 68,
@@ -51083,10 +51203,10 @@
       "node_kind": "heading",
       "norm_label": "when it does not apply",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L130"
+      "source_location": "L139"
     },
     {
-      "id": "claude_skills_coding_preferences_references_effect_when_it_does_not_apply_155",
+      "id": "claude_skills_coding_preferences_references_effect_when_it_does_not_apply_164",
       "label": "When it does not apply",
       "_origin": "ast",
       "community": 68,
@@ -51095,10 +51215,10 @@
       "node_kind": "heading",
       "norm_label": "when it does not apply",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L155"
+      "source_location": "L164"
     },
     {
-      "id": "claude_skills_coding_preferences_references_effect_when_it_does_not_apply_177",
+      "id": "claude_skills_coding_preferences_references_effect_when_it_does_not_apply_186",
       "label": "When it does not apply",
       "_origin": "ast",
       "community": 68,
@@ -51107,10 +51227,10 @@
       "node_kind": "heading",
       "norm_label": "when it does not apply",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L177"
+      "source_location": "L186"
     },
     {
-      "id": "claude_skills_coding_preferences_references_effect_when_it_does_not_apply_211",
+      "id": "claude_skills_coding_preferences_references_effect_when_it_does_not_apply_220",
       "label": "When it does not apply",
       "_origin": "ast",
       "community": 68,
@@ -51119,7 +51239,7 @@
       "node_kind": "heading",
       "norm_label": "when it does not apply",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L211"
+      "source_location": "L220"
     },
     {
       "id": "claude_skills_coding_preferences_references_effect_when_this_applies",
@@ -51134,7 +51254,7 @@
       "source_location": "L20"
     },
     {
-      "id": "claude_skills_coding_preferences_references_effect_when_this_applies_122",
+      "id": "claude_skills_coding_preferences_references_effect_when_this_applies_104",
       "label": "When this applies",
       "_origin": "ast",
       "community": 68,
@@ -51143,10 +51263,10 @@
       "node_kind": "heading",
       "norm_label": "when this applies",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L122"
+      "source_location": "L104"
     },
     {
-      "id": "claude_skills_coding_preferences_references_effect_when_this_applies_146",
+      "id": "claude_skills_coding_preferences_references_effect_when_this_applies_131",
       "label": "When this applies",
       "_origin": "ast",
       "community": 68,
@@ -51155,10 +51275,10 @@
       "node_kind": "heading",
       "norm_label": "when this applies",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L146"
+      "source_location": "L131"
     },
     {
-      "id": "claude_skills_coding_preferences_references_effect_when_this_applies_169",
+      "id": "claude_skills_coding_preferences_references_effect_when_this_applies_155",
       "label": "When this applies",
       "_origin": "ast",
       "community": 68,
@@ -51167,10 +51287,10 @@
       "node_kind": "heading",
       "norm_label": "when this applies",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L169"
+      "source_location": "L155"
     },
     {
-      "id": "claude_skills_coding_preferences_references_effect_when_this_applies_203",
+      "id": "claude_skills_coding_preferences_references_effect_when_this_applies_178",
       "label": "When this applies",
       "_origin": "ast",
       "community": 68,
@@ -51179,10 +51299,10 @@
       "node_kind": "heading",
       "norm_label": "when this applies",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L203"
+      "source_location": "L178"
     },
     {
-      "id": "claude_skills_coding_preferences_references_effect_when_this_applies_95",
+      "id": "claude_skills_coding_preferences_references_effect_when_this_applies_212",
       "label": "When this applies",
       "_origin": "ast",
       "community": 68,
@@ -51191,7 +51311,7 @@
       "node_kind": "heading",
       "norm_label": "when this applies",
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L95"
+      "source_location": "L212"
     },
     {
       "id": "docs_troubleshooting_a_id_checks_a_the_smartcloud_check",
@@ -51411,7 +51531,7 @@
       "node_kind": "heading",
       "norm_label": "before a pull request",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L33"
+      "source_location": "L35"
     },
     {
       "id": "templates_agents_before_every_commit",
@@ -51423,7 +51543,7 @@
       "node_kind": "heading",
       "norm_label": "before every commit",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L18"
+      "source_location": "L19"
     },
     {
       "id": "templates_agents_changing_a_toolset",
@@ -51435,7 +51555,7 @@
       "node_kind": "heading",
       "norm_label": "changing a toolset",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L129"
+      "source_location": "L131"
     },
     {
       "id": "templates_agents_code_knowledge_and_memory_graphify",
@@ -51447,7 +51567,7 @@
       "node_kind": "heading",
       "norm_label": "code knowledge and memory (graphify)",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L139"
+      "source_location": "L141"
     },
     {
       "id": "templates_agents_external_tools",
@@ -51459,7 +51579,7 @@
       "node_kind": "heading",
       "norm_label": "external tools",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L164"
+      "source_location": "L166"
     },
     {
       "id": "templates_agents_final_message",
@@ -51471,7 +51591,7 @@
       "node_kind": "heading",
       "norm_label": "final message",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L213"
+      "source_location": "L215"
     },
     {
       "id": "templates_agents_house_standards",
@@ -51483,7 +51603,7 @@
       "node_kind": "heading",
       "norm_label": "house standards",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L56"
+      "source_location": "L58"
     },
     {
       "id": "templates_agents_how_orca_sets_itself_up",
@@ -51495,7 +51615,7 @@
       "node_kind": "heading",
       "norm_label": "how orca sets itself up",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L111"
+      "source_location": "L113"
     },
     {
       "id": "templates_agents_issues_and_handoff",
@@ -51507,7 +51627,7 @@
       "node_kind": "heading",
       "norm_label": "issues and handoff",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L180"
+      "source_location": "L182"
     },
     {
       "id": "templates_agents_mcp_servers",
@@ -51519,7 +51639,7 @@
       "node_kind": "heading",
       "norm_label": "mcp servers",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L117"
+      "source_location": "L119"
     },
     {
       "id": "templates_agents_mission",
@@ -51543,7 +51663,7 @@
       "node_kind": "heading",
       "norm_label": "on a clean clone",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L83"
+      "source_location": "L85"
     },
     {
       "id": "templates_agents_session_start",
@@ -51567,7 +51687,7 @@
       "node_kind": "heading",
       "norm_label": "source availability",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L135"
+      "source_location": "L137"
     },
     {
       "id": "templates_agents_the_law",
@@ -51591,7 +51711,7 @@
       "node_kind": "heading",
       "norm_label": "the repository workspace",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L79"
+      "source_location": "L81"
     },
     {
       "id": "templates_agents_when_a_tool_is_unavailable",
@@ -51603,7 +51723,7 @@
       "node_kind": "heading",
       "norm_label": "when a tool is unavailable",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L40"
+      "source_location": "L42"
     },
     {
       "id": "templates_agents_when_asked",
@@ -51615,7 +51735,7 @@
       "node_kind": "heading",
       "norm_label": "when asked",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L206"
+      "source_location": "L208"
     },
     {
       "id": "templates_agents_when_the_task_and_a_rule_disagree",
@@ -51627,7 +51747,7 @@
       "node_kind": "heading",
       "norm_label": "when the task and a rule disagree",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L48"
+      "source_location": "L50"
     },
     {
       "id": "templates_agents_which_toolset_each_host_reads",
@@ -51639,7 +51759,7 @@
       "node_kind": "heading",
       "norm_label": "which toolset each host reads",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L92"
+      "source_location": "L94"
     },
     {
       "id": "templates_agents_workspace_defaults",
@@ -51651,7 +51771,7 @@
       "node_kind": "heading",
       "norm_label": "workspace defaults",
       "source_file": "templates/AGENTS.md",
-      "source_location": "L191"
+      "source_location": "L193"
     },
     {
       "id": "templates_claude",
@@ -51699,7 +51819,19 @@
       "node_kind": "heading",
       "norm_label": "batching and caching",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L163"
+      "source_location": "L172"
+    },
+    {
+      "id": "templates_agents_skills_coding_preferences_references_effect_boundaries_and_what_the_commit_hook_refuses",
+      "label": "Boundaries, and what the commit hook refuses",
+      "_origin": "ast",
+      "community": 72,
+      "community_name": "Effect-TS",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "boundaries, and what the commit hook refuses",
+      "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
+      "source_location": "L36"
     },
     {
       "id": "templates_agents_skills_coding_preferences_references_effect_conflict_resolution",
@@ -51711,7 +51843,7 @@
       "node_kind": "heading",
       "norm_label": "conflict resolution",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L118"
+      "source_location": "L127"
     },
     {
       "id": "templates_agents_skills_coding_preferences_references_effect_current_decisions",
@@ -51723,7 +51855,7 @@
       "node_kind": "heading",
       "norm_label": "current decisions",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L60"
+      "source_location": "L69"
     },
     {
       "id": "templates_agents_skills_coding_preferences_references_effect_effect_configuration",
@@ -51735,7 +51867,7 @@
       "node_kind": "heading",
       "norm_label": "effect configuration",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L138"
+      "source_location": "L147"
     },
     {
       "id": "templates_agents_skills_coding_preferences_references_effect_effect_first_never_at_the_cost_of_functionality",
@@ -51747,7 +51879,7 @@
       "node_kind": "heading",
       "norm_label": "effect first, never at the cost of functionality",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L54"
+      "source_location": "L63"
     },
     {
       "id": "templates_agents_skills_coding_preferences_references_effect_effect_language_service_and_dev_tools",
@@ -51759,7 +51891,7 @@
       "node_kind": "heading",
       "norm_label": "effect language service and dev tools",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L36"
+      "source_location": "L45"
     },
     {
       "id": "templates_agents_skills_coding_preferences_references_effect_effect_platform",
@@ -51771,7 +51903,7 @@
       "node_kind": "heading",
       "norm_label": "effect platform",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L112"
+      "source_location": "L121"
     },
     {
       "id": "templates_agents_skills_coding_preferences_references_effect_effect_schema",
@@ -51783,7 +51915,7 @@
       "node_kind": "heading",
       "norm_label": "effect schema",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L85"
+      "source_location": "L94"
     },
     {
       "id": "templates_agents_skills_coding_preferences_references_effect_effect_style_guidelines",
@@ -51795,7 +51927,7 @@
       "node_kind": "heading",
       "norm_label": "effect style guidelines",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L73"
+      "source_location": "L82"
     },
     {
       "id": "templates_agents_skills_coding_preferences_references_effect_effect_ts",
@@ -51834,7 +51966,7 @@
       "source_location": "L13"
     },
     {
-      "id": "templates_agents_skills_coding_preferences_references_effect_implementation_42",
+      "id": "templates_agents_skills_coding_preferences_references_effect_implementation_51",
       "label": "Implementation",
       "_origin": "ast",
       "community": 72,
@@ -51843,7 +51975,7 @@
       "node_kind": "heading",
       "norm_label": "implementation",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L42"
+      "source_location": "L51"
     },
     {
       "id": "templates_agents_skills_coding_preferences_references_effect_module_resolution",
@@ -51855,7 +51987,7 @@
       "node_kind": "heading",
       "norm_label": "module resolution",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L199"
+      "source_location": "L208"
     },
     {
       "id": "templates_agents_skills_coding_preferences_references_effect_prefer_functions_over_methods",
@@ -51867,7 +51999,7 @@
       "node_kind": "heading",
       "norm_label": "prefer functions over methods",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L79"
+      "source_location": "L88"
     },
     {
       "id": "templates_agents_skills_coding_preferences_references_effect_roundtrip_consistency",
@@ -51879,7 +52011,7 @@
       "node_kind": "heading",
       "norm_label": "roundtrip consistency",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L91"
+      "source_location": "L100"
     },
     {
       "id": "templates_agents_skills_coding_preferences_references_effect_test_location",
@@ -51891,7 +52023,7 @@
       "node_kind": "heading",
       "norm_label": "test location",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L195"
+      "source_location": "L204"
     },
     {
       "id": "templates_agents_skills_coding_preferences_references_effect_testing_with_effect",
@@ -51903,7 +52035,7 @@
       "node_kind": "heading",
       "norm_label": "testing with effect",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L185"
+      "source_location": "L194"
     },
     {
       "id": "templates_agents_skills_coding_preferences_references_effect_the_golden_rule",
@@ -51915,7 +52047,7 @@
       "node_kind": "heading",
       "norm_label": "the golden rule",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L191"
+      "source_location": "L200"
     },
     {
       "id": "templates_agents_skills_coding_preferences_references_effect_use_runmain_for_entry_points",
@@ -51927,7 +52059,7 @@
       "node_kind": "heading",
       "norm_label": "use `runmain` for entry points",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L75"
+      "source_location": "L84"
     },
     {
       "id": "templates_agents_skills_coding_preferences_references_effect_when_it_does_not_apply",
@@ -51942,7 +52074,7 @@
       "source_location": "L28"
     },
     {
-      "id": "templates_agents_skills_coding_preferences_references_effect_when_it_does_not_apply_104",
+      "id": "templates_agents_skills_coding_preferences_references_effect_when_it_does_not_apply_113",
       "label": "When it does not apply",
       "_origin": "ast",
       "community": 72,
@@ -51951,10 +52083,10 @@
       "node_kind": "heading",
       "norm_label": "when it does not apply",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L104"
+      "source_location": "L113"
     },
     {
-      "id": "templates_agents_skills_coding_preferences_references_effect_when_it_does_not_apply_130",
+      "id": "templates_agents_skills_coding_preferences_references_effect_when_it_does_not_apply_139",
       "label": "When it does not apply",
       "_origin": "ast",
       "community": 72,
@@ -51963,10 +52095,10 @@
       "node_kind": "heading",
       "norm_label": "when it does not apply",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L130"
+      "source_location": "L139"
     },
     {
-      "id": "templates_agents_skills_coding_preferences_references_effect_when_it_does_not_apply_155",
+      "id": "templates_agents_skills_coding_preferences_references_effect_when_it_does_not_apply_164",
       "label": "When it does not apply",
       "_origin": "ast",
       "community": 72,
@@ -51975,10 +52107,10 @@
       "node_kind": "heading",
       "norm_label": "when it does not apply",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L155"
+      "source_location": "L164"
     },
     {
-      "id": "templates_agents_skills_coding_preferences_references_effect_when_it_does_not_apply_177",
+      "id": "templates_agents_skills_coding_preferences_references_effect_when_it_does_not_apply_186",
       "label": "When it does not apply",
       "_origin": "ast",
       "community": 72,
@@ -51987,10 +52119,10 @@
       "node_kind": "heading",
       "norm_label": "when it does not apply",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L177"
+      "source_location": "L186"
     },
     {
-      "id": "templates_agents_skills_coding_preferences_references_effect_when_it_does_not_apply_211",
+      "id": "templates_agents_skills_coding_preferences_references_effect_when_it_does_not_apply_220",
       "label": "When it does not apply",
       "_origin": "ast",
       "community": 72,
@@ -51999,7 +52131,7 @@
       "node_kind": "heading",
       "norm_label": "when it does not apply",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L211"
+      "source_location": "L220"
     },
     {
       "id": "templates_agents_skills_coding_preferences_references_effect_when_this_applies",
@@ -52014,7 +52146,7 @@
       "source_location": "L20"
     },
     {
-      "id": "templates_agents_skills_coding_preferences_references_effect_when_this_applies_122",
+      "id": "templates_agents_skills_coding_preferences_references_effect_when_this_applies_104",
       "label": "When this applies",
       "_origin": "ast",
       "community": 72,
@@ -52023,10 +52155,10 @@
       "node_kind": "heading",
       "norm_label": "when this applies",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L122"
+      "source_location": "L104"
     },
     {
-      "id": "templates_agents_skills_coding_preferences_references_effect_when_this_applies_146",
+      "id": "templates_agents_skills_coding_preferences_references_effect_when_this_applies_131",
       "label": "When this applies",
       "_origin": "ast",
       "community": 72,
@@ -52035,10 +52167,10 @@
       "node_kind": "heading",
       "norm_label": "when this applies",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L146"
+      "source_location": "L131"
     },
     {
-      "id": "templates_agents_skills_coding_preferences_references_effect_when_this_applies_169",
+      "id": "templates_agents_skills_coding_preferences_references_effect_when_this_applies_155",
       "label": "When this applies",
       "_origin": "ast",
       "community": 72,
@@ -52047,10 +52179,10 @@
       "node_kind": "heading",
       "norm_label": "when this applies",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L169"
+      "source_location": "L155"
     },
     {
-      "id": "templates_agents_skills_coding_preferences_references_effect_when_this_applies_203",
+      "id": "templates_agents_skills_coding_preferences_references_effect_when_this_applies_178",
       "label": "When this applies",
       "_origin": "ast",
       "community": 72,
@@ -52059,10 +52191,10 @@
       "node_kind": "heading",
       "norm_label": "when this applies",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L203"
+      "source_location": "L178"
     },
     {
-      "id": "templates_agents_skills_coding_preferences_references_effect_when_this_applies_95",
+      "id": "templates_agents_skills_coding_preferences_references_effect_when_this_applies_212",
       "label": "When this applies",
       "_origin": "ast",
       "community": 72,
@@ -52071,7 +52203,7 @@
       "node_kind": "heading",
       "norm_label": "when this applies",
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L95"
+      "source_location": "L212"
     },
     {
       "id": "agents_skills_gitbutler_references_concepts",
@@ -53778,23 +53910,11 @@
       "source_location": "L67"
     },
     {
-      "id": "llms",
-      "label": "LLMS.md",
-      "_origin": "ast",
-      "community": 79,
-      "community_name": "@resnovas/house for agents",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "llms.md",
-      "source_file": "LLMS.md",
-      "source_location": "L1"
-    },
-    {
       "id": "llms_code",
       "label": "Code",
       "_origin": "ast",
       "community": 79,
-      "community_name": "@resnovas/house for agents",
+      "community_name": "House standards",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "code",
@@ -53806,43 +53926,43 @@
       "label": "Commits and pull requests",
       "_origin": "ast",
       "community": 79,
-      "community_name": "@resnovas/house for agents",
+      "community_name": "House standards",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "commits and pull requests",
       "source_file": "LLMS.md",
-      "source_location": "L66"
+      "source_location": "L84"
     },
     {
       "id": "llms_document_everything_twice",
       "label": "Document everything twice",
       "_origin": "ast",
       "community": 79,
-      "community_name": "@resnovas/house for agents",
+      "community_name": "House standards",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "document everything twice",
       "source_file": "LLMS.md",
-      "source_location": "L89"
+      "source_location": "L107"
     },
     {
       "id": "llms_files",
       "label": "Files",
       "_origin": "ast",
       "community": 79,
-      "community_name": "@resnovas/house for agents",
+      "community_name": "House standards",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "files",
       "source_file": "LLMS.md",
-      "source_location": "L58"
+      "source_location": "L76"
     },
     {
       "id": "llms_house_standards",
       "label": "House standards",
       "_origin": "ast",
       "community": 79,
-      "community_name": "@resnovas/house for agents",
+      "community_name": "House standards",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "house standards",
@@ -53850,59 +53970,11 @@
       "source_location": "L15"
     },
     {
-      "id": "llms_how_the_sync_reaches_other_repositories",
-      "label": "How the sync reaches other repositories",
-      "_origin": "ast",
-      "community": 79,
-      "community_name": "@resnovas/house for agents",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "how the sync reaches other repositories",
-      "source_file": "LLMS.md",
-      "source_location": "L197"
-    },
-    {
-      "id": "llms_making_a_change_here",
-      "label": "Making a change here",
-      "_origin": "ast",
-      "community": 79,
-      "community_name": "@resnovas/house for agents",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "making a change here",
-      "source_file": "LLMS.md",
-      "source_location": "L314"
-    },
-    {
-      "id": "llms_resnovas_house_for_agents",
-      "label": "@resnovas/house for agents",
-      "_origin": "ast",
-      "community": 79,
-      "community_name": "@resnovas/house for agents",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "@resnovas/house for agents",
-      "source_file": "LLMS.md",
-      "source_location": "L6"
-    },
-    {
-      "id": "llms_reusable_workflows",
-      "label": "Reusable workflows",
-      "_origin": "ast",
-      "community": 79,
-      "community_name": "@resnovas/house for agents",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "reusable workflows",
-      "source_file": "LLMS.md",
-      "source_location": "L273"
-    },
-    {
       "id": "llms_tests",
       "label": "Tests",
       "_origin": "ast",
       "community": 79,
-      "community_name": "@resnovas/house for agents",
+      "community_name": "House standards",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "tests",
@@ -53910,16 +53982,16 @@
       "source_location": "L50"
     },
     {
-      "id": "llms_the_house_preset",
-      "label": "The house preset",
+      "id": "llms_typescript",
+      "label": "TypeScript",
       "_origin": "ast",
       "community": 79,
-      "community_name": "@resnovas/house for agents",
+      "community_name": "House standards",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "the house preset",
+      "norm_label": "typescript",
       "source_file": "LLMS.md",
-      "source_location": "L235"
+      "source_location": "L58"
     },
     {
       "id": "claude_skills_graphify_skill",
@@ -57072,7 +57144,7 @@
       "node_kind": "heading",
       "norm_label": "commits and pull requests",
       "source_file": "ai-docs/src/05_house-standards/index.md",
-      "source_location": "L53"
+      "source_location": "L71"
     },
     {
       "id": "ai_docs_src_05_house_standards_index_document_everything_twice",
@@ -57084,7 +57156,7 @@
       "node_kind": "heading",
       "norm_label": "document everything twice",
       "source_file": "ai-docs/src/05_house-standards/index.md",
-      "source_location": "L76"
+      "source_location": "L94"
     },
     {
       "id": "ai_docs_src_05_house_standards_index_files",
@@ -57096,7 +57168,7 @@
       "node_kind": "heading",
       "norm_label": "files",
       "source_file": "ai-docs/src/05_house-standards/index.md",
-      "source_location": "L45"
+      "source_location": "L63"
     },
     {
       "id": "ai_docs_src_05_house_standards_index_house_standards",
@@ -57121,6 +57193,18 @@
       "norm_label": "tests",
       "source_file": "ai-docs/src/05_house-standards/index.md",
       "source_location": "L37"
+    },
+    {
+      "id": "ai_docs_src_05_house_standards_index_typescript",
+      "label": "TypeScript",
+      "_origin": "ast",
+      "community": 95,
+      "community_name": "House standards",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "typescript",
+      "source_file": "ai-docs/src/05_house-standards/index.md",
+      "source_location": "L45"
     },
     {
       "id": "templates_ai_docs_src_05_house_standards_index",
@@ -57156,7 +57240,7 @@
       "node_kind": "heading",
       "norm_label": "commits and pull requests",
       "source_file": "templates/ai-docs/src/05_house-standards/index.md",
-      "source_location": "L53"
+      "source_location": "L71"
     },
     {
       "id": "templates_ai_docs_src_05_house_standards_index_document_everything_twice",
@@ -57168,7 +57252,7 @@
       "node_kind": "heading",
       "norm_label": "document everything twice",
       "source_file": "templates/ai-docs/src/05_house-standards/index.md",
-      "source_location": "L76"
+      "source_location": "L94"
     },
     {
       "id": "templates_ai_docs_src_05_house_standards_index_files",
@@ -57180,7 +57264,7 @@
       "node_kind": "heading",
       "norm_label": "files",
       "source_file": "templates/ai-docs/src/05_house-standards/index.md",
-      "source_location": "L45"
+      "source_location": "L63"
     },
     {
       "id": "templates_ai_docs_src_05_house_standards_index_house_standards",
@@ -57205,6 +57289,18 @@
       "norm_label": "tests",
       "source_file": "templates/ai-docs/src/05_house-standards/index.md",
       "source_location": "L37"
+    },
+    {
+      "id": "templates_ai_docs_src_05_house_standards_index_typescript",
+      "label": "TypeScript",
+      "_origin": "ast",
+      "community": 96,
+      "community_name": "House standards",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "typescript",
+      "source_file": "templates/ai-docs/src/05_house-standards/index.md",
+      "source_location": "L45"
     },
     {
       "id": "ai_docs_readme",
@@ -58450,7 +58546,7 @@
       "label": "ref_node_assert",
       "_origin": "semantic",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_node_assert",
@@ -58462,7 +58558,7 @@
       "label": "ref_node_child_process",
       "_origin": "semantic",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_node_child_process",
@@ -58474,7 +58570,7 @@
       "label": "ref_node_os",
       "_origin": "semantic",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_node_os",
@@ -58486,7 +58582,7 @@
       "label": "ref_node_path",
       "_origin": "semantic",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_node_path",
@@ -58498,7 +58594,7 @@
       "label": "ref_node_test",
       "_origin": "semantic",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_node_test",
@@ -58510,22 +58606,10 @@
       "label": "ref_node_url",
       "_origin": "semantic",
       "community": 10,
-      "community_name": "ref_node_path",
+      "community_name": "ai-docs.test.mjs",
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_node_url",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "ref_node_util",
-      "label": "ref_node_util",
-      "_origin": "semantic",
-      "community": 40,
-      "community_name": "scripts/render.mjs",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "ref_node_util",
       "source_file": "",
       "type": "external"
     },
@@ -58542,14 +58626,14 @@
       "type": "external"
     },
     {
-      "id": "ref_node_crypto",
-      "label": "ref_node_crypto",
+      "id": "ref_node_util",
+      "label": "ref_node_util",
       "_origin": "semantic",
-      "community": 61,
-      "community_name": "templates/tools/dev/surfaces.mjs",
+      "community": 47,
+      "community_name": "values.test.mjs",
       "external": true,
       "file_type": "concept",
-      "norm_label": "ref_node_crypto",
+      "norm_label": "ref_node_util",
       "source_file": "",
       "type": "external"
     },
@@ -58557,11 +58641,23 @@
       "id": "ref_node_net",
       "label": "ref_node_net",
       "_origin": "semantic",
+      "community": 61,
+      "community_name": "templates/tools/dev/surfaces.mjs",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_node_net",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "ref_node_crypto",
+      "label": "ref_node_crypto",
+      "_origin": "semantic",
       "community": 62,
       "community_name": "tools/dev/surfaces.mjs",
       "external": true,
       "file_type": "concept",
-      "norm_label": "ref_node_net",
+      "norm_label": "ref_node_crypto",
       "source_file": "",
       "type": "external"
     }
@@ -59025,18 +59121,6 @@
     },
     {
       "source": "templates_tools_dev_commit_check_checkmessage",
-      "target": "templates_tools_dev_commit_check_parsemessage",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L79",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_tools_dev_commit_check_checkmessage",
       "target": "templates_tools_dev_commit_check_isai",
       "relation": "calls",
       "_origin": "ast",
@@ -59044,7 +59128,31 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L97",
+      "source_location": "L113",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_commit_check_checkmessage",
+      "target": "templates_tools_dev_commit_check_parsemessage",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "templates/tools/dev/commit-check.mjs",
+      "source_location": "L95",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_commit_check_checkstagedtext",
+      "target": "templates_tools_dev_commit_check_withoutstrings",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "templates/tools/dev/commit-check.mjs",
+      "source_location": "L182",
       "weight": 1.0
     },
     {
@@ -59056,7 +59164,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L166",
+      "source_location": "L206",
       "weight": 1.0
     },
     {
@@ -59068,7 +59176,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L177",
+      "source_location": "L217",
       "weight": 1.0
     },
     {
@@ -59080,7 +59188,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L181",
+      "source_location": "L221",
       "weight": 1.0
     },
     {
@@ -59092,7 +59200,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L181",
+      "source_location": "L221",
       "weight": 1.0
     },
     {
@@ -60081,18 +60189,6 @@
     },
     {
       "source": "tools_dev_commit_check_checkmessage",
-      "target": "tools_dev_commit_check_parsemessage",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L79",
-      "weight": 1.0
-    },
-    {
-      "source": "tools_dev_commit_check_checkmessage",
       "target": "tools_dev_commit_check_isai",
       "relation": "calls",
       "_origin": "ast",
@@ -60100,7 +60196,31 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L97",
+      "source_location": "L113",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_commit_check_checkmessage",
+      "target": "tools_dev_commit_check_parsemessage",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tools/dev/commit-check.mjs",
+      "source_location": "L95",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_commit_check_checkstagedtext",
+      "target": "tools_dev_commit_check_withoutstrings",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tools/dev/commit-check.mjs",
+      "source_location": "L182",
       "weight": 1.0
     },
     {
@@ -60112,7 +60232,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L166",
+      "source_location": "L206",
       "weight": 1.0
     },
     {
@@ -60124,7 +60244,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L177",
+      "source_location": "L217",
       "weight": 1.0
     },
     {
@@ -60136,7 +60256,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L181",
+      "source_location": "L221",
       "weight": 1.0
     },
     {
@@ -60148,7 +60268,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L181",
+      "source_location": "L221",
       "weight": 1.0
     },
     {
@@ -61577,7 +61697,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L18",
+      "source_location": "L21",
       "weight": 1.0
     },
     {
@@ -61589,7 +61709,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L19",
+      "source_location": "L22",
       "weight": 1.0
     },
     {
@@ -62333,7 +62453,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L18",
+      "source_location": "L21",
       "weight": 1.0
     },
     {
@@ -62345,7 +62465,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L19",
+      "source_location": "L22",
       "weight": 1.0
     },
     {
@@ -62553,7 +62673,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L139",
+      "source_location": "L141",
       "weight": 1.0
     },
     {
@@ -62564,18 +62684,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L164",
-      "weight": 1.0
-    },
-    {
-      "source": "agents",
-      "target": "agents_before_every_commit",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "AGENTS.md",
-      "source_location": "L18",
+      "source_location": "L166",
       "weight": 1.0
     },
     {
@@ -62586,7 +62695,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L180",
+      "source_location": "L182",
+      "weight": 1.0
+    },
+    {
+      "source": "agents",
+      "target": "agents_before_every_commit",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "L19",
       "weight": 1.0
     },
     {
@@ -62597,7 +62717,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L191",
+      "source_location": "L193",
       "weight": 1.0
     },
     {
@@ -62619,7 +62739,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L206",
+      "source_location": "L208",
       "weight": 1.0
     },
     {
@@ -62630,7 +62750,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L213",
+      "source_location": "L215",
       "weight": 1.0
     },
     {
@@ -62641,7 +62761,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L219",
+      "source_location": "L221",
       "weight": 1.0
     },
     {
@@ -62652,7 +62772,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L33",
+      "source_location": "L35",
       "weight": 1.0
     },
     {
@@ -62663,7 +62783,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L40",
+      "source_location": "L42",
       "weight": 1.0
     },
     {
@@ -62674,7 +62794,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L48",
+      "source_location": "L50",
       "weight": 1.0
     },
     {
@@ -62685,7 +62805,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L56",
+      "source_location": "L58",
       "weight": 1.0
     },
     {
@@ -62707,7 +62827,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L79",
+      "source_location": "L81",
       "weight": 1.0
     },
     {
@@ -64791,46 +64911,46 @@
     },
     {
       "source": "agents_skills_coding_preferences_references_effect_batching_and_caching",
-      "target": "agents_skills_coding_preferences_references_effect_when_this_applies_169",
+      "target": "agents_skills_coding_preferences_references_effect_when_this_applies_178",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L169",
+      "source_location": "L178",
       "weight": 1.0
     },
     {
       "source": "agents_skills_coding_preferences_references_effect_batching_and_caching",
-      "target": "agents_skills_coding_preferences_references_effect_when_it_does_not_apply_177",
+      "target": "agents_skills_coding_preferences_references_effect_when_it_does_not_apply_186",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L177",
+      "source_location": "L186",
       "weight": 1.0
     },
     {
       "source": "agents_skills_coding_preferences_references_effect_effect_configuration",
-      "target": "agents_skills_coding_preferences_references_effect_when_this_applies_146",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L146",
-      "weight": 1.0
-    },
-    {
-      "source": "agents_skills_coding_preferences_references_effect_effect_configuration",
-      "target": "agents_skills_coding_preferences_references_effect_when_it_does_not_apply_155",
+      "target": "agents_skills_coding_preferences_references_effect_when_this_applies_155",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
       "source_location": "L155",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_skills_coding_preferences_references_effect_effect_configuration",
+      "target": "agents_skills_coding_preferences_references_effect_when_it_does_not_apply_164",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/coding-preferences/references/effect.md",
+      "source_location": "L164",
       "weight": 1.0
     },
     {
@@ -64841,18 +64961,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L60",
+      "source_location": "L69",
       "weight": 1.0
     },
     {
       "source": "agents_skills_coding_preferences_references_effect_effect_language_service_and_dev_tools",
-      "target": "agents_skills_coding_preferences_references_effect_implementation_42",
+      "target": "agents_skills_coding_preferences_references_effect_implementation_51",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L42",
+      "source_location": "L51",
       "weight": 1.0
     },
     {
@@ -64863,40 +64983,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L118",
+      "source_location": "L127",
       "weight": 1.0
     },
     {
       "source": "agents_skills_coding_preferences_references_effect_effect_platform",
-      "target": "agents_skills_coding_preferences_references_effect_when_this_applies_122",
+      "target": "agents_skills_coding_preferences_references_effect_when_this_applies_131",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L122",
+      "source_location": "L131",
       "weight": 1.0
     },
     {
       "source": "agents_skills_coding_preferences_references_effect_effect_platform",
-      "target": "agents_skills_coding_preferences_references_effect_when_it_does_not_apply_130",
+      "target": "agents_skills_coding_preferences_references_effect_when_it_does_not_apply_139",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L130",
-      "weight": 1.0
-    },
-    {
-      "source": "agents_skills_coding_preferences_references_effect_effect_schema",
-      "target": "agents_skills_coding_preferences_references_effect_when_it_does_not_apply_104",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L104",
+      "source_location": "L139",
       "weight": 1.0
     },
     {
@@ -64907,18 +65016,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L91",
+      "source_location": "L100",
       "weight": 1.0
     },
     {
       "source": "agents_skills_coding_preferences_references_effect_effect_schema",
-      "target": "agents_skills_coding_preferences_references_effect_when_this_applies_95",
+      "target": "agents_skills_coding_preferences_references_effect_when_this_applies_104",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L95",
+      "source_location": "L104",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_skills_coding_preferences_references_effect_effect_schema",
+      "target": "agents_skills_coding_preferences_references_effect_when_it_does_not_apply_113",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/coding-preferences/references/effect.md",
+      "source_location": "L113",
       "weight": 1.0
     },
     {
@@ -64929,7 +65049,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L75",
+      "source_location": "L84",
       "weight": 1.0
     },
     {
@@ -64940,7 +65060,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L79",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -64951,7 +65071,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L112",
+      "source_location": "L121",
       "weight": 1.0
     },
     {
@@ -64962,7 +65082,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L138",
+      "source_location": "L147",
       "weight": 1.0
     },
     {
@@ -64973,7 +65093,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L163",
+      "source_location": "L172",
       "weight": 1.0
     },
     {
@@ -64984,7 +65104,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L185",
+      "source_location": "L194",
       "weight": 1.0
     },
     {
@@ -64995,7 +65115,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L36",
+      "source_location": "L45",
       "weight": 1.0
     },
     {
@@ -65006,7 +65126,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L54",
+      "source_location": "L63",
       "weight": 1.0
     },
     {
@@ -65028,7 +65148,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L73",
+      "source_location": "L82",
       "weight": 1.0
     },
     {
@@ -65039,7 +65159,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L85",
+      "source_location": "L94",
       "weight": 1.0
     },
     {
@@ -65076,6 +65196,17 @@
       "weight": 1.0
     },
     {
+      "source": "agents_skills_coding_preferences_references_effect_effect_ts_at_core",
+      "target": "agents_skills_coding_preferences_references_effect_boundaries_and_what_the_commit_hook_refuses",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/skills/coding-preferences/references/effect.md",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
       "source": "agents_skills_coding_preferences_references_effect_testing_with_effect",
       "target": "agents_skills_coding_preferences_references_effect_the_golden_rule",
       "relation": "contains",
@@ -65083,7 +65214,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L191",
+      "source_location": "L200",
       "weight": 1.0
     },
     {
@@ -65094,7 +65225,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L195",
+      "source_location": "L204",
       "weight": 1.0
     },
     {
@@ -65105,29 +65236,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L199",
+      "source_location": "L208",
       "weight": 1.0
     },
     {
       "source": "agents_skills_coding_preferences_references_effect_testing_with_effect",
-      "target": "agents_skills_coding_preferences_references_effect_when_this_applies_203",
+      "target": "agents_skills_coding_preferences_references_effect_when_this_applies_212",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L203",
+      "source_location": "L212",
       "weight": 1.0
     },
     {
       "source": "agents_skills_coding_preferences_references_effect_testing_with_effect",
-      "target": "agents_skills_coding_preferences_references_effect_when_it_does_not_apply_211",
+      "target": "agents_skills_coding_preferences_references_effect_when_it_does_not_apply_220",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L211",
+      "source_location": "L220",
       "weight": 1.0
     },
     {
@@ -73663,7 +73794,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L111",
+      "source_location": "L113",
       "weight": 1.0
     },
     {
@@ -73674,7 +73805,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L117",
+      "source_location": "L119",
       "weight": 1.0
     },
     {
@@ -73685,7 +73816,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L129",
+      "source_location": "L131",
       "weight": 1.0
     },
     {
@@ -73696,7 +73827,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L135",
+      "source_location": "L137",
       "weight": 1.0
     },
     {
@@ -73707,7 +73838,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L83",
+      "source_location": "L85",
       "weight": 1.0
     },
     {
@@ -73718,7 +73849,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L92",
+      "source_location": "L94",
       "weight": 1.0
     },
     {
@@ -73811,7 +73942,7 @@
     },
     {
       "source": "ai_docs_src_05_house_standards_index_house_standards",
-      "target": "ai_docs_src_05_house_standards_index_files",
+      "target": "ai_docs_src_05_house_standards_index_typescript",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -73822,13 +73953,24 @@
     },
     {
       "source": "ai_docs_src_05_house_standards_index_house_standards",
+      "target": "ai_docs_src_05_house_standards_index_files",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ai-docs/src/05_house-standards/index.md",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "ai_docs_src_05_house_standards_index_house_standards",
       "target": "ai_docs_src_05_house_standards_index_commits_and_pull_requests",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "ai-docs/src/05_house-standards/index.md",
-      "source_location": "L53",
+      "source_location": "L71",
       "weight": 1.0
     },
     {
@@ -73839,7 +73981,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "ai-docs/src/05_house-standards/index.md",
-      "source_location": "L76",
+      "source_location": "L94",
       "weight": 1.0
     },
     {
@@ -76715,46 +76857,46 @@
     },
     {
       "source": "claude_skills_coding_preferences_references_effect_batching_and_caching",
-      "target": "claude_skills_coding_preferences_references_effect_when_this_applies_169",
+      "target": "claude_skills_coding_preferences_references_effect_when_this_applies_178",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L169",
+      "source_location": "L178",
       "weight": 1.0
     },
     {
       "source": "claude_skills_coding_preferences_references_effect_batching_and_caching",
-      "target": "claude_skills_coding_preferences_references_effect_when_it_does_not_apply_177",
+      "target": "claude_skills_coding_preferences_references_effect_when_it_does_not_apply_186",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L177",
+      "source_location": "L186",
       "weight": 1.0
     },
     {
       "source": "claude_skills_coding_preferences_references_effect_effect_configuration",
-      "target": "claude_skills_coding_preferences_references_effect_when_this_applies_146",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L146",
-      "weight": 1.0
-    },
-    {
-      "source": "claude_skills_coding_preferences_references_effect_effect_configuration",
-      "target": "claude_skills_coding_preferences_references_effect_when_it_does_not_apply_155",
+      "target": "claude_skills_coding_preferences_references_effect_when_this_applies_155",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
       "source_location": "L155",
+      "weight": 1.0
+    },
+    {
+      "source": "claude_skills_coding_preferences_references_effect_effect_configuration",
+      "target": "claude_skills_coding_preferences_references_effect_when_it_does_not_apply_164",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/coding-preferences/references/effect.md",
+      "source_location": "L164",
       "weight": 1.0
     },
     {
@@ -76765,18 +76907,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L60",
+      "source_location": "L69",
       "weight": 1.0
     },
     {
       "source": "claude_skills_coding_preferences_references_effect_effect_language_service_and_dev_tools",
-      "target": "claude_skills_coding_preferences_references_effect_implementation_42",
+      "target": "claude_skills_coding_preferences_references_effect_implementation_51",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L42",
+      "source_location": "L51",
       "weight": 1.0
     },
     {
@@ -76787,40 +76929,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L118",
+      "source_location": "L127",
       "weight": 1.0
     },
     {
       "source": "claude_skills_coding_preferences_references_effect_effect_platform",
-      "target": "claude_skills_coding_preferences_references_effect_when_this_applies_122",
+      "target": "claude_skills_coding_preferences_references_effect_when_this_applies_131",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L122",
+      "source_location": "L131",
       "weight": 1.0
     },
     {
       "source": "claude_skills_coding_preferences_references_effect_effect_platform",
-      "target": "claude_skills_coding_preferences_references_effect_when_it_does_not_apply_130",
+      "target": "claude_skills_coding_preferences_references_effect_when_it_does_not_apply_139",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L130",
-      "weight": 1.0
-    },
-    {
-      "source": "claude_skills_coding_preferences_references_effect_effect_schema",
-      "target": "claude_skills_coding_preferences_references_effect_when_it_does_not_apply_104",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L104",
+      "source_location": "L139",
       "weight": 1.0
     },
     {
@@ -76831,18 +76962,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L91",
+      "source_location": "L100",
       "weight": 1.0
     },
     {
       "source": "claude_skills_coding_preferences_references_effect_effect_schema",
-      "target": "claude_skills_coding_preferences_references_effect_when_this_applies_95",
+      "target": "claude_skills_coding_preferences_references_effect_when_this_applies_104",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L95",
+      "source_location": "L104",
+      "weight": 1.0
+    },
+    {
+      "source": "claude_skills_coding_preferences_references_effect_effect_schema",
+      "target": "claude_skills_coding_preferences_references_effect_when_it_does_not_apply_113",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/coding-preferences/references/effect.md",
+      "source_location": "L113",
       "weight": 1.0
     },
     {
@@ -76853,7 +76995,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L75",
+      "source_location": "L84",
       "weight": 1.0
     },
     {
@@ -76864,7 +77006,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L79",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -76875,7 +77017,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L112",
+      "source_location": "L121",
       "weight": 1.0
     },
     {
@@ -76886,7 +77028,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L138",
+      "source_location": "L147",
       "weight": 1.0
     },
     {
@@ -76897,7 +77039,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L163",
+      "source_location": "L172",
       "weight": 1.0
     },
     {
@@ -76908,7 +77050,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L185",
+      "source_location": "L194",
       "weight": 1.0
     },
     {
@@ -76919,7 +77061,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L36",
+      "source_location": "L45",
       "weight": 1.0
     },
     {
@@ -76930,7 +77072,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L54",
+      "source_location": "L63",
       "weight": 1.0
     },
     {
@@ -76952,7 +77094,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L73",
+      "source_location": "L82",
       "weight": 1.0
     },
     {
@@ -76963,7 +77105,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L85",
+      "source_location": "L94",
       "weight": 1.0
     },
     {
@@ -77000,6 +77142,17 @@
       "weight": 1.0
     },
     {
+      "source": "claude_skills_coding_preferences_references_effect_effect_ts_at_core",
+      "target": "claude_skills_coding_preferences_references_effect_boundaries_and_what_the_commit_hook_refuses",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/coding-preferences/references/effect.md",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
       "source": "claude_skills_coding_preferences_references_effect_testing_with_effect",
       "target": "claude_skills_coding_preferences_references_effect_the_golden_rule",
       "relation": "contains",
@@ -77007,7 +77160,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L191",
+      "source_location": "L200",
       "weight": 1.0
     },
     {
@@ -77018,7 +77171,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L195",
+      "source_location": "L204",
       "weight": 1.0
     },
     {
@@ -77029,29 +77182,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L199",
+      "source_location": "L208",
       "weight": 1.0
     },
     {
       "source": "claude_skills_coding_preferences_references_effect_testing_with_effect",
-      "target": "claude_skills_coding_preferences_references_effect_when_this_applies_203",
+      "target": "claude_skills_coding_preferences_references_effect_when_this_applies_212",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L203",
+      "source_location": "L212",
       "weight": 1.0
     },
     {
       "source": "claude_skills_coding_preferences_references_effect_testing_with_effect",
-      "target": "claude_skills_coding_preferences_references_effect_when_it_does_not_apply_211",
+      "target": "claude_skills_coding_preferences_references_effect_when_it_does_not_apply_220",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": ".claude/skills/coding-preferences/references/effect.md",
-      "source_location": "L211",
+      "source_location": "L220",
       "weight": 1.0
     },
     {
@@ -87473,6 +87626,17 @@
     },
     {
       "source": "llms_house_standards",
+      "target": "llms_document_everything_twice",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "LLMS.md",
+      "source_location": "L107",
+      "weight": 1.0
+    },
+    {
+      "source": "llms_house_standards",
       "target": "llms_code",
       "relation": "contains",
       "_origin": "ast",
@@ -87495,7 +87659,7 @@
     },
     {
       "source": "llms_house_standards",
-      "target": "llms_files",
+      "target": "llms_typescript",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -87506,24 +87670,24 @@
     },
     {
       "source": "llms_house_standards",
+      "target": "llms_files",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "LLMS.md",
+      "source_location": "L76",
+      "weight": 1.0
+    },
+    {
+      "source": "llms_house_standards",
       "target": "llms_commits_and_pull_requests",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "LLMS.md",
-      "source_location": "L66",
-      "weight": 1.0
-    },
-    {
-      "source": "llms_house_standards",
-      "target": "llms_document_everything_twice",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "LLMS.md",
-      "source_location": "L89",
+      "source_location": "L84",
       "weight": 1.0
     },
     {
@@ -87534,18 +87698,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "LLMS.md",
-      "source_location": "L105",
-      "weight": 1.0
-    },
-    {
-      "source": "llms_resnovas_house_for_agents",
-      "target": "llms_templates_and_the_renderer",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "LLMS.md",
-      "source_location": "L146",
+      "source_location": "L123",
       "weight": 1.0
     },
     {
@@ -87561,13 +87714,24 @@
     },
     {
       "source": "llms_resnovas_house_for_agents",
+      "target": "llms_templates_and_the_renderer",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "LLMS.md",
+      "source_location": "L164",
+      "weight": 1.0
+    },
+    {
+      "source": "llms_resnovas_house_for_agents",
       "target": "llms_how_the_sync_reaches_other_repositories",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "LLMS.md",
-      "source_location": "L197",
+      "source_location": "L215",
       "weight": 1.0
     },
     {
@@ -87578,7 +87742,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "LLMS.md",
-      "source_location": "L235",
+      "source_location": "L253",
       "weight": 1.0
     },
     {
@@ -87589,7 +87753,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "LLMS.md",
-      "source_location": "L273",
+      "source_location": "L291",
       "weight": 1.0
     },
     {
@@ -87600,7 +87764,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "LLMS.md",
-      "source_location": "L314",
+      "source_location": "L332",
       "weight": 1.0
     },
     {
@@ -92451,7 +92615,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L139",
+      "source_location": "L141",
       "weight": 1.0
     },
     {
@@ -92462,18 +92626,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L164",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_agents",
-      "target": "templates_agents_before_every_commit",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/AGENTS.md",
-      "source_location": "L18",
+      "source_location": "L166",
       "weight": 1.0
     },
     {
@@ -92484,7 +92637,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L180",
+      "source_location": "L182",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_agents",
+      "target": "templates_agents_before_every_commit",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/AGENTS.md",
+      "source_location": "L19",
       "weight": 1.0
     },
     {
@@ -92495,7 +92659,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L191",
+      "source_location": "L193",
       "weight": 1.0
     },
     {
@@ -92517,7 +92681,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L206",
+      "source_location": "L208",
       "weight": 1.0
     },
     {
@@ -92528,7 +92692,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L213",
+      "source_location": "L215",
       "weight": 1.0
     },
     {
@@ -92539,7 +92703,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L33",
+      "source_location": "L35",
       "weight": 1.0
     },
     {
@@ -92550,7 +92714,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L40",
+      "source_location": "L42",
       "weight": 1.0
     },
     {
@@ -92561,7 +92725,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L48",
+      "source_location": "L50",
       "weight": 1.0
     },
     {
@@ -92572,7 +92736,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L56",
+      "source_location": "L58",
       "weight": 1.0
     },
     {
@@ -92594,7 +92758,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L79",
+      "source_location": "L81",
       "weight": 1.0
     },
     {
@@ -94678,46 +94842,46 @@
     },
     {
       "source": "templates_agents_skills_coding_preferences_references_effect_batching_and_caching",
-      "target": "templates_agents_skills_coding_preferences_references_effect_when_this_applies_169",
+      "target": "templates_agents_skills_coding_preferences_references_effect_when_this_applies_178",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L169",
+      "source_location": "L178",
       "weight": 1.0
     },
     {
       "source": "templates_agents_skills_coding_preferences_references_effect_batching_and_caching",
-      "target": "templates_agents_skills_coding_preferences_references_effect_when_it_does_not_apply_177",
+      "target": "templates_agents_skills_coding_preferences_references_effect_when_it_does_not_apply_186",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L177",
+      "source_location": "L186",
       "weight": 1.0
     },
     {
       "source": "templates_agents_skills_coding_preferences_references_effect_effect_configuration",
-      "target": "templates_agents_skills_coding_preferences_references_effect_when_this_applies_146",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L146",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_agents_skills_coding_preferences_references_effect_effect_configuration",
-      "target": "templates_agents_skills_coding_preferences_references_effect_when_it_does_not_apply_155",
+      "target": "templates_agents_skills_coding_preferences_references_effect_when_this_applies_155",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
       "source_location": "L155",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_agents_skills_coding_preferences_references_effect_effect_configuration",
+      "target": "templates_agents_skills_coding_preferences_references_effect_when_it_does_not_apply_164",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
+      "source_location": "L164",
       "weight": 1.0
     },
     {
@@ -94728,18 +94892,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L60",
+      "source_location": "L69",
       "weight": 1.0
     },
     {
       "source": "templates_agents_skills_coding_preferences_references_effect_effect_language_service_and_dev_tools",
-      "target": "templates_agents_skills_coding_preferences_references_effect_implementation_42",
+      "target": "templates_agents_skills_coding_preferences_references_effect_implementation_51",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L42",
+      "source_location": "L51",
       "weight": 1.0
     },
     {
@@ -94750,40 +94914,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L118",
+      "source_location": "L127",
       "weight": 1.0
     },
     {
       "source": "templates_agents_skills_coding_preferences_references_effect_effect_platform",
-      "target": "templates_agents_skills_coding_preferences_references_effect_when_this_applies_122",
+      "target": "templates_agents_skills_coding_preferences_references_effect_when_this_applies_131",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L122",
+      "source_location": "L131",
       "weight": 1.0
     },
     {
       "source": "templates_agents_skills_coding_preferences_references_effect_effect_platform",
-      "target": "templates_agents_skills_coding_preferences_references_effect_when_it_does_not_apply_130",
+      "target": "templates_agents_skills_coding_preferences_references_effect_when_it_does_not_apply_139",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L130",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_agents_skills_coding_preferences_references_effect_effect_schema",
-      "target": "templates_agents_skills_coding_preferences_references_effect_when_it_does_not_apply_104",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L104",
+      "source_location": "L139",
       "weight": 1.0
     },
     {
@@ -94794,18 +94947,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L91",
+      "source_location": "L100",
       "weight": 1.0
     },
     {
       "source": "templates_agents_skills_coding_preferences_references_effect_effect_schema",
-      "target": "templates_agents_skills_coding_preferences_references_effect_when_this_applies_95",
+      "target": "templates_agents_skills_coding_preferences_references_effect_when_this_applies_104",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L95",
+      "source_location": "L104",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_agents_skills_coding_preferences_references_effect_effect_schema",
+      "target": "templates_agents_skills_coding_preferences_references_effect_when_it_does_not_apply_113",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
+      "source_location": "L113",
       "weight": 1.0
     },
     {
@@ -94816,7 +94980,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L75",
+      "source_location": "L84",
       "weight": 1.0
     },
     {
@@ -94827,7 +94991,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L79",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -94838,7 +95002,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L112",
+      "source_location": "L121",
       "weight": 1.0
     },
     {
@@ -94849,7 +95013,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L138",
+      "source_location": "L147",
       "weight": 1.0
     },
     {
@@ -94860,7 +95024,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L163",
+      "source_location": "L172",
       "weight": 1.0
     },
     {
@@ -94871,7 +95035,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L185",
+      "source_location": "L194",
       "weight": 1.0
     },
     {
@@ -94882,7 +95046,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L36",
+      "source_location": "L45",
       "weight": 1.0
     },
     {
@@ -94893,7 +95057,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L54",
+      "source_location": "L63",
       "weight": 1.0
     },
     {
@@ -94915,7 +95079,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L73",
+      "source_location": "L82",
       "weight": 1.0
     },
     {
@@ -94926,7 +95090,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L85",
+      "source_location": "L94",
       "weight": 1.0
     },
     {
@@ -94963,6 +95127,17 @@
       "weight": 1.0
     },
     {
+      "source": "templates_agents_skills_coding_preferences_references_effect_effect_ts_at_core",
+      "target": "templates_agents_skills_coding_preferences_references_effect_boundaries_and_what_the_commit_hook_refuses",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
       "source": "templates_agents_skills_coding_preferences_references_effect_testing_with_effect",
       "target": "templates_agents_skills_coding_preferences_references_effect_the_golden_rule",
       "relation": "contains",
@@ -94970,7 +95145,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L191",
+      "source_location": "L200",
       "weight": 1.0
     },
     {
@@ -94981,7 +95156,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L195",
+      "source_location": "L204",
       "weight": 1.0
     },
     {
@@ -94992,29 +95167,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L199",
+      "source_location": "L208",
       "weight": 1.0
     },
     {
       "source": "templates_agents_skills_coding_preferences_references_effect_testing_with_effect",
-      "target": "templates_agents_skills_coding_preferences_references_effect_when_this_applies_203",
+      "target": "templates_agents_skills_coding_preferences_references_effect_when_this_applies_212",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L203",
+      "source_location": "L212",
       "weight": 1.0
     },
     {
       "source": "templates_agents_skills_coding_preferences_references_effect_testing_with_effect",
-      "target": "templates_agents_skills_coding_preferences_references_effect_when_it_does_not_apply_211",
+      "target": "templates_agents_skills_coding_preferences_references_effect_when_it_does_not_apply_220",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/.agents/skills/coding-preferences/references/effect.md",
-      "source_location": "L211",
+      "source_location": "L220",
       "weight": 1.0
     },
     {
@@ -103550,7 +103725,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L111",
+      "source_location": "L113",
       "weight": 1.0
     },
     {
@@ -103561,7 +103736,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L117",
+      "source_location": "L119",
       "weight": 1.0
     },
     {
@@ -103572,7 +103747,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L129",
+      "source_location": "L131",
       "weight": 1.0
     },
     {
@@ -103583,7 +103758,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L135",
+      "source_location": "L137",
       "weight": 1.0
     },
     {
@@ -103594,7 +103769,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L83",
+      "source_location": "L85",
       "weight": 1.0
     },
     {
@@ -103605,7 +103780,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/AGENTS.md",
-      "source_location": "L92",
+      "source_location": "L94",
       "weight": 1.0
     },
     {
@@ -103698,7 +103873,7 @@
     },
     {
       "source": "templates_ai_docs_src_05_house_standards_index_house_standards",
-      "target": "templates_ai_docs_src_05_house_standards_index_files",
+      "target": "templates_ai_docs_src_05_house_standards_index_typescript",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -103709,13 +103884,24 @@
     },
     {
       "source": "templates_ai_docs_src_05_house_standards_index_house_standards",
+      "target": "templates_ai_docs_src_05_house_standards_index_files",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/ai-docs/src/05_house-standards/index.md",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_ai_docs_src_05_house_standards_index_house_standards",
       "target": "templates_ai_docs_src_05_house_standards_index_commits_and_pull_requests",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/ai-docs/src/05_house-standards/index.md",
-      "source_location": "L53",
+      "source_location": "L71",
       "weight": 1.0
     },
     {
@@ -103726,7 +103912,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/ai-docs/src/05_house-standards/index.md",
-      "source_location": "L76",
+      "source_location": "L94",
       "weight": 1.0
     },
     {
@@ -105420,7 +105606,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L134",
+      "source_location": "L152",
       "weight": 1.0
     },
     {
@@ -105431,7 +105617,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L155",
+      "source_location": "L195",
       "weight": 1.0
     },
     {
@@ -105442,7 +105628,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L157",
+      "source_location": "L197",
       "weight": 1.0
     },
     {
@@ -105453,7 +105639,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L26",
+      "source_location": "L29",
       "weight": 1.0
     },
     {
@@ -105464,7 +105650,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L29",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_commit_check",
+      "target": "templates_tools_dev_commit_check_withoutstrings",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/tools/dev/commit-check.mjs",
+      "source_location": "L52",
       "weight": 1.0
     },
     {
@@ -105475,7 +105672,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L44",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
@@ -105486,7 +105683,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L54",
+      "source_location": "L70",
       "weight": 1.0
     },
     {
@@ -105497,7 +105694,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L77",
+      "source_location": "L93",
       "weight": 1.0
     },
     {
@@ -106377,7 +106574,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L134",
+      "source_location": "L152",
       "weight": 1.0
     },
     {
@@ -106388,7 +106585,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L155",
+      "source_location": "L195",
       "weight": 1.0
     },
     {
@@ -106399,7 +106596,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L157",
+      "source_location": "L197",
       "weight": 1.0
     },
     {
@@ -106410,7 +106607,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L26",
+      "source_location": "L29",
       "weight": 1.0
     },
     {
@@ -106421,7 +106618,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L29",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_commit_check",
+      "target": "tools_dev_commit_check_withoutstrings",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/dev/commit-check.mjs",
+      "source_location": "L52",
       "weight": 1.0
     },
     {
@@ -106432,7 +106640,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L44",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
@@ -106443,7 +106651,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L54",
+      "source_location": "L70",
       "weight": 1.0
     },
     {
@@ -106454,7 +106662,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L77",
+      "source_location": "L93",
       "weight": 1.0
     },
     {
@@ -108436,7 +108644,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L102",
+      "source_location": "L118",
       "weight": 1.0
     },
     {
@@ -108508,7 +108716,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L102",
+      "source_location": "L118",
       "weight": 1.0
     },
     {
@@ -108604,7 +108812,7 @@
       "confidence_score": 0.95,
       "context": "managedConflicts",
       "source_file": "LLMS.md",
-      "source_location": "L174",
+      "source_location": "L192",
       "weight": 1.0
     },
     {
@@ -108628,7 +108836,7 @@
       "confidence_score": 0.95,
       "context": "mergeManaged",
       "source_file": "LLMS.md",
-      "source_location": "L159",
+      "source_location": "L177",
       "weight": 1.0
     },
     {
@@ -108676,7 +108884,7 @@
       "confidence_score": 0.95,
       "context": "rendered",
       "source_file": "LLMS.md",
-      "source_location": "L136",
+      "source_location": "L154",
       "weight": 1.0
     },
     {
@@ -109239,6 +109447,5 @@
       "source_file": "templates/CONTRIBUTING.md"
     }
   ],
-  "hyperedges": [],
-  "built_at_commit": "b2633e980c94cf50744dc2583b121b14cc8806bf"
+  "hyperedges": []
 }
