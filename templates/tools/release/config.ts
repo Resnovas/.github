@@ -88,7 +88,7 @@ const strings = (value: unknown, path: string): ReadonlyArray<string> =>
  * @throws When a field has the wrong shape; the message names the field.
  */
 export const parseReleaseConfig = (raw: unknown, packageName: string): ReleaseConfig => {
-  if (!isRecord(raw)) fail('the file', 'a JSON object')
+  if (!isRecord(raw)) return fail('the file', 'a JSON object')
   const nightly = raw['nightly']
   const posthog = raw['posthog']
   const npm = raw['npm']
