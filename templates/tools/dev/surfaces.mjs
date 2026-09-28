@@ -33,7 +33,7 @@ import { execFileSync } from 'node:child_process'
 import { chmodSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs'
 import { createConnection } from 'node:net'
 import { homedir } from 'node:os'
-import { dirname, join } from 'node:path'
+import { dirname, join, resolve } from 'node:path'
 import { randomUUID } from 'node:crypto'
 import { fileURLToPath } from 'node:url'
 
@@ -564,7 +564,7 @@ const installCommitHook = () => {
   } catch {
     return 'Commit hook: not a git checkout, nothing installed.'
   }
-  const path = join(root, hooks, 'commit-msg')
+  const path = resolve(root, hooks, 'commit-msg')
   if (existsSync(path)) {
     const current = readFileSync(path, 'utf8')
     if (current === commitHook) return 'Commit hook: already installed.'
@@ -585,7 +585,7 @@ const missingCommitHook = () => {
   if (process.env['CI'] !== undefined) return []
   try {
     const hooks = execFileSync('git', ['rev-parse', '--git-path', 'hooks'], { cwd: root, encoding: 'utf8' }).trim()
-    const path = join(root, hooks, 'commit-msg')
+    const path = resolve(root, hooks, 'commit-msg')
     return existsSync(path) && readFileSync(path, 'utf8').includes(HOOK_MARKER) ? [] : [`${hooks}/commit-msg (run node --run setup)`]
   } catch {
     return []

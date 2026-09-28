@@ -20,7 +20,8 @@
 // smartcloud check on the pull request still applies every rule.
 
 import { execFileSync } from 'node:child_process'
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 
 const POLICY = 'https://github.com/Resnovas/.github/blob/main'
 
@@ -48,9 +49,15 @@ const PLAIN_PROMISE = /\basync\b|\bawait\b|\btry\s*\{|\bthrow\b|\bnew\s+Promise\
 const EFFECT_CALL = /\bEffect\./
 const BOUNDARY = /effect-boundary:/
 const COMMENT_LINE = /^\s*(?:\/\/|\/?\*)/
+// Git-generated subjects: the merge queue, rebase tooling and git itself write these.
+const GIT_GENERATED = /^(?:Merge |fixup! |squash! |Revert ")/
+// Everything after git's verbose-commit cut line is the diff, not the message.
+const CUT_LINE = /^# -+ >8 -+$/m
 // String literals are not code: `"async"` in a label is not an async function.
 const STRINGS = /(["'`])(?:\\.|(?!\1).)*\1/g
 const withoutStrings = (text) => text.replace(STRINGS, '""')
+// Nor are comments after code, block comments or JSX text.
+const codeOnly = (text) => withoutStrings(text).replace(/\/\/.*$/, '').replace(/\/\*.*?\*\//g, ' ').replace(/>[^<>]*</g, '><')
 
 /**
  * Parses "Name <email>".
@@ -69,7 +76,8 @@ const parseIdentity = (text) => {
  * @param {string} message
  */
 const parseMessage = (message) => {
-  const lines = message
+  const cut = CUT_LINE.exec(message)
+  const lines = (cut ? message.slice(0, cut.index) : message)
     .split('\n')
     .filter((line) => !line.startsWith('#'))
     .map((line) => line.trimEnd())
@@ -96,15 +104,16 @@ export const checkMessage = (message, author) => {
   const { subject, lines, trailers } = parseMessage(message)
   const text = lines.join('\n')
 
-  if (subject === '' || /^(?:Merge |fixup! |squash! |Revert ")/.test(subject)) {
-    // Git writes these itself; the merge queue and rebase tooling handle them.
-  } else if (!CONVENTIONAL.test(subject)) {
+  if (subject !== '' && !GIT_GENERATED.test(subject) && !CONVENTIONAL.test(subject)) {
     problems.push(
       `Subject "${subject}" is not a conventional commit: <type>(<scope>): <summary>, with type one of ${TYPES.replaceAll('|', ', ')}. See ${POLICY}/CONTRIBUTING.md#Commits`,
     )
   }
   if (LONG_DASH.test(text)) problems.push(`The message contains an em or en dash; use ordinary punctuation (AI-09). See ${POLICY}/AI_POLICY.md#ai-09`)
   if (EMOJI.test(text)) problems.push(`The message contains emoji (AI-09). See ${POLICY}/AI_POLICY.md#ai-09`)
+  // A merge, revert, fixup or squash commit is git's own: no sign-off or credit to check
+  // (the pull request check exempts merge commits too, and fixups never land).
+  if (subject === '' || GIT_GENERATED.test(subject)) return [...new Set(problems)]
 
   const trailer = (key) =>
     trailers
@@ -180,7 +189,7 @@ export const checkStagedText = (diff) => {
     if (LONG_DASH.test(text))
       report(`${file}:dash`, `${file}: an added line contains an em or en dash; use ASCII hyphen-minus in agent-authored text (house standard no-em-or-en-dashes).`)
     if (source && !COMMENT_LINE.test(text)) {
-      const code = withoutStrings(text)
+      const code = codeOnly(text)
       if (ANY_TYPE.test(code))
         report(`${file}:any`, `${file}: an added line uses \`any\`; use unknown with a type guard, a precise generic, a Schema or a branded type (coding-preferences, references/language.md).`)
       if (PLAIN_PROMISE.test(code) && !EFFECT_CALL.test(code) && !BOUNDARY.test(text) && !boundary)
@@ -219,6 +228,8 @@ const main = () => {
     author = parseIdentity(ident)
     if (author === undefined) throw new Error(`cannot read the author from git: "${ident}"`)
   }
+  // A merge or revert in progress stages already-reviewed changes; only the message is checked.
+  if (scanDiff && ['MERGE_HEAD', 'REVERT_HEAD'].some((head) => existsSync(resolve(git('rev-parse', '--git-path', head).trim())))) scanDiff = false
   const problems = [...checkMessage(message, author), ...(scanDiff ? checkStagedText(git('diff', '--cached', '--unified=1', '--no-color')) : [])]
   for (const problem of problems) console.error(`commit-check: ${problem}`)
   if (problems.length > 0) console.error('commit-check: the commit was not made. Fix the message or the staged text, or set HOUSE_SKIP_COMMIT_CHECK=1 for an emergency commit; the pull request check still applies.')

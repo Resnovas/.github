@@ -50,6 +50,20 @@ test('a file without a header, or with an old year, is reported and fixed with t
   assert.match(b, /export const b = 2\n$/)
 })
 
+test('a CRLF file keeps one header after --fix, and passes the check', () => {
+  const root = repository()
+  const template = readFileSync(join(root, 'tools/license/header.txt'), 'utf8')
+  const old = headerFor(template, 'src/win.ts', '2021').replaceAll('\n', '\r\n')
+  writeFileSync(join(root, 'src/win.ts'), `${old}\r\n\r\nexport const w = 1\r\n`)
+  assert.deepEqual(checkHeaders(root, { files: ['src/win.ts'], fix: true }).wrong, ['src/win.ts'])
+  const text = readFileSync(join(root, 'src/win.ts'), 'utf8')
+  assert.equal(text.split('DELETING THIS NOTICE').length, 2)
+  assert.match(text, new RegExp(`Copyright ${year} Example Ltd`))
+  assert.match(text, /export const w = 1\r\n$/)
+  writeFileSync(join(root, 'src/crlf.ts'), `${headerFor(template, 'src/crlf.ts', year).replaceAll('\n', '\r\n')}\r\n\r\nexport const c = 1\r\n`)
+  assert.deepEqual(checkHeaders(root, { files: ['src/crlf.ts'] }), { checked: 1, wrong: [] })
+})
+
 test('synced house files, typings, generated directories and ignore patterns are skipped, and a shebang stays first', () => {
   const root = repository()
   writeFileSync(join(root, 'src/synced.mjs'), '#!/usr/bin/env node\n// Synced from Resnovas/.github templates/tools/x.mjs. Edit it there.\nexport const x = 1\n')

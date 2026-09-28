@@ -105,6 +105,25 @@ test('plain Promise code and any fail in added TypeScript sources, not in tests,
   assert.match(problems[0], /effect-boundary/)
 })
 
+test('git-generated commits need no sign-off, and a verbose-commit diff after the cut line is not the message', () => {
+  assert.deepEqual(checkMessage("Merge branch 'main' into x", human), [])
+  assert.deepEqual(checkMessage('Revert "feat: x"\n\nThis reverts commit abc.', human), [])
+  assert.deepEqual(checkMessage('fixup! feat: x', human), [])
+  assert.match(checkMessage("Merge branch 'main' \u2014 again", human).join('\n'), /em or en dash/)
+  const verbose = `fix: x\n\n${signed}\n# ------------------------ >8 ------------------------\n# Do not modify or remove the line above.\ndiff --git a/a.ts b/a.ts\n+const s = 'plain \u2014 dash'\n`
+  assert.deepEqual(checkMessage(verbose, human), [])
+})
+
+test('comments after code, block comments and JSX text are not code', () => {
+  const hunk = (path, ...lines) => ['diff --git a/' + path + ' b/' + path, '--- a/' + path, '+++ b/' + path, '@@ -1 +1 @@', ...lines]
+  const diff = [
+    ...hunk('packages/core/src/a.ts', "+run() // don't await here, the caller does", '+const label = "x" /* throw away */', '+const n: number = 1'),
+    ...hunk('packages/ui/src/b.tsx', '+<p>Please await confirmation</p>', '+const url = "http://example.com" // async docs'),
+  ].join('\n')
+  assert.deepEqual(checkStagedText(diff), [])
+  assert.equal(checkStagedText(hunk('packages/core/src/c.ts', '+const p = fetch(u).then((r) => r.json()) // fine?').join('\n')).length, 1)
+})
+
 test('the command line reads a message file or --message, with an explicit author and no diff', () => {
   const run = (...args) => {
     try {
