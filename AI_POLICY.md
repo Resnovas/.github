@@ -62,7 +62,7 @@ Pick the level that describes what the tool actually did, not what you intended 
 
 | Level | Meaning | Examples |
 | --- | --- | --- |
-| `none` | No AI tool touched the submission. | You wrote the code and the description yourself. Your editor's non-AI autocomplete of a known symbol name does not count. |
+| `unassisted` | No AI tool touched the submission. | You wrote the code and the description yourself. Your editor's non-AI autocomplete of a known symbol name does not count. (This level was called `none`; GitHub issue forms reserve that word, and the check still reads it.) |
 | `autocomplete` | An AI tool suggested inline completions, and you accepted some. | Copilot or Cursor Tab finished a line or a function body as you typed. You did not open a chat or ask for anything. |
 | `chat` | You asked an AI tool for suggestions, explanations or code, then chose what to apply and applied it yourself. | You pasted an error into ChatGPT and adapted its answer. You asked Claude how to structure a module, then wrote it. The tool never edited your files. |
 | `agent` | An AI tool edited files, ran commands or made commits while you directed it and watched. | Claude Code or Cursor Agent implemented a change in your working copy over several steps while you steered it. Codex ran the test suite and fixed the failures it found. |
@@ -74,9 +74,9 @@ If you are unsure between two levels, choose the higher one.
 
 ### <a id="ai-01"></a>AI-01: Disclose on every submission (checked)
 
-Every pull request and issue **MUST** state its autonomy level and, unless the level is `none`, every AI tool and model used, for example `Claude Code (claude-opus-5-5)`.
+Every pull request and issue **MUST** state its autonomy level and, unless the level is `unassisted`, every AI tool and model used, for example `Claude Code (claude-opus-5-5)`.
 The pull request template and issue forms have the fields; fill them in rather than deleting them.
-A level of `none` **MUST NOT** be combined with an AI co-author or a listed tool.
+A level of `unassisted` **MUST NOT** be combined with an AI co-author or a listed tool.
 The [trusted bots](GOVERNANCE.md#trusted-bots) (`dependabot[bot], renovate[bot], github-actions[bot], resnovas-smartcloud[bot]`) are exempt from the checked rules (AI-01 to AI-03, [AI-20](#ai-20) and [AI-21](#ai-21)), because no person writes their pull requests.
 
 ### <a id="ai-02"></a>AI-02: Credit the AI as a co-author (checked)
@@ -196,7 +196,7 @@ These rules apply to everyone who opens issues or pull requests, including maint
 
 ### <a id="ai-20"></a>AI-20: AI-assisted pull requests start as drafts (checked)
 
-A pull request with any autonomy level other than `none` **MUST** be opened as a draft.
+A pull request with any autonomy level other than `unassisted` **MUST** be opened as a draft.
 It stays a draft while you review it.
 
 ### <a id="ai-21"></a>AI-21: Leaving draft is your signature (checked)

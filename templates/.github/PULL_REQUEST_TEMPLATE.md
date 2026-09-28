@@ -30,7 +30,7 @@ Recordings for UI changes, benchmarks for performance changes.
 ## AI disclosure
 
 <!--
-AI level: none, autocomplete, chat, agent or autonomous. If unsure, pick the higher.
+AI level: unassisted, autocomplete, chat, agent or autonomous. If unsure, pick the higher.
 AI tools: every tool and model, e.g. Claude Code (claude-opus-5-5), or none.
 Accountable human: your GitHub handle, filled in when you mark this ready.
 Human review: what you personally read, ran and checked, filled in when you mark this ready.

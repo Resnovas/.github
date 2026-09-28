@@ -62,7 +62,7 @@ Licence breaches, including those that come from AI-produced material, are cured
 AI tools are allowed, and a human is always accountable for what they produce.
 The full rules are in the [AI Contribution Policy](AI_POLICY.md); these are the parts you will meet first:
 
-- Declare the autonomy level (`none`, `autocomplete`, `chat`, `agent` or `autonomous`) and the tools on every issue and pull request.
+- Declare the autonomy level (`unassisted`, `autocomplete`, `chat`, `agent` or `autonomous`) and the tools on every issue and pull request.
 - Credit each AI tool that materially changed a commit with a `Co-authored-by` trailer, and sign off yourself.
 - Open AI-assisted pull requests as drafts, and mark them ready only once you have reviewed and run every change yourself.
 - Reply to reviewers in your own words.

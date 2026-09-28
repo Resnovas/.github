@@ -101,7 +101,7 @@ disclosure:
   maintainerLevel: warning
 ```
 
-The pull request description must fill in `AI level:` (`none`, `autocomplete`, `chat`, `agent` or `autonomous`) and `AI tools:`, and, once the pull request is ready for review, `Accountable human:` (the author) and `Human review:` (what they checked).
+The pull request description must fill in `AI level:` (`unassisted`, `autocomplete`, `chat`, `agent` or `autonomous`) and `AI tools:`, and, once the pull request is ready for review, `Accountable human:` (the author) and `Human review:` (what they checked).
 The synced pull request template already has these lines.
 **`requireDraft`** means a pull request that used AI must be opened as a draft, and leave draft only once the accountable person has reviewed it.
 On a maintainer's own pull request the findings are warnings.
