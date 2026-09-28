@@ -575,7 +575,7 @@
       "file_type": "code",
       "norm_label": "checkmessage()",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L94"
+      "source_location": "L102"
     },
     {
       "id": "templates_tools_dev_commit_check_checkstagedtext",
@@ -587,7 +587,19 @@
       "file_type": "code",
       "norm_label": "checkstagedtext()",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L153"
+      "source_location": "L162"
+    },
+    {
+      "id": "templates_tools_dev_commit_check_codeonly",
+      "label": "codeOnly()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "templates/tools/dev/commit-check.mjs",
+      "file_type": "code",
+      "norm_label": "codeonly()",
+      "source_file": "templates/tools/dev/commit-check.mjs",
+      "source_location": "L60"
     },
     {
       "id": "templates_tools_dev_commit_check_git",
@@ -599,7 +611,7 @@
       "file_type": "code",
       "norm_label": "git()",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L196"
+      "source_location": "L205"
     },
     {
       "id": "templates_tools_dev_commit_check_isai",
@@ -611,7 +623,7 @@
       "file_type": "code",
       "norm_label": "isai()",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L30"
+      "source_location": "L31"
     },
     {
       "id": "templates_tools_dev_commit_check_main",
@@ -623,7 +635,7 @@
       "file_type": "code",
       "norm_label": "main()",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L198"
+      "source_location": "L207"
     },
     {
       "id": "templates_tools_dev_commit_check_parseidentity",
@@ -635,7 +647,7 @@
       "file_type": "code",
       "norm_label": "parseidentity()",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L61"
+      "source_location": "L68"
     },
     {
       "id": "templates_tools_dev_commit_check_parsemessage",
@@ -647,7 +659,7 @@
       "file_type": "code",
       "norm_label": "parsemessage()",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L71"
+      "source_location": "L78"
     },
     {
       "id": "templates_tools_dev_commit_check_withoutstrings",
@@ -659,7 +671,7 @@
       "file_type": "code",
       "norm_label": "withoutstrings()",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L53"
+      "source_location": "L58"
     },
     {
       "id": "tools_dev_commit_check_checkmessage",
@@ -671,7 +683,7 @@
       "file_type": "code",
       "norm_label": "checkmessage()",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L94"
+      "source_location": "L102"
     },
     {
       "id": "tools_dev_commit_check_checkstagedtext",
@@ -683,7 +695,19 @@
       "file_type": "code",
       "norm_label": "checkstagedtext()",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L153"
+      "source_location": "L162"
+    },
+    {
+      "id": "tools_dev_commit_check_codeonly",
+      "label": "codeOnly()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 58,
+      "community_name": "tools/dev/commit-check.mjs",
+      "file_type": "code",
+      "norm_label": "codeonly()",
+      "source_file": "tools/dev/commit-check.mjs",
+      "source_location": "L60"
     },
     {
       "id": "tools_dev_commit_check_git",
@@ -695,7 +719,7 @@
       "file_type": "code",
       "norm_label": "git()",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L196"
+      "source_location": "L205"
     },
     {
       "id": "tools_dev_commit_check_isai",
@@ -707,7 +731,7 @@
       "file_type": "code",
       "norm_label": "isai()",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L30"
+      "source_location": "L31"
     },
     {
       "id": "tools_dev_commit_check_main",
@@ -719,7 +743,7 @@
       "file_type": "code",
       "norm_label": "main()",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L198"
+      "source_location": "L207"
     },
     {
       "id": "tools_dev_commit_check_parseidentity",
@@ -731,7 +755,7 @@
       "file_type": "code",
       "norm_label": "parseidentity()",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L61"
+      "source_location": "L68"
     },
     {
       "id": "tools_dev_commit_check_parsemessage",
@@ -743,7 +767,7 @@
       "file_type": "code",
       "norm_label": "parsemessage()",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L71"
+      "source_location": "L78"
     },
     {
       "id": "tools_dev_commit_check_withoutstrings",
@@ -755,7 +779,7 @@
       "file_type": "code",
       "norm_label": "withoutstrings()",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L53"
+      "source_location": "L58"
     },
     {
       "id": "templates_tools_ai_docs_docgen_byprefix",
@@ -2811,6 +2835,17 @@
       "norm_label": "lines",
       "source_file": "test/actions.test.mjs",
       "source_location": "L33"
+    },
+    {
+      "id": "test_actions_test_references",
+      "label": "references",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "actions.test.mjs",
+      "file_type": "code",
+      "norm_label": "references",
+      "source_file": "test/actions.test.mjs",
+      "source_location": "L44"
     },
     {
       "id": "test_actions_test_root",
@@ -41027,17 +41062,6 @@
       "source_location": "L42"
     },
     {
-      "id": "test_actions_test_references",
-      "label": "references",
-      "_origin": "ast",
-      "community": 47,
-      "community_name": "ref_node_fs",
-      "file_type": "code",
-      "norm_label": "references",
-      "source_file": "test/actions.test.mjs",
-      "source_location": "L44"
-    },
-    {
       "id": "test_render_test",
       "label": "render.test.mjs",
       "_origin": "ast",
@@ -47644,7 +47668,7 @@
       "file_type": "code",
       "norm_label": "conventional",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L33"
+      "source_location": "L34"
     },
     {
       "id": "agents_skills_terraform_vendor_handover",
@@ -48026,7 +48050,7 @@
       "file_type": "code",
       "norm_label": "conventional",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L33"
+      "source_location": "L34"
     },
     {
       "id": "claude_skills_clerk_vendor_handover",
@@ -54757,7 +54781,7 @@
       "file_type": "code",
       "norm_label": "result",
       "source_file": "templates/tools/test/file.ts",
-      "source_location": "L47"
+      "source_location": "L49"
     },
     {
       "id": "templates_tools_test_file_root",
@@ -54769,6 +54793,17 @@
       "norm_label": "root",
       "source_file": "templates/tools/test/file.ts",
       "source_location": "L21"
+    },
+    {
+      "id": "templates_tools_test_file_vitest",
+      "label": "vitest",
+      "_origin": "ast",
+      "community": 79,
+      "community_name": "ref_node_path",
+      "file_type": "code",
+      "norm_label": "vitest",
+      "source_file": "templates/tools/test/file.ts",
+      "source_location": "L48"
     },
     {
       "id": "templates_tools_typecheck_tests",
@@ -54955,7 +54990,7 @@
       "file_type": "code",
       "norm_label": "result",
       "source_file": "tools/test/file.ts",
-      "source_location": "L47"
+      "source_location": "L49"
     },
     {
       "id": "tools_test_file_root",
@@ -54967,6 +55002,17 @@
       "norm_label": "root",
       "source_file": "tools/test/file.ts",
       "source_location": "L21"
+    },
+    {
+      "id": "tools_test_file_vitest",
+      "label": "vitest",
+      "_origin": "ast",
+      "community": 79,
+      "community_name": "ref_node_path",
+      "file_type": "code",
+      "norm_label": "vitest",
+      "source_file": "tools/test/file.ts",
+      "source_location": "L48"
     },
     {
       "id": "tools_typecheck_tests",
@@ -59667,6 +59713,18 @@
       "type": "external"
     },
     {
+      "id": "ref_vitest",
+      "label": "ref_vitest",
+      "_origin": "semantic",
+      "community": 637,
+      "community_name": "templates/tools/ci/coverage-goal.ts",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_vitest",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "ref_node_os",
       "label": "ref_node_os",
       "_origin": "semantic",
@@ -59711,17 +59769,6 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_node_url",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "ref_vitest",
-      "label": "ref_vitest",
-      "community": 637,
-      "community_name": "templates/tools/ci/coverage-goal.ts",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "ref_vitest",
       "source_file": "",
       "type": "external"
     }
@@ -60269,18 +60316,6 @@
     },
     {
       "source": "templates_tools_dev_commit_check_checkmessage",
-      "target": "templates_tools_dev_commit_check_isai",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L114",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_tools_dev_commit_check_checkmessage",
       "target": "templates_tools_dev_commit_check_parsemessage",
       "relation": "calls",
       "_origin": "ast",
@@ -60288,11 +60323,35 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L96",
+      "source_location": "L104",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_commit_check_checkmessage",
+      "target": "templates_tools_dev_commit_check_isai",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "templates/tools/dev/commit-check.mjs",
+      "source_location": "L123",
       "weight": 1.0
     },
     {
       "source": "templates_tools_dev_commit_check_checkstagedtext",
+      "target": "templates_tools_dev_commit_check_codeonly",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "templates/tools/dev/commit-check.mjs",
+      "source_location": "L192",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_commit_check_codeonly",
       "target": "templates_tools_dev_commit_check_withoutstrings",
       "relation": "calls",
       "_origin": "ast",
@@ -60300,7 +60359,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L183",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
@@ -60312,7 +60371,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L207",
+      "source_location": "L216",
       "weight": 1.0
     },
     {
@@ -60324,7 +60383,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L218",
+      "source_location": "L227",
       "weight": 1.0
     },
     {
@@ -60336,7 +60395,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L222",
+      "source_location": "L233",
       "weight": 1.0
     },
     {
@@ -60348,7 +60407,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L222",
+      "source_location": "L233",
       "weight": 1.0
     },
     {
@@ -61481,18 +61540,6 @@
     },
     {
       "source": "tools_dev_commit_check_checkmessage",
-      "target": "tools_dev_commit_check_isai",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L114",
-      "weight": 1.0
-    },
-    {
-      "source": "tools_dev_commit_check_checkmessage",
       "target": "tools_dev_commit_check_parsemessage",
       "relation": "calls",
       "_origin": "ast",
@@ -61500,11 +61547,35 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L96",
+      "source_location": "L104",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_commit_check_checkmessage",
+      "target": "tools_dev_commit_check_isai",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tools/dev/commit-check.mjs",
+      "source_location": "L123",
       "weight": 1.0
     },
     {
       "source": "tools_dev_commit_check_checkstagedtext",
+      "target": "tools_dev_commit_check_codeonly",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tools/dev/commit-check.mjs",
+      "source_location": "L192",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_commit_check_codeonly",
       "target": "tools_dev_commit_check_withoutstrings",
       "relation": "calls",
       "_origin": "ast",
@@ -61512,7 +61583,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L183",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
@@ -61524,7 +61595,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L207",
+      "source_location": "L216",
       "weight": 1.0
     },
     {
@@ -61536,7 +61607,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L218",
+      "source_location": "L227",
       "weight": 1.0
     },
     {
@@ -61548,7 +61619,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L222",
+      "source_location": "L233",
       "weight": 1.0
     },
     {
@@ -61560,7 +61631,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L222",
+      "source_location": "L233",
       "weight": 1.0
     },
     {
@@ -63163,6 +63234,18 @@
       "weight": 1.0
     },
     {
+      "source": "templates_tools_dev_commit_check",
+      "target": "ref_node_path",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "templates/tools/dev/commit-check.mjs",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
       "source": "templates_tools_dev_docs",
       "target": "ref_node_child_process",
       "relation": "imports_from",
@@ -64242,6 +64325,18 @@
       "context": "import",
       "source_file": "tools/dev/commit-check.mjs",
       "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_commit_check",
+      "target": "ref_node_path",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tools/dev/commit-check.mjs",
+      "source_location": "L24",
       "weight": 1.0
     },
     {
@@ -107732,13 +107827,24 @@
     },
     {
       "source": "templates_tools_dev_commit_check",
+      "target": "templates_tools_dev_commit_check_checkmessage",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/tools/dev/commit-check.mjs",
+      "source_location": "L102",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_commit_check",
       "target": "templates_tools_dev_commit_check_checkstagedtext",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L153",
+      "source_location": "L162",
       "weight": 1.0
     },
     {
@@ -107749,7 +107855,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L196",
+      "source_location": "L205",
       "weight": 1.0
     },
     {
@@ -107760,7 +107866,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L198",
+      "source_location": "L207",
       "weight": 1.0
     },
     {
@@ -107771,7 +107877,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L30",
+      "source_location": "L31",
       "weight": 1.0
     },
     {
@@ -107782,7 +107888,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L33",
+      "source_location": "L34",
       "weight": 1.0
     },
     {
@@ -107793,7 +107899,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L53",
+      "source_location": "L58",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_dev_commit_check",
+      "target": "templates_tools_dev_commit_check_codeonly",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/tools/dev/commit-check.mjs",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
@@ -107804,7 +107921,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L61",
+      "source_location": "L68",
       "weight": 1.0
     },
     {
@@ -107815,18 +107932,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L71",
-      "weight": 1.0
-    },
-    {
-      "source": "templates_tools_dev_commit_check",
-      "target": "templates_tools_dev_commit_check_checkmessage",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L94",
+      "source_location": "L78",
       "weight": 1.0
     },
     {
@@ -108414,13 +108520,24 @@
     },
     {
       "source": "templates_tools_test_file",
+      "target": "templates_tools_test_file_vitest",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "templates/tools/test/file.ts",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_tools_test_file",
       "target": "templates_tools_test_file_result",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "templates/tools/test/file.ts",
-      "source_location": "L47",
+      "source_location": "L49",
       "weight": 1.0
     },
     {
@@ -109074,13 +109191,24 @@
     },
     {
       "source": "tools_dev_commit_check",
+      "target": "tools_dev_commit_check_checkmessage",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/dev/commit-check.mjs",
+      "source_location": "L102",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_commit_check",
       "target": "tools_dev_commit_check_checkstagedtext",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L153",
+      "source_location": "L162",
       "weight": 1.0
     },
     {
@@ -109091,7 +109219,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L196",
+      "source_location": "L205",
       "weight": 1.0
     },
     {
@@ -109102,7 +109230,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L198",
+      "source_location": "L207",
       "weight": 1.0
     },
     {
@@ -109113,7 +109241,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L30",
+      "source_location": "L31",
       "weight": 1.0
     },
     {
@@ -109124,7 +109252,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L33",
+      "source_location": "L34",
       "weight": 1.0
     },
     {
@@ -109135,7 +109263,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L53",
+      "source_location": "L58",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_dev_commit_check",
+      "target": "tools_dev_commit_check_codeonly",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/dev/commit-check.mjs",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
@@ -109146,7 +109285,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L61",
+      "source_location": "L68",
       "weight": 1.0
     },
     {
@@ -109157,18 +109296,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L71",
-      "weight": 1.0
-    },
-    {
-      "source": "tools_dev_commit_check",
-      "target": "tools_dev_commit_check_checkmessage",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L94",
+      "source_location": "L78",
       "weight": 1.0
     },
     {
@@ -109756,13 +109884,24 @@
     },
     {
       "source": "tools_test_file",
+      "target": "tools_test_file_vitest",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/test/file.ts",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_test_file",
       "target": "tools_test_file_result",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/test/file.ts",
-      "source_location": "L47",
+      "source_location": "L49",
       "weight": 1.0
     },
     {
@@ -111447,7 +111586,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "templates/tools/dev/commit-check.mjs",
-      "source_location": "L119",
+      "source_location": "L128",
       "weight": 1.0
     },
     {
@@ -111519,7 +111658,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "tools/dev/commit-check.mjs",
-      "source_location": "L119",
+      "source_location": "L128",
       "weight": 1.0
     },
     {
