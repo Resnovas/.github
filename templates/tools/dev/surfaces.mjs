@@ -72,9 +72,19 @@ const renamedSources = [['.agents/surfaces.json', '.agents/surfaces.jsonc']]
 // Reads a file, or returns null when it does not exist. Reading straight away,
 // rather than testing existsSync first, leaves no window for the file to change
 // between the test and the read.
-const readIfExists = (path) => {
+const readIfExists = (path, encoding = 'utf8') => {
   try {
-    return readFileSync(path, 'utf8')
+    return readFileSync(path, encoding)
+  } catch (error) {
+    if (error.code === 'ENOENT') return null
+    throw error
+  }
+}
+
+// The permission bits of a file, or null when it does not exist.
+const modeOf = (path) => {
+  try {
+    return statSync(path).mode & 0o777
   } catch (error) {
     if (error.code === 'ENOENT') return null
     throw error
@@ -195,7 +205,7 @@ const syncPrompts = (write) => {
     }
     for (const [file, content] of wanted) {
       const path = join(directory, file)
-      if (existsSync(path) && readFileSync(path, 'utf8') === content) continue
+      if (readIfExists(path) === content) continue
       stale.push(`${target.directory}/${file}`)
       if (write) {
         mkdirSync(directory, { recursive: true })
@@ -268,7 +278,8 @@ const syncSkills = (write) => {
       const to = join(directory, file)
       const content = readFileSync(from)
       const mode = statSync(from).mode & 0o777
-      if (existsSync(to) && readFileSync(to).equals(content) && (statSync(to).mode & 0o777) === mode) continue
+      const existing = readIfExists(to, null)
+      if (existing !== null && existing.equals(content) && modeOf(to) === mode) continue
       stale.push(`${target}/${file}`)
       if (write) {
         mkdirSync(dirname(to), { recursive: true })
@@ -521,7 +532,8 @@ const installOpenChamber = () => {
   for (const checkout of checkouts) {
     // OpenChamber names a project's settings file after its path.
     const file = join(directory, 'projects', `path_${Buffer.from(checkout, 'utf8').toString('base64url')}.json`)
-    const current = existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : {}
+    const text = readIfExists(file)
+    const current = text === null ? {} : JSON.parse(text)
     const kept = (Array.isArray(current.projectActions) ? current.projectActions : []).filter((entry) => !entry.id.startsWith(prefix))
     const projectActions = actions.map((action) => ({
       id: `${prefix}${action.id}`,
@@ -565,8 +577,8 @@ const installCommitHook = () => {
     return 'Commit hook: not a git checkout, nothing installed.'
   }
   const path = resolve(root, hooks, 'commit-msg')
-  if (existsSync(path)) {
-    const current = readFileSync(path, 'utf8')
+  const current = readIfExists(path)
+  if (current !== null) {
     if (current === commitHook) return 'Commit hook: already installed.'
     if (!current.includes(HOOK_MARKER)) return `Commit hook: ${hooks}/commit-msg exists and is not the house hook; add "node tools/dev/commit-check.mjs \\"$1\\"" to it yourself.`
   }
@@ -586,7 +598,8 @@ const missingCommitHook = () => {
   try {
     const hooks = execFileSync('git', ['rev-parse', '--git-path', 'hooks'], { cwd: root, encoding: 'utf8' }).trim()
     const path = resolve(root, hooks, 'commit-msg')
-    return existsSync(path) && readFileSync(path, 'utf8').includes(HOOK_MARKER) ? [] : [`${hooks}/commit-msg (run node --run setup)`]
+    const current = readIfExists(path)
+    return current !== null && current.includes(HOOK_MARKER) ? [] : [`${hooks}/commit-msg (run node --run setup)`]
   } catch {
     return []
   }

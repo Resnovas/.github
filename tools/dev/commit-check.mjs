@@ -43,7 +43,9 @@ const SKIP_PATH = /^(?:graphify-out\/|externals\/|docs\/reference\/|LLMS\.md$|CH
 // TypeScript the code scan covers: sources, not tests, typings, vendored code
 // or repository tooling (coding-preferences, references/effect.md).
 const TS_PATH = /\.tsx?$/
-const TS_SKIP = /(?:^|\/)(?:tests?|__tests__|scripts|tools)\/|\.(?:test|spec|d)\.tsx?$/
+const TS_SKIP_DIRECTORY = /(?:^|\/)(?:tests?|__tests__|scripts|tools)\//
+const TS_SKIP_FILE = /\.(?:test|spec|d)\.tsx?$/
+const isSource = (file) => TS_PATH.test(file) && !TS_SKIP_DIRECTORY.test(file) && !TS_SKIP_FILE.test(file)
 const ANY_TYPE = /(?::\s*any\b|\bas\s+any\b|<any[\s,>]|\bany\[\])/
 const PLAIN_PROMISE = /\basync\b|\bawait\b|\btry\s*\{|\bthrow\b|\bnew\s+Promise\b|\.then\(/
 const EFFECT_CALL = /\bEffect\./
@@ -175,7 +177,7 @@ export const checkStagedText = (diff) => {
     if (line.startsWith('+++ ')) {
       file = line.slice(4).replace(/^b\//, '')
       skip = file === '/dev/null' || SKIP_PATH.test(file)
-      source = !skip && TS_PATH.test(file) && !TS_SKIP.test(file)
+      source = !skip && isSource(file)
       boundary = false
       continue
     }
