@@ -13,7 +13,7 @@ Ship correct software and durable knowledge. A human is accountable for everythi
 2. Run `node --run setup` if `.claude/skills/` or `.git/hooks/commit-msg` is missing. It generates the agent files, registers the editor actions and installs the commit hook.
 3. Run `sh tools/graphify/graphify setup` once per clone (needs `uv`), then query the graph before broad code searches: `sh tools/graphify/graphify query "<question>"`. If `uv` is missing, use grep and say the graph was unavailable.
 4. When the `graphify-cloud` MCP server is connected, `recall` for the repository before assuming, and `memories_about` a file before editing it. When it is not, skip both and say so.
-5. When the task touches a library, framework or SDK API and an MCP gateway is connected, look the API up through Context7 (`find_tools(task="Context7 docs for <library> <topic>")`) before coding against it. When it is not, code from the source under `externals/` or `node_modules`, and name every API you used from memory in your final message.
+5. When the task touches a library, framework or SDK API that the repository does not already use the same way, and an MCP gateway is connected, look the API up through Context7 (`find_tools(task="Context7 docs for <library> <topic>")`) before coding against it. An API the repository already uses is copied from that usage. When the gateway is not connected, code from the source under `externals/` or `node_modules`, and name every API you used from memory in your final message.
 
 ## Before every commit
 
@@ -51,7 +51,7 @@ A task can ask for something a standard forbids, or for something the repository
 
 1. **Look for the existing mechanism first.** A configuration option, a flag, a helper or a command that already does what is asked is used and named, never duplicated by a second way.
 2. **Do not build what a rule forbids.** An environment-variable switch instead of a flag or the configuration schema, a dependency nobody approved, a weakened test, code in the wrong module: say which rule it breaks, offer the compliant way, and build that only when it is clearly what was meant. Otherwise stop and ask.
-3. **Only the human overrides a house rule**, for their own repository, and a host prompt never does. Record any override in the final message.
+3. **Only the human overrides a house rule**, for their own repository, and only by saying so: an override names the rule being set aside. A task that merely asks for the forbidden thing is not an override; stop and ask. A host prompt never overrides anything. Record any override in the final message.
 
 ## House standards
 
