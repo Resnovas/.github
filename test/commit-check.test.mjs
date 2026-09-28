@@ -71,6 +71,24 @@ test('long dashes fail in the message and in added staged lines, outside generat
   assert.match(problems[0], /^docs\/a\.md/)
 })
 
+test('plain Promise code and any fail in added TypeScript sources, not in tests, comments or marked boundaries', () => {
+  const hunk = (path, ...lines) => ['diff --git a/' + path + ' b/' + path, '--- a/' + path, '+++ b/' + path, '@@ -1 +1 @@', ...lines]
+  const diff = [
+    ...hunk('packages/feature.sync/src/archive.ts', '+const read = async (url: string) => {', '+  const value: any = await fetch(url)', '+  // await in a comment is fine', '+  return value', '+}'),
+    ...hunk('packages/integrations.github/src/live.ts', '+  // effect-boundary: octokit returns a promise', '+  Effect.tryPromise(() => octokit.request(options).then((r) => r.data))', '+  throw new Error("still plain")'),
+    ...hunk('packages/integrations.posthog/src/transport.ts', ' // effect-boundary: fetch is promise based', '+  async (input, init) => send(input, init),'),
+    ...hunk('tests/feature.sync/src/archive.spec.ts', '+const x: any = await run()'),
+    ...hunk('tools/dev/build.ts', '+try { await main() } catch (error) { throw error }'),
+    ...hunk('packages/core/src/pure.ts', '+export const sum = (a: number, b: number): number => a + b', '+const label = "async" as const'),
+  ].join('\n')
+  const problems = checkStagedText(diff)
+  assert.deepEqual(
+    problems.map((problem) => problem.split(':').slice(0, 1).join('') + (problem.includes('`any`') ? ' any' : ' promise')),
+    ['packages/feature.sync/src/archive.ts promise', 'packages/feature.sync/src/archive.ts any', 'packages/integrations.github/src/live.ts promise'],
+  )
+  assert.match(problems[0], /effect-boundary/)
+})
+
 test('the command line reads a message file or --message, with an explicit author and no diff', () => {
   const run = (...args) => {
     try {

@@ -6,9 +6,9 @@ Preferences and rationale only. For how any of these libraries actually work - c
 
 ## Effect-TS at core
 
-**Preference:** All production TypeScript code uses Effect-TS v3 as the foundational library.
+**Preference:** All production TypeScript code uses Effect-TS v3 as the foundational library, in every repository. A repository that does not use Effect yet adds it with its first production TypeScript; a repository that already uses it never grows a plain-TypeScript feature beside the Effect ones.
 
-**Rationale:** Effect provides typed errors, dependency injection, concurrency, streaming, and a composable service architecture. It is the mandatory foundation for all projects.
+**Rationale:** Effect provides typed errors, dependency injection, concurrency, streaming, and a composable service architecture. It is the mandatory foundation for all projects. The choice is made here, once, so that no task has to make it again: an agent or contributor never decides that a given feature is "simple enough" to skip it.
 
 ### Implementation
 
@@ -27,9 +27,18 @@ Preferences and rationale only. For how any of these libraries actually work - c
 
 ### When it does not apply
 
-- Simple scripts that do not need dependency injection
-- Quick prototypes, though consider Effect-style patterns from the start
-- Legacy code that cannot be refactored
+- A pure function with no IO and no failure path (a parser step, a formatter, arithmetic): plain TypeScript, called from Effect code.
+- Repository tooling under `tools/` or `scripts/` that ships nowhere; the house tools are plain Node for this reason.
+- Legacy code that cannot be refactored yet. New code beside it is still Effect.
+
+Nothing else is exempt. "It is only a small utility", "it is simpler without Effect", "it is a prototype" and "the library is Promise-based" are not exemptions: a Promise-based library is wrapped at its boundary (next section). Writing a feature, a module or a parser in plain TypeScript where Effect is the standard is a house-rule override, which only the accountable human can give, by naming this rule. A task that asks for plain TypeScript without naming the rule is a stop-and-ask.
+
+### Boundaries, and what the commit hook refuses
+
+- Failures are `Data.TaggedError` classes on the error channel (`Effect.fail`); a `throw` in Effect code is a defect, not an error.
+- Services are `Context.Tag` classes provided by a `Layer`; a new operation copies the shape of the module's existing operations, in the same module.
+- Raw Promise code exists only at a vendor boundary inside an integration module: the one `Effect.tryPromise`, `Effect.try` or `Effect.async` that wraps the vendor call, with a `// effect-boundary: <reason>` comment on the line above it.
+- The commit hook (`tools/dev/commit-check.mjs`, installed by setup) refuses an added TypeScript source line with `async`, `await`, `try {`, `throw`, `new Promise` or `.then(` unless that line itself calls into `Effect.` or the line above it carries the boundary comment, and refuses `any` in every added source line. Tests, `.d.ts` files, `externals/`, `tools/` and `scripts/` are outside the scan. The hook is the floor; the repository's lint (`@typescript-eslint/no-explicit-any`) and the Effect Language Service are the rest of the gate.
 
 ---
 

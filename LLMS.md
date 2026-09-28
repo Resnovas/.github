@@ -55,6 +55,24 @@ with them. The sections after this one describe this repository itself.
   (`AI_POLICY.md` AI-11). A flaky test is a bug to fix, not to retry away.
 - Every bug fix comes with a regression test that fails before the fix.
 
+### TypeScript
+
+- Effect-TS v3 is the foundation of all production TypeScript, in every
+  repository (house skill `coding-preferences`, `references/effect.md`).
+  Anything that does IO, can fail, reads configuration, retries, runs
+  concurrently or holds a resource is an `Effect` with `Data.TaggedError`
+  failures, services as `Context.Tag` classes behind a `Layer`, input through
+  `Schema`, configuration through `Config`, tests with `@effect/vitest`, in
+  the shape of the module's existing code.
+- Raw Promise code (`async`, `await`, `try`/`catch`, `throw`, `new Promise`,
+  `.then`) lives only at a vendor boundary inside an integration module, in
+  the one `Effect.tryPromise` or `Effect.try` that wraps the vendor call,
+  marked with `// effect-boundary: <reason>` on the line above. The commit
+  hook refuses it anywhere else in added source lines, and refuses `any`.
+- A pure function with no IO and no failure path stays plain TypeScript. A
+  whole feature in plain TypeScript is never an agent's decision: it is a
+  house-rule override only the accountable human gives, by naming the rule.
+
 ### Files
 
 - Every source file carries the FCL-1.0-MIT licence header; the repository's

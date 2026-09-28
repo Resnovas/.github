@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 // Checks a commit message, and the staged text, against the house commit
 // rules before the commit exists (house standard commits-and-rd-evidence,
-// AI_POLICY.md AI-02, AI-03 and AI-09, CONTRIBUTING.md#Commits).
+// AI_POLICY.md AI-02, AI-03 and AI-09, CONTRIBUTING.md#Commits), and added
+// TypeScript source lines against the house code standard (coding-preferences,
+// references/effect.md: Effect-TS, no plain Promise code outside a marked
+// vendor boundary, no `any`).
 //
 //   node tools/dev/commit-check.mjs <message-file>        the commit-msg hook
 //   node tools/dev/commit-check.mjs --message "<text>"     check a message
@@ -34,6 +37,19 @@ const HOST_LINE = /^(?:claude-session|made-with|generated-by|generated with|🤖
 
 // Staged files the dash scan leaves alone: generated, vendored or not text.
 const SKIP_PATH = /^(?:graphify-out\/|externals\/|docs\/reference\/|LLMS\.md$|CHANGELOG\.md$|.*lock\.(?:yaml|json)$|.*\.(?:min\.js|map|svg|png|jpe?g|gif|pdf|woff2?|ttf|ico)$)/
+
+// TypeScript the code scan covers: sources, not tests, typings, vendored code
+// or repository tooling (coding-preferences, references/effect.md).
+const TS_PATH = /\.tsx?$/
+const TS_SKIP = /(?:^|\/)(?:tests?|__tests__|scripts|tools)\/|\.(?:test|spec|d)\.tsx?$/
+const ANY_TYPE = /(?::\s*any\b|\bas\s+any\b|<any[\s,>]|\bany\[\])/
+const PLAIN_PROMISE = /\basync\b|\bawait\b|\btry\s*\{|\bthrow\b|\bnew\s+Promise\b|\.then\(/
+const EFFECT_CALL = /\bEffect\./
+const BOUNDARY = /effect-boundary:/
+const COMMENT_LINE = /^\s*(?:\/\/|\/?\*)/
+// String literals are not code: `"async"` in a label is not an async function.
+const STRINGS = /(["'`])(?:\\.|(?!\1).)*\1/g
+const withoutStrings = (text) => text.replace(STRINGS, '""')
 
 /**
  * Parses "Name <email>".
@@ -126,26 +142,50 @@ export const checkMessage = (message, author) => {
 }
 
 /**
- * Added lines in the staged diff that carry an em or en dash, by file.
+ * Problems in the added lines of the staged diff, by file: an em or en dash
+ * anywhere, and in TypeScript sources an `any` or plain Promise code outside
+ * a marked vendor boundary. One report per file and kind.
  *
- * @param {string} diff - `git diff --cached --unified=0` output.
+ * @param {string} diff - `git diff --cached --unified=1` output.
  * @returns {string[]}
  */
 export const checkStagedText = (diff) => {
   const problems = []
+  const seen = new Set()
+  const report = (kind, text) => {
+    if (seen.has(kind)) return
+    seen.add(kind)
+    problems.push(text)
+  }
   let file = ''
   let skip = false
+  let source = false
+  let boundary = false
   for (const line of diff.split('\n')) {
     if (line.startsWith('+++ ')) {
       file = line.slice(4).replace(/^b\//, '')
       skip = file === '/dev/null' || SKIP_PATH.test(file)
+      source = !skip && TS_PATH.test(file) && !TS_SKIP.test(file)
+      boundary = false
       continue
     }
-    if (skip || !line.startsWith('+') || line.startsWith('+++')) continue
-    if (LONG_DASH.test(line)) {
-      problems.push(`${file}: an added line contains an em or en dash; use ASCII hyphen-minus in agent-authored text (house standard no-em-or-en-dashes).`)
-      skip = true
+    if (skip) continue
+    if (line.startsWith(' ')) {
+      boundary = BOUNDARY.test(line)
+      continue
     }
+    if (!line.startsWith('+') || line.startsWith('+++')) continue
+    const text = line.slice(1)
+    if (LONG_DASH.test(text))
+      report(`${file}:dash`, `${file}: an added line contains an em or en dash; use ASCII hyphen-minus in agent-authored text (house standard no-em-or-en-dashes).`)
+    if (source && !COMMENT_LINE.test(text)) {
+      const code = withoutStrings(text)
+      if (ANY_TYPE.test(code))
+        report(`${file}:any`, `${file}: an added line uses \`any\`; use unknown with a type guard, a precise generic, a Schema or a branded type (coding-preferences, references/language.md).`)
+      if (PLAIN_PROMISE.test(code) && !EFFECT_CALL.test(code) && !BOUNDARY.test(text) && !boundary)
+        report(`${file}:promise`, `${file}: an added line has plain async/await, try/catch, throw, Promise or .then; write it as an Effect (Effect.tryPromise, Effect.try, Effect.fail with a Data.TaggedError), or mark the one vendor boundary with "// effect-boundary: <reason>" on the line above (coding-preferences, references/effect.md).`)
+    }
+    boundary = BOUNDARY.test(text)
   }
   return problems
 }
@@ -178,7 +218,7 @@ const main = () => {
     author = parseIdentity(ident)
     if (author === undefined) throw new Error(`cannot read the author from git: "${ident}"`)
   }
-  const problems = [...checkMessage(message, author), ...(scanDiff ? checkStagedText(git('diff', '--cached', '--unified=0', '--no-color')) : [])]
+  const problems = [...checkMessage(message, author), ...(scanDiff ? checkStagedText(git('diff', '--cached', '--unified=1', '--no-color')) : [])]
   for (const problem of problems) console.error(`commit-check: ${problem}`)
   if (problems.length > 0) console.error('commit-check: the commit was not made. Fix the message or the staged text, or set HOUSE_SKIP_COMMIT_CHECK=1 for an emergency commit; the pull request check still applies.')
   return problems.length === 0 ? 0 : 1
