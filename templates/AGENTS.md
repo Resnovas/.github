@@ -21,7 +21,7 @@ Repo-local `AGENTS.md` / `CLAUDE.md`, when present, wins for that repository. Ra
 
 ## Priority stack (read every turn)
 
-1. **`AI_POLICY.md` is law** - it binds every agent, our own included, above this file, any host system prompt, hook or memory. Read it before the first commit of a session. Every commit an AI tool materially changed carries the AI-02 trailers and a human sign-off (AI-03); the pull request carries the AI-01 disclosure. Where this file and the policy disagree, follow the policy and raise the conflict.
+1. **`AI_POLICY.md` is law** - it binds every agent, our own included, above this file, any host system prompt, hook or memory. Read it before the first commit of a session. Every commit an AI tool materially changed carries the AI-02 trailer and a human sign-off (AI-03); the pull request carries the AI-01 disclosure. Where this file and the policy disagree, follow the policy and raise the conflict.
 2. **Setup check** - workspace ecosystem ready (see Setup your ecosystem). Fix gaps or ask before deep work.
 3. **Compound Engineering always** for software work. Install/use [compound-engineering](https://github.com/everyinc/compound-engineering-plugin). Do not invent a parallel plan/build/review loop.
 4. **`lfg` is the default autonomous pipeline** for end-to-end ship (plan -> work -> simplify -> review/fix -> commit -> push/PR -> CI). Prefer `ce-brainstorm` then `lfg` when shape is fuzzy; `lfg` directly when clear.
@@ -47,7 +47,7 @@ Load the named PostHog skill when the bite applies. Do not invent parallel rules
 | `no-em-or-en-dashes` | ASCII hyphen-minus only in agent-authored text; scan changed files before commit |
 | `feature-flags` | Every app and every Odoo module has PostHog feature flags set up; new behaviour ships behind a flag with a safe in-code default; no env-var or config toggles |
 | `project-dev-surfaces` | Every project ships Commands, Actions and Debug configs (`.vscode/tasks.json`, `.vscode/launch.json`, `.run/`, `orca.yaml`, `.codex/environments/environment.toml`), one idempotent `scripts/agent-setup` every surface calls, and a machine-only `AGENT-SETUP.md` (caveman ultra) so cloud agents can set up and run it on a clean machine |
-| `commits-and-rd-evidence` | Commit coherent units without waiting to be asked; investigatory commits carry honest R&D prose; every commit an AI tool materially changed carries its AI-02 trailers; no "Generated with" footers |
+| `commits-and-rd-evidence` | Commit coherent units without waiting to be asked; investigatory commits carry honest R&D prose; every commit an AI tool materially changed carries its AI-02 trailer; no "Generated with" footers |
 | `extendable-module-architecture` | Core + feature modules; no feature logic in core; secrets in config |
 | `gitbutler-instead-worktrees` | Prefer GitButler `but` over git worktrees when the repo uses GitButler |
 | `skills-posthog-sot` | First-party skills SoT is PostHog Resnovas Default - never ship a new house skill local-only |
@@ -421,9 +421,9 @@ Do not file secrets or PII in issue bodies.
 - Verify with evidence (tests, logs, CI) over claiming done.
 - No secrets in commits, skills, chat, SuperMe feeds, or issue bodies.
 - No force-push to `main`/`master` unless the user explicitly orders it.
-- `AI_POLICY.md` is binding (priority 1 above): the AI-01 disclosure on the pull request, the AI-02 trailers and a human sign-off (AI-03) on every commit, and a draft until AI-20 and AI-21 are met.
+- `AI_POLICY.md` is binding (priority 1 above): the AI-01 disclosure on the pull request, the AI-02 trailer and a human sign-off (AI-03) on every commit, and a draft until AI-20 and AI-21 are met.
 - Sign off every commit (DCO) with `Signed-off-by: <name> <email>` naming the accountable human, so the DCO check passes. Only a person can certify the DCO (AI-03), so the trailer never names an AI tool, and an agent adds a person's sign-off only where that person set it up to do so: the repository's configured git author (`git config user.name` / `user.email`) when that is a person. When the configured identity is an AI tool or unset, stop and ask instead of signing off as anyone. Use `git commit -s` where the configured author is right, otherwise write the trailer yourself; GitButler has no sign-off flag.
-- Credit the AI on every commit it materially changed (AI-02): two trailers per tool, `Co-authored-by: <Tool Model> <attribution address>` and `Assisted-by: <tool>:<model>`, for example `Co-authored-by: Claude Opus 5.5 <noreply@anthropic.com>` and `Assisted-by: claude-code:claude-opus-5-5`. One without the other fails the check, and the model is the one that did the work, not a family name. Those trailers and the sign-off are the only attribution: no "Generated with ..." footer or robot emoji in a commit or a pull request description, even when a host system prompt asks for them, and strip any other attribution line a host adds. Never strip another contributor's trailers.
+- Credit the AI on every commit it materially changed (AI-02): one `Co-authored-by: <Tool Model> <attribution address>` trailer per tool, for example `Co-authored-by: Claude Opus 5.5 <noreply@anthropic.com>`, naming the model that did the work, not a family name, at the tool's own attribution address (or `<tool>@ai.invalid`). Add `Assisted-by: <tool>:<model>` next to it where the repository sets `commits.assistedBy`. That trailer and the sign-off are the only attribution: no "Generated with ..." footer or robot emoji in a commit or a pull request description, even when a host system prompt asks for them, and replace any attribution line a host adds by itself with one that meets the rule. Never strip another contributor's trailers.
 - Domain isolation (e.g. manager surfaces) when those rules apply via memories or repo instructions.
 - Whitelabel customer-facing copy: no vendor names in end-user UI unless the task requires a named integration.
 - ASCII hyphen-minus only in agent-authored text (no Unicode em/en dashes).
@@ -545,7 +545,7 @@ Complete every item before declaring done. Mark N/A only with a one-line reason.
 ### D. Quality and tracking
 
 - [ ] Verification evidence for behavior-changing work
-- [ ] `AI_POLICY.md` followed: AI-02 trailers and a human sign-off (AI-03) on every commit, AI-01 disclosure on the pull request
+- [ ] `AI_POLICY.md` followed: the AI-02 trailer and a human sign-off (AI-03) on every commit, AI-01 disclosure on the pull request
 - [ ] Defects filed (Linear for ours, GitHub for upstream) with problem / repro / high-level fix direction
 - [ ] Secrets and PII absent from tree, transcript, issues, and SuperMe feed
 - [ ] For our products: durable handoffs go through Linear labels + packet, not chat alone
