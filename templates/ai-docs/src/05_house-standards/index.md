@@ -65,7 +65,7 @@ with them. The sections after this one describe this repository itself.
   these rules.
 - One pull request per batch of work: one stacked branch per issue, each
   squashed to one conventional, signed-off commit naming its issue, all opened
-  as a single pull request. Once Jonathan approves it, it lands as an owner
+  as a single pull request. Once a maintainer approves it, it lands as an owner
   fast-forward (its signed commits pushed onto the default branch unchanged),
   so each issue keeps its own commit; the merge queue squashes, because GitHub
   cannot sign rebased commits. Run the full gate locally first; CI is not the
