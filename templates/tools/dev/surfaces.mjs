@@ -547,6 +547,37 @@ const installOpenChamber = () => {
   return `OpenChamber: ${actions.length} project actions for ${checkouts.join(' and ')}.`
 }
 
+// --- Commit hook -------------------------------------------------------------
+
+// The commit-msg hook runs tools/dev/commit-check.mjs, so a commit that breaks
+// the house commit rules never exists. Installed into this checkout's hooks
+// directory (a worktree has its own); a hook someone wrote by hand is left
+// alone and reported.
+const HOOK_MARKER = '# house:commit-check'
+const commitHook = `#!/bin/sh\n${HOOK_MARKER} - installed by tools/dev/surfaces.mjs install. Runs the house commit rules; see tools/dev/commit-check.mjs.\nexec node "$(git rev-parse --show-toplevel)/tools/dev/commit-check.mjs" "$1"\n`
+
+const installCommitHook = () => {
+  if (!existsSync(join(root, 'tools/dev/commit-check.mjs'))) return 'Commit hook: tools/dev/commit-check.mjs is missing, nothing installed.'
+  let hooks
+  try {
+    hooks = execFileSync('git', ['rev-parse', '--git-path', 'hooks'], { cwd: root, encoding: 'utf8' }).trim()
+  } catch {
+    return 'Commit hook: not a git checkout, nothing installed.'
+  }
+  const path = join(root, hooks, 'commit-msg')
+  if (existsSync(path)) {
+    const current = readFileSync(path, 'utf8')
+    if (current === commitHook) return 'Commit hook: already installed.'
+    if (!current.includes(HOOK_MARKER)) return `Commit hook: ${hooks}/commit-msg exists and is not the house hook; add "node tools/dev/commit-check.mjs \\"$1\\"" to it yourself.`
+  }
+  if (!dryRun) {
+    mkdirSync(dirname(path), { recursive: true })
+    writeFileSync(path, commitHook)
+    chmodSync(path, 0o755)
+  }
+  return `Commit hook: ${dryRun ? 'would install' : 'installed'} ${hooks}/commit-msg.`
+}
+
 // --- Commands ----------------------------------------------------------------
 
 if (command === 'sync' || command === 'check') {
@@ -577,6 +608,7 @@ if (command === 'sync' || command === 'check') {
     console.warn('Agent commands, skills or MCP configs are out of date; run node tools/dev/surfaces.mjs sync.')
   }
   const prompts = readPrompts()
+  console.log(installCommitHook())
   console.log(await installOrca(prompts))
   console.log(installOpenChamber())
   if (dryRun) console.log('Dry run: nothing was written.')

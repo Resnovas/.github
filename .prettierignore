@@ -39,6 +39,7 @@ LICENSE
 tools/graphify/
 tools/dev/surfaces.mjs
 tools/dev/open.mjs
+tools/dev/commit-check.mjs
 tools/ai-docs/
 ai-docs/README.md
 ai-docs/src/05_house-standards/

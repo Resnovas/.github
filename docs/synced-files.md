@@ -112,6 +112,7 @@ They only call three package scripts every repository has (`setup`, `check` and 
 | `.agents/mcp.jsonc` | Extendable | Every agent host | The MCP servers agents use (Mem0 gateway, the repository's Graphify graph, and Graphify Cloud with its memory). Your own go under `servers`. No credential is ever written: each host reads them from environment variables. |
 | `tools/dev/surfaces.mjs` | Whole file | You, and `setup` and `check` | `sync` writes the prompts to `.claude/commands` and `.cursor/commands`, the skills to `.claude/skills`, and the MCP servers to `.mcp.json`, `.cursor/mcp.json`, `.vscode/mcp.json` and a block in `.codex/config.toml`. `check` fails when they are out of date. `install` registers the actions in Orca and OpenChamber, which keep them in per-user settings. |
 | `tools/dev/open.mjs` | Whole file | The tasks | Opens a file in the default browser on any platform. |
+| `tools/dev/commit-check.mjs` | Whole file | git, as the `commit-msg` hook that `setup` installs | Refuses a commit that breaks the house commit rules: a conventional subject, the author and sign-off being a person, an AI co-author naming its model, no host attribution lines, no em or en dashes or emoji in the message or the added text. `HOUSE_SKIP_COMMIT_CHECK=1` skips one emergency commit; the smartcloud check on the pull request still applies. |
 
 JSON files here are JSON with comments, so their markers are `//` lines, and a local entry may not reuse a synced `label`, `name` or `id`.
 

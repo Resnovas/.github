@@ -56,9 +56,13 @@ with them. The sections after this one describe this repository itself.
   change each, and every commit signed off for the Developer Certificate of
   Origin with the commit author's name and address. An AI tool never signs off
   (`AI_POLICY.md` AI-03).
-- In the maintainer's own repositories agents add no AI attribution: no AI
-  co-author trailer and no "Generated with" footer (house skill
-  `commits-and-rd-evidence`). Outside contributors follow `AI_POLICY.md` AI-02.
+- Every commit an AI tool materially changed carries one `Co-authored-by`
+  trailer per tool naming the tool and the model at the tool's attribution
+  address (`AI_POLICY.md` AI-02); the commit author and the sign-off are the
+  accountable human. No "Generated with" footer, robot emoji or host session
+  line (house skill `commits-and-rd-evidence`). `tools/dev/commit-check.mjs`,
+  installed as the commit-msg hook by setup, refuses a commit that breaks
+  these rules.
 - One pull request per batch of work: one stacked branch per issue, each
   squashed to one conventional, signed-off commit naming its issue, all opened
   as a single pull request. Once Jonathan approves it, it lands as an owner
