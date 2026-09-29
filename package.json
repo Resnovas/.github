@@ -12,7 +12,9 @@
     "render": "node scripts/render.mjs",
     "ai-docs": "node tools/ai-docs/docgen.mjs",
     "ai-docs:check": "node tools/ai-docs/docgen.mjs --check",
-    "check": "node scripts/render.mjs --check && node tools/dev/surfaces.mjs check && node tools/ai-docs/docgen.mjs --check",
-    "test": "node --test --experimental-test-coverage --test-coverage-lines=90 --test-coverage-branches=90 --test-coverage-include=scripts/lib/** \"test/**/*.test.mjs\""
+    "check": "node scripts/render.mjs --check && node tools/license/check-headers.mjs && node tools/dev/surfaces.mjs check && node tools/ai-docs/docgen.mjs --check",
+    "test": "node --test --experimental-test-coverage --test-coverage-lines=90 --test-coverage-branches=90 --test-coverage-include=scripts/lib/** \"test/**/*.test.mjs\"",
+    "headers": "node tools/license/check-headers.mjs",
+    "headers:fix": "node tools/license/check-headers.mjs --fix"
   }
 }

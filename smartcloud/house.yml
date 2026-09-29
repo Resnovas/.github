@@ -145,6 +145,8 @@ conventions:
 
 # DCO sign-off and AI attribution (AI-02, AI-03). An AI sign-off is an error
 # for everyone; anything else on a maintainer's own pull request is a warning.
+# assistedBy is left unset (off): the Co-authored-by trailer is the credit, and
+# a repository may add assistedBy: true to also require Assisted-by.
 commits:
   dco: true
   aiAttribution: true

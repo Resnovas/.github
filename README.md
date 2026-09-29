@@ -36,7 +36,8 @@ An AI agent should read [`LLMS.md`](LLMS.md) instead: the same ground, written f
 
 | Path | What it is |
 | --- | --- |
-| `templates/` | The source of every synced file. `{{KEY}}` in a template is a placeholder filled in per repository. **Edit files here, never the copies.** |
+| `templates/` | The source of every synced file. `{{KEY}}` in a template is a placeholder filled in per repository. **Edit files here, never the copies.** `templates/.agents/skills/` holds the house skills every repository gets. |
+| `skills/` | House skills that do not sync everywhere (host-specific ones, and this repository's own jobs), published to the catalogue with the synced ones. |
 | `house.yml` | The values the placeholders get when this repository renders its own copies. |
 | root files and `.github/` | This repository's own rendered copies of `templates/`. CI fails if they are out of date. |
 | `smartcloud/house.yml` | The **house preset**: the smartcloud settings every repository inherits. See [The house preset](docs/preset.md). |

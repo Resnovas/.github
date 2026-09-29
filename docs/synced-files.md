@@ -49,6 +49,8 @@ These Markdown documents sit at the root of every repository. GitHub links sever
 
 ## <a id="workflows"></a>Workflows
 
+The release workflows (`house-release.yml`, `house-nightly.yml`, `house-release-preview.yml`) are synced too; what they do, and the `release.config.json` a repository writes to use them, are in [Workflows](workflows.md#release).
+
 Each is described in full in [Workflows](workflows.md).
 
 | File | Kind | What it does |
@@ -111,11 +113,26 @@ They only call three package scripts every repository has (`setup`, `check` and 
 | `orca.yaml` | Extendable | Orca | Runs `setup` after each new worktree. Add tabs and shared directories after `house:local`. |
 | `.agents/surfaces.jsonc` | Extendable | Orca, OpenChamber | The quick commands and project actions. Your own go in the `actions` list. |
 | `.agents/prompts/verify.md`, `review.md`, `address-review.md` | Whole file | Every agent host | Agent prompts: run the gate and fix failures; review the branch against the house rules; work through review comments. Add your own prompts as other files beside them. |
-| `.agents/mcp.jsonc` | Extendable | Every agent host | The MCP servers agents use (Mem0 gateway, Cognee, the repository's Graphify graph, Graphify Cloud). Your own go under `servers`. No credential is ever written: each host reads them from environment variables. |
-| `tools/dev/surfaces.mjs` | Whole file | You, and `setup` and `check` | `sync` writes the prompts to `.claude/commands` and `.cursor/commands`, and the MCP servers to `.mcp.json`, `.cursor/mcp.json`, `.vscode/mcp.json` and a block in `.codex/config.toml`. `check` fails when they are out of date. `install` registers the actions in Orca and OpenChamber, which keep them in per-user settings. |
+| `.agents/mcp.jsonc` | Extendable | Every agent host | The MCP servers agents use (Mem0 gateway, the repository's Graphify graph, and Graphify Cloud with its memory). Your own go under `servers`. No credential is ever written: each host reads them from environment variables. |
+| `tools/dev/surfaces.mjs` | Whole file | You, and `setup` and `check` | `sync` writes the prompts to `.claude/commands` and `.cursor/commands`, the skills to `.claude/skills`, and the MCP servers to `.mcp.json`, `.cursor/mcp.json`, `.vscode/mcp.json` and a block in `.codex/config.toml`. `check` fails when they are out of date. `install` registers the actions in Orca and OpenChamber, which keep them in per-user settings, and installs the commit hook; outside CI, `check` fails while the hook is missing, and everywhere it fails while a project with a `package.json` lacks `scripts/agent-setup` or `AGENT-SETUP.md`. |
 | `tools/dev/open.mjs` | Whole file | The tasks | Opens a file in the default browser on any platform. |
+| `tools/dev/commit-check.mjs` | Whole file | git, as the `commit-msg` hook that `setup` installs | Refuses a commit that breaks the house commit rules: a conventional subject, the author and sign-off being a person, an AI co-author naming its model, no host attribution lines, no em or en dashes or emoji in the message or the added text; and the house code standard in added TypeScript source lines: no `any`, and no plain `async`, `await`, `try`, `throw`, `new Promise` or `.then(` outside a line that calls `Effect.` or sits under a `// effect-boundary: <reason>` comment (tests, `.d.ts`, `externals/`, `tools/` and `scripts/` are not scanned). `HOUSE_SKIP_COMMIT_CHECK=1` skips one emergency commit; the smartcloud check on the pull request still applies. |
 
 JSON files here are JSON with comments, so their markers are `//` lines, and a local entry may not reuse a synced `label`, `name` or `id`.
+
+## <a id="tools"></a>Repository tools
+
+Plain scripts every repository runs the same way, synced whole. They need only Node and the house stack (Nx, Vitest, Mintlify); none carries a licence header, because the sync would overwrite it, and each starts with a "Synced from" line so the header check skips it. Wire them up as package scripts with these names, so the editor tasks, the docs and the agents find them:
+
+| File | Package script | What it does |
+| --- | --- | --- |
+| `tools/license/check-headers.mjs`, `tools/license/header.txt` | `headers`, `headers:fix` (`--fix`) | Every source file (`.ts`, `.tsx`, `.js`, `.mjs`, `.cjs` and their variants) starts with the FCL-1.0-MIT header from `header.txt`, with its own path in the `@file` line and the current year in the copyright line. `headers` fails on a missing or outdated header; `headers:fix` writes it. Each January the check fails until `headers:fix` has moved every file to the new year: one commit, then green. Generated and vendored directories, `.d.ts` files and synced files are skipped; a repository lists further paths in `tools/license/ignore`, one regular expression a line. Run `headers` from `check`. |
+| `tools/ci/coverage-goal.ts` | none (a Vitest reporter) | Warns, as a CI annotation, when a test project covers less than the goal (100%) while still passing the enforced minimum ({{COVERAGE_MIN}}%), so a gap is never silent. Add it to the reporters in the shared Vitest config. |
+| `tools/ci/flaky-tests.ts` | none (a Vitest reporter) | Reports every test that failed and then passed on a retry, as an annotation and a job summary table, so a retry never hides a flaky test. |
+| `tools/test/file.ts` | `test:file` | Runs the tests for one file, for the editors' "debug the current test" configurations: a spec under `tests/<name>/src`, or a source file whose mirrored spec runs. Coverage off. |
+| `tools/typecheck/tests.ts` | `typecheck:tests` | Type-checks every test project under `tests/`, which Nx does not, after building the packages they reference. |
+| `tools/dev/docs.ts` | `docs:dev` | Serves the Mintlify docs under `docs/` locally, fetching the pinned Mintlify CLI once into pnpm's cache. |
+| `tools/release/*.ts` | `release:dry-run` (`release.ts --dry-run`), `release:preview` (`release-preview.ts`) | The release tooling the house release workflows run: `config.ts` reads `release.config.json`, `release.ts` and `nightly.ts` cut a release or a nightly, `bundle.ts` bundles an app with esbuild, `sourcemaps.ts` uploads source maps to error tracking, `changelog-renderer.ts` renders the notes in the house style, `preview.ts` and `release-preview.ts` make the pull request preview. See [Workflows: Release](workflows.md#release). |
 
 ## <a id="graphify"></a>Code graph (Graphify)
 
@@ -127,8 +144,24 @@ Building it uses local parsers only: no model, no network, no cost.
 | `tools/graphify/graphify` | Whole file | The wrapper: `setup` installs Graphify (with [uv](https://docs.astral.sh/uv/)) and the git hooks, `update` rebuilds the graph, `check` fails when it is stale, `query "<question>"` asks it. |
 | `graphify-out/.gitignore` | Whole file | Commits only the graph and the paid-for semantic cache. |
 | `graphify-out/.gitattributes` | Whole file | Marks the output as generated and merges `graph.json` with Graphify's own merge driver. |
-| `.agents/skills/graphify/SKILL.md`, `.claude/skills/graphify/SKILL.md` | Whole file | Teaches agents when and how to query the graph. |
+| `.agents/skills/graphify/` | Whole file | Teaches agents when and how to query the graph. See [House skills](#skills) for the rest of the skills and how they reach Claude Code. |
 | `.graphifyignore` | Extendable | See [Review bot configuration](#review-bots). |
+
+## <a id="skills"></a>House skills
+
+Every directory under `templates/.agents/skills/` is a skill in the [Agent Skills](https://agentskills.io) format (`SKILL.md` plus reference files), synced whole into `.agents/skills/` of every repository. `tools/dev/surfaces.mjs sync` mirrors the whole of `.agents/skills/` to `.claude/skills/`, so Claude Code reads the same copy, and `check` fails while the mirror is out of date. A repository adds its own skills beside the house ones; a house skill is changed in this repository, never in a copy.
+
+The house skills, by what they are for:
+
+| Group | Skills |
+| --- | --- |
+| House standards | `coding-preferences`, `commits-and-rd-evidence`, `commit`, `creating-pull-requests`, `no-em-or-en-dashes`, `whitelabel-customer-facing-copy`, `feature-flags`, `extendable-module-architecture`, `project-dev-surfaces`, `documentation-writing-standards`, `writing-specifications`, `gitbutler`, `gitbutler-instead-worktrees`, `graphify`, `graphify-vendor` |
+| Changing code | `investigate-first`, `surgical-patch`, `safe-refactor`, `migration`, `lean-build`, `build-error-resolver`, `react-build-resolver` |
+| Reviewing | `code-review`, `silent-failure-hunter`, `type-design-analyzer`, `typescript-reviewer`, `python-reviewer`, `database-reviewer`, `react-reviewer`, `agent-self-evaluation`, `eval-harness`, `harness-optimizer`, `gan-planner`, `gan-generator`, `gan-evaluator` |
+| Thinking and writing | `research`, `eli5`, `archify`, `grilling`, `cross-critique`, `frontend-design-hard-rules`, `convert-documents-to-markdown`, `skills-spec`, `skills-best-practices` |
+| Vendors | `odoo-enterprise`, `odoo-module-separation`, `twilio`, `neon-vendor`, `clerk-vendor`, `convex-vendor`, `terraform-vendor`, `apify-vendor`, `cloudflare-workers`, `ai-sdk-vendor`, `chat-sdk-vendor`, `workflow-sdk-vendor`, `flags-sdk-vendor`, `vendor-llms-indexes` |
+
+Skills that apply only on one host, or only to this repository's own jobs, live in [`skills/`](../skills/) and are published to the catalogue without syncing.
 
 ## <a id="ai-docs"></a>AI docs
 

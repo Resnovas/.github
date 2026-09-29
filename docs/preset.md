@@ -90,7 +90,7 @@ commits:
 ```
 
 - **`dco`**: every commit needs a `Signed-off-by` line whose email matches the commit author's. Fix a missing one with `git rebase --signoff main` and a force push.
-- **`aiAttribution`**: a commit an AI tool helped with credits it with both a `Co-authored-by` and an `Assisted-by: TOOL:MODEL` line, and no `Signed-off-by` may name an AI tool ([AI-02, AI-03](../AI_POLICY.md#ai-02)).
+- **`aiAttribution`**: a commit an AI tool helped with credits it with a `Co-authored-by` line naming the tool and model, and no `Signed-off-by` may name an AI tool ([AI-02, AI-03](../AI_POLICY.md#ai-02)). The preset leaves `assistedBy` unset, so the kernel-form `Assisted-by: TOOL:MODEL` line is optional; a repository may add `assistedBy: true` to require it.
 - **`maintainerLevel: warning`**: on a maintainer's own pull request these are warnings, except an AI sign-off, which is always an error.
 
 ## <a id="disclosure"></a>`disclosure`: how AI was used
@@ -101,7 +101,7 @@ disclosure:
   maintainerLevel: warning
 ```
 
-The pull request description must fill in `AI level:` (`none`, `autocomplete`, `chat`, `agent` or `autonomous`) and `AI tools:`, and, once the pull request is ready for review, `Accountable human:` (the author) and `Human review:` (what they checked).
+The pull request description must fill in `AI level:` (`unassisted`, `autocomplete`, `chat`, `agent` or `autonomous`) and `AI tools:`, and, once the pull request is ready for review, `Accountable human:` (the author) and `Human review:` (what they checked).
 The synced pull request template already has these lines.
 **`requireDraft`** means a pull request that used AI must be opened as a draft, and leave draft only once the accountable person has reviewed it.
 On a maintainer's own pull request the findings are warnings.

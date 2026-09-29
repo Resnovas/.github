@@ -1,0 +1,78 @@
+# Reusable nightly pre-release. A repository's synced house-nightly.yml calls
+# it on a schedule; tools/release/nightly.ts cuts a v<next>-nightly.<date> tag
+# on a release commit holding the bundles release.config.json lists, and a
+# GitHub pre-release with generated notes, when the default branch has moved
+# since the last one. In a repository whose config has no nightly section the
+# tool says so and cuts nothing. Nothing goes to npm and no changelog is
+# written. With majorTag, v<major> follows the nightlies until that major's
+# first stable release.
+name: Nightly
+
+on:
+  workflow_call:
+    inputs:
+      dry-run:
+        description: Print the version without tagging or releasing
+        type: boolean
+        default: false
+    secrets:
+      POSTHOG_CLI_API_KEY:
+        description: A PostHog personal API key for the source maps; optional
+        required: false
+
+permissions: {}
+
+jobs:
+  nightly:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # Nightlies come only from the default branch.
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    permissions:
+      # Pushes the tags and creates the pre-release.
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          sparse-checkout: release.config.json
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+
+      # A repository without nightlies stops here, before installing anything.
+      - id: config
+        run: |
+          if [ -f release.config.json ] && jq -e '.nightly' release.config.json > /dev/null; then
+            echo 'enabled=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'release.config.json has no nightly section, so this repository cuts no nightlies.'
+            echo 'enabled=false' >> "$GITHUB_OUTPUT"
+          fi
+
+      - if: steps.config.outputs.enabled == 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+          # The script pushes the tags with the workflow token.
+          persist-credentials: true
+
+      - if: steps.config.outputs.enabled == 'true'
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+
+      - if: steps.config.outputs.enabled == 'true'
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - if: steps.config.outputs.enabled == 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Cut the nightly
+        if: steps.config.outputs.enabled == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          POSTHOG_CLI_API_KEY: ${{ secrets.POSTHOG_CLI_API_KEY }}
+          DRY_RUN: ${{ inputs.dry-run }}
+        run: |
+          if [ "$DRY_RUN" = 'true' ]; then node tools/release/nightly.ts --dry-run; else node tools/release/nightly.ts; fi

@@ -1,3 +1,19 @@
+/**
+ * @file test/workflows.test.mjs
+ *
+ * Copyright 2026 Jonathan Stevens trading as Resnovas. All rights reserved.
+ * Licensed under the Fair Core License, Version 1.0, MIT Future License
+ * (FCL-1.0-MIT); see LICENSE. You may not move, change, disable or circumvent
+ * the licence key functionality, or modify any part of the software that the
+ * licence key protects.
+ *
+ * Contributions are made under the Developer Certificate of Origin (DCO.md) and
+ * the Contributing Guidelines (CONTRIBUTING.md), subject to the Code of Conduct
+ * (CODE_OF_CONDUCT.md) and the Cooperation Commitment (COOPERATION_COMMITMENT.md).
+ *
+ * DELETING THIS NOTICE AUTOMATICALLY VOIDS YOUR LICENSE.
+ */
+
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { readdirSync, readFileSync } from 'node:fs'
@@ -108,7 +124,7 @@ test('no workflow filters pull requests or the merge queue by path', () => {
 // required checks on every queued group, so a workflow that checks pull
 // requests also runs on merge_group. Graphify only reports a notice on pull
 // requests and gates nothing, so the queue does not need it.
-const ungated = new Set(['house-graphify.yml'])
+const ungated = new Set(['house-graphify.yml', 'house-release-preview.yml'])
 
 test('every workflow that checks pull requests also runs in the merge queue', () => {
   const missing = workflows
