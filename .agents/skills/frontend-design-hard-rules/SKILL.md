@@ -21,6 +21,7 @@ Hard rules:
 - Motion: at least 2-3 intentional motions for visually led work; presence and hierarchy, not noise.
 - Color and look: choose a clear direction with CSS variables. Avoid common AI-default looks: purple-on-white / purple-to-indigo gradients; warm cream (~#F4F1EA) with high-contrast serif + terracotta; broadsheet hairline rules / zero radius / dense newspaper columns. Avoid biases to dark mode, purple, glow, rounded-full pills, multi-layer shadows, emojis.
 - Must work on desktop and mobile.
+- Accessible: every rule here sits on top of the `web-accessibility` skill (WCAG 2.2 AA). Expressive type, colour and motion still meet its contrast, heading, focus and `prefers-reduced-motion` rules; when they conflict, accessibility wins.
 - React: prefer modern patterns (useEffectEvent, startTransition, useDeferredValue) when appropriate for the team. Do not add useMemo/useCallback by default unless already used; follow the repo React Compiler guidance.
 
 Exception: within an existing website or design system, preserve established patterns and visual language.
