@@ -178,11 +178,15 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: changelogs
+          # Every node_modules and externals directory at any depth is left out:
+          # a pnpm workspace links each package's node_modules into the store, and
+          # excluding only the root one sent the glob through every dependency's
+          # CHANGELOG.md, so the step never finished.
           path: |
             CHANGELOG.md
             **/CHANGELOG.md
-            !node_modules/**
-            !externals/**
+            !**/node_modules/**
+            !**/externals/**
           if-no-files-found: error
           retention-days: 7
 
