@@ -31,6 +31,9 @@ re-runs a pull request's smartcloud run when it is reviewed.
   `merge_group`, and none filters those events by `paths`.
 - A matrix job sets `fail-fast: false`; a job that runs Nx caches `.nx/cache`.
 - Every reusable workflow a caller references exists here.
+- A job checks out the repository once; it checks out sparsely only when it
+  never checks out again (a full checkout over a sparse one left files missing).
+  To read one file before deciding to check out, use `gh api` on the contents.
 
 The synced callers also pass actionlint and zizmor (`.github/zizmor.yml` lets
 `Resnovas/*` follow a branch). Untrusted input reaches `run:` only through

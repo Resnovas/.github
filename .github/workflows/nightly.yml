@@ -32,16 +32,25 @@ jobs:
       # Pushes the tags and creates the pre-release.
       contents: write
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          sparse-checkout: release.config.json
-          sparse-checkout-cone-mode: false
-          persist-credentials: false
-
-      # A repository without nightlies stops here, before installing anything.
+      # A repository without nightlies stops here, before checking out or
+      # installing anything. The config is read through the API rather than a
+      # sparse checkout: a full checkout over a sparse one in the same job left
+      # the working tree without package.json, so pnpm/action-setup found no
+      # version and every nightly failed.
       - id: config
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          if [ -f release.config.json ] && jq -e '.nightly' release.config.json > /dev/null; then
+          set -euo pipefail
+          # A missing file means no nightlies; any other failure stops the run.
+          if ! config=$(gh api -H 'Accept: application/vnd.github.raw' "repos/$GITHUB_REPOSITORY/contents/release.config.json?ref=$GITHUB_SHA" 2> "$RUNNER_TEMP/config.err"); then
+            if ! grep -q 'HTTP 404' "$RUNNER_TEMP/config.err"; then
+              cat "$RUNNER_TEMP/config.err" >&2
+              exit 1
+            fi
+            config='{}'
+          fi
+          if printf '%s' "$config" | jq -e '.nightly' > /dev/null; then
             echo 'enabled=true' >> "$GITHUB_OUTPUT"
           else
             echo 'release.config.json has no nightly section, so this repository cuts no nightlies.'

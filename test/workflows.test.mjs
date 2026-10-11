@@ -165,3 +165,18 @@ test('the house release runs on push to the default branch, not only by hand', (
   assert.match(reusable, /needs\.config\.outputs\.enabled == 'true'/)
   assert.match(reusable, /jq -r '\.firstRelease \/\/ empty' release\.config\.json/)
 })
+
+// A full checkout over a sparse one in the same job left the working tree
+// without package.json, so pnpm/action-setup found no pnpm version and every
+// nightly failed. A job checks out the repository once, or sparsely only when
+// it never checks out again.
+test('no job checks out sparsely and then checks out again', () => {
+  const mixed = workflows
+    .flatMap(jobs)
+    .filter(({ lines }) => {
+      const checkouts = lines.filter((line) => line.includes('actions/checkout@')).length
+      return checkouts > 1 && lines.some((line) => line.trim().startsWith('sparse-checkout:'))
+    })
+    .map(({ path, name }) => `${path} ${name}`)
+  assert.deepEqual(mixed, [])
+})
