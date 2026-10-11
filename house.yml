@@ -4,7 +4,11 @@
 # templates are rendered. The root of this repository is rendered from these
 # values. Other repositories are rendered by smartcloud's sync from sync.values
 # in smartcloud/house.yml, which holds the same keys and values apart from
-# REPOSITORY and HOUSE_EXCLUDE (test/values.test.mjs checks). The --override
+# REPOSITORY, HOUSE_EXCLUDE and the organisation keys below (test/values.test.mjs
+# checks). The organisation keys (ORG_NAME, LEGAL_HOLDER, PACKAGE_SCOPE,
+# CONDUCT_CONTACT, SPONSORS) are left out of the preset so a repository of
+# another organisation can set its own in its sync.values; the templates write
+# them as {{KEY:-value}} with the value here as the default. The --override
 # option of scripts/render.mjs layers another file of keys over these for a
 # preview.
 #

@@ -252,7 +252,7 @@ sync:
   source: Resnovas/.github/templates@main
   branch: house/sync
   check: true
-  values: { ORG_NAME: Resnovas, MAINTAINERS: TGTGamer, ... }
+  values: { COPYRIGHT_YEAR: "2026", MAINTAINERS: TGTGamer, ... }
 ```
 
 - **`source`**: where the templates come from.
