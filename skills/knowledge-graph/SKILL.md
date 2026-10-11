@@ -1,6 +1,6 @@
 ---
 name: knowledge-graph
-description: Manage persistent Knowledge Graph for specifications. Provides read, query, update, and validation capabilities for codebase analysis caching. Use when: spec-to-tasks needs to cache/reuse codebase analysis, task-implementation needs to validate task dependencies or contracts, spec-quality needs to synchronize provides, or any command needs to query existing patterns/components/APIs. Reduces redundant codebase exploration by caching agent discoveries.
+description: 'Manage persistent Knowledge Graph for specifications. Provides read, query, update, and validation capabilities for codebase analysis caching. Use when: spec-to-tasks needs to cache/reuse codebase analysis, task-implementation needs to validate task dependencies or contracts, spec-quality needs to synchronize provides, or any command needs to query existing patterns/components/APIs. Reduces redundant codebase exploration by caching agent discoveries.'
 license: MIT
 ---
 # Knowledge Graph Skill

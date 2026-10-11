@@ -1,6 +1,6 @@
 ---
 name: founder
-description: Startup founder workflows: validate ideas, product briefs, competitors, personas, MVP, pricing, GTM, landing pages, email sequences, pitch decks, fundraise prep, metrics. Load one references/*.md.
+description: 'Startup founder workflows: validate ideas, product briefs, competitors, personas, MVP, pricing, GTM, landing pages, email sequences, pitch decks, fundraise prep, metrics. Load one references/*.md.'
 license: MIT
 ---
 # Founder skills
