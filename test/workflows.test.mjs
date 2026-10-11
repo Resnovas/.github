@@ -190,3 +190,15 @@ test('upload globs leave out node_modules and externals at every depth', () => {
     .map(({ path }) => path)
   assert.deepEqual(shallow, [])
 })
+
+// smartcloud's first v2.0.0 publish failed with ENEEDAUTH: trusted publishing
+// needs the package to exist on npm. The release explains that, and a re-run
+// after a version reached npm skips the publish so the rest of the release
+// can finish.
+test('the release checks npm before it publishes', () => {
+  const lines = workflows.find(({ path }) => path === join('.github/workflows', 'release.yml')).lines
+  const publish = lines.findIndex((line) => line.includes('npm publish --provenance'))
+  const before = lines.slice(0, publish).join('\n')
+  assert.match(before, /npm view "\$name@\$VERSION" version/)
+  assert.match(before, /is not on npm yet/)
+})
