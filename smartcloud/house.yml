@@ -15,6 +15,10 @@
 #   settings.ruleset       requiredDeployments, statusChecks.checks,
 #                          codeScanning.ESLint, codeCoverage.enabled
 #   sync.exclude           template paths the repository keeps its own copy of
+#   required.expect        the check names the aggregate must wait for
+#   commits.assistedBy     whether commits also need an Assisted-by trailer
+#   other sections         labels, labelling rules, stale, lock, backport,
+#                          freeze, notifications and commands
 version: 2
 
 # sync.values MAINTAINERS and TRUSTED_BOTS name these in the synced documents,
@@ -225,9 +229,8 @@ settings:
     # read-only token cannot create check runs, still report it. It is the
     # aggregate check (see required below). A repository adds its main CI job
     # here and under required.expect, because a restricted run from a fork or
-    # Dependabot skips this private preset, and with it the aggregate. One
-    # whose CI runs parallel jobs requires a single job that needs them all and
-    # fails unless every one succeeded, so adding a job leaves the ruleset unchanged.
+    # Dependabot skips the aggregate. One whose CI runs parallel jobs requires
+    # a single job that needs them all and fails unless every one succeeded, so adding a job leaves the ruleset unchanged.
     # A CI that skips jobs a change cannot affect gates them on the outputs of a
     # classifying job, never on workflow path filters, which leave a required
     # check pending; the aggregate job accepts only the skips it ordered.
