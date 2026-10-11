@@ -34,6 +34,8 @@ re-runs a pull request's smartcloud run when it is reviewed.
 - A job checks out the repository once; it checks out sparsely only when it
   never checks out again (a full checkout over a sparse one left files missing).
   To read one file before deciding to check out, use `gh api` on the contents.
+- A path glob leaves out `**/node_modules/**` and `**/externals/**`, never only
+  the root ones: pnpm links every workspace package's `node_modules`.
 
 The synced callers also pass actionlint and zizmor (`.github/zizmor.yml` lets
 `Resnovas/*` follow a branch). Untrusted input reaches `run:` only through

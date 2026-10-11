@@ -180,3 +180,13 @@ test('no job checks out sparsely and then checks out again', () => {
     .map(({ path, name }) => `${path} ${name}`)
   assert.deepEqual(mixed, [])
 })
+
+// A glob that leaves out only the root node_modules still walks every
+// workspace package's node_modules, which pnpm links into the store: the
+// release's changelog upload never finished. Exclusions reach every depth.
+test('upload globs leave out node_modules and externals at every depth', () => {
+  const shallow = workflows
+    .filter(({ lines }) => lines.some((line) => /^\s*!(node_modules|externals)\//.test(line)))
+    .map(({ path }) => path)
+  assert.deepEqual(shallow, [])
+})
