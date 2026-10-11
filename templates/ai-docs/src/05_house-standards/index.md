@@ -1,7 +1,7 @@
 <!-- house:managed:begin - synced from Resnovas/.github templates/ai-docs/src/05_house-standards/index.md. Edits inside this block are overwritten. -->
 ## House standards
 
-Every {{ORG_NAME}} repository follows the same standards. This section is synced from
+Every {{ORG_NAME:-Resnovas}} repository follows the same standards. This section is synced from
 [`Resnovas/.github`](https://github.com/Resnovas/.github); the rules come from
 `AGENTS.md`, `CONTRIBUTING.md`, `AI_POLICY.md` and the PostHog skill
 `coding-preferences`, and those documents win if this summary ever disagrees
@@ -29,7 +29,7 @@ with them. The sections after this one describe this repository itself.
   `feature-flags`). Telemetry events carry no secret or personal data.
 - **Module boundaries.** The core package holds domain-agnostic building
   blocks only. Vendor SDKs and API clients live in
-  `{{PACKAGE_SCOPE}}/integrations.<vendor>`. Features depend on core and
+  `{{PACKAGE_SCOPE:-@resnovas}}/integrations.<vendor>`. Features depend on core and
   integrations, never the other way round (`AI_POLICY.md` AI-13).
 - **Comments explain why.** Constraints, trade-offs and anything surprising;
   never a restatement of the code.

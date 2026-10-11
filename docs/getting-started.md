@@ -9,7 +9,7 @@ This page explains the ideas behind the house in plain words, then walks you thr
 | --- | --- |
 | **House** | This repository, `Resnovas/.github`. It holds the rules and shared files for every Resnovas repository. |
 | **Template** | A file under `templates/` that is copied into every repository. It may contain placeholders. |
-| **Placeholder** | A marker such as `{{ORG_NAME}}` in a template. It is replaced with a real value, such as `Resnovas`, when the file is copied. An unknown placeholder stops the copy rather than leaving a blank. |
+| **Placeholder** | A marker such as `{{MAINTAINERS}}` in a template. It is replaced with a real value, such as `TGTGamer`, when the file is copied. An unknown placeholder stops the copy rather than leaving a blank. |
 | **Render** | Turning a template into a finished file: fill the placeholders, then merge with what the repository already has. |
 | **Sync** | The weekly job, run in each repository, that renders every template and opens a pull request with the changes. |
 | **smartcloud** | The GitHub Action that runs the sync, checks pull requests against the house rules, keeps labels in line and applies repository settings. Its source is [Resnovas/smartcloud](https://github.com/Resnovas/smartcloud). |

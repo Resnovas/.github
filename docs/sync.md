@@ -123,20 +123,29 @@ This repository renders its own root from [`house.yml`](../house.yml) instead, b
 
 | Key | Used for | House value |
 | --- | --- | --- |
-| `ORG_NAME` | The owner's name in prose. | `Resnovas` |
-| `LEGAL_HOLDER` | The copyright holder in `LICENSE`. | `Jonathan Stevens trading as Resnovas` |
+| `ORG_NAME` | The owner's name in prose. Per repository (default shown). | `Resnovas` |
+| `LEGAL_HOLDER` | The copyright holder in `LICENSE`. Per repository (default shown). | `Jonathan Stevens trading as Resnovas` |
 | `COPYRIGHT_YEAR` | The year in the copyright notice. | `2026` |
 | `REPOSITORY` | Links to the repository's own advisories, discussions and files. Set automatically. | the repository's `owner/name` |
-| `PACKAGE_SCOPE` | The npm scope in the module boundary rules. | `@resnovas` |
-| `CONDUCT_CONTACT` | Where Code of Conduct reports go. | `hello@resnovas.com` |
+| `PACKAGE_SCOPE` | The npm scope in the module boundary rules. Per repository (default shown). | `@resnovas` |
+| `CONDUCT_CONTACT` | Where Code of Conduct reports go. Per repository (default shown). | `hello@resnovas.com` |
 | `COVERAGE_MIN` | The minimum line and branch coverage, in percent. | `90` |
-| `SPONSORS` | GitHub Sponsors accounts in `FUNDING.yml`. | `TGTGamer` |
+| `SPONSORS` | GitHub Sponsors accounts in `FUNDING.yml`. Per repository (default shown). | `TGTGamer` |
 | `OWNERS_ADMIN`, `OWNERS_DOCS`, `OWNERS_QA`, `OWNERS_WORKFLOW` | Code owners by role in `CODEOWNERS`. Each is a `@user` or `@org/team`; separate several with spaces. | `@TGTGamer` |
 | `MAINTAINERS` | The maintainers named in `GOVERNANCE.md`, `CONTRIBUTING.md` and the comment in `.github/smartcloud.yml`. GitHub logins, comma separated. | `TGTGamer` |
 | `TRUSTED_BOTS` | The automation accounts named as exempt in `GOVERNANCE.md`, `DCO.md`, `AI_POLICY.md`, `APPROVAL_POLICY.md` and `CONTRIBUTING.md`. Comma separated. | `dependabot[bot], renovate[bot], github-actions[bot], resnovas-smartcloud[bot]` |
 | `CODE_SCANNING_GATE` | Whether `GOVERNANCE.md` says merges are blocked on CodeQL findings. `true` or `false`. | `true` |
 
-A value is fixed by the preset, so a repository cannot change it; a repository that needs a different licence holder, for example, excludes `LICENSE` and keeps its own.
+A value the preset sets is fixed, so a repository cannot change it. The organisation values (`ORG_NAME`, `LEGAL_HOLDER`, `PACKAGE_SCOPE`, `CONDUCT_CONTACT` and `SPONSORS`) are not in the preset: the templates write them with the Resnovas value as the default (`{{ORG_NAME:-Resnovas}}`), so a repository of another organisation names its own owner in its `.github/smartcloud.yml`, after the `house:local` line:
+
+```yaml
+sync:
+  values:
+    ORG_NAME: ClimbGroup
+    CONDUCT_CONTACT: marketing@climb-uk.com
+```
+
+A repository that needs a different licence altogether excludes `LICENSE` and keeps its own.
 A template that uses a placeholder with no value fails the sync, so a new placeholder needs its value in the preset in the same change.
 A placeholder may carry a default, written `{{KEY:-default}}`: it becomes the default when no value is set, and the value when one is. Use it for a value each repository may set for itself but need not; a plain `{{KEY}}` must always have a value.
 

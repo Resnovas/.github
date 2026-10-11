@@ -184,7 +184,7 @@ Ask in the issue first.
 Module boundaries are enforced, and cross-component pollution is closely watched.
 
 - The **core** package holds domain-agnostic building blocks only.
-- Vendor SDKs, API clients and service-specific configuration belong in `{{PACKAGE_SCOPE}}/integrations.<vendor>`.
+- Vendor SDKs, API clients and service-specific configuration belong in `{{PACKAGE_SCOPE:-@resnovas}}/integrations.<vendor>`.
 - Features depend on core and integrations, never the other way round.
 
 A change that breaks these boundaries has to be refactored by the submitter before review continues, so it pays to get it right the first time.

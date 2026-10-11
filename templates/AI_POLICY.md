@@ -175,7 +175,7 @@ Agents add packages readily; ask first in the issue.
 ### <a id="ai-13"></a>AI-13: Respect the module boundaries
 
 The **core** package holds domain-agnostic building blocks only.
-Vendor SDKs, API clients and service-specific configuration belong in `{{PACKAGE_SCOPE}}/integrations.<vendor>`.
+Vendor SDKs, API clients and service-specific configuration belong in `{{PACKAGE_SCOPE:-@resnovas}}/integrations.<vendor>`.
 A change that puts vendor code in core, or reaches across components, **MUST** be refactored by the submitter before review continues.
 Getting this right the first time is much cheaper than moving it later.
 

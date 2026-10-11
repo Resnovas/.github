@@ -14,7 +14,7 @@ This document sets out who decides what, and how changes get reviewed and merged
 
 ### <a id="owner"></a>Owner
 
-The owner is {{ORG_NAME}}.
+The owner is {{ORG_NAME:-Resnovas}}.
 While a project has a single maintainer, the owner has full discretion over it: they may review, approve and merge their own work, and no rule in this document blocks them.
 
 ### <a id="maintainers"></a>Maintainers

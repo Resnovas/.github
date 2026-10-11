@@ -30,7 +30,7 @@ const repository = () => {
   const root = mkdtempSync(join(tmpdir(), 'headers-'))
   mkdirSync(join(root, 'tools/license'), { recursive: true })
   mkdirSync(join(root, 'src'), { recursive: true })
-  writeFileSync(join(root, 'tools/license/header.txt'), readFileSync(join(templates, 'tools/license/header.txt'), 'utf8').replace('{{LEGAL_HOLDER}}', 'Example Ltd'))
+  writeFileSync(join(root, 'tools/license/header.txt'), readFileSync(join(templates, 'tools/license/header.txt'), 'utf8').replace(/\{\{LEGAL_HOLDER(:-[^}]*)?\}\}/, 'Example Ltd'))
   return root
 }
 

@@ -37,6 +37,11 @@ const preset = readFileSync(join(root, 'smartcloud', 'house.yml'), 'utf8').split
 // preset's equivalent of HOUSE_EXCLUDE.
 const ROOT_ONLY = new Set(['REPOSITORY', 'HOUSE_EXCLUDE'])
 
+// Organisation keys: the preset leaves them unset, because a value it sets is
+// locked, and a repository of another organisation names its own owner. The
+// templates default each to its house.yml value.
+const ORG_KEYS = ['ORG_NAME', 'LEGAL_HOLDER', 'PACKAGE_SCOPE', 'CONDUCT_CONTACT', 'SPONSORS']
+
 test('COPYRIGHT_YEAR is the current year, so LICENSE and the synced copies carry it', () => {
   assert.equal(house.COPYRIGHT_YEAR, String(new Date().getFullYear()))
 })
@@ -89,7 +94,9 @@ const creatorPatterns = () => {
 const escape = (login) => login.replace(/[\\[\]]/g, '\\$&')
 
 test('sync.values holds the same keys and values as house.yml', () => {
-  const shared = Object.fromEntries(Object.entries(house).filter(([key]) => !ROOT_ONLY.has(key)))
+  const shared = Object.fromEntries(
+    Object.entries(house).filter(([key]) => !ROOT_ONLY.has(key) && !ORG_KEYS.includes(key)),
+  )
   assert.deepEqual(syncValues(), shared)
 })
 
@@ -163,4 +170,21 @@ test('project type and environments are per repository: defaults when unset, the
     governance({ ...house, PROJECT_TYPE: 'library', ENVIRONMENTS: 'Release' }),
     /ships as `library`, with the environments `Release`/,
   )
+})
+
+test('organisation values default to the house values and a repository can set its own', () => {
+  const sync = { ...syncValues(), REPOSITORY: 'Example/example' }
+  for (const key of ORG_KEYS) assert.ok(!(key in sync), `sync.values would lock ${key} for every repository`)
+  const placeholders = new Map()
+  for (const file of renderAll(templates, { ...house, ...Object.fromEntries(ORG_KEYS.map((key) => [key, `<${key}>`])) })) {
+    for (const key of ORG_KEYS) if (file.content.includes(`<${key}>`)) placeholders.set(key, true)
+  }
+  for (const key of ORG_KEYS) assert.ok(placeholders.has(key), `no template uses ${key}`)
+  const text = (values, path) => renderAll(templates, values).find((file) => file.path.replaceAll('\\', '/') === path).content
+  assert.match(text(sync, 'GOVERNANCE.md'), new RegExp(`The owner is ${house.ORG_NAME}\\.`))
+  assert.match(text(sync, 'CODE_OF_CONDUCT.md'), new RegExp(house.CONDUCT_CONTACT.replace('.', '\\.')))
+  const own = { ...sync, ORG_NAME: 'ClimbGroup', CONDUCT_CONTACT: 'team@example.com' }
+  assert.match(text(own, 'GOVERNANCE.md'), /The owner is ClimbGroup\./)
+  assert.match(text(own, 'CODE_OF_CONDUCT.md'), /team@example\.com/)
+  assert.doesNotMatch(text(own, 'CODE_OF_CONDUCT.md'), new RegExp(house.CONDUCT_CONTACT.replace('.', '\\.')))
 })

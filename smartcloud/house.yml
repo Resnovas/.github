@@ -293,13 +293,13 @@ sync:
   branch: house/sync
   check: true
   values:
-    ORG_NAME: Resnovas
-    LEGAL_HOLDER: Jonathan Stevens trading as Resnovas
+    # ORG_NAME, LEGAL_HOLDER, PACKAGE_SCOPE, CONDUCT_CONTACT and SPONSORS
+    # are not set here: a value set here is locked, and a repository of
+    # another organisation names its own owner. The templates default them
+    # to the Resnovas values in house.yml, and a repository overrides them in
+    # its own sync.values.
     COPYRIGHT_YEAR: "2026"
-    PACKAGE_SCOPE: "@resnovas"
-    CONDUCT_CONTACT: hello@resnovas.com
     COVERAGE_MIN: "90"
-    SPONSORS: TGTGamer
     OWNERS_ADMIN: "@TGTGamer"
     OWNERS_DOCS: "@TGTGamer"
     OWNERS_QA: "@TGTGamer"

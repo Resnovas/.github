@@ -335,6 +335,12 @@ When you change the preset, keep it valid against smartcloud's schema (the
 repository on its next run. Changing a locked value can make a repository's
 own config, which restated the old value, fail; search the organisation first.
 
+The organisation values (`ORG_NAME`, `LEGAL_HOLDER`, `PACKAGE_SCOPE`,
+`CONDUCT_CONTACT`, `SPONSORS`) stay out of `sync.values` on purpose: the
+templates write them as `{{KEY:-<Resnovas value>}}`, and a repository of
+another organisation sets its own under `sync.values` after its `house:local`
+line. Never add them back to the preset, which would lock them for everyone.
+
 `required.ignore` stays out of the preset on purpose: a list the preset set
 could not be extended, because presets are locked. Each house repository with
 review bots lists `^CodeRabbit` and `'^Cursor '` (quoted; the trailing space

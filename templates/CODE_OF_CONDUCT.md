@@ -47,7 +47,7 @@ It also applies to everything an AI agent submits on a person's behalf; that per
 
 ## <a id="enforcement"></a>Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behaviour may be reported to the community leaders responsible for enforcement at [{{CONDUCT_CONTACT}}](mailto:{{CONDUCT_CONTACT}}).
+Instances of abusive, harassing, or otherwise unacceptable behaviour may be reported to the community leaders responsible for enforcement at [{{CONDUCT_CONTACT:-hello@resnovas.com}}](mailto:{{CONDUCT_CONTACT:-hello@resnovas.com}}).
 All complaints will be reviewed and investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and security of the reporter of any incident.
