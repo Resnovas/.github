@@ -10,7 +10,8 @@
 # policy was checked on the pull request, and a queued group needs no label or
 # settings run.
 #
-# smartcloud splits its tokens, so each does only its own job (docs/access.md):
+# smartcloud splits its tokens, so each does only its own job
+# (https://github.com/Resnovas/.github/blob/main/docs/access.md):
 # - the workflow token acts in this repository: check runs, comments, labels
 #   and reviews, within the job's permissions below;
 # - a read-only Resnovas Bot token, limited to contents: read on
@@ -37,7 +38,9 @@ name: smartcloud
 
 on:
   pull_request:
-    types: [opened, edited, synchronize, reopened, ready_for_review, converted_to_draft]
+    # closed starts the backports a merged pull request's labels ask for. Its
+    # check lands on a merged pull request, so it gates nothing.
+    types: [opened, edited, synchronize, reopened, ready_for_review, converted_to_draft, closed]
   issues:
     types: [opened, edited, reopened, labeled, unlabeled]
   push:
@@ -60,7 +63,8 @@ jobs:
     name: smartcloud
     if: github.event_name != 'merge_group'
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # Above the aggregate check's 60-minute wait for the other checks (required.timeout).
+    timeout-minutes: 75
     # Without the app's credentials, as in a repository outside the
     # organisation, the mint is skipped rather than attempted with empty inputs.
     env:
@@ -80,7 +84,12 @@ jobs:
       # A failed mint falls back to the workflow token rather than failing the run.
       - name: Mint the read-only house token
         id: house
-        if: env.HAS_APP_KEY == 'true' && github.event.pull_request.head.repo.fork != true && github.actor != 'dependabot[bot]'
+        # Never for a pull request from another (or a deleted) repository, or
+        # for Dependabot's runs and pull requests.
+        if: >-
+          env.HAS_APP_KEY == 'true'
+          && (!github.event.pull_request || github.event.pull_request.head.repo.full_name == github.repository)
+          && github.actor != 'dependabot[bot]' && github.event.pull_request.user.login != 'dependabot[bot]'
         continue-on-error: true
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
