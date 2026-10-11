@@ -152,3 +152,16 @@ test('every matrix job runs every combination', () => {
     .map(({ path, name }) => `${path} ${name}`)
   assert.deepEqual(failFast, [])
 })
+
+// Releases are automatic: the synced house release runs on every push to the
+// default branch and releases for real there, and the reusable workflow skips
+// a repository that ships no releases instead of failing its pushes.
+test('the house release runs on push to the default branch, not only by hand', () => {
+  const caller = readFileSync(join(root, 'templates/.github/workflows/house-release.yml'), 'utf8')
+  assert.match(caller, /^on:\n {2}push:\n {4}branches: \[main\]\n {2}workflow_dispatch:/m)
+  assert.match(caller, /dry-run: \$\{\{ github\.event_name == 'workflow_dispatch' && inputs\.dry-run \}\}/)
+  const reusable = readFileSync(join(root, '.github/workflows/release.yml'), 'utf8')
+  assert.match(reusable, /if \[ "\$EVENT" = push \]; then[\s\S]*?enabled=false/)
+  assert.match(reusable, /needs\.config\.outputs\.enabled == 'true'/)
+  assert.match(reusable, /jq -r '\.firstRelease \/\/ empty' release\.config\.json/)
+})

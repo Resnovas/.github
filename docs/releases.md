@@ -6,7 +6,7 @@ This page is the house default, which [smartcloud's release guide](https://githu
 
 ## <a id="default"></a>The house default
 
-- **Nx release, started by hand** from a `release` workflow on the default branch. Conventional commits since the last tag decide the version. The published projects form one release group, tagged `v{version}`.
+- **Nx release, on every push** to the default branch, from the synced `house-release.yml` workflow; a push whose commits call for no version releases nothing. Conventional commits since the last tag decide the version. The published projects form one release group, tagged `v{version}`.
 - **The GitHub release holds the main notes.** `release.changelog.workspaceChangelog` sets `createRelease: github`, with a renderer that replaces Nx's emoji with words (smartcloud's `tools/release/changelog-renderer.ts`).
 - **The notes are also written to the repository** through the same renderer: the workspace changelog to the root `CHANGELOG.md` (new releases above any older history), and `projectChangelogs` to `{projectRoot}/CHANGELOG.md` for each published project, with `createRelease: false`. Unpublished libraries get none; their changes appear under the projects that bundle them.
 - **The changelog files reach the default branch through a pull request**, because the ruleset only takes changes through pull requests with signed commits. After tagging, a separate `changelogs` job creates a Resnovas Bot app token (see [Access](access.md)), commits the files through the GitHub API so GitHub signs the commit, and opens `chore(release): changelogs for v<version>`. The commit is signed off by `resnovas-smartcloud[bot]`, a trusted bot in the preset. Merge it before the next release.
