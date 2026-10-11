@@ -428,6 +428,17 @@ jobs:
             $prepare
           fi
           cd "$directory"
+          name=$(jq -r .name package.json)
+          # A re-run after the version reached npm (by hand or an earlier run) has nothing to publish.
+          if npm view "$name@$VERSION" version > /dev/null 2>&1; then
+            echo "$name@$VERSION is already on npm, so there is nothing to publish." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          # Trusted publishing is set on an existing package, so the first version is published by hand.
+          if ! npm view "$name" name > /dev/null 2>&1; then
+            echo "::error::$name is not on npm yet. Trusted publishing works only for a package that exists: publish this version by hand once, add this repository's house-release.yml as the package's trusted publisher, then re-run the failed jobs (see docs/workflows.md in Resnovas/.github)."
+            exit 1
+          fi
           npm publish --provenance --access public
 
   # Signs build provenance for the released bundles, binds the first one's SBOM
