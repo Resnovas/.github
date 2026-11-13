@@ -178,3 +178,16 @@ See [AI docs](ai-docs.md) for how to use them.
 | File | Kind | What it is |
 | --- | --- | --- |
 | `.prettierignore` | Extendable | Lists every synced file, and the generated `LLMS.md`, so Prettier never reformats them: a reformatted managed block would fail the sync check. Add your own ignores after `house:local`. |
+
+## Agent worktree defaults
+
+Agents use a dedicated Git worktree and task branch, with ordinary Git for commits and pushes. This isolates concurrent edits and works across T3, Orca, Codex, Claude Code, OpenCode and other hosts. Jonathan can continue using GitButler in his personal checkout.
+
+The synced `.agents/skills/git-worktrees/SKILL.md` is a whole-file skill. `AGENTS.md` carries the same default for hosts that do not load skills. Reuse a task worktree the host already created. For a new task, choose worktree mode in T3, create a worktree in Orca, or use the host's native worktree support. A plain Git fallback is:
+
+```sh
+git worktree add -b agents/example ../repo-example origin/main
+cd ../repo-example
+```
+
+Replace `origin/main` with the verified base branch. Run the repository's setup in the new checkout. Keep the primary checkout and other agents' work intact, and specify the intended PR base explicitly. GitButler-specific skills are only for an explicit request to help with GitButler.
