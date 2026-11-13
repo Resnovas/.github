@@ -1,6 +1,7 @@
 # The house preset
 
 [`smartcloud/house.yml`](../smartcloud/house.yml) is the smartcloud configuration every Resnovas repository builds on.
+It extends [`smartcloud/house-base.yml`](../smartcloud/house-base.yml), which holds every house value except the two ruleset gates that spend GitHub AI credits, and adds those two (see [The base preset](#base)).
 It decides the pull request rules, the labels, the review count, the repository settings and the sync.
 This page explains every section in plain words.
 The full reference for each key is in the [smartcloud documentation](https://github.com/Resnovas/smartcloud/tree/main/docs).
@@ -279,9 +280,34 @@ The preset leaves these to each repository, in `.github/smartcloud.yml` after th
 
 Check your file with `GITHUB_TOKEN=$(gh auth token) npx @resnovas/smartcloud validate`, or let your editor check it: the first line of the synced file names the JSON Schema.
 
+## <a id="base"></a>The base preset: a temporary exception for the AI-credit gates
+
+Two default branch ruleset gates spend GitHub AI credits: `settings.ruleset.copilotReview: true`, a Copilot review on drafts and every push, and `settings.ruleset.codeQuality: errors`, the Code Quality merge gate.
+`smartcloud/house.yml` sets only these two and extends `smartcloud/house-base.yml` for everything else, so every repository that extends `house.yml` gets both.
+
+Because presets are locked, a repository that extends `house.yml` cannot turn either gate off.
+When the owner approves a temporary exception, for example while the organisation's AI-credit budget is held at zero, the repository extends the base preset instead and switches Copilot review off explicitly.
+Record the exception in an issue with the date to revisit it.
+Add this after the `house:local` line of `.github/smartcloud.yml`:
+
+```yaml
+sync:
+  values:
+    HOUSE_PRESET: house-base.yml
+settings:
+  ruleset:
+    copilotReview: false
+```
+
+The `HOUSE_PRESET` value makes the house sync render the `extends` line of the managed block as `Resnovas/.github/smartcloud/house-base.yml@main`.
+Edit that line by hand in the same change, so the repository reads the base preset before its first sync.
+`codeQuality` has no off value: leaving it unset adds no Code Quality rule.
+Every other house rule, including the CodeQL gate, secret scanning and the administrator bypass, still comes from the base preset and stays locked.
+To end the exception, remove the lines above and point `extends` back at `house.yml`.
+
 ## <a id="changing"></a>Changing the preset
 
-Edit `smartcloud/house.yml` here and open a pull request.
+Edit `smartcloud/house-base.yml` here and open a pull request; only the two AI-credit gates live in `smartcloud/house.yml`.
 Remember it applies to every repository on its next run.
 A new placeholder value goes in both `sync.values` and `house.yml`, with the same value; `test/values.test.mjs` fails if they differ.
 If you change a value a repository restated in its own file, that repository's run fails until it removes or updates the restatement, so search the organisation first.
