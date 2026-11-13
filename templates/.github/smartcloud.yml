@@ -2,7 +2,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Resnovas/smartcloud/main/schema/smartcloud.schema.json
 version: 2
 extends:
-  - Resnovas/.github/smartcloud/house.yml@main
+  - Resnovas/.github/smartcloud/{{HOUSE_PRESET:-house.yml}}@main
 #
 # The preset sets, and this file cannot change:
 #   roles.maintainers   {{MAINTAINERS}}

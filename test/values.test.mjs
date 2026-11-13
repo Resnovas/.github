@@ -15,7 +15,8 @@
  */
 
 // The house values reach templates two ways: house.yml renders this
-// repository's root, and sync.values in smartcloud/house.yml is what
+// repository's root, and sync.values in smartcloud/house-base.yml, which
+// smartcloud/house.yml extends, is what
 // smartcloud's sync renders every other repository with. These tests keep the
 // two in step, keep the values in step with the preset's own settings, and
 // check the templates render with the preset's values alone.
@@ -31,7 +32,7 @@ import { renderAll } from '../scripts/lib/render.mjs'
 const root = fileURLToPath(new URL('../', import.meta.url))
 const templates = join(root, 'templates')
 const house = loadValues(join(root, 'house.yml'))
-const preset = readFileSync(join(root, 'smartcloud', 'house.yml'), 'utf8').split('\n')
+const preset = readFileSync(join(root, 'smartcloud', 'house-base.yml'), 'utf8').split('\n')
 
 // Root-only keys: smartcloud sets REPOSITORY itself, and sync.exclude is the
 // preset's equivalent of HOUSE_EXCLUDE.
@@ -49,7 +50,7 @@ test('COPYRIGHT_YEAR is the current year, so LICENSE and the synced copies carry
 // The lines nested under the first `<indent><key>:` found after `from`.
 const block = (key, indent, from = 0) => {
   const start = preset.findIndex((line, index) => index >= from && line === `${' '.repeat(indent)}${key}:`)
-  assert.notEqual(start, -1, `smartcloud/house.yml has no ${key}`)
+  assert.notEqual(start, -1, `smartcloud/house-base.yml has no ${key}`)
   const lines = []
   for (const line of preset.slice(start + 1)) {
     if (line.trim() !== '' && line.search(/\S/) <= indent) break
@@ -61,7 +62,7 @@ const block = (key, indent, from = 0) => {
 const syncValues = () => {
   const { start } = block('sync', 0)
   const { lines } = block('values', 2, start)
-  return parseValues(lines.map((line) => line.trim()).join('\n'), 'smartcloud/house.yml sync.values')
+  return parseValues(lines.map((line) => line.trim()).join('\n'), 'smartcloud/house-base.yml sync.values')
 }
 
 // A YAML flow list of logins, such as [a, "b[bot]"].
@@ -187,4 +188,29 @@ test('organisation values default to the house values and a repository can set i
   assert.match(text(own, 'GOVERNANCE.md'), /The owner is ClimbGroup\./)
   assert.match(text(own, 'CODE_OF_CONDUCT.md'), /team@example\.com/)
   assert.doesNotMatch(text(own, 'CODE_OF_CONDUCT.md'), new RegExp(house.CONDUCT_CONTACT.replace('.', '\\.')))
+})
+
+test('house.yml is house-base.yml plus exactly the two AI-credit ruleset gates', () => {
+  const full = readFileSync(join(root, 'smartcloud', 'house.yml'), 'utf8')
+  const own = full.split('\n').filter((line) => line.trim() !== '' && !line.trim().startsWith('#'))
+  assert.deepEqual(own, [
+    'version: 2',
+    'extends:',
+    '  - Resnovas/.github/smartcloud/house-base.yml@main',
+    'settings:',
+    '  ruleset:',
+    '    codeQuality: errors',
+    '    copilotReview: true',
+  ])
+  for (const key of ['codeQuality', 'copilotReview']) {
+    assert.ok(!preset.some((line) => line.trim().startsWith(`${key}:`)), `house-base.yml sets ${key}`)
+  }
+})
+
+test('the synced smartcloud.yml extends house.yml unless a repository names another house preset', () => {
+  assert.ok(!('HOUSE_PRESET' in house), 'house.yml sets HOUSE_PRESET')
+  assert.ok(!('HOUSE_PRESET' in syncValues()), 'sync.values would lock HOUSE_PRESET for every repository')
+  const text = (values) => renderAll(templates, values).find((file) => file.path.replaceAll('\\', '/') === '.github/smartcloud.yml').content
+  assert.match(text(house), /\n {2}- Resnovas\/\.github\/smartcloud\/house\.yml@main\n/)
+  assert.match(text({ ...house, HOUSE_PRESET: 'house-base.yml' }), /\n {2}- Resnovas\/\.github\/smartcloud\/house-base\.yml@main\n/)
 })

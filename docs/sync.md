@@ -135,6 +135,7 @@ This repository renders its own root from [`house.yml`](../house.yml) instead, b
 | `MAINTAINERS` | The maintainers named in `GOVERNANCE.md`, `CONTRIBUTING.md` and the comment in `.github/smartcloud.yml`. GitHub logins, comma separated. | `TGTGamer` |
 | `TRUSTED_BOTS` | The automation accounts named as exempt in `GOVERNANCE.md`, `DCO.md`, `AI_POLICY.md`, `APPROVAL_POLICY.md` and `CONTRIBUTING.md`. Comma separated. | `dependabot[bot], renovate[bot], github-actions[bot], resnovas-smartcloud[bot]` |
 | `CODE_SCANNING_GATE` | Whether `GOVERNANCE.md` says merges are blocked on CodeQL findings. `true` or `false`. | `true` |
+| `HOUSE_PRESET` | The preset file the synced `.github/smartcloud.yml` extends. Per repository (default shown); set it only for an approved exception (see [The base preset](preset.md#base)). | `house.yml` |
 
 A value the preset sets is fixed, so a repository cannot change it. The organisation values (`ORG_NAME`, `LEGAL_HOLDER`, `PACKAGE_SCOPE`, `CONDUCT_CONTACT` and `SPONSORS`) are not in the preset: the templates write them with the Resnovas value as the default (`{{ORG_NAME:-Resnovas}}`), so a repository of another organisation names its own owner in its `.github/smartcloud.yml`, after the `house:local` line:
 

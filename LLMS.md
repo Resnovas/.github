@@ -308,6 +308,18 @@ extends:
   - Resnovas/.github/smartcloud/house.yml@main
 ```
 
+`smartcloud/house.yml` holds only the two ruleset gates that spend GitHub AI
+credits (`settings.ruleset.codeQuality: errors` and
+`settings.ruleset.copilotReview: true`) and extends
+`smartcloud/house-base.yml`, which holds every other house value. Edit
+`house-base.yml` for any other change. A repository with an owner-approved,
+recorded, temporary exception extends the base preset instead: it sets
+`sync.values.HOUSE_PRESET: house-base.yml` and
+`settings.ruleset.copilotReview: false` after its `house:local` line and
+points the managed `extends` line at `house-base.yml`. Never set
+`HOUSE_PRESET` in the preset's `sync.values`, which would lock it for every
+repository.
+
 Presets are locked: a repository may add keys the preset leaves unset, or
 restate a value exactly, but a different value for a key the preset sets fails
 the run. Keys left unset on purpose: `settings.environments`,

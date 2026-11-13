@@ -1,0 +1,313 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Resnovas/smartcloud/main/schema/smartcloud.schema.json
+#
+# The Resnovas house base preset: every house value except the two ruleset
+# gates that spend GitHub AI credits, Copilot code review and the Code Quality
+# gate. smartcloud/house.yml extends it and adds those two, and every Resnovas
+# repository extends house.yml. Change every other house value here.
+#
+# A repository extends this file directly only under a recorded, temporary
+# exception the owner approved, by setting sync.values HOUSE_PRESET to
+# house-base.yml after the house:local line of its .github/smartcloud.yml.
+# See docs/preset.md#base.
+#
+# Presets are locked: a repository may add keys this file leaves unset, but it
+# cannot change a value set here. Identical restatements are allowed.
+#
+# Left unset on purpose, so each repository adds its own:
+#   settings.environments  projectType (saas, desktop, library) or names; not a
+#                          sync value, because a value set here is locked
+#   settings.ruleset       requiredDeployments, statusChecks.checks,
+#                          codeScanning.ESLint, codeCoverage.enabled
+#   sync.exclude           template paths the repository keeps its own copy of
+#   required.expect        the check names the aggregate must wait for
+#   commits.assistedBy     whether commits also need an Assisted-by trailer
+#   other sections         labels, labelling rules, stale, lock, backport,
+#                          freeze, notifications and commands
+version: 2
+
+# sync.values MAINTAINERS and TRUSTED_BOTS name these in the synced documents,
+# and the title rules under conventions repeat them; test/values.test.mjs fails
+# when any of them disagree.
+roles:
+  maintainers: [TGTGamer]
+  trustedBots: ["dependabot[bot]", "renovate[bot]", "github-actions[bot]", "resnovas-smartcloud[bot]"]
+
+links:
+  policyBase: https://github.com/Resnovas/.github/blob/main
+
+# The process labels from AI_POLICY.md#labels, plus the label automation uses
+# on its own pull requests.
+labels:
+  needs-disclosure:
+    name: needs-disclosure
+    color: D93F0B
+    description: Complete the AI disclosure (AI-01) and co-author trailers (AI-02).
+  needs-dco:
+    name: needs-dco
+    color: B60205
+    description: Sign off every commit.
+  needs-reproduction:
+    name: needs-reproduction
+    color: FBCA04
+    description: Provide a reproduction on the production branch with exact steps.
+  needs-evidence:
+    name: needs-evidence
+    color: F9D0C4
+    description: Attach the evidence the change requires.
+  needs-tests:
+    name: needs-tests
+    color: FEF2C0
+    description: Add the missing regression or coverage tests.
+  needs-human-explanation:
+    name: needs-human-explanation
+    color: E99695
+    description: Explain the rationale or a material change yourself (AI-04, AI-05).
+  needs-scope-approval:
+    name: needs-scope-approval
+    color: C5DEF5
+    description: Agree the scope or dependency with a maintainer before continuing.
+  needs-refactor:
+    name: needs-refactor
+    color: BFD4F2
+    description: Move code to the correct module or package (AI-13).
+  house-sync:
+    name: house-sync
+    color: EDEDED
+    description: Automated update from Resnovas/.github.
+
+# Pull request title and house style. Every pattern runs in linear time.
+# Trusted bots are exempt, as before. A maintainer's non-conventional title is
+# a warning rather than an error, through the second title rule.
+conventions:
+  rules:
+    title:
+      on: [pullRequest]
+      message: 'The title is not a conventional commit, for example "fix(auth): reject expired tokens". See https://github.com/Resnovas/.github/blob/main/CONTRIBUTING.md#pr-title'
+      when:
+        requires: 1
+        condition:
+          - type: creatorMatches
+            condition: '/^(TGTGamer|dependabot\[bot\]|renovate\[bot\]|github-actions\[bot\]|resnovas-smartcloud\[bot\])$/i'
+          - type: titleMatches
+            condition: '^(feat|fix|perf|refactor|test|docs|chore|build|ci|style|revert)(\([\w./-]+\))?!?: \S'
+    title-maintainer:
+      on: [pullRequest]
+      level: warning
+      message: 'The title is not a conventional commit, for example "fix(auth): reject expired tokens". See https://github.com/Resnovas/.github/blob/main/CONTRIBUTING.md#pr-title'
+      when:
+        requires: 1
+        condition:
+          - type: $not
+            condition:
+              - type: creatorMatches
+                condition: '/^TGTGamer$/i'
+          - type: titleMatches
+            condition: '^(feat|fix|perf|refactor|test|docs|chore|build|ci|style|revert)(\([\w./-]+\))?!?: \S'
+    no-emoji:
+      on: [pullRequest]
+      level: warning
+      message: Remove emoji from the title and description. See https://github.com/Resnovas/.github/blob/main/AI_POLICY.md#ai-09
+      when:
+        requires: 1
+        condition:
+          - type: creatorMatches
+            condition: '/^(dependabot|renovate|github-actions|resnovas-smartcloud)\[bot\]$/i'
+          - type: $not
+            condition:
+              requires: 1
+              condition:
+                - type: titleMatches
+                  condition: '/\p{Extended_Pictographic}/u'
+                - type: descriptionMatches
+                  condition: '/\p{Extended_Pictographic}/u'
+    no-long-dashes:
+      on: [pullRequest]
+      level: warning
+      message: Replace em and en dashes with ordinary punctuation. See https://github.com/Resnovas/.github/blob/main/AI_POLICY.md#ai-09
+      when:
+        requires: 1
+        condition:
+          - type: creatorMatches
+            condition: '/^(dependabot|renovate|github-actions|resnovas-smartcloud)\[bot\]$/i'
+          - type: $not
+            condition:
+              requires: 1
+              condition:
+                - type: titleMatches
+                  condition: '[\u2013\u2014]'
+                - type: descriptionMatches
+                  condition: '[\u2013\u2014]'
+    checklist-done:
+      on: [pullRequest]
+      level: warning
+      message: Remove unticked checklist items; state what was done instead. See https://github.com/Resnovas/.github/blob/main/AI_POLICY.md#ai-09
+      when:
+        requires: 1
+        condition:
+          - type: creatorMatches
+            condition: '/^(dependabot|renovate|github-actions|resnovas-smartcloud)\[bot\]$/i'
+          - type: $not
+            condition:
+              - type: descriptionMatches
+                condition: '/^[ \t]*[-*+] \[ \]/m'
+
+# DCO sign-off and AI attribution (AI-02, AI-03). An AI sign-off is an error
+# for everyone; anything else on a maintainer's own pull request is a warning.
+# assistedBy is left unset (off): the Co-authored-by trailer is the credit, and
+# a repository may add assistedBy: true to also require Assisted-by.
+commits:
+  dco: true
+  aiAttribution: true
+  maintainerLevel: warning
+
+# The AI disclosure (AI-01), drafts (AI-20) and leaving draft (AI-21).
+disclosure:
+  requireDraft: true
+  maintainerLevel: warning
+
+# GOVERNANCE.md#review. The gate stays open while fewer than two maintainers
+# are listed, so a sole owner is never blocked.
+reviews:
+  gate:
+    outside: 2
+    maintainer: 1
+
+# The house baseline, GOVERNANCE.md#settings. Needs an admin token, which the
+# smartcloud workflow mints from the Resnovas Bot GitHub App.
+settings:
+  merging:
+    mergeCommit: false
+    squash: true
+    rebase: true
+    autoMerge: true
+    updateBranch: true
+    deleteBranchOnMerge: true
+    webCommitSignoff: true
+    # Keeping the commit messages preserves every Signed-off-by,
+    # Co-authored-by and Assisted-by trailer through a squash.
+    squashTitle: PR_TITLE
+    squashMessage: COMMIT_MESSAGES
+  features:
+    wiki: false
+    discussions: true
+    sponsorships: true
+  security:
+    immutableReleases: true
+    privateVulnerabilityReporting: true
+    dependabotAlerts: true
+    dependabotSecurityUpdates: true
+    # CodeQL runs as advanced setup from the synced house-codeql.yml workflow,
+    # so a repository can tune it (paths-ignore for vendored code). GitHub
+    # rejects advanced results while default setup is on, so it stays off.
+    codeScanning: off
+    secretScanning: true
+  ruleset:
+    name: "house: default branch"
+    blockDeletion: true
+    blockForcePush: true
+    linearHistory: true
+    # Every pull request merges through the queue, and every queued entry must
+    # pass the required checks. Required workflows also run on merge_group.
+    # One method serves the whole queue. It squashes: GitHub signs the squash
+    # commit, while commits it rewrites by rebasing are unsigned, which the
+    # signed-commits rule below would reject. A maintainer's batch pull request
+    # (one signed commit per issue) keeps its commits by landing as an owner
+    # fast-forward instead; see GOVERNANCE.md#merging.
+    mergeQueue:
+      method: squash
+      grouping: allGreen
+    # Left unset on purpose: a repository that deploys a pre-production
+    # environment adds, for example, requiredDeployments: [Staging].
+    signedCommits: true
+    # GOVERNANCE.md#review: one other maintainer approves a maintainer's pull
+    # request, two approve an outside one. The ruleset cannot tell them apart,
+    # so it requires the shared minimum and the smartcloud check enforces the
+    # rest. Approvals bind only once two or more maintainers are listed.
+    pullRequest:
+      requiredApprovals: 1
+      dismissStaleReviews: true
+      conversationResolution: true
+      extraApprovalForUnattributedCopilot: true
+      mergeMethods: [squash, rebase]
+    # The workflow job is the context, so pull requests from forks, whose
+    # read-only token cannot create check runs, still report it. It is the
+    # aggregate check (see required below). A repository adds its main CI job
+    # here and under required.expect, because a restricted run from a fork or
+    # Dependabot skips the aggregate. One whose CI runs parallel jobs requires
+    # a single job that needs them all and fails unless every one succeeded, so adding a job leaves the ruleset unchanged.
+    # A CI that skips jobs a change cannot affect gates them on the outputs of a
+    # classifying job, never on workflow path filters, which leave a required
+    # check pending; the aggregate job accepts only the skips it ordered.
+    statusChecks:
+      checks:
+        smartcloud: true
+      strict: true
+      skipOnCreation: true
+    # A repository that uploads ESLint results to code scanning adds
+    # codeScanning.ESLint with the same thresholds; one that uploads nothing
+    # would block every pull request.
+    # sync.values CODE_SCANNING_GATE is "true" while this gate is set.
+    codeScanning:
+      CodeQL:
+        securityAlerts: high_or_higher
+        alerts: errors
+    # Enforced only in a repository that uploads coverage to GitHub
+    # (actions/upload-code-coverage) and adds codeCoverage.enabled: true.
+    codeCoverage:
+      minimum: 80
+      maxDrop: 5
+    secretScanningAlerts: [provider_patterns]
+    # Locked on: the owner can always bypass, including the review gate.
+    adminBypass: true
+  # Every house workflow declares the permissions it needs, so the workflow
+  # token is read-only by default. It may still open pull requests: the
+  # Graphify refresh falls back to it where the app token is not available.
+  # A private repository's reusable workflows stay callable from the rest of
+  # the organisation; public repositories have no access level to set.
+  actions:
+    workflowPermissions: read
+    createPullRequests: true
+    accessLevel: organization
+
+# Dependency updates merge themselves once the required checks pass: a
+# Dependabot or Renovate patch or minor update gets GitHub auto-merge turned
+# on, and the merge queue lands it. Major updates wait for a person. A
+# repository adds its own rules under autoMerge.rules with keys of its own.
+autoMerge:
+  rules:
+    dependency-updates:
+      when:
+        condition:
+          - type: dependencyUpdateType
+            condition: [patch, minor]
+
+# One aggregate check: on pull requests, the smartcloud job waits for every
+# other check on the head commit and fails if any of them fails, so the
+# ruleset requires the smartcloud check alone instead of a list of names.
+# The workflow passes the job's check run id, which the feature needs: without
+# it the check fails with required.check-run-missing. The synced smartcloud
+# workflow passes it, so a repository takes the sync before relying on this.
+required: {}
+
+# Governance files synced from this repository's templates.
+sync:
+  source: Resnovas/.github/templates@main
+  branch: house/sync
+  check: true
+  values:
+    # ORG_NAME, LEGAL_HOLDER, PACKAGE_SCOPE, CONDUCT_CONTACT and SPONSORS
+    # are not set here: a value set here is locked, and a repository of
+    # another organisation names its own owner. The templates default them
+    # to the Resnovas values in house.yml, and a repository overrides them in
+    # its own sync.values.
+    COPYRIGHT_YEAR: "2026"
+    COVERAGE_MIN: "90"
+    OWNERS_ADMIN: "@TGTGamer"
+    OWNERS_DOCS: "@TGTGamer"
+    OWNERS_QA: "@TGTGamer"
+    OWNERS_WORKFLOW: "@TGTGamer"
+    # The same people and gate as roles and settings.ruleset.codeScanning
+    # above, for the documents that name them.
+    MAINTAINERS: TGTGamer
+    TRUSTED_BOTS: "dependabot[bot], renovate[bot], github-actions[bot], resnovas-smartcloud[bot]"
+    CODE_SCANNING_GATE: "true"
