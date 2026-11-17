@@ -403,6 +403,22 @@ so a change here reaches every repository on its next run.
 reusable ones: the first runs the smartcloud action with the preset, the second
 re-runs a pull request's smartcloud run when it is reviewed.
 
+The tooling under `templates/tools/` is canonical, including its JSDoc for
+helpers, callbacks, reporters and release operations. Preserve behavior when
+editing documentation, then render the root copies. In a release-enabled
+repository, `node tools/release/release.ts --dry-run` previews Nx version and
+changelog changes without writing them, but still builds configured bundles
+when a version is proposed, deletes maps and strips map comments with uploads
+disabled. It creates no release commit or tag and pushes or publishes nothing;
+GitHub Actions outputs may still be appended. Do not describe this flag
+(default false) as read-only or confuse it with nightly's early dry-run exit.
+
+`node tools/release/release-preview.ts` instead skips bundle builds and asks
+Nx for version/changelog previews without applying those changes. Its CI
+squash simulation creates a local commit and moves HEAD when the PR merge
+parents, title and number are available; configured summary/output files are
+appended too. It creates or pushes no tags, but is not a read-only Git check.
+
 `npm test` enforces these rules on every workflow here and under
 `templates/.github/workflows`, so follow them when editing one:
 

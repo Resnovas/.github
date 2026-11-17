@@ -13,6 +13,28 @@ This page is the house default, which [smartcloud's release guide](https://githu
 - **The app's token never meets untrusted code.** The job that creates it checks out and runs nothing from the repository; the job that installs dependencies and runs Nx hands it the files as an artifact.
 - **Releases are immutable once published** (the preset's `immutableReleases`). Create the release as a draft, attach its files and [attest them](workflows.md#attest), then publish.
 
+## Preview release changes locally
+
+Run `node tools/release/release.ts --dry-run` in a repository with its own
+`release.config.json` and installed release dependencies. The flag defaults to
+false. Nx previews version and changelog changes without writing them, and the
+script creates no release commit or tag and pushes or publishes nothing.
+
+A dry run is not a read-only check: when Nx proposes a version, the script
+still runs configured bundle targets, deletes their source maps and strips
+map comments. It disables source-map uploads, but may append GitHub Actions
+outputs. If a bundle or its map is missing, check the configured build target
+and output path. Use a disposable checkout when build artifacts must remain
+untouched. The synced tools' JSDoc describes helper contracts, reporter
+warnings and release side effects; change it in `templates/tools/`, not in a
+downstream copy.
+
+The separate `node tools/release/release-preview.ts` command asks Nx for
+version and changelog previews without building bundles. On CI with a pull
+request merge checkout and valid `PR_TITLE`/`PR_NUMBER`, it creates a synthetic
+squash commit and moves HEAD. It also appends configured summary/output files;
+it does not create or push tags. Run it in a disposable checkout on CI.
+
 ## <a id="future"></a>What the sync will manage later
 
 When smartcloud's sync manages Nx release configuration ([SMC-81](https://linear.app/resnovas/issue/SMC-81)), it should sync:
