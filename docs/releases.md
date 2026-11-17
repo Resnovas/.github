@@ -29,6 +29,10 @@ untouched. The synced tools' JSDoc describes helper contracts, reporter
 warnings and release side effects; change it in `templates/tools/`, not in a
 downstream copy.
 
+Internal release-tool comments also explain the workflow-output guard, preservation
+of Nx-rendered change text and multiline squash bodies, and the line-aware notes
+budget. These comments change no release behavior or activation policy.
+
 The separate `node tools/release/release-preview.ts` command asks Nx for
 version and changelog previews without building bundles. On CI with a pull
 request merge checkout and valid `PR_TITLE`/`PR_NUMBER`, it creates a synthetic

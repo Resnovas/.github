@@ -70,3 +70,10 @@ adds or changes (compare API, `base...head`), skipping `externals/`,
 `vendor/`, `node_modules/` and `dist/`, and always adds `actions`. A failed
 comparison warns and falls back to the repository languages; never let it fail
 the scan. Keep the extension map in step with the language map above it.
+
+Release-tool rationale is maintained in `templates/tools/release/`: output helpers
+do not write when the workflow destination is absent/empty; Nx owns changelog links
+and change text; multiline squash bodies retain breaking-change markers; truncated
+notes prefer complete lines with a notice outside the budget. These are existing
+contracts, not permission to run or activate releases. Render downstream copies
+from these canonical templates rather than adding local exceptions.
