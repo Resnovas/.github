@@ -233,6 +233,12 @@ A new synced file needs three things besides the template itself: an entry in
 `templates/.prettierignore` if Prettier can format it (a test fails otherwise),
 a row in `docs/synced-files.md`, and a render so the root copy exists.
 
+## Generated Linear source and the commit hook
+
+`templates/tools/dev/commit-check.mjs` fixes the generated-source exclusions by path: `docs/planning/issues/**` and exactly `tools/documentation/linear-snapshot.json` preserve verbatim Linear text, including historical em and en dashes. These are generated-source locations only. Human-authored planning prose outside the issue mirror and arbitrary JSON remain subject to the existing ASCII dash rule. Content markers and local configuration cannot extend these exclusions; commit-message checks are unchanged.
+
+For example, preserve a generated `docs/planning/issues/EVE-45.md` description unchanged, but use ASCII hyphen-minus in `docs/planning/timeline.md`. Verify with `node --test test/commit-check.test.mjs`. Render the canonical template and deliver it through the repository's existing house-sync rules; do not patch a downstream managed copy independently or rewrite mirrored source to pass the hook.
+
 ## Issue forms
 
 `templates/.github/ISSUE_TEMPLATE/` holds one form per kind of issue, matching

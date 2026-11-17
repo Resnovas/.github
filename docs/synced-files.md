@@ -120,6 +120,14 @@ They only call three package scripts every repository has (`setup`, `check` and 
 
 JSON files here are JSON with comments, so their markers are `//` lines, and a local entry may not reuse a synced `label`, `name` or `id`.
 
+### Generated Linear mirror source
+
+The commit hook leaves `docs/planning/issues/**` and the exact file `tools/documentation/linear-snapshot.json` out of its staged-text scan. These generated mirrors preserve source text verbatim, including historical em and en dashes. Do not rewrite source punctuation to pass the hook or put human-authored prose in those paths.
+
+For example, a generated `docs/planning/issues/EVE-45.md` may retain its Linear description unchanged, while a new paragraph in `docs/planning/timeline.md` must still use ASCII hyphen-minus. Other JSON files, including `tools/documentation/other.json`, remain scanned. A generated-file comment does not grant an exclusion. The paths are fixed in the canonical template, not configurable through a marker, local setting or environment variable. Commit messages retain all their existing checks.
+
+Run `node --test test/commit-check.test.mjs` in the house repository to check this boundary. Downstream repositories receive the checker through the existing house sync; change the template here rather than patching a managed copy. If a human-authored file fails the dash check, replace its newly authored long dashes with ASCII hyphen-minus. If a generated mirror fails, verify its exact path and that the synchronized checker includes these exclusions; leave the source prose unchanged.
+
 ## <a id="tools"></a>Repository tools
 
 Plain scripts every repository runs the same way, synced whole. They need only Node and the house stack (Nx, Vitest, Mintlify); none carries a licence header, because the sync would overwrite it, and each starts with a "Synced from" line so the header check skips it. Wire them up as package scripts with these names, so the editor tasks, the docs and the agents find them:

@@ -87,6 +87,48 @@ test('long dashes fail in the message and in added staged lines, outside generat
   assert.match(problems[0], /^docs\/a\.md/)
 })
 
+test('only the exact generated Linear mirror paths preserve verbatim source dashes', () => {
+  const mirrors = [
+    'docs/planning/issues/EVE-45.md',
+    'docs/planning/issues/archive/EVE-46.md',
+    'tools/documentation/linear-snapshot.json',
+  ]
+  const authored = [
+    'docs/planning/README.md',
+    'docs/planning/timeline.md',
+    'docs/planning/issues.md',
+    'docs/planning/issues-archive/EVT-1.md',
+    'other/docs/planning/issues/EVT-1.md',
+    'tools/documentation/other.json',
+    'tools/documentation/linear-snapshot.json.backup',
+    'tools/documentation/linear-snapshot.json/extra.json',
+    'other/tools/documentation/linear-snapshot.json',
+  ]
+  for (const dash of ['\u2013', '\u2014']) {
+    // A generated marker cannot grant an exclusion to an arbitrary path.
+    const hunk = (path) => [
+      `diff --git a/${path} b/${path}`,
+      `--- a/${path}`,
+      `+++ b/${path}`,
+      '@@ -0,0 +1,2 @@',
+      '+<!-- Generated from Linear. Do not edit. -->',
+      `+{"description":"Historical source ${dash} preserved verbatim"}`,
+    ].join('\n')
+    for (const path of mirrors) {
+      assert.deepEqual(checkStagedText(hunk(path)), [], path)
+      assert.deepEqual(checkStagedText(hunk(path).replace('+<!-- Generated from Linear. Do not edit. -->\n', '')), [], path)
+    }
+    for (const path of authored) {
+      const problems = checkStagedText(hunk(path))
+      assert.equal(problems.length, 1, path)
+      assert.ok(problems[0].startsWith(`${path}:`), path)
+      assert.match(problems[0], /em or en dash/, path)
+    }
+    // An excluded file must not disable scanning of the next authored file.
+    assert.equal(checkStagedText([...mirrors, authored[0]].map(hunk).join('\n')).length, 1)
+  }
+})
+
 test('plain Promise code and any fail in added TypeScript sources, not in tests, comments or marked boundaries', () => {
   const hunk = (path, ...lines) => ['diff --git a/' + path + ' b/' + path, '--- a/' + path, '+++ b/' + path, '@@ -1 +1 @@', ...lines]
   const diff = [
