@@ -159,6 +159,8 @@ Building it uses local parsers only: no model, no network, no cost.
 
 Every directory under `templates/.agents/skills/` is a skill in the [Agent Skills](https://agentskills.io) format (`SKILL.md` plus reference files), synced whole into `.agents/skills/` of every repository. `tools/dev/surfaces.mjs sync` mirrors the whole of `.agents/skills/` to `.claude/skills/`, so Claude Code reads the same copy, and `check` fails while the mirror is out of date. A repository adds its own skills beside the house ones; a house skill is changed in this repository, never in a copy.
 
+The `coding-preferences` architecture reference uses colon-separated Nx tags. Read the receiving repository's `eslint.config.mjs` before adding an import: every matching type, layer and capability constraint must allow it. For example, Eventiva permits same-type integration dependencies when their other tags allow them, but a backend test cannot import frontend code just because its type is `type:test`. Its 16-row baseline is recorded in the reference, not installed as lint configuration by house sync. There is no database type-import or `devDependencies` bypass. Keep the separate cycle and external-import checks; if lint rejects a dependency, move the responsibility or inject an implementation through an allowed contract rather than weakening the rule. See [EVE-22](https://linear.app/resnovas/issue/EVE-22) for the reconciliation evidence. On the next sync these corrections reach both agent skill copies and the generated house standards summary. Markdown remains canonical; this change adds no AsciiDoc pointers.
+
 The house skills, by what they are for:
 
 | Group | Skills |
