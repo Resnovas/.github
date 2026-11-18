@@ -17,9 +17,12 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { execFileSync } from 'node:child_process'
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import { checkMessage, checkStagedText } from '../templates/tools/dev/commit-check.mjs'
+import { renderText } from '../scripts/lib/render.mjs'
 
 const human = { name: 'Jane Doe', email: 'jane@example.com' }
 const signed = 'Signed-off-by: Jane Doe <jane@example.com>'
@@ -31,6 +34,37 @@ test('a conventional, signed-off, human-authored commit passes', () => {
     checkMessage(`feat: x\n\nCo-authored-by: Claude Opus 5.5 <noreply@anthropic.com>\n${signed}\n`, human),
     [],
   )
+})
+
+test('mapped tasks require both their exact Linear prefix and a qualified GitHub issue on every ordinary commit', () => {
+  for (const subject of ['fix(auth): reject expired tokens', 'chore(graphify): refresh the code graph', 'docs: regenerate agent docs']) {
+    const message = `${subject}\n\n${signed}`
+    assert.equal(checkMessage(message, human, 'EVE').length, 2)
+    assert.equal(checkMessage(`${subject}\n\nRefs: EVE-266\n\n${signed}`, human, 'EVE').length, 1)
+    for (const reference of ['Resnovas/Eventiva#1053', 'https://github.com/Resnovas/Eventiva/issues/1053']) {
+      assert.deepEqual(checkMessage(`${subject}\n\nRefs: EVE-266, ${reference}\n\n${signed}`, human, 'EVE'), [])
+    }
+    // Unmapped repositories keep the existing signing and disclosure contract.
+    assert.deepEqual(checkMessage(message, human), [])
+    assert.match(checkMessage(subject, human).join('\n'), /No Signed-off-by/)
+  }
+})
+
+test('traceability rejects wrong prefixes, bare numbers, pull requests and references hidden in comments or verbose diffs', () => {
+  for (const linear of ['OTHER-266', 'NOT-EVE-266', 'EVE-0', 'EVE-266suffix']) {
+    assert.match(checkMessage(`fix: x\n\nRefs: ${linear}, Resnovas/Eventiva#1053\n\n${signed}`, human, 'EVE').join('\n'), /owning EVE issue/)
+  }
+  for (const github of ['#1053', 'Resnovas/Eventiva#0', 'https://github.com/Resnovas/Eventiva/pull/1053', 'https://example.com/Resnovas/Eventiva/issues/1053']) {
+    assert.match(checkMessage(`fix: x\n\nRefs: EVE-266, ${github}\n\n${signed}`, human, 'EVE').join('\n'), /qualified GitHub issue/)
+  }
+  for (const hidden of ['# Refs: EVE-266, Resnovas/Eventiva#1053', '# ------------------------ >8 ------------------------\nRefs: EVE-266, Resnovas/Eventiva#1053']) {
+    assert.equal(checkMessage(`fix: x\n\n${signed}\n${hidden}`, human, 'EVE').length, 2)
+  }
+  assert.match(checkMessage(`fix: x\n\n${signed}`, human, 'EVE|OTHER').join('\n'), /invalid task Linear prefix/)
+  // Keep git's existing merge/revert/fixup handling; normal graph commits are not exempt.
+  assert.deepEqual(checkMessage("Merge branch 'main'", human, 'EVE'), [])
+  assert.deepEqual(checkMessage('Revert "fix: x"', human, 'EVE'), [])
+  assert.deepEqual(checkMessage('fixup! fix: x', human, 'EVE'), [])
 })
 
 test('the subject must be a conventional commit, except what git writes itself', () => {
@@ -166,10 +200,17 @@ test('comments after code, block comments and JSX text are not code', () => {
   assert.equal(checkStagedText(hunk('packages/core/src/c.ts', '+const p = fetch(u).then((r) => r.json()) // fine?').join('\n')).length, 1)
 })
 
-test('the command line reads a message file or --message, with an explicit author and no diff', () => {
+test('the rendered command line reads messages and enforces the configured mapping without network access', (t) => {
+  const parent = fileURLToPath(new URL('../.amp/in/orb-backup/', import.meta.url))
+  mkdirSync(parent, { recursive: true })
+  const directory = mkdtempSync(join(parent, 'commit-check-'))
+  t.after(() => rmSync(directory, { recursive: true, force: true }))
+  const rendered = join(directory, 'commit-check.mjs')
+  const source = readFileSync(script, 'utf8')
+  writeFileSync(rendered, renderText(source, {}))
   const run = (...args) => {
     try {
-      execFileSync(process.execPath, [script, ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] })
+      execFileSync(process.execPath, [rendered, ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] })
       return { code: 0, stderr: '' }
     } catch (error) {
       return { code: error.status, stderr: String(error.stderr) }
@@ -180,4 +221,9 @@ test('the command line reads a message file or --message, with an explicit autho
   assert.equal(failed.code, 1)
   assert.match(failed.stderr, /commit-check: Subject "nope"/)
   assert.equal(run('--no-diff').code, 2)
+  writeFileSync(rendered, renderText(source, { TASK_LINEAR_PREFIX: 'EVE' }))
+  assert.equal(run('--message', `chore(graphify): refresh graph\n\n${signed}`, '--author', 'Jane Doe <jane@example.com>', '--no-diff').code, 1)
+  const messageFile = join(directory, 'message.txt')
+  writeFileSync(messageFile, `chore(graphify): refresh graph\n\nRefs: EVE-266, Resnovas/Eventiva#1053\n\n${signed}`)
+  assert.equal(run(messageFile, '--author', 'Jane Doe <jane@example.com>', '--no-diff').code, 0)
 })

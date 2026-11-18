@@ -246,6 +246,14 @@ a row in `docs/synced-files.md`, and a render so the root copy exists.
 
 For example, preserve a generated `docs/planning/issues/EVE-45.md` description unchanged, but use ASCII hyphen-minus in `docs/planning/timeline.md`. Verify with `node --test test/commit-check.test.mjs`. Render the canonical template and deliver it through the repository's existing house-sync rules; do not patch a downstream managed copy independently or rewrite mirrored source to pass the hook.
 
+## Development task traceability
+
+Follow [AGENTS.md, Issues and handoff](../../../AGENTS.md#issues-and-handoff) for task-owned start, blocked, pause/handoff and verified-delivery updates. Verify the actual Linear/GitHub pair and mirrored comments, preserve other active slices, and keep read-only requests read-only. Every mapped task commit, including generated outputs, cites both verified issues; partial delivery uses `Refs`, never whole-issue closure.
+
+The existing renderer accepts optional `sync.values.TASK_LINEAR_PREFIX` from the downstream local `.github/smartcloud.yml`. Default `none` leaves unmapped repositories compatible; a verified uppercase team key such as Eventiva's `EVE` makes the rendered offline checker require that exact key and a qualified GitHub issue reference on ordinary commits. `Refs: EVE-266, Resnovas/Eventiva#1053` is this rollout's verified pair, not IDs to copy into unrelated tasks. Full GitHub issue URLs also work. Bare numbers, pull request URLs, different/prefixed keys and references hidden in git comments or the verbose diff fail. Invalid prefix values fail explicitly. Existing git-generated exceptions and signing/credit/staged-source rules are unchanged.
+
+Run `node --test test/commit-check.test.mjs`, then normal render/test/check and doc generation. The rendered CLI tests cover both default-unmapped and opted-in behavior, including generated graph/docs commits. This is a syntax guard, not remote mapping verification, tracker synchronization, acceptance or a new runtime feature flag. An accepted upstream change and normal downstream sync must precede downstream managed adoption. Record this rollout's actual evidence and remaining house/sync acceptance in [the canonical timeline](https://github.com/Resnovas/Eventiva/blob/main/docs/planning/timeline.md) and both linked trackers; never report a proposed template as delivered everywhere.
+
 ## Issue forms
 
 `templates/.github/ISSUE_TEMPLATE/` holds one form per kind of issue, matching
