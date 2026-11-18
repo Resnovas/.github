@@ -207,6 +207,12 @@ If you would rather ship the rebuilt graph in your own pull request, run `sh too
 5. The `artifacts` job checks out the tag, rebuilds each bundle and stops unless it matches the tagged one, writes an SPDX SBOM per shipped package, and with an `npm` section builds, prepares and publishes the package to npm with provenance through trusted publishing.
 6. `attest.yml` (below) signs build provenance for the bundles and attaches the SBOMs to the draft release, and `publish-release` publishes it. It stays a draft until then, because house releases are immutable once published.
 
+For executable bundles, source-map processing keeps the original shebang at byte zero.
+The helper temporarily leaves its first line blank while the pinned error-tracking CLI injects its bootstrap, then restores the shebang and offsets the generated source-map lines before upload.
+It runs `node --check` on instrumented JavaScript before uploading, so invalid injected syntax stops the release.
+Without upload credentials, the helper retains the original executable header while removing private maps and their reference comments.
+If a downloaded CLI reports `SyntaxError` beside a displaced `#!/usr/bin/env node`, verify the published tarball, repair this canonical helper and build a new authorized patch release; do not rewrite an immutable release or move a shebang without correcting the uploaded map.
+
 **Setup.** Write `release.config.json` at the repository root. Every key is optional except where the feature needs it:
 
 | Key | Default | Meaning |
