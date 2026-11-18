@@ -250,7 +250,10 @@ const main = () => {
   }
   // A merge or revert in progress stages already-reviewed changes; only the message is checked.
   if (scanDiff && ['MERGE_HEAD', 'REVERT_HEAD'].some((head) => existsSync(resolve(git('rev-parse', '--git-path', head).trim())))) scanDiff = false
-  const problems = [...checkMessage(message, author, 'none'), ...(scanDiff ? checkStagedText(git('diff', '--cached', '--unified=1', '--no-color')) : [])]
+  // Keep rendered configuration as data: even quotes/newlines cannot become
+  // executable JavaScript before the team-key validation runs.
+  const linearPrefix = readFileSync(new URL('./commit-check-linear-prefix.txt', import.meta.url), 'utf8').trim()
+  const problems = [...checkMessage(message, author, linearPrefix), ...(scanDiff ? checkStagedText(git('diff', '--cached', '--unified=1', '--no-color')) : [])]
   for (const problem of problems) console.error(`commit-check: ${problem}`)
   if (problems.length > 0) console.error('commit-check: the commit was not made. Fix the message or the staged text, or set HOUSE_SKIP_COMMIT_CHECK=1 for an emergency commit; the pull request check still applies.')
   return problems.length === 0 ? 0 : 1

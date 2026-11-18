@@ -206,8 +206,11 @@ test('the rendered command line reads messages and enforces the configured mappi
   const directory = mkdtempSync(join(parent, 'commit-check-'))
   t.after(() => rmSync(directory, { recursive: true, force: true }))
   const rendered = join(directory, 'commit-check.mjs')
+  const prefixFile = join(directory, 'commit-check-linear-prefix.txt')
+  const prefixTemplate = readFileSync(new URL('../templates/tools/dev/commit-check-linear-prefix.txt', import.meta.url), 'utf8')
   const source = readFileSync(script, 'utf8')
   writeFileSync(rendered, renderText(source, {}))
+  writeFileSync(prefixFile, renderText(prefixTemplate, {}))
   const run = (...args) => {
     try {
       execFileSync(process.execPath, [rendered, ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] })
@@ -221,9 +224,18 @@ test('the rendered command line reads messages and enforces the configured mappi
   assert.equal(failed.code, 1)
   assert.match(failed.stderr, /commit-check: Subject "nope"/)
   assert.equal(run('--no-diff').code, 2)
-  writeFileSync(rendered, renderText(source, { TASK_LINEAR_PREFIX: 'EVE' }))
+  writeFileSync(prefixFile, renderText(prefixTemplate, { TASK_LINEAR_PREFIX: 'EVE' }))
   assert.equal(run('--message', `chore(graphify): refresh graph\n\n${signed}`, '--author', 'Jane Doe <jane@example.com>', '--no-diff').code, 1)
   const messageFile = join(directory, 'message.txt')
   writeFileSync(messageFile, `chore(graphify): refresh graph\n\nRefs: EVE-266, Resnovas/Eventiva#1053\n\n${signed}`)
   assert.equal(run(messageFile, '--author', 'Jane Doe <jane@example.com>', '--no-diff').code, 0)
+  for (const prefix of ["none' + (console.error('PREFIX_EXECUTED'), '') + '", '` ${process.exit(0)}', 'EVE\nconsole.error("PREFIX_EXECUTED")']) {
+    writeFileSync(prefixFile, renderText(prefixTemplate, { TASK_LINEAR_PREFIX: prefix }))
+    const invalid = run(messageFile, '--author', 'Jane Doe <jane@example.com>', '--no-diff')
+    assert.doesNotMatch(invalid.stderr, /PREFIX_EXECUTED/)
+    assert.equal(invalid.code, 1)
+    assert.match(invalid.stderr, /invalid task Linear prefix/)
+  }
+  rmSync(prefixFile)
+  assert.equal(run(messageFile, '--author', 'Jane Doe <jane@example.com>', '--no-diff').code, 1)
 })
