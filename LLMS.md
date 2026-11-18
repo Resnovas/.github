@@ -390,6 +390,13 @@ so a change here reaches every repository on its next run.
 reusable ones: the first runs the smartcloud action with the preset, the second
 re-runs a pull request's smartcloud run when it is reviewed.
 
+For a dependency update to a synced workflow, update the matching source in
+`templates/.github/workflows/` and run `npm run render`, `npm test` and
+`npm run check`. For example, keep both `actions/create-github-app-token`
+pins and release comments aligned in `templates/.github/workflows/smartcloud.yml`.
+A rendered-file mismatch means the template still needs the reviewed update;
+do not skip the gate or discard the update by rendering an older template.
+
 `npm test` enforces these rules on every workflow here and under
 `templates/.github/workflows`, so follow them when editing one:
 
