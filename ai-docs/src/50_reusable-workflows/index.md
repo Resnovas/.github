@@ -24,6 +24,22 @@ pins and release comments aligned in `templates/.github/workflows/smartcloud.yml
 A rendered-file mismatch means the template still needs the reviewed update;
 do not skip the gate or discard the update by rendering an older template.
 
+The tooling under `templates/tools/` is canonical, including its JSDoc for
+helpers, callbacks, reporters and release operations. Preserve behavior when
+editing documentation, then render the root copies. In a release-enabled
+repository, `node tools/release/release.ts --dry-run` previews Nx version and
+changelog changes without writing them, but still builds configured bundles
+when a version is proposed, deletes maps and strips map comments with uploads
+disabled. It creates no release commit or tag and pushes or publishes nothing;
+GitHub Actions outputs may still be appended. Do not describe this flag
+(default false) as read-only or confuse it with nightly's early dry-run exit.
+
+`node tools/release/release-preview.ts` instead skips bundle builds and asks
+Nx for version/changelog previews without applying those changes. Its CI
+squash simulation creates a local commit and moves HEAD when the PR merge
+parents, title and number are available; configured summary/output files are
+appended too. It creates or pushes no tags, but is not a read-only Git check.
+
 `npm test` enforces these rules on every workflow here and under
 `templates/.github/workflows`, so follow them when editing one:
 
@@ -61,3 +77,10 @@ adds or changes (compare API, `base...head`), skipping `externals/`,
 `vendor/`, `node_modules/` and `dist/`, and always adds `actions`. A failed
 comparison warns and falls back to the repository languages; never let it fail
 the scan. Keep the extension map in step with the language map above it.
+
+Release-tool rationale is maintained in `templates/tools/release/`: output helpers
+do not write when the workflow destination is absent/empty; Nx owns changelog links
+and change text; multiline squash bodies retain breaking-change markers; truncated
+notes prefer complete lines with a notice outside the budget. These are existing
+contracts, not permission to run or activate releases. Render downstream copies
+from these canonical templates rather than adding local exceptions.

@@ -51,8 +51,15 @@ untouched. The synced `git-worktrees` skill contains the workflow.
   `feature-flags`). Telemetry events carry no secret or personal data.
 - **Module boundaries.** The core package holds domain-agnostic building
   blocks only. Vendor SDKs and API clients live in
-  `@resnovas/integrations.<vendor>`. Features depend on core and
-  integrations, never the other way round (`AI_POLICY.md` AI-13).
+  `@resnovas/integrations.<vendor>` (`AI_POLICY.md` AI-13).
+  Use colon-separated Nx tags (`type:core`, `layer:shared`,
+  `capability:contracts`) and intersect every matching constraint in the
+  repository's `eslint.config.mjs`. Type-only imports and `devDependencies`
+  do not bypass boundaries; same-type permission does not permit cycles.
+  Read `coding-preferences/references/architecture.md` for Eventiva's
+  16-row baseline and the distinction between workspace, external and cycle
+  checks. That baseline is not a universal hierarchy or permission for
+  extensions to import integrations.
 - **Comments explain why.** Constraints, trade-offs and anything surprising;
   never a restatement of the code.
 
@@ -233,6 +240,12 @@ A new synced file needs three things besides the template itself: an entry in
 `templates/.prettierignore` if Prettier can format it (a test fails otherwise),
 a row in `docs/synced-files.md`, and a render so the root copy exists.
 
+## Generated Linear source and the commit hook
+
+`templates/tools/dev/commit-check.mjs` fixes the generated-source exclusions by path: `docs/planning/issues/**` and exactly `tools/documentation/linear-snapshot.json` preserve verbatim Linear text, including historical em and en dashes. These are generated-source locations only. Human-authored planning prose outside the issue mirror and arbitrary JSON remain subject to the existing ASCII dash rule. Content markers and local configuration cannot extend these exclusions; commit-message checks are unchanged.
+
+For example, preserve a generated `docs/planning/issues/EVE-45.md` description unchanged, but use ASCII hyphen-minus in `docs/planning/timeline.md`. Verify with `node --test test/commit-check.test.mjs`. Render the canonical template and deliver it through the repository's existing house-sync rules; do not patch a downstream managed copy independently or rewrite mirrored source to pass the hook.
+
 ## Issue forms
 
 `templates/.github/ISSUE_TEMPLATE/` holds one form per kind of issue, matching
@@ -397,6 +410,22 @@ pins and release comments aligned in `templates/.github/workflows/smartcloud.yml
 A rendered-file mismatch means the template still needs the reviewed update;
 do not skip the gate or discard the update by rendering an older template.
 
+The tooling under `templates/tools/` is canonical, including its JSDoc for
+helpers, callbacks, reporters and release operations. Preserve behavior when
+editing documentation, then render the root copies. In a release-enabled
+repository, `node tools/release/release.ts --dry-run` previews Nx version and
+changelog changes without writing them, but still builds configured bundles
+when a version is proposed, deletes maps and strips map comments with uploads
+disabled. It creates no release commit or tag and pushes or publishes nothing;
+GitHub Actions outputs may still be appended. Do not describe this flag
+(default false) as read-only or confuse it with nightly's early dry-run exit.
+
+`node tools/release/release-preview.ts` instead skips bundle builds and asks
+Nx for version/changelog previews without applying those changes. Its CI
+squash simulation creates a local commit and moves HEAD when the PR merge
+parents, title and number are available; configured summary/output files are
+appended too. It creates or pushes no tags, but is not a read-only Git check.
+
 `npm test` enforces these rules on every workflow here and under
 `templates/.github/workflows`, so follow them when editing one:
 
@@ -434,6 +463,13 @@ adds or changes (compare API, `base...head`), skipping `externals/`,
 `vendor/`, `node_modules/` and `dist/`, and always adds `actions`. A failed
 comparison warns and falls back to the repository languages; never let it fail
 the scan. Keep the extension map in step with the language map above it.
+
+Release-tool rationale is maintained in `templates/tools/release/`: output helpers
+do not write when the workflow destination is absent/empty; Nx owns changelog links
+and change text; multiline squash bodies retain breaking-change markers; truncated
+notes prefer complete lines with a notice outside the budget. These are existing
+contracts, not permission to run or activate releases. Render downstream copies
+from these canonical templates rather than adding local exceptions.
 
 ---
 

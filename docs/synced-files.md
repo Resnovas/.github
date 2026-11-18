@@ -120,6 +120,14 @@ They only call three package scripts every repository has (`setup`, `check` and 
 
 JSON files here are JSON with comments, so their markers are `//` lines, and a local entry may not reuse a synced `label`, `name` or `id`.
 
+### Generated Linear mirror source
+
+The commit hook leaves `docs/planning/issues/**` and the exact file `tools/documentation/linear-snapshot.json` out of its staged-text scan. These generated mirrors preserve source text verbatim, including historical em and en dashes. Do not rewrite source punctuation to pass the hook or put human-authored prose in those paths.
+
+For example, a generated `docs/planning/issues/EVE-45.md` may retain its Linear description unchanged, while a new paragraph in `docs/planning/timeline.md` must still use ASCII hyphen-minus. Other JSON files, including `tools/documentation/other.json`, remain scanned. A generated-file comment does not grant an exclusion. The paths are fixed in the canonical template, not configurable through a marker, local setting or environment variable. Commit messages retain all their existing checks.
+
+Run `node --test test/commit-check.test.mjs` in the house repository to check this boundary. Downstream repositories receive the checker through the existing house sync; change the template here rather than patching a managed copy. If a human-authored file fails the dash check, replace its newly authored long dashes with ASCII hyphen-minus. If a generated mirror fails, verify its exact path and that the synchronized checker includes these exclusions; leave the source prose unchanged.
+
 ## <a id="tools"></a>Repository tools
 
 Plain scripts every repository runs the same way, synced whole. They need only Node and the house stack (Nx, Vitest, Mintlify); none carries a licence header, because the sync would overwrite it, and each starts with a "Synced from" line so the header check skips it. Wire them up as package scripts with these names, so the editor tasks, the docs and the agents find them:
@@ -150,6 +158,8 @@ Building it uses local parsers only: no model, no network, no cost.
 ## <a id="skills"></a>House skills
 
 Every directory under `templates/.agents/skills/` is a skill in the [Agent Skills](https://agentskills.io) format (`SKILL.md` plus reference files), synced whole into `.agents/skills/` of every repository. `tools/dev/surfaces.mjs sync` mirrors the whole of `.agents/skills/` to `.claude/skills/`, so Claude Code reads the same copy, and `check` fails while the mirror is out of date. A repository adds its own skills beside the house ones; a house skill is changed in this repository, never in a copy.
+
+The `coding-preferences` architecture reference uses colon-separated Nx tags. Read the receiving repository's `eslint.config.mjs` before adding an import: every matching type, layer and capability constraint must allow it. For example, Eventiva permits same-type integration dependencies when their other tags allow them, but a backend test cannot import frontend code just because its type is `type:test`. Its 16-row baseline is recorded in the reference, not installed as lint configuration by house sync. There is no database type-import or `devDependencies` bypass. Keep the separate cycle and external-import checks; if lint rejects a dependency, move the responsibility or inject an implementation through an allowed contract rather than weakening the rule. See [EVE-22](https://linear.app/resnovas/issue/EVE-22) for the reconciliation evidence. On the next sync these corrections reach both agent skill copies and the generated house standards summary. Markdown remains canonical; this change adds no AsciiDoc pointers.
 
 The house skills, by what they are for:
 
