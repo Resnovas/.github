@@ -25,6 +25,10 @@ When updating action pins in a synced workflow, update its source under `templat
 For example, update both pins in `templates/.github/workflows/smartcloud.yml` when changing `actions/create-github-app-token`, keeping the release comments aligned with the SHA.
 If `check` reports a rendered workflow out of date after a dependency update, reconcile its template with the reviewed update instead of reverting the generated file or skipping the check.
 
+Keep `pnpm/action-setup` at v6.1.0 while v6.1.1 is excluded in the canonical Dependabot template.
+The v6.1.1 bootstrap intermittently left pnpm unable to return its store path in [Eventiva #1046, attempt 1](https://github.com/Resnovas/Eventiva/actions/runs/44298210070/attempts/1), failing before dependency installation.
+The exclusion names only 6.1.1, so a later fixed release can still be proposed and verified.
+
 ## <a id="smartcloud"></a>smartcloud
 
 **What it does.** Runs [smartcloud](https://github.com/Resnovas/smartcloud) with the [house preset](preset.md).
