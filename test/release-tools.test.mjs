@@ -17,7 +17,8 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { execFileSync } from 'node:child_process'
-import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { SourceMap } from 'node:module'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
@@ -103,5 +104,69 @@ test('every release tool starts with the sync marker, and the ones that act read
     assert.match(text.split('\n').slice(0, 3).join('\n'), /Synced from Resnovas\/\.github/, tool)
     assert.match(text, /loadReleaseConfig\(/, tool)
     assert.doesNotMatch(text, /smartcloud/i, tool)
+  }
+})
+
+test('source-map processing preserves executable headers and uploaded source positions', (t) => {
+  const root = repository({ posthog: { projectId: 'test', host: 'https://invalid.example' } })
+  t.after(() => rmSync(root, { recursive: true, force: true }))
+  mkdirSync(join(root, 'tools', 'release'), { recursive: true })
+  for (const tool of ['config', 'sourcemaps']) {
+    cpSync(join(templates, `tools/release/${tool}.ts`), join(root, `tools/release/${tool}.ts`))
+  }
+
+  // Model the pinned vendor's text prepend at the process boundary. Capture what
+  // would be uploaded without credentials, downloads or an external write.
+  const vendor = join(root, 'vendor.mjs')
+  writeFileSync(vendor, `
+    import childProcess from 'node:child_process'
+    import { syncBuiltinESMExports } from 'node:module'
+    import { copyFileSync, readFileSync, writeFileSync, unlinkSync } from 'node:fs'
+    import { join } from 'node:path'
+    const original = childProcess.execFileSync
+    childProcess.execFileSync = (command, args, options) => {
+      if (command !== 'npx') return original(command, args, options)
+      const bundle = join(args[args.indexOf('--directory') + 1], 'bundle.mjs')
+      if (args.includes('inject')) {
+        writeFileSync(bundle, 'globalThis.injected = true;' + readFileSync(bundle, 'utf8'))
+      } else {
+        copyFileSync(bundle, ${JSON.stringify(join(root, 'uploaded.mjs'))})
+        copyFileSync(bundle + '.map', ${JSON.stringify(join(root, 'uploaded.map'))})
+        unlinkSync(bundle + '.map')
+      }
+    }
+    syncBuiltinESMExports()
+  `)
+
+  const bundle = join(root, 'bundle.mjs')
+  for (const header of ['#!/usr/bin/env node', '#!/usr/bin/env -S node --no-warnings\r', '']) {
+    for (const upload of [true, false]) {
+      writeFileSync(bundle, `${header}\nconsole.log('release smoke')\nthrow new Error('mapped failure')\n//# sourceMappingURL=bundle.mjs.map\n`)
+      writeFileSync(`${bundle}.map`, JSON.stringify({
+        version: 3, sources: ['entry.ts'], names: [], mappings: ';AAAA;AACA',
+      }))
+      execFileSync(process.execPath, ['--import', pathToFileURL(vendor).href, join(root, 'tools/release/sourcemaps.ts'), '1.2.3', bundle], {
+        env: { ...process.env, POSTHOG_CLI_API_KEY: upload ? 'not-a-credential' : '' },
+        stdio: 'pipe',
+      })
+      execFileSync(process.execPath, ['--check', bundle], { stdio: 'pipe' })
+      const output = readFileSync(bundle, 'utf8')
+      if (header) assert.ok(output.startsWith(`${header}\n`))
+      else assert.ok(!output.startsWith('#!'))
+      assert.equal(existsSync(`${bundle}.map`), false)
+      assert.doesNotMatch(output, /sourceMappingURL/)
+      if (!upload) continue
+      const uploaded = readFileSync(join(root, 'uploaded.mjs'), 'utf8')
+      assert.match(uploaded, /globalThis.injected = true;/)
+      const sourceMap = new SourceMap(JSON.parse(readFileSync(join(root, 'uploaded.map'), 'utf8')))
+      const lines = uploaded.split('\n')
+      for (const [sourceLine, statement] of ["console.log('release smoke')", "throw new Error('mapped failure')"].entries()) {
+        const generatedLine = lines.findIndex((line) => line === statement)
+        const mapped = sourceMap.findEntry(generatedLine, 0)
+        assert.equal(mapped.originalLine, sourceLine)
+        assert.equal(mapped.originalColumn, 0)
+        assert.equal(mapped.originalSource, 'entry.ts')
+      }
+    }
   }
 })

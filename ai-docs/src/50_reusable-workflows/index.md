@@ -17,6 +17,18 @@ so a change here reaches every repository on its next run.
 reusable ones: the first runs the smartcloud action with the preset, the second
 re-runs a pull request's smartcloud run when it is reviewed.
 
+For a dependency update to a synced workflow, update the matching source in
+`templates/.github/workflows/` and run `npm run render`, `npm test` and
+`npm run check`. For example, keep both `actions/create-github-app-token`
+pins and release comments aligned in `templates/.github/workflows/smartcloud.yml`.
+A rendered-file mismatch means the template still needs the reviewed update;
+do not skip the gate or discard the update by rendering an older template.
+
+The pnpm setup pin intentionally remains v6.1.0: v6.1.1 intermittently failed
+to provide a working `pnpm store path` in Eventiva run 44298210070, attempt 1.
+The canonical Dependabot template excludes only 6.1.1, not later releases.
+Keep the preview template and reusable release/nightly pins aligned.
+
 The tooling under `templates/tools/` is canonical, including its JSDoc for
 helpers, callbacks, reporters and release operations. Preserve behavior when
 editing documentation, then render the root copies. In a release-enabled
@@ -77,3 +89,13 @@ and change text; multiline squash bodies retain breaking-change markers; truncat
 notes prefer complete lines with a notice outside the budget. These are existing
 contracts, not permission to run or activate releases. Render downstream copies
 from these canonical templates rather than adding local exceptions.
+
+`sourcemaps.ts` preserves executable shebangs around vendor instrumentation.
+It leaves the original first newline in place during injection, restores the
+header as a new first line and prepends an unmapped generated line to esbuild's
+flat source map before upload. This keeps body positions accurate and retains
+the vendor's chunk metadata. Instrumented JavaScript must pass `node --check`
+before upload; no-key processing keeps its original header and strips maps.
+The regression test checks LF/CRLF headers, non-executable bundles and uploaded
+source positions without sending data to the provider. This does not authorize
+a downstream patch publication or rewriting an existing release.
