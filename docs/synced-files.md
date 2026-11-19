@@ -128,12 +128,31 @@ For example, a generated `docs/planning/issues/EVE-45.md` may retain its Linear 
 
 Run `node --test test/commit-check.test.mjs` in the house repository to check this boundary. Downstream repositories receive the checker through the existing house sync; change the template here rather than patching a managed copy. If a human-authored file fails the dash check, replace its newly authored long dashes with ASCII hyphen-minus. If a generated mirror fails, verify its exact path and that the synchronized checker includes these exclusions; leave the source prose unchanged.
 
+### Development task traceability
+
+Use the lifecycle contract in [AGENTS.md, Issues and handoff](../AGENTS.md#issues-and-handoff). Resolve the owning Linear issue and its GitHub mirror before starting implementation. Verify the integration's link and the target issue; do not create a second issue while an automatic mirror is pending. At actual start, blockage, pause/handoff and verified delivery, update both trackers and the canonical Markdown timeline with the task's Amp thread, bounded scope/owner, actual activity, evidence and remaining whole-issue acceptance. Verify mirrored comments instead of double-posting. An audit remains read-only. Preserve other active slices when changing shared issue state, and never close a whole issue for partial delivery.
+
+For mapped repositories, set `sync.values.TASK_LINEAR_PREFIX` in the local section of `.github/smartcloud.yml` to the verified uppercase Linear team key. Its default is `none`, which preserves existing commit behavior for repositories without Linear mappings. The normal accepted house sync renders this value into `tools/dev/commit-check-linear-prefix.txt`, read as data by `tools/dev/commit-check.mjs`; configuration is never inserted into executable JavaScript. Merely setting the value does not activate an older checker. Sync both files together; a missing data file fails closed. Do not copy an unaccepted upstream checker into a downstream managed file. No new dependency, network call or environment variable is involved.
+
+With the verified Eventiva team key, the configuration is:
+
+```yaml
+sync:
+  values:
+    TASK_LINEAR_PREFIX: EVE
+```
+
+Then every ordinary task commit, including generated docs/graph commits, needs the owning `EVE-N` and a qualified GitHub issue reference. For this rollout the verified non-closing reference is `Refs: EVE-266, Resnovas/Eventiva#1053`. A full `https://github.com/Resnovas/Eventiva/issues/1053` URL also works; a bare `#1053`, a pull request URL, an unrelated prefix or references only in git comments/verbose diff do not. Existing git-generated merge/revert/fixup/squash handling, signing, attribution and staged-text checks are unchanged. The hook checks syntax only: it cannot prove the pair is linked, trackers were updated or whole-issue acceptance passed. Agents must verify that evidence even in repositories without the opt-in.
+
+If a commit fails the paired-reference check, resolve and cite the real mapping; do not insert example IDs or disable checks. An invalid configured prefix fails explicitly. If access or mapping is missing, record the exact pending update and report it promptly. Normal human acceptance, draft pull requests and downstream sync still apply. The cross-repository rollout is tracked on [EVE-266](https://linear.app/resnovas/issue/EVE-266), [Eventiva#1053](https://github.com/Resnovas/Eventiva/issues/1053) and the [canonical Eventiva timeline](https://github.com/Resnovas/Eventiva/blob/main/docs/planning/timeline.md); proposed house source is not accepted downstream behavior.
+
 ## <a id="tools"></a>Repository tools
 
 Plain scripts every repository runs the same way, synced whole. They need only Node and the house stack (Nx, Vitest, Mintlify); none carries a licence header, because the sync would overwrite it, and each starts with a "Synced from" line so the header check skips it. Wire them up as package scripts with these names, so the editor tasks, the docs and the agents find them:
 
 | File | Package script | What it does |
 | --- | --- | --- |
+| `tools/dev/commit-check-linear-prefix.txt` | none (commit-hook data) | The rendered `TASK_LINEAR_PREFIX` value, default `none`. The hook reads and validates this plaintext rather than executing it; quotes, backticks and embedded newlines are rejected as invalid prefixes. Delivered with `tools/dev/commit-check.mjs` through normal house sync. |
 | `tools/license/check-headers.mjs`, `tools/license/header.txt` | `headers`, `headers:fix` (`--fix`) | Every source file (`.ts`, `.tsx`, `.js`, `.mjs`, `.cjs` and their variants) starts with the FCL-1.0-MIT header from `header.txt`, with its own path in the `@file` line and the current year in the copyright line. `headers` fails on a missing or outdated header; `headers:fix` writes it. Each January the check fails until `headers:fix` has moved every file to the new year: one commit, then green. Generated and vendored directories, `.d.ts` files and synced files are skipped; a repository lists further paths in `tools/license/ignore`, one regular expression a line. Run `headers` from `check`. |
 | `tools/ci/coverage-goal.ts` | none (a Vitest reporter) | Warns, as a CI annotation, when a test project covers less than the goal (100%) while still passing the enforced minimum ({{COVERAGE_MIN}}%), so a gap is never silent. Add it to the reporters in the shared Vitest config. |
 | `tools/ci/flaky-tests.ts` | none (a Vitest reporter) | Reports every test that failed and then passed on a retry, as an annotation and a job summary table, so a retry never hides a flaky test. |
