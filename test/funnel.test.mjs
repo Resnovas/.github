@@ -17,7 +17,7 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { execFileSync, spawnSync } from 'node:child_process'
-import { mkdirSync, mkdtempSync, readFileSync, writeFileSync, copyFileSync, statSync, utimesSync } from 'node:fs'
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync, copyFileSync, statSync, utimesSync, openSync, fstatSync, closeSync } from 'node:fs'
 import { resolve, join } from 'node:path'
 import { installPreCommit, runPreCommit } from '../templates/tools/dev/pre-commit.mjs'
 import { checkDocs } from '../templates/tools/verification/docs-budget.mjs'
@@ -93,17 +93,26 @@ test('explicit native composition preserves the owned hook and executes its pack
   installPreCommit(root, false, native)
   const path = join(root, '.git/hooks/pre-commit')
   const expected = '#!/bin/sh\n# smartcloud-funnel pre-commit\nexec node --run funnel:pre-commit\n'
-  assert.equal(readFileSync(path, 'utf8'), expected)
+  // Inspect bytes and metadata through one descriptor, not a path checked earlier.
+  const inspect = () => {
+    const descriptor = openSync(path, 'r')
+    try {
+      return { text: readFileSync(descriptor, 'utf8'), modified: fstatSync(descriptor).mtimeMs }
+    } finally {
+      closeSync(descriptor)
+    }
+  }
+  assert.equal(inspect().text, expected)
   utimesSync(path, 946684800, 946684800)
   installPreCommit(root, false, native)
-  assert.equal(statSync(path).mtimeMs, 946684800000)
+  assert.deepEqual(inspect(), { text: expected, modified: 946684800000 })
   mkdirSync(join(root, '.agents/prompts'), { recursive: true })
   mkdirSync(join(root, 'tools/dev'), { recursive: true })
   for (const file of ['surfaces.mjs', 'pre-commit.mjs']) copyFileSync(resolve('templates/tools/dev', file), join(root, 'tools/dev', file))
   writeFileSync(join(root, '.agents/surfaces.jsonc'), JSON.stringify({ repository: 'synthetic/native', preCommit: native }))
   const setup = () => execFileSync(process.execPath, ['tools/dev/surfaces.mjs', 'install', '--dry-run'], { cwd: root, encoding: 'utf8' })
   assert.match(setup(), /Pre-commit hook: already installed/)
-  assert.equal(statSync(path).mtimeMs, 946684800000)
+  assert.deepEqual(inspect(), { text: expected, modified: 946684800000 })
   git(root, 'add', '.')
   git(root, 'commit', '-qm', 'native fixture')
   assert.equal(readFileSync(join(root, 'events'), 'utf8'), 'static\naffected\n')
@@ -117,7 +126,7 @@ test('explicit native composition preserves the owned hook and executes its pack
   writeFileSync(join(root, 'package.json'), JSON.stringify({ scripts }))
   assert.throws(() => installPreCommit(root, false, native), /Define package script/)
   assert.throws(setup, /Define package script/)
-  assert.equal(readFileSync(path, 'utf8'), expected)
+  assert.deepEqual(inspect(), { text: expected, modified: 946684800000 })
 })
 
 test('staged test selection follows source owners without collecting full verification evidence', () => {
