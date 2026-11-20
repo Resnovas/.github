@@ -76,6 +76,7 @@ function emit(row) {
  */
 export function startChild(command, args, options) {
   if (options.signal?.aborted) throw new Error('Child launch aborted before spawn.')
+  if ('shell' in options) throw new TypeError('Shell options are forbidden; pass an executable and an argument array, never a command string.')
   const { budgetMs, ordinal = 1, cwd, env = process.env, input, ipc = false,
     journal = false, maxBuffer = 65536, inheritOutput = false } = options
   if (!Number.isSafeInteger(budgetMs) || budgetMs <= 0 || !Number.isSafeInteger(ordinal) || ordinal <= 0 ||
@@ -101,7 +102,7 @@ export function startChild(command, args, options) {
   const stdio = ['pipe', 'pipe', 'pipe', ...(journal ? ['pipe'] : []), ...(ipc ? ['ipc'] : [])]
   // POSIX descendants inherit this owned group, even after its leader exits.
   const grouped = process.platform !== 'win32'
-  const child = spawn(command, args, { cwd, env, stdio, detached: grouped })
+  const child = spawn(command, args, { cwd, env, stdio, detached: grouped, shell: false })
   let stdout = ''
   let stderr = ''
   let diagnostic = ''

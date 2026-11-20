@@ -52,6 +52,8 @@ export interface ChildResult {
 /** Explicit child lifetime and stream policy; there is deliberately no timing-disable option. */
 export interface ChildOptions {
   readonly budgetMs: number
+  /** Shell interpretation is forbidden, including an explicit false or inherited runtime option. */
+  readonly shell?: never
   readonly ordinal?: number
   readonly cwd?: string
   readonly env?: Readonly<Record<string, string | undefined>>

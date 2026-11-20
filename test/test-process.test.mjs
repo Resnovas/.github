@@ -36,6 +36,39 @@ test('serial admission rejects the original pair and accepts measured and nearby
   assert.throws(() => startChild(process.execPath, [], { budgetMs: 0 }), /positive integer child budget/)
 })
 
+test('shell options are refused before any child can spawn', (t) => {
+  const spawn = t.mock.method(childProcess, 'spawn', () => assert.fail('Shell option reached spawn'))
+  syncBuiltinESMExports()
+  try {
+    for (const launch of [runChild, startChild]) {
+      for (const shell of [true, false, undefined, 'cmd.exe']) {
+        assert.throws(() => launch(process.execPath, [], { budgetMs: 1000, shell }), /Shell options are forbidden.*argument array/)
+      }
+      assert.throws(() => launch(process.execPath, [], Object.assign(Object.create({ shell: false }), { budgetMs: 1000 })), /Shell options are forbidden/)
+    }
+    assert.equal(spawn.mock.callCount(), 0)
+  } finally {
+    spawn.mock.restore()
+    syncBuiltinESMExports()
+  }
+})
+
+test('arguments remain literal across metacharacters and paths containing spaces', { timeout: 3000 }, async (t) => {
+  const backup = resolve('.amp/in/orb-backup')
+  mkdirSync(backup, { recursive: true })
+  const root = mkdtempSync(join(backup, 'argument path '))
+  t.after(() => rmSync(root, { recursive: true, force: true }))
+  const script = join(root, 'argument probe.cjs')
+  writeFileSync(script, 'process.stdout.write(JSON.stringify({ args: process.argv.slice(2), cwd: process.cwd() }))')
+  const args = ['two words', '"double quotes"', "single'quote", ';', '$VAR', '&&', '|', 'a;b', 'x&&y', 'x|y', 'back\\slash']
+  const result = await runChild(process.execPath, [script, ...args], {
+    budgetMs: 1000, cwd: root, env: { ...process.env, VAR: 'MUST_NOT_EXPAND' },
+  })
+  assert.equal(result.error, undefined)
+  assert.equal(result.status, 0)
+  assert.deepEqual(JSON.parse(result.stdout), { args, cwd: root })
+})
+
 test('the dependency-free consumer preserves UTF-8, output, exit and mandatory closed timing', { timeout: 3000 }, async (t) => {
   const records = []
   t.mock.method(process.stderr, 'write', (chunk) => { records.push(JSON.parse(String(chunk))); return true })
@@ -111,11 +144,14 @@ test('deadline and output limits terminate real children instead of stranding th
     { budgetMs: 1000, maxBuffer: 32 })
   assert.equal(noisy.error.code, 'ENOBUFS')
   assert.equal(noisy.stdout, '')
-  const missing = await runChild('eventiva-test-intentionally-missing-executable', [], { budgetMs: 1000 })
+  // A missing cwd exercises an actual OS launch failure even where non-Node roots are refused.
+  const missing = await runChild(process.execPath, [], {
+    budgetMs: 1000, cwd: join(dirname(fileURLToPath(import.meta.url)), 'intentionally-missing-directory'),
+  })
   assert.equal(missing.error.code, 'ENOENT')
 })
 
-test('a descendant holding output cannot extend the 150 ms child deadline', { timeout: 3000 }, async () => {
+test('the 150 ms deadline bounds actual close even when startup has not finished', { timeout: 3000 }, async () => {
   const result = await runChild(process.execPath, ['--eval', `
     const { spawn } = require('node:child_process');
     const descendant = spawn(process.execPath, ['--eval', 'setTimeout(() => {}, 1800)'], {
@@ -124,7 +160,7 @@ test('a descendant holding output cannot extend the 150 ms child deadline', { ti
     console.log('descendant:' + descendant.pid);
     setInterval(() => {}, 1000);
   `], { budgetMs: 150 })
-  assert.match(result.stdout, /descendant:\d+/)
+  // A wall deadline promises expiry, not bootstrap readiness; the 1000 ms scenarios below require the PID.
   assert.equal(result.error.code, 'ETIMEDOUT')
   assert.equal(result.timings.at(-1).phase, 'total')
   // A generous scheduling tolerance still rejects waiting for the descendant's 1800 ms timer.
@@ -206,6 +242,7 @@ for (const mode of ['deadline', 'cancel', 'abort', 'exit-first', 'no-pipes', 'no
       await within(owner.cancel(), 500)
     })
     assert.equal((await within(ready, 700)).ready, true)
+    assert.ok(Number.isSafeInteger(descendantPid) && descendantPid > 0)
     const close = once(owner.child, 'close')
     if (mode === 'cancel') await within(owner.cancel(), 700)
     if (mode === 'abort') controller.abort()
