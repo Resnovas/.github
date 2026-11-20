@@ -52,6 +52,7 @@ tools/release/
 docs/house-funnel.md
 tools/dev/pre-commit.mjs
 tools/lint/funnel.mjs
+tools/lint/react.mjs
 tools/verification/
 tools/ci/coverage-goal.ts
 tools/ci/flaky-tests.ts

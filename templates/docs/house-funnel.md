@@ -34,6 +34,30 @@ export default [
 ]
 ```
 
+## Opt into React ownership checks
+
+React repositories can import `reactLifecycle` and `reactUiTimers` from `tools/lint/react.mjs`. Neither is enabled by the base funnel config. They require no new dependency; keep the existing ESLint parser. Both sets use error severity and leave file selection to the caller. The timer rule takes no options; retain the supplied lifecycle options when composing existing rules.
+
+`reactLifecycle` preserves Eventiva's bootstrap/event-owner correction: reject `useEffect` imports and re-exports, default/namespace React imports, literal dynamic React imports and literal CommonJS React loading. Other named React imports remain allowed. Apply it across editable active sources, including backend/runtime/tests as Eventiva does, rather than only components. It does not follow aliases of loaders or computed module names.
+
+`reactUiTimers` enables `house-react/no-zero-delay-ui-timer` only on the UI globs you select. It rejects global `setTimeout` with omitted or literal zero delay, including `+0`/`-0`, optional calls and literal `globalThis`/`window`/`self` members. Genuine delays, local shadows and spread arguments remain allowed; aliases and dynamic delays are not evaluated. Fix state ownership instead of changing zero to one; use scoped Effect scheduling for genuinely timed work. The messages are preserved verbatim from [Eventiva's source revision](https://github.com/Resnovas/Eventiva/commit/9e379bf6a5c6629752d14e822dd673ae51894c81).
+
+For a config without overlapping restriction rules, append these entries after its parser:
+
+```js
+import { reactLifecycle, reactUiTimers } from './tools/lint/react.mjs'
+
+export default [
+  ...existingConfig,
+  { ...reactLifecycle, files: ['**/*.{ts,tsx,mts,js,mjs}'] },
+  { ...reactUiTimers, files: ['apps/client/**/*.{ts,tsx}', 'packages/ui-modules/src/**/*.{ts,tsx}'] },
+]
+```
+
+When a repository already configures `no-restricted-imports`, `no-restricted-modules` or `no-restricted-syntax`, compose their options explicitly: flat config replaces arrays, it does not concatenate them. At every overriding scope, retain local `paths`/`patterns` and append `reactLifecycle.rules['no-restricted-imports'][1].paths` (or the equivalent modules paths); prepend `reactLifecycle.rules['no-restricted-syntax'].slice(1)` to its existing syntax selectors. For example, package export scopes must keep the dynamic-import selector alongside their `ExportAllDeclaration` restriction. A later severity-only setting is not a substitute for combining options. Keep Nx, React Hooks, localization, portability and other existing rules and exclusions unchanged.
+
+Eventiva must retain its current active-source and UI globs, including repeated portable/runtime import restrictions. Replace the local timer plugin only after the shared revision is accepted and synced; retain the real-config boundary suite, updating only the timer rule ID to `house-react/no-zero-delay-ui-timer`. Run passing/failing probes for imports, re-exports, loaders, timers, lexical shadows, server timer controls and package barrels before removing the local copy. `test/funnel-lint.test.mjs` exercises shared policy and composition; it is not proof of downstream adoption.
+
 ## Source documentation contracts
 
 Every editable TypeScript function, method, class, interface and type alias needs useful JSDoc explaining its contract, purpose and important constraints. Apply `contracts` only to the repository's editable sources, preserving its reviewed vendored, generated and immutable historical exclusions. Extend discovered-config fixtures to prove ordinary sources are checked and those existing exclusions stay excluded; never grow exclusions to obtain a passing gate.
