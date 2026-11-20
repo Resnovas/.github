@@ -229,6 +229,12 @@ test('workflow trust contract uses completion, trusted house code and only scope
   const workflow = readFileSync(new URL('../.github/workflows/codeql-alert-comment.yml', import.meta.url), 'utf8')
   assert.match(caller, /workflow_run:\n    workflows: \[House CodeQL\]\n    types: \[completed\]/)
   assert.match(caller, /uses: Resnovas\/\.github\/\.github\/workflows\/codeql-alert-comment.yml@[a-f0-9]{40} /)
+  const pin = caller.match(/codeql-alert-comment.yml@([a-f0-9]{40}) /)[1]
+  // A feature-branch SHA can disappear from GitHub's history after squash merge.
+  // CI fetches full history; require the implementation to be published first.
+  assert.doesNotThrow(() => execFileSync('git', ['merge-base', '--is-ancestor', pin, 'refs/remotes/origin/main'], {
+    cwd: new URL('..', import.meta.url), stdio: 'pipe',
+  }), 'The CodeQL commenter pin must be an ancestor of published origin/main')
   assert.match(workflow, /repository: Resnovas\/\.github\n          ref: main\n          persist-credentials: false/)
   assert.match(workflow, /GH_TOKEN: \$\{\{ github.token \}\}/)
   assert.deepEqual(workflow.split('\n').filter((line) => /^      [\w-]+: (read|write)$/.test(line)).map((line) => line.trim()), ['actions: read', 'contents: read', 'security-events: read', 'pull-requests: write'])
