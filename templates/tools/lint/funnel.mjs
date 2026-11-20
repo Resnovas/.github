@@ -2,10 +2,12 @@
 import jsdoc from 'eslint-plugin-jsdoc'
 import { readFileSync } from 'node:fs'
 import { relative, resolve, sep } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { headerFor } from '../license/check-headers.mjs'
 
 const message = 'Do not assert that source code, a symbol or a source file is absent. Execute the affected public path and assert its observable behavior instead; retain legitimate output, redaction and UI absence assertions.'
 const property = (node) => node?.type === 'MemberExpression' ? (node.computed ? node.property.value : node.property.name) : undefined
+const repositoryRoot = fileURLToPath(new URL('../../', import.meta.url))
 
 /** Delegate prose checks unchanged except for reports inside the exact licence header required by the repository. */
 const withLicenceHeader = (rule) => ({
@@ -14,8 +16,8 @@ const withLicenceHeader = (rule) => ({
     const text = context.sourceCode.text.replaceAll('\r\n', '\n')
     const offset = text.startsWith('#!') ? text.indexOf('\n') + 1 : 0
     if (!text.slice(offset).startsWith('/**\n * @file ')) return rule.create(context)
-    const file = relative(context.cwd, resolve(context.cwd, context.filename)).split(sep).join('/')
-    const header = headerFor(readFileSync(resolve(context.cwd, 'tools/license/header.txt'), 'utf8'), file, String(new Date().getFullYear()))
+    const file = relative(repositoryRoot, resolve(context.cwd, context.filename)).split(sep).join('/')
+    const header = headerFor(readFileSync(new URL('../license/header.txt', import.meta.url), 'utf8'), file, String(new Date().getFullYear()))
     if (!text.slice(offset).startsWith(`${header}\n`)) return rule.create(context)
     const firstLine = offset ? 2 : 1
     const lastLine = firstLine + header.split('\n').length - 1
