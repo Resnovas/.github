@@ -1,8 +1,33 @@
 // Synced from Resnovas/.github templates/tools/lint/funnel.mjs. Edit it there.
 import jsdoc from 'eslint-plugin-jsdoc'
+import { readFileSync } from 'node:fs'
+import { relative, resolve, sep } from 'node:path'
+import { headerFor } from '../license/check-headers.mjs'
 
 const message = 'Do not assert that source code, a symbol or a source file is absent. Execute the affected public path and assert its observable behavior instead; retain legitimate output, redaction and UI absence assertions.'
 const property = (node) => node?.type === 'MemberExpression' ? (node.computed ? node.property.value : node.property.name) : undefined
+
+/** Delegate prose checks unchanged except for reports inside the exact licence header required by the repository. */
+const withLicenceHeader = (rule) => ({
+  ...rule,
+  create(context) {
+    const text = context.sourceCode.text.replaceAll('\r\n', '\n')
+    const offset = text.startsWith('#!') ? text.indexOf('\n') + 1 : 0
+    if (!text.slice(offset).startsWith('/**\n * @file ')) return rule.create(context)
+    const file = relative(context.cwd, resolve(context.cwd, context.filename)).split(sep).join('/')
+    const header = headerFor(readFileSync(resolve(context.cwd, 'tools/license/header.txt'), 'utf8'), file, String(new Date().getFullYear()))
+    if (!text.slice(offset).startsWith(`${header}\n`)) return rule.create(context)
+    const firstLine = offset ? 2 : 1
+    const lastLine = firstLine + header.split('\n').length - 1
+    return rule.create(Object.create(context, {
+      report: { value(descriptor) {
+        const line = descriptor.loc?.start?.line ?? descriptor.loc?.line ?? descriptor.node?.loc?.start?.line
+        if (line >= firstLine && line <= lastLine) return
+        context.report(descriptor)
+      } },
+    }))
+  },
+})
 
 /** Follow local initializer provenance, not variable spelling, to distinguish source inspection from runtime output. */
 export const noSourceAbsence = {
@@ -83,9 +108,15 @@ export const noSourceAbsence = {
   },
 }
 
+const house = { rules: {
+  'no-source-absence': noSourceAbsence,
+  'require-description': withLicenceHeader(jsdoc.rules['require-description']),
+  'match-description': withLicenceHeader(jsdoc.rules['match-description']),
+} }
+
 /** Shared additive rules: callers retain their parser, boundaries, declaration contracts and rationale checks. */
 export const funnel = {
-  plugins: { jsdoc, house: { rules: { 'no-source-absence': noSourceAbsence } } },
+  plugins: { jsdoc, house },
   rules: {
     'house/no-source-absence': 'error',
     'jsdoc/informative-docs': ['error', { aliases: { run: ['runs', 'running'], main: ['entry', 'point'] } }],
@@ -94,7 +125,7 @@ export const funnel = {
 
 /** Apply to editable production TypeScript, alongside the repository's existing TypeScript parser. */
 export const contracts = {
-  plugins: { jsdoc },
+  plugins: { jsdoc, house },
   settings: { jsdoc: { mode: 'typescript' } },
   rules: {
     'jsdoc/require-jsdoc': ['error', {
@@ -105,7 +136,10 @@ export const contracts = {
       exemptEmptyConstructors: false,
       exemptEmptyFunctions: false,
     }],
-    'jsdoc/require-description': ['error', { contexts: ['any'] }],
+    // Replace only these two vendor rules with licence-aware delegates; never exempt declarations or whole files.
+    'jsdoc/require-description': 'off',
+    'jsdoc/match-description': 'off',
+    'house/require-description': ['error', { contexts: ['any'] }],
     'jsdoc/informative-docs': funnel.rules['jsdoc/informative-docs'],
     'jsdoc/no-blank-block-descriptions': 'error',
     'jsdoc/require-param': 'error',
@@ -122,7 +156,7 @@ export const contracts = {
     'jsdoc/check-alignment': 'error',
     'jsdoc/multiline-blocks': 'error',
     'jsdoc/tag-lines': ['error', 'never', { startLines: 1 }],
-    'jsdoc/match-description': ['error', {
+    'house/match-description': ['error', {
       contexts: ['any'],
       matchDescription: '^\\s*(?:-\\s*)?[\\p{Upper}`][\\s\\S]*[.!?]\\s*$',
       tags: { param: true, returns: true, throws: true, template: true },
