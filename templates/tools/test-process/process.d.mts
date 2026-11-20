@@ -23,6 +23,7 @@ export const terminationGraceMs: 100
 /** Synchronous pre-spawn rejection of a Windows root other than process.execPath. */
 export class UnsupportedChildRootError extends TypeError {
   readonly code: 'ERR_CHILD_ROOT_UNSUPPORTED'
+  /** Explain the unsupported root without retaining its command or arguments. */
   constructor()
 }
 

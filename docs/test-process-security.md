@@ -114,11 +114,13 @@ ref/unref and IPC handle passing are not delegated. Supply stdin with `input`.
 Await `spawn` or readiness before using a delegated PID.
 
 Three regressions first fail descendant-death assertions on accepted PR74.
-Five new contracts now pass locally: live grandchildren under outer deadline,
-cancel and abort, normal command/IPC/stream completion, and failed acquisition.
+Six new contracts now pass locally: live grandchildren under outer deadline,
+cancel and abort, normal command/IPC/stream completion, failed spawn and
+synchronous acquisition rejection. A rejection without a real child settles
+the proxy with empty timings, never a fabricated child-close event.
 The producer deliberately lacks a disconnect self-kill handler. Positive
 no-business-IPC tests exposed buffered private messages during development;
-the owner now enables Node's message dispatch explicitly. All 26 process tests
+the owner now enables Node's message dispatch explicitly. All 27 process tests
 pass on Linux; every matrix OS executes these tests without skips. Hosted
 results, normal house merge and Eventiva adoption remain separate gates.
 This is a correctness change; no optimization speedup is claimed.
