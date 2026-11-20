@@ -57,8 +57,8 @@ Owner: [.github pod](https://ampcode.com/threads/T-01a1f637-2241-770e-aa29-22cf1
 
 ## EVE-261 process-lifetime follow-up
 
-- 2026-11-20T14:09:10Z: [PR74](https://github.com/Resnovas/.github/pull/74) merged as [2a47a89](https://github.com/Resnovas/.github/commit/2a47a89033aba23a6fd4dd239324a08584306739), six-lane/check/smartcloud green. Its accepted close core, not local nesting, is synced in uncommitted Eventiva work.
-- 2026-11-20, ruling time unknown: Puck assigned the [nesting correction](test-process-security.md#nested-ownership-survives-an-intermediate-process). Three PR74 regressions fail before; process26/26 passes after. Budgets/assertions and Windows B stay unchanged. Hooks, hosted matrix, merge and adoption remain pending; EVE-261/Eventiva#1035 stays open.
+- 2026-11-20: [PR74](https://github.com/Resnovas/.github/pull/74) merged14:09:10Z; accepted core synced.
+- [Nesting](test-process-security.md#nested-ownership-survives-an-intermediate-process):27/27; hook142/142. Rebased gates/merge/sync pending; EVE261 open.
 
 - 2026-11-20T13:55:16Z: PR59 merged normally as [d6daf4a](https://github.com/Resnovas/.github/commit/d6daf4af54bf195915d14ac04706aa5ea4ba3152), following fully green sourcecd1dc80. Scoped Eventiva sync exposed missing explicit `close` evidence required by its newer telemetry contracts. Puck authorized this owner's narrow canonical follow-up: emit at the actual close callback, allow safe nested forwarding and extend existing normal/no-fd3/journal/cancel/deadline matrix proofs, without lifetime or budget changes. Three focused cases fail before; local process21/21 and static checks pass after. Full hooks, exact-head hosted matrix, normal merge and downstream resync remain separate gates; EVE-261/Core stays open.
 
