@@ -148,4 +148,5 @@ jobs:
           name: house-codeql-sarif-${{ matrix.language }}
           path: ${{ steps.analyze.outputs.sarif-output }}/*.sarif
           if-no-files-found: error
+          overwrite: true
           retention-days: 7

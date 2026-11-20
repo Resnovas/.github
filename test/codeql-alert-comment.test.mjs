@@ -234,5 +234,6 @@ test('workflow trust contract uses completion, trusted house code and only scope
   assert.deepEqual(workflow.split('\n').filter((line) => /^      [\w-]+: (read|write)$/.test(line)).map((line) => line.trim()), ['actions: read', 'contents: read', 'security-events: read', 'pull-requests: write'])
   const analyzer = readFileSync(new URL('../.github/workflows/codeql.yml', import.meta.url), 'utf8')
   assert.match(analyzer, /path: \$\{\{ steps.analyze.outputs.sarif-output \}\}\/\*.sarif/)
+  assert.match(analyzer, /overwrite: true/)
   assert.match(analyzer, /retention-days: 7/)
 })
