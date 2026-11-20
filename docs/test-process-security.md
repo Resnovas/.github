@@ -154,7 +154,17 @@ See Microsoft's [nested Job contract](https://learn.microsoft.com/windows/win32/
 Local Linux proof passes 33/33 process tests, including the six native lifecycle
 cases with unchanged 1000 ms budgets, real Git byte/argv/status contracts and a
 compiler-shaped renamed executable. That executable is a transport fixture,
-not real Hermes or compiler performance evidence. Windows compilation, native
-Job behavior and both Windows Node versions remain unverified until hosted
-matrix execution. No speedup, downstream adoption or whole EVE-261 acceptance
-is claimed. No OS test is skipped and no existing threshold is lowered.
+not real Hermes or compiler performance evidence. PR78 head `3a8b48d` compiled
+on Windows24/current but failed eight native tests and reached the 10-minute
+job limit. Git produced output at64-97 ms but exit appeared only at its deadline.
+Linux/macOS passed on both Node versions; this is not all-OS qualification.
+
+The private client now requests `PipeOptions.Asynchronous`: a pending control
+read must not serialize exit/empty writes on the same Windows pipe handle.
+Microsoft documents [overlapped pipe I/O](https://learn.microsoft.com/windows/win32/ipc/synchronous-and-overlapped-input-and-output)
+as the way to read and write simultaneously. This is a focused correction to
+the observed deadlock hypothesis; only new Windows execution can confirm it.
+The existing natural Git/compiler and lifecycle assertions remain its regression
+controls, with no budget, readiness allowance or threshold increase.
+The local corrected full gate passes153/153; Windows requalification is pending.
+No speedup, downstream adoption or whole EVE-261 acceptance is claimed.

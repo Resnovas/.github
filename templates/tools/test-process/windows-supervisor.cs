@@ -223,7 +223,10 @@ internal static class WindowsSupervisor
     {
         if (arguments.Length != 1) return 1;
         JavaScriptSerializer json = new JavaScriptSerializer();
-        using (NamedPipeClientStream pipe = new NamedPipeClientStream(".", arguments[0], PipeDirection.InOut))
+        // The control thread keeps a read pending while this thread publishes
+        // exit/empty. A synchronous Windows pipe handle serializes those I/O
+        // operations, leaving a natural exit blocked until cancellation input.
+        using (NamedPipeClientStream pipe = new NamedPipeClientStream(".", arguments[0], PipeDirection.InOut, PipeOptions.Asynchronous))
         {
             pipe.Connect();
             StreamReader reader = new StreamReader(pipe, new UTF8Encoding(false));
