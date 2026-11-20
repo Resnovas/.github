@@ -23,7 +23,7 @@ import { validateEvidence } from '../tools/verification/evidence.mjs'
 const git = (...args) => execFileSync('git', args, { encoding: 'utf8' }).trim()
 const markdown = readFileSync('docs/verification.md', 'utf8')
 const entries = parseRegistry(markdown)
-const inventory = ['tools/dev/pre-commit.mjs', 'tools/lint/funnel.mjs', ...readdirSync('tools/verification').filter((name) => name.endsWith('.mjs')).map((name) => `tools/verification/${name}`)]
+const inventory = ['tools/dev/pre-commit.mjs', ...['tools/lint', 'tools/verification'].flatMap((directory) => readdirSync(directory).filter((name) => name.endsWith('.mjs')).map((name) => `${directory}/${name}`))]
 checkCoverage(entries, inventory)
 const mode = process.argv[2]
 if (mode === 'registry') {

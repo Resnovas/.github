@@ -21,6 +21,7 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'nod
 import { dirname, join, resolve } from 'node:path'
 import { ESLint, Linter } from 'eslint'
 import { funnel, contracts } from '../tools/lint/funnel.mjs'
+import { reactLifecycle, reactUiTimers } from '../tools/lint/react.mjs'
 import { headerFor } from '../templates/tools/license/check-headers.mjs'
 import { renderAll } from '../scripts/lib/render.mjs'
 import { loadValues } from '../scripts/lib/values.mjs'
@@ -42,6 +43,85 @@ const parser = {
 }
 const lintContract = (code, { cwd = process.cwd(), filename = 'contract.js' } = {}) => new Linter({ cwd }).verify(code, [{ ...contracts, languageOptions: { parser, sourceType: 'module' } }], { filename })
 const documented = (description, tags, declaration) => `/**\n * ${description}\n${tags ? ` *\n${tags.split('\n').map((line) => ` * ${line}`).join('\n')}\n` : ''} */\n${declaration}`
+
+test('opt-in React lint preserves corrective lifecycle and lexical timer contracts', () => {
+  const lifecycleMessage = 'Initialize app-owned services in bootstrap before rendering product content. Derive render state or update its owner from events; use named React imports, never useEffect.'
+  const timerMessage = 'Do not defer UI state with a zero-delay timer. Keep state in one owner and update it from the event; use scoped Effect scheduling for genuine timed work.'
+  for (const [code, ruleId] of [
+    ["import { useEffect } from 'react'", 'no-restricted-imports'],
+    ["import { useEffect as effect } from 'react'", 'no-restricted-imports'],
+    ["export { useEffect } from 'react'", 'no-restricted-imports'],
+    ["export * from 'react'", 'no-restricted-imports'],
+    ["import * as React from 'react'; React.useEffect(work)", 'no-restricted-imports'],
+    ["import React from 'react'; React.useEffect(work)", 'no-restricted-imports'],
+    ["import('react')", 'no-restricted-syntax'],
+    ["const React = require('react')", 'no-restricted-modules'],
+  ]) {
+    const messages = lint(code, reactLifecycle)
+    assert.ok(messages.some((item) => item.ruleId === ruleId && item.severity === 2 && item.message.endsWith(lifecycleMessage)), JSON.stringify({ code, messages }))
+    assert.deepEqual(lint(code), [], 'the base set must remain opt-in')
+  }
+  for (const code of [
+    "import { useState, useSyncExternalStore, createElement } from 'react'",
+    "import { useEffect } from './owned.js'",
+    "import('./owned.js')",
+    "const owned = require('./owned.js')",
+  ]) assert.deepEqual(lint(code, reactLifecycle), [], code)
+
+  for (const code of [
+    'setTimeout(done, 0)', 'setTimeout(done)', 'setTimeout(done, -0, value)',
+    'globalThis.setTimeout(done, 0)', 'window["setTimeout"](done, 0)',
+    'self.setTimeout(done, -0)', 'globalThis.setTimeout?.(done, +0)',
+    'window?.setTimeout(done, 0)', 'setTimeout?.(done, 0)',
+  ]) {
+    const messages = lint(code, reactUiTimers)
+    assert.deepEqual(messages.map(({ ruleId, message, severity }) => ({ ruleId, message, severity })), [{ ruleId: 'house-react/no-zero-delay-ui-timer', message: timerMessage, severity: 2 }], code)
+    assert.deepEqual(lint(code), [], 'the base set must not activate UI timer policy')
+  }
+  for (const code of [
+    'setTimeout(done, 25)', 'window.setTimeout(done, 25)', 'setTimeout(done, delay)',
+    'setTimeout(...args)', 'setTimeout(done, 0, ...args)', 'setTimeout()', 'updateOwner(value)',
+    'function run(setTimeout) { setTimeout(done, 0) }',
+    'function run(window) { window.setTimeout(done, 0) }',
+    'const self = owned; function run() { self.setTimeout(done, 0) }',
+    'const globalThis = owned; globalThis.setTimeout(done, 0)',
+    'scheduler.setTimeout(done, 0)', 'window[method](done, 0)',
+  ]) assert.deepEqual(lint(code, reactUiTimers), [], code)
+})
+
+test('React opt-in composition retains consumer restrictions and UI-only timer scope', () => {
+  const lifecycle = reactLifecycle.rules
+  const config = [
+    { files: ['**/*.{ts,tsx,mts,js,mjs}'], languageOptions: { parser }, rules: {
+      ...lifecycle,
+      'no-restricted-imports': ['error', { ...lifecycle['no-restricted-imports'][1], paths: [
+        ...lifecycle['no-restricted-imports'][1].paths,
+        { name: 'zod', message: 'Use effect/Schema.' },
+      ], patterns: [{ group: ['node:*'], message: 'Take platform services from the caller.' }] }],
+    } },
+    { files: ['packages/**/src/**/*.ts'], rules: {
+      'no-restricted-syntax': [...lifecycle['no-restricted-syntax'], { selector: 'ExportAllDeclaration', message: 'No barrels: export each name explicitly.' }],
+    } },
+    { ...reactUiTimers, files: ['apps/client/**/*.tsx', 'apps/client/**/*.ts', 'packages/ui-modules/src/**/*.{ts,tsx}'] },
+  ]
+  const check = (code, filename) => new Linter().verify(code, config, { filename })
+  for (const path of ['apps/client/view.tsx', 'packages/ui-modules/src/view.ts', 'apps/server/main.ts', 'packages/runtime/src/main.ts', 'tests/probe.mts']) {
+    for (const [code, ruleId, message] of [
+      ["import { useEffect } from 'react'", 'no-restricted-imports', 'use named React imports, never useEffect.'],
+      ["import('react')", 'no-restricted-syntax', 'use named React imports, never useEffect.'],
+      ["const React = require('react')", 'no-restricted-modules', 'use named React imports, never useEffect.'],
+      ["import z from 'zod'", 'no-restricted-imports', 'Use effect/Schema.'],
+      ["import fs from 'node:fs'", 'no-restricted-imports', 'Take platform services from the caller.'],
+    ]) assert.ok(check(code, path).some((item) => item.ruleId === ruleId && item.message.endsWith(message)), `${path}: ${code}`)
+    assert.deepEqual(check("import { useSyncExternalStore } from 'react'", path), [], path)
+  }
+  for (const path of ['apps/client/view.tsx', 'packages/ui-modules/src/view.ts']) {
+    assert.deepEqual(check('setTimeout(done, 0)', path).map((item) => item.ruleId), ['house-react/no-zero-delay-ui-timer'])
+    assert.deepEqual(check('setTimeout(done, 25)', path), [])
+  }
+  assert.deepEqual(check('setTimeout(done, 0)', 'apps/server/main.ts'), [])
+  assert.deepEqual(check("export * from './owned.js'", 'packages/ui-modules/src/view.ts').map((item) => item.message), ['No barrels: export each name explicitly.'])
+})
 
 test('source-absence lint rejects source inspections while allowing behavior and redaction assertions', () => {
   const invalid = [

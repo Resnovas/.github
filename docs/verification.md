@@ -11,6 +11,7 @@ Use disposable Git repositories, synthetic JSON and lint snippets. Execute the c
   "interfaces": [
     "tools/dev/pre-commit.mjs",
     "tools/lint/funnel.mjs",
+    "tools/lint/react.mjs",
     "tools/verification/build-info.mjs",
     "tools/verification/docs-budget.mjs",
     "tools/verification/evidence.mjs",
@@ -28,7 +29,9 @@ Use disposable Git repositories, synthetic JSON and lint snippets. Execute the c
     "source-absence lint rejects source inspections while allowing behavior and redaction assertions",
     "JSDoc rejects name restatements and missing contracts while accepting purpose and constraints",
     "the repository config applies shared policies to test and lint-tool scopes",
-    "rendered Node consumers exempt canonical headers across JSDoc rules without exempting declarations"
+    "rendered Node consumers exempt canonical headers across JSDoc rules without exempting declarations",
+    "opt-in React lint preserves corrective lifecycle and lexical timer contracts",
+    "React opt-in composition retains consumer restrictions and UI-only timer scope"
   ],
   "evidence": ["log"]
 }
