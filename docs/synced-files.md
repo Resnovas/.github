@@ -185,7 +185,7 @@ Timing goes to stderr, preserving JSON stdout. Records contain only `code`, chil
 
 POSIX launches own an isolated group. Deadline/output-limit/cancel and normal leader exit signal remaining members; escalation survives leader close. Results preserve the leader's status/signal and await actual descriptors plus escalation. Deliberately detached groups are excluded.
 
-Windows still signals only the direct PID: inherited descendants can defeat deadline/cancel. Live-root `taskkill /T` cannot prove exited-root cleanup. Native Job/supervisor adoption needs an explicit decision. PR59 stays draft and downstream migration held; all six OS/Node jobs run the unskipped regressions.
+Windows Node-parent cases use libuv's existing Job cleanup, not arbitrary native-root ownership. Native shell-root regressions run on all six OS/Node jobs. No new Job/supervisor is adopted. PR59 stays draft pending portable proof and human acceptance; downstream migration remains held.
 
 The previously unbounded typecheck launcher now declares 120000 ms for its build and 60000 ms per compiler, deriving its whole-command cancellation budget from that vector plus cleanup and reporting headroom. The editor launcher declares 600000 ms because it can select a complete project; Vitest's existing per-test deadlines and the editor's existing coverage-off behavior remain unchanged. These are new safety ceilings, not claims that every repository completes at those limits. A slow/flooded child reports its phase: shorten its work or escalate a genuinely inadequate task budget rather than suppress timing.
 

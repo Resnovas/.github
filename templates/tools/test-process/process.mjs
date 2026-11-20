@@ -59,7 +59,7 @@ function emit(row) {
 /**
  * Start one bounded child with mandatory timing, bounded streams and optional IPC/journal descriptors.
  * The returned owner retains cancellation until actual close; callers must await completed or cancel().
- * POSIX signals target the owned process group; Windows currently owns only the direct PID.
+ * POSIX signals target the owned group; Windows Node children also use libuv's existing Job cleanup.
  * Descendants that deliberately create another POSIX session/group are outside this ownership boundary.
  * No option disables timing. Command, environment, stream and IPC payloads are never logged as timing.
  * Optimization evidence: real-child output/IPC/abort proofs took 73.52/42.95/45.11 ms; one owner avoids a second polling runner.
@@ -218,7 +218,7 @@ export function startChild(command, args, options) {
   })
   /**
    * Cancellation awaits actual pipes/IPC close and sends SIGKILL to the owned group on POSIX.
-   * Windows direct-PID cancellation cannot yet bound inherited descendant descriptors.
+   * Windows Node-parent cleanup does not establish ownership for arbitrary native-root trees.
    * Linux descendant cancel/abort contracts completed in 66/66 ms; this is correctness evidence, not a speedup.
    */
   const cancel = async () => {

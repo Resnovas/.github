@@ -184,6 +184,9 @@ for (const mode of ['deadline', 'cancel', 'abort', 'exit-first', 'no-pipes', 'no
       }));
       setInterval(() => {}, 1000);
     `], { budgetMs: 1000, ipc: true, journal: true, signal: controller.signal })
+    let completed = false
+    void owner.completed.then(() => { completed = true })
+    let abortedAfterCompletion = false
     let descendantPid
     const ready = once(owner.child, 'message').then(([value]) => {
       descendantPid = value.pid
@@ -207,6 +210,8 @@ for (const mode of ['deadline', 'cancel', 'abort', 'exit-first', 'no-pipes', 'no
     if (mode === 'abort') controller.abort()
     if (mode === 'no-pipes-abort') {
       await within(close, 700)
+      abortedAfterCompletion = completed
+      if (completed) await assertStopped(descendantPid)
       controller.abort()
     }
     const result = await within(owner.completed, mode === 'deadline' ? 1500 : 700)
@@ -217,7 +222,8 @@ for (const mode of ['deadline', 'cancel', 'abort', 'exit-first', 'no-pipes', 'no
       assert.equal(result.status, 23)
       assert.equal(result.signal, null)
       assert.equal(result.error, undefined)
-      if (mode === 'no-pipes-abort') assert.ok(result.timings.some((row) => row.phase === 'cancel'))
+      if (mode === 'no-pipes-abort')
+        assert.equal(result.timings.some((row) => row.phase === 'cancel'), !abortedAfterCompletion)
     } else if (mode === 'deadline') {
       assert.equal(result.error.code, 'ETIMEDOUT')
       assert.ok(result.timings.some((row) => row.phase === 'deadline'))
@@ -234,7 +240,78 @@ for (const mode of ['deadline', 'cancel', 'abort', 'exit-first', 'no-pipes', 'no
     assert.ok(result.elapsedMs < 1600, `Actual close took ${result.elapsedMs} ms`)
     assert.equal(result.timings.at(-1).phase, 'total')
     await assertStopped(descendantPid)
-    t.diagnostic(`${process.platform}/${process.version} ${mode}: status=${status}, signal=${signal}, total=${result.elapsedMs} ms; descendant stopped`)
+    t.diagnostic(`${process.platform}/${process.version} ${mode}: status=${status}, signal=${signal}, total=${result.elapsedMs} ms; descendant stopped; abortedAfterCompletion=${abortedAfterCompletion}`)
+  })
+}
+
+for (const mode of ['deadline', 'cancel', 'exit-first']) {
+  test(`native-root descendant ownership: ${mode} retains actual close and descendant lifetime`, { timeout: 3000 }, async (t) => {
+    const backup = resolve('.amp/in/orb-backup')
+    mkdirSync(backup, { recursive: true })
+    const root = mkdtempSync(join(backup, 'native-descendant-'))
+    const leaf = join(root, 'leaf.cjs')
+    writeFileSync(leaf, `
+      process.on('SIGTERM', () => {});
+      process.stderr.write('NATIVE_DESCENDANT', () => {
+        process.stdout.write(JSON.stringify({pid: process.pid}) + '\\n', () => {
+          require('node:fs').writeFileSync(process.env.PROBE_READY, 'ready');
+        });
+      });
+      setInterval(() => {}, 1000);
+      setTimeout(() => process.exit(99), 10000);
+    `)
+    const windows = process.platform === 'win32'
+    const command = windows ? (process.env.ComSpec ?? 'cmd.exe') : '/bin/sh'
+    const invocation = windows ? '"%PROBE_NODE%" "%PROBE_FILE%"' : '"$PROBE_NODE" "$PROBE_FILE"'
+    const script = join(root, windows ? 'root.cmd' : 'root.sh')
+    writeFileSync(script, windows
+      ? (mode === 'exit-first'
+        ? `@echo off\r\nstart "" /b ${invocation}\r\n:wait\r\nif not exist "%PROBE_READY%" goto wait\r\nexit /b 23\r\n`
+        : `@echo off\r\n${invocation}\r\n`)
+      : (mode === 'exit-first'
+        ? `${invocation} &\nwhile [ ! -f "$PROBE_READY" ]; do sleep 0.01; done\nexit 23\n`
+        : `${invocation} & wait\n`))
+    const owner = startChild(command, windows ? ['/d', '/c', script] : [script], {
+      budgetMs: 1000,
+      env: { ...process.env, PROBE_NODE: process.execPath, PROBE_FILE: leaf, PROBE_READY: join(root, 'ready') },
+    })
+    let descendantPid
+    const ready = new Promise((resolveReady) => {
+      let output = ''
+      owner.child.stdout.on('data', (chunk) => {
+        output += chunk
+        if (!descendantPid && output.includes('\n')) {
+          descendantPid = JSON.parse(output.trim()).pid
+          resolveReady()
+        }
+      })
+    })
+    t.after(async () => {
+      if (windows && mode === 'exit-first' && owner.child.exitCode !== null) {
+        const probe = spawnSync('taskkill.exe', ['/PID', String(owner.child.pid), '/T', '/F'], { encoding: 'utf8', timeout: 500 })
+        t.diagnostic(`Native exited-root taskkill: status=${probe.status}; error=${probe.error?.code}; ${probe.stdout.trim()} ${probe.stderr.trim()}`)
+      }
+      for (const pid of [descendantPid, owner.child.pid]) {
+        if (!pid) continue
+        try { process.kill(pid, 'SIGKILL') } catch (failure) { if (failure.code !== 'ESRCH') throw failure }
+      }
+      await within(owner.cancel(), 500)
+      rmSync(root, { recursive: true, force: true })
+    })
+    await within(ready, 700)
+    assert.ok(Number.isSafeInteger(descendantPid) && descendantPid > 0)
+    if (mode === 'cancel') await within(owner.cancel(), 700)
+    const result = await within(owner.completed, mode === 'deadline' ? 1500 : 700)
+    if (mode === 'exit-first') {
+      assert.equal(result.status, 23)
+      assert.equal(result.signal, null)
+      assert.equal(result.error, undefined)
+    } else if (mode === 'deadline') assert.equal(result.error.code, 'ETIMEDOUT')
+    else assert.equal(result.error, undefined)
+    assert.equal(result.stderr, 'NATIVE_DESCENDANT')
+    assert.equal(result.timings.at(-1).phase, 'total')
+    await assertStopped(descendantPid)
+    t.diagnostic(`${process.platform}/${process.version} native ${mode}: status=${result.status}, signal=${result.signal}, total=${result.elapsedMs} ms; descendant stopped`)
   })
 }
 
