@@ -185,7 +185,7 @@ Timing goes to stderr, preserving JSON stdout. Records contain only `code`, chil
 
 POSIX launches own an isolated group. Deadline/output-limit/cancel and normal leader exit signal remaining members; escalation survives leader close. Results preserve the leader's status/signal and await actual descriptors plus escalation. Deliberately detached groups are excluded.
 
-At `ece7e01`, Linux/macOS pass 124/124; Windows passes 121/124, failing native shell deadline/cancel/exited-root ownership. Node-root cases pass via libuv Job cleanup. PR59 stays draft; native ownership approval and downstream adoption remain held. See [evidence](funnel-timeline.md#eve-261-process-lifetime-follow-up).
+Windows requires `process.execPath`; other commands synchronously throw exported `UnsupportedChildRootError` (`TypeError`, code `ERR_CHILD_ROOT_UNSUPPORTED`) before spawn. Use Node entry points. Node roots use libuv Job cleanup, excluding deliberate breakaway. Linux/macOS retain native roots. Approved choice B: [evidence](funnel-timeline.md#eve-261-process-lifetime-follow-up). Adoption requires green house merge and sync.
 
 The previously unbounded typecheck launcher now declares 120000 ms for its build and 60000 ms per compiler, deriving its whole-command cancellation budget from that vector plus cleanup and reporting headroom. The editor launcher declares 600000 ms because it can select a complete project; Vitest's existing per-test deadlines and the editor's existing coverage-off behavior remain unchanged. These are new safety ceilings, not claims that every repository completes at those limits. A slow/flooded child reports its phase: shorten its work or escalate a genuinely inadequate task budget rather than suppress timing.
 

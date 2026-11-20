@@ -15,14 +15,15 @@
  */
 
 import assert from 'node:assert/strict'
-import { spawnSync } from 'node:child_process'
+import childProcess, { spawnSync } from 'node:child_process'
 import { once } from 'node:events'
 import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { syncBuiltinESMExports } from 'node:module'
 import { dirname, join, resolve } from 'node:path'
 import test from 'node:test'
 import { setTimeout as delay } from 'node:timers/promises'
 import { fileURLToPath } from 'node:url'
-import { childBudgetIssue, runChild, startChild, terminationGraceMs } from '../templates/tools/test-process/process.mjs'
+import { childBudgetIssue, runChild, startChild, terminationGraceMs, UnsupportedChildRootError } from '../templates/tools/test-process/process.mjs'
 
 test('serial admission rejects the original pair and accepts measured and nearby valid plans', () => {
   assert.match(childBudgetIssue([10000, 10000], 5000), /shorten.*not raise/)
@@ -245,7 +246,29 @@ for (const mode of ['deadline', 'cancel', 'abort', 'exit-first', 'no-pipes', 'no
 }
 
 for (const mode of ['deadline', 'cancel', 'exit-first']) {
-  test(`native-root descendant ownership: ${mode} retains actual close and descendant lifetime`, { timeout: 3000 }, async (t) => {
+  test(`native-root ${mode}: Windows rejects before spawn; POSIX retains actual close and descendant lifetime`, { timeout: 3000 }, async (t) => {
+    // Exercise the Windows refusal on every host, then retain the real POSIX ownership proof.
+    const platform = Object.getOwnPropertyDescriptor(process, 'platform')
+    const spawn = t.mock.method(childProcess, 'spawn', () => assert.fail('Unsupported root spawned'))
+    syncBuiltinESMExports()
+    Object.defineProperty(process, 'platform', { value: 'win32' })
+    try {
+      for (const command of ['cmd.exe', 'powershell.exe', 'C:\\native\\probe.exe']) {
+        for (const launch of [runChild, startChild]) assert.throws(() => launch(command, [], { budgetMs: 1000 }), (error) => {
+          assert.ok(error instanceof UnsupportedChildRootError)
+          assert.ok(error instanceof TypeError)
+          assert.equal(error.code, 'ERR_CHILD_ROOT_UNSUPPORTED')
+          assert.match(error.message, /Windows.*descendant cleanup.*process\.execPath/)
+          return true
+        })
+      }
+      assert.equal(spawn.mock.callCount(), 0)
+    } finally {
+      Object.defineProperty(process, 'platform', platform)
+      spawn.mock.restore()
+      syncBuiltinESMExports()
+    }
+    if (process.platform === 'win32') return
     const backup = resolve('.amp/in/orb-backup')
     mkdirSync(backup, { recursive: true })
     const root = mkdtempSync(join(backup, 'native-descendant-'))
@@ -260,18 +283,13 @@ for (const mode of ['deadline', 'cancel', 'exit-first']) {
       setInterval(() => {}, 1000);
       setTimeout(() => process.exit(99), 10000);
     `)
-    const windows = process.platform === 'win32'
-    const command = windows ? (process.env.ComSpec ?? 'cmd.exe') : '/bin/sh'
-    const invocation = windows ? '"%PROBE_NODE%" "%PROBE_FILE%"' : '"$PROBE_NODE" "$PROBE_FILE"'
-    const script = join(root, windows ? 'root.cmd' : 'root.sh')
-    writeFileSync(script, windows
-      ? (mode === 'exit-first'
-        ? `@echo off\r\nstart "" /b ${invocation}\r\n:wait\r\nif not exist "%PROBE_READY%" goto wait\r\nexit /b 23\r\n`
-        : `@echo off\r\n${invocation}\r\n`)
-      : (mode === 'exit-first'
+    const command = '/bin/sh'
+    const invocation = '"$PROBE_NODE" "$PROBE_FILE"'
+    const script = join(root, 'root.sh')
+    writeFileSync(script, mode === 'exit-first'
         ? `${invocation} &\nwhile [ ! -f "$PROBE_READY" ]; do sleep 0.01; done\nexit 23\n`
-        : `${invocation} & wait\n`))
-    const owner = startChild(command, windows ? ['/d', '/c', script] : [script], {
+        : `${invocation} & wait\n`)
+    const owner = startChild(command, [script], {
       budgetMs: 1000,
       env: { ...process.env, PROBE_NODE: process.execPath, PROBE_FILE: leaf, PROBE_READY: join(root, 'ready') },
     })
@@ -287,10 +305,6 @@ for (const mode of ['deadline', 'cancel', 'exit-first']) {
       })
     })
     t.after(async () => {
-      if (windows && mode === 'exit-first' && owner.child.exitCode !== null) {
-        const probe = spawnSync('taskkill.exe', ['/PID', String(owner.child.pid), '/T', '/F'], { encoding: 'utf8', timeout: 500 })
-        t.diagnostic(`Native exited-root taskkill: status=${probe.status}; error=${probe.error?.code}; ${probe.stdout.trim()} ${probe.stderr.trim()}`)
-      }
       for (const pid of [descendantPid, owner.child.pid]) {
         if (!pid) continue
         try { process.kill(pid, 'SIGKILL') } catch (failure) { if (failure.code !== 'ESRCH') throw failure }

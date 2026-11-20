@@ -21,6 +21,16 @@ import { spawn } from 'node:child_process'
 /** Per-child cleanup allowance reserved by both registration and execution. */
 export const terminationGraceMs = 100
 
+/** Refuse an unowned Windows native root before any child or descriptor exists. */
+export class UnsupportedChildRootError extends TypeError {
+  /** Explain the supported launch form without exposing the rejected command. */
+  constructor() {
+    super('Windows child ownership requires the current Node executable (process.execPath); native executable and shell roots cannot guarantee descendant cleanup. Launch a Node entry point through process.execPath instead.')
+    this.name = 'UnsupportedChildRootError'
+    this.code = 'ERR_CHILD_ROOT_UNSUPPORTED'
+  }
+}
+
 /**
  * Reject inconsistent serial child lifetimes before registering or executing a scenario.
  * Optimization evidence: Node 24.22.3 admission proof took 2.08 ms for invalid/boundary/valid controls; no speedup is claimed.
@@ -59,7 +69,7 @@ function emit(row) {
 /**
  * Start one bounded child with mandatory timing, bounded streams and optional IPC/journal descriptors.
  * The returned owner retains cancellation until actual close; callers must await completed or cancel().
- * POSIX signals target the owned group; Windows Node children also use libuv's existing Job cleanup.
+ * POSIX signals target the owned group; Windows requires process.execPath and uses libuv's existing Job cleanup.
  * Descendants that deliberately create another POSIX session/group are outside this ownership boundary.
  * No option disables timing. Command, environment, stream and IPC payloads are never logged as timing.
  * Optimization evidence: real-child output/IPC/abort proofs took 73.52/42.95/45.11 ms; one owner avoids a second polling runner.
@@ -71,6 +81,7 @@ export function startChild(command, args, options) {
   if (!Number.isSafeInteger(budgetMs) || budgetMs <= 0 || !Number.isSafeInteger(ordinal) || ordinal <= 0 ||
       !Number.isSafeInteger(maxBuffer) || maxBuffer <= 0)
     throw new TypeError('Declare a positive integer child budget, ordinal and output bound before spawning.')
+  if (process.platform === 'win32' && command !== process.execPath) throw new UnsupportedChildRootError()
   const started = performance.now()
   const spawnedAtMs = Math.round(performance.timeOrigin + started)
   const timings = []

@@ -20,6 +20,12 @@ import type { ChildProcess } from 'node:child_process'
 /** SIGTERM-to-SIGKILL allowance that every registered budget must reserve. */
 export const terminationGraceMs: 100
 
+/** Synchronous pre-spawn rejection of a Windows root other than process.execPath. */
+export class UnsupportedChildRootError extends TypeError {
+  readonly code: 'ERR_CHILD_ROOT_UNSUPPORTED'
+  constructor()
+}
+
 /** Validate serial child lifetimes plus cleanup strictly below the enclosing test limit. */
 export function childBudgetIssue(budgets: ReadonlyArray<number>, testMs: number): string | undefined
 
@@ -60,7 +66,7 @@ export interface ChildOptions {
 /**
  * One cancellable resource; completed/cancel both wait for actual stream and IPC close.
  * POSIX signals include descendants retaining the owned group, including after leader exit.
- * Windows Node-parent cases use libuv Job cleanup; arbitrary native-root trees remain unqualified.
+ * Windows accepts only process.execPath roots and uses libuv Job cleanup, excluding deliberate breakaway.
  * Deliberately detached POSIX groups/sessions are not recursively owned.
  */
 export interface ChildOwner {
@@ -70,8 +76,8 @@ export interface ChildOwner {
   readonly cancel: () => Promise<void>
 }
 
-/** Start one timed resource, retaining ownership until the caller awaits completed or cancel. */
+/** Start one timed resource; Windows rejects other roots with UnsupportedChildRootError before spawning. */
 export function startChild(command: string, args: ReadonlyArray<string>, options: ChildOptions): ChildOwner
 
-/** Await one timed child, with optional AbortSignal cancellation through actual close. */
+/** Await actual close; Windows synchronously throws UnsupportedChildRootError for roots other than process.execPath. */
 export function runChild(command: string, args: ReadonlyArray<string>, options: ChildOptions): Promise<ChildResult>
