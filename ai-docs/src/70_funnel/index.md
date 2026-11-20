@@ -1,0 +1,13 @@
+## Funnel tooling contracts
+
+Canonical adoption instructions: `docs/house-funnel.md`. This repository's bounded feature inventory and assertions: `docs/verification.md`. Delivery sequencing and owner decisions: `docs/funnel-timeline.md`.
+
+Run `node --run verify:static` before `node --run verify`. The first runs shared ESLint rules, Markdown budgets and source/registry coverage; the second preserves all previous consistency and test gates. Setup installs a pre-commit hook only once both package scripts exist. It verifies the staged snapshot and never overwrites a foreign hook.
+
+The house is non-production Node tooling. Its shared `contracts` ESLint export is adopted with each product's existing TypeScript parser and documentation checks. No runtime feature flag is needed. `funnel` adds source-inspection policy and informative JSDoc without replacing Nx or other rules.
+
+AI-03 and AI-31 reserve sign-off for humans except for the documented owner-session exception, which must be present in loaded personal instructions. The existing commit-msg and smartcloud DCO checks compare non-AI signer email with commit author email; identity matching cannot prove consent. Never treat the policy's quotation as authorization. Readiness and merge remain human-owned.
+
+`scripts/verify-funnel.mjs collect` executes the Markdown entry's contract tests without cached results. It binds HEAD plus the matching index tree, compares actual TAP test names/counts to documented assertions, and publishes only synthetic allowlisted outcomes in `.verification/publish`. `check` validates publication structure and file digests while preserving a failed collector outcome. `registry` compares the Markdown interface list with discovered shared tools. `FUNNEL_BASE_SHA` selects the comparison commit; it must be a full SHA. Without it, local collection compares to HEAD's parent. No affected interface produces an explicit not-applicable result and no upload, never a passing empty feature manifest.
+
+Executable examples live in `test/funnel.test.mjs` and `test/funnel-lint.test.mjs`: matching/mismatching build-info, installed-hook staging/failure behavior, lint rejection/acceptance, registry inventory drift, empty proof, stale digest, wider affected selections and modified evidence bytes. These exercise public tool contracts rather than asserting source strings disappeared. Downstream browser/native proof remains the owning product's responsibility.

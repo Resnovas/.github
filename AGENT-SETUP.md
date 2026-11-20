@@ -4,7 +4,7 @@ Machine-only. People: `README.md`, `AGENTS.md`.
 
 ## Needs
 
-- Node 24+ (`engines.node`). No dependencies, no install step, no services, no database.
+- Node 24.15+ (`engines.node`), npm and network for the locked lint dependencies. No services or database.
 - `uv` only for the code graph (`sh tools/graphify/graphify setup`), optional.
 
 ## Env
@@ -13,7 +13,7 @@ Machine-only. People: `README.md`, `AGENTS.md`.
 
 ## Setup
 
-- `scripts/agent-setup`. Idempotent. Steps: Node check, `node --run setup` (editor surfaces, commit hook), `node --run check`.
+- `scripts/agent-setup`. Idempotent. Steps: Node check, frozen dependency install, `node --run setup` (editor surfaces and hooks), `node --run verify:static`, `node --run check`.
 - Success: last line `agent-setup: ok`. A few seconds.
 
 ## Run
@@ -22,7 +22,9 @@ Machine-only. People: `README.md`, `AGENTS.md`.
 | --- | --- |
 | render templates into the root | `npm run render` |
 | test | `npm test` |
-| all CI | `npm run check` |
+| static checks first | `node --run verify:static` |
+| consistency and complete test gate | `node --run verify` |
+| affected funnel evidence | `node --run verify:evidence` after staging |
 | code graph | `sh tools/graphify/graphify update` |
 | agent files | `node tools/dev/surfaces.mjs sync` after editing `.agents/` |
 
