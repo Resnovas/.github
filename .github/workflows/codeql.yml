@@ -135,5 +135,17 @@ jobs:
           config-file: ${{ steps.config.outputs.file }}
 
       - uses: github/codeql-action/analyze@33d7b85da1a04171e211befe2c739303b9a4c066 # v4.39.3
+        id: analyze
         with:
           category: /language:${{ matrix.language }}
+          output: ${{ runner.temp }}/house-codeql-sarif
+
+      # Preserve the original CLI flows: the code-scanning download API is a subset.
+      # This is data for a separate trusted commenter, never executable PR code.
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: github.event_name == 'pull_request'
+        with:
+          name: house-codeql-sarif-${{ matrix.language }}
+          path: ${{ steps.analyze.outputs.sarif-output }}/*.sarif
+          if-no-files-found: error
+          retention-days: 7
