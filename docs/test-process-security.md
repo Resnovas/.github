@@ -133,7 +133,16 @@ Run `node tools/test-process/build-windows.mjs` after accepted house sync on
 Windows. It compiles the checked-in C# source with the installed .NET Framework 4
 `csc.exe` and `System.Web.Extensions.dll`; no download, NuGet or dependency is
 added. Compilation has a 30000 ms build bound and is not hidden in a child budget.
-Other OS hosts do nothing. `npm test` builds the template helper first.
+It then performs one canonical-owner native no-op acquisition of system
+`cmd.exe` with fixed separate arguments `/d /c exit 0` and hard-coded
+`shell:false`. This owner-approved prerequisite has its own10000ms ceiling,
+selected above the prior3353ms acquisition observation. It must report request
+decode, status0, Job release, actual close and final ownership release before
+timed tests begin; any failure stops setup. `test.child.setup` start/complete
+records distinguish its budget and elapsed time from test timing. Mandatory
+child phases remain visible. Other OS hosts do nothing. `npm test` builds and
+warms the template helper first. Direct test invocations must run this same
+explicit prerequisite first; test startup is never silently excluded.
 
 The platform adapter uses an unnamed, noninherited Job with
 `JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE` and neither breakaway flag. It creates the
@@ -182,11 +191,23 @@ FILETIME/UTC, translated to parent-relative milliseconds; connection/decoding
 are parent receipt times. Their difference is not a CPU profile or proof of
 which subsystem waited. Cancellation before a report leaves that interval
 unknown, never zero. Existing ready/PID/death tests require the new phases too.
-No warm-up, readiness/deadline increase or startup exclusion is implemented.
-Any proposed explicit setup warm-up requires owner review after measurements.
+Diagnostic head9275d95 completes both Windows lanes at152/153: only the first
+native deadline fixture misses unchanged700ms readiness. Windows24 first
+creation/Main/connection/decode/root-spawn/close is3/29/509/929/1025/1037ms;
+current is4/28/454/841ms through decode and894ms through close. Subsequent
+Main entries take20-26ms, connections42-48ms and decode57-64ms. Thus this run
+does not show a large creation-to-Main delay; most excess is after Main and
+during decoding. Assembly/JIT/page-cache and post-entry scanning are not
+independently attributed. Jonathan approved the explicit setup acquisition
+above via Puck on2026-11-20 after these measurements; exact human time unknown.
+All child budgets,700ms readiness, assertions and phase logging remain unchanged.
+New exact-head Windows execution must qualify this correction; no speedup is
+claimed from moving explicitly reported setup work outside tests.
 
 Jonathan's conditional decision permits false-positive dismissal of alerts70/71
 only after the corrected exact head passes every OS and both flows are confirmed
 unchanged: separate argv, `shell:false`, normalized prefixed test filter.
 Different alerts return for review; no alert is dismissed by these partial runs.
+New alert IDs72/73 on the diagnostic head were returned to Jonathan via Puck;
+the70/71 authorization is not extended to them. No alert action is taken yet.
 No speedup, downstream adoption or whole EVE-261 acceptance is claimed.

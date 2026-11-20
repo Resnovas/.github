@@ -59,7 +59,7 @@ Owner: [.github pod](https://ampcode.com/threads/T-01a1f637-2241-770e-aa29-22cf1
 
 - 2026-11-20: [PR74](https://github.com/Resnovas/.github/pull/74) merged14:09:10Z; accepted core synced.
 - 2026-11-20T15:10:00Z: TGTGamer merged [nesting PR75](https://github.com/Resnovas/.github/pull/75), exact5769778, as608ab6f; all six lanes green. No human review was invented. Downstream sync remains separate.
-- 2026-11-20T16:30Z: [native B](test-process-security.md#windows-native-acquisition) PR78 fbcf270: Windows151/153 and147/153; four POSIX lanes green. Early700ms readiness fails; numeric creation/Main/connect/decode diagnosis follows. No warm-up/budget change. Alerts70/71, queue/merge/adoption remain held; EVE-261 open.
+- 2026-11-20: [native B](test-process-security.md#windows-native-acquisition) PR78 diagnostic9275d95: Windows152/153; decode929/841ms misses700ms readiness. Jonathan approves10000ms canonical setup acquisition; test limits unchanged. Alerts72/73 with Jonathan; merge/adoption held; EVE-261 open.
 
 - 2026-11-20T13:55:16Z: PR59 merged as [d6daf4a](https://github.com/Resnovas/.github/commit/d6daf4af54bf195915d14ac04706aa5ea4ba3152), green sourcecd1dc80. Eventiva sync exposed missing actual-close evidence. Puck approved the close-only follow-up: three red cases, then21/21/static green, unchanged lifetime/budgets. [Proof](test-process-security.md#explicit-descriptor-close-evidence); hooks/matrix/resync were pending.
 

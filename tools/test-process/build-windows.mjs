@@ -19,6 +19,7 @@ import { execFileSync } from 'node:child_process'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { runChild } from './process.mjs'
 
 // Explicit build prerequisite, never a compiler launched inside a test budget.
 // Only Microsoft's installed Framework compiler and system assemblies are used.
@@ -31,4 +32,14 @@ if (process.platform === 'win32') {
   execFileSync(compiler, ['/nologo', '/target:exe', '/optimize+', '/reference:System.Web.Extensions.dll', `/out:${output}`, source], {
     timeout: 30000, maxBuffer: 65536, stdio: ['ignore', 'pipe', 'pipe'], windowsHide: true,
   })
+  // Owner-approved setup, outside timed tests: exercise the same acquisition,
+  // Job release and actual-close path once, without excluding any test startup.
+  const budgetMs = 10000
+  console.error(JSON.stringify({ code: 'test.child.setup', phase: 'start', budgetMs }))
+  const result = await runChild(join(process.env.SystemRoot ?? 'C:\\Windows', 'System32', 'cmd.exe'), ['/d', '/c', 'exit', '0'], { budgetMs })
+  if (result.error || result.status !== 0 || result.signal ||
+      !result.timings.some(({ phase }) => phase === 'native-request-decoded') ||
+      !result.timings.some(({ phase }) => phase === 'close') || result.timings.at(-1)?.phase !== 'total')
+    throw new Error('Windows native setup acquisition failed; timed tests must not start.')
+  console.error(JSON.stringify({ code: 'test.child.setup', phase: 'complete', budgetMs, elapsedMs: result.elapsedMs }))
 }
