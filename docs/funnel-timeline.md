@@ -11,7 +11,7 @@ Owner: [.github pod](https://ampcode.com/threads/T-01a1f637-2241-770e-aa29-22cf1
 - 2026-11-20T00:09Z: Jonathan approved ESLint as the minimal shared-config host, corrected AI-03 to prohibit delegated certification except the exact personal-instructions owner exception, and assigned canonical ownership to RES-66/RES-67. The existing author-email DCO check remains in smartcloud CI; its maintainer-warning and trusted-bot rules are unchanged.
 - 2026-11-20T00:23Z: verified RES-67 restored to RES under RES-66 with GitHub #55 attached. Exact exception confirmed in loaded personal instructions; TGTGamer/private owner session verified. Updated RES-67 to In Progress for active local verification.
 
-## Current local implementation
+## Implemented contracts
 
 - Shared corrective source-inspection lint and additive JSDoc config; tests exercise rejected/accepted behavior, not deleted-source strings.
 - Pre-commit preserves foreign hooks and requires matching staged/working trees, then static and full verification.
@@ -19,14 +19,22 @@ Owner: [.github pod](https://ampcode.com/threads/T-01a1f637-2241-770e-aa29-22cf1
 - Fixed document budgets, exact deployed build-info SHA check, static-first reusable CI and seven-day reviewed artifact publication policy.
 - Shared AGENTS slimmed while retaining human authority, tracker lifecycle and tool-routing boundaries. Supplied escalation text retained verbatim.
 
-## Verification and upcoming acceptance
+## Delivery and verification
 
 2026-11-20T00:23Z: `npm ci --ignore-scripts` installed the locked toolchain with zero reported vulnerabilities. `node --run verify:static` passed document budgets and six-interface coverage. `node --run verify` passed render, 19 headers, surfaces, generated docs and 103 tests, with measured renderer coverage of 100% lines and 98.58% branches. `node --run verify:evidence` executed all nine documented contracts; `node --run verify:evidence:check` reported structurally valid, byte-bound publication evidence. The installed pre-commit hook is exercised in disposable Git repositories. No downstream runtime, production endpoint or media-redaction review is claimed by these nonvisual contracts.
 
-1. Retain the staged-tree evidence and final full-check results through delivery.
-2. Refresh the code graph from clean sources and preserve it as a separate task commit.
-3. Push a disclosed draft PR with linked issue references; human owns readiness and merge.
-4. Product pods adopt the tested shared contracts via normal house sync; preserve their trust gates, coverage and documentation ratchets. Verify affected runtime/native paths in those repositories.
+- 2026-11-20T00:26Z: pushed contracts and the separate graph commit to [draft PR #56](https://github.com/Resnovas/.github/pull/56). Linear automation changed readiness; restored draft and escalated the integration behavior. Human readiness and merge authority remain unchanged.
+- 2026-11-20T00:28Z: [CI run 44645981211](https://github.com/Resnovas/.github/actions/runs/44645981211) passed Linux/macOS/Windows on Node 24/current. Synthetic affected-contract evidence expires after seven days. Workflow lint and Graphify passed. Dependency review rejected three transitive licences; CodeQL reported hook-write and evidence-read races in canonical/rendered copies. No full-green claim.
+- 2026-11-20T00:34Z: local follow-up passed all 103 tests and static gates. Hook installation now creates exclusively without rewriting an existing hook; evidence metadata/digests use one descriptor. All 18 requested JSDoc rules have accepted/rejected real TypeScript fixtures, plus 12 declaration/callback shapes. Semantic accuracy and meaningful in-body rationale remain guidance; downstream AST, zero and example gates are preserved.
+- 2026-11-20T00:37Z: MIT-only provenance confirmed for parse-statements@1.0.11 against npm tarball integrity, release LICENSE/package.json and upstream history. Jonathan approved exact-version exceptions for it, spdx-exceptions@2.5.0 and uri-js@4.4.1. Before publication, found that dependency-review-action v5.0.0 ignores versions when matching licence exclusions. Held the policy-only change and requested an owner decision on an exact-version guard versus waiting for an upstream fix; no broadened exception was pushed. Base-ref policy loading stays intact.
+- 2026-11-20T00:41Z: added the two subsequently approved rules, sentence-form descriptions and public/exported examples. All 20 rule fixture pairs pass, alongside declaration/callback, export/re-export and private-member controls. Licence exceptions remain held pending the owner's version-guard decision. Eventiva confirms no shared adoption yet; its registry still needs the fenced JSON, blocked/unimplemented and media-duration contracts. Its large-checkout header-inventory buffer/fallback report is a separate shared candidate, not silently included in this change.
+
+## Remaining acceptance
+
+1. Push the reviewed follow-up and refreshed graph; require fresh CodeQL and full CI evidence for that head.
+2. Resolve exact-version exception enforcement, then land a prerequisite policy-only PR through human review. The dependent PR cannot authorize its own exceptions because policy is read from its base.
+3. Product pods adopt the tested shared contracts via normal house sync; preserve their trust gates, coverage and documentation ratchets. Verify affected runtime/native paths in those repositories. A synced config is not proof of adoption.
+4. Human reviews and decides readiness/merge. RES-67 and RES-66 remain non-closing until whole-issue acceptance. Do not remove the personal documentation paragraph until downstream adoption is verified; the remaining semantic guidance now lives in shared AGENTS and the canonical guide.
 
 ```mermaid
 flowchart LR

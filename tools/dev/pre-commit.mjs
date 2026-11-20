@@ -1,6 +1,6 @@
 // Synced from Resnovas/.github templates/tools/dev/pre-commit.mjs. Edit it there.
 import { execFileSync, spawnSync } from 'node:child_process'
-import { chmodSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 
@@ -10,15 +10,23 @@ const hook = '#!/bin/sh\n# house:pre-commit\nexec node "$(git rev-parse --show-t
 export function installPreCommit(root, dryRun = false) {
   const hooks = execFileSync('git', ['rev-parse', '--git-path', 'hooks'], { cwd: root, encoding: 'utf8' }).trim()
   const path = resolve(root, hooks, 'pre-commit')
-  if (existsSync(path) && readFileSync(path, 'utf8') !== hook) {
-    throw new Error('Preserve the existing pre-commit hook. Add node tools/dev/pre-commit.mjs run to it, or review and replace it explicitly; setup will not overwrite it.')
-  }
   if (!dryRun) {
     mkdirSync(dirname(path), { recursive: true })
-    writeFileSync(path, hook)
-    chmodSync(path, 0o755)
+    try {
+      // Exclusive creation never overwrites a hook installed concurrently after inspection.
+      writeFileSync(path, hook, { flag: 'wx', mode: 0o755 })
+      return 'Pre-commit hook: installed.'
+    } catch (error) {
+      if (error.code !== 'EEXIST') throw error
+    }
   }
-  return `Pre-commit hook: ${dryRun ? 'would install' : 'installed'}.`
+  try {
+    if (readFileSync(path, 'utf8') !== hook) throw new Error('Preserve the existing pre-commit hook. Compose the house verification call manually or review and replace it explicitly; setup will not overwrite it.')
+    return 'Pre-commit hook: already installed.'
+  } catch (error) {
+    if (dryRun && error.code === 'ENOENT') return 'Pre-commit hook: would install.'
+    throw error
+  }
 }
 
 /** Reject partial staging before running the same static and behavioral package gates as CI. */

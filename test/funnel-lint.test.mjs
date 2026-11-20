@@ -16,10 +16,27 @@
 
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
+import { createRequire } from 'node:module'
 import { ESLint, Linter } from 'eslint'
 import { funnel, contracts } from '../templates/tools/lint/funnel.mjs'
 
 const lint = (code, config = funnel) => new Linter().verify(code, [{ ...config, languageOptions: { ecmaVersion: 'latest', sourceType: 'module' } }])
+
+// Exercise real TypeScript ASTs using the parser already locked under the approved JSDoc dependency.
+// Consumers supply their own ESLint parser; this test adapter adds no production parser or dependency.
+const jsdocRequire = createRequire(import.meta.resolve('eslint-plugin-jsdoc'))
+const typescriptRequire = createRequire(jsdocRequire.resolve('@typescript-eslint/utils'))
+const { parse } = typescriptRequire('@typescript-eslint/typescript-estree')
+const { analyze } = typescriptRequire('@typescript-eslint/scope-manager')
+const { visitorKeys } = createRequire(typescriptRequire.resolve('@typescript-eslint/typescript-estree'))('@typescript-eslint/visitor-keys')
+const parser = {
+  parseForESLint(code) {
+    const ast = parse(code, { comment: true, tokens: true, loc: true, range: true, filePath: 'contract.ts' })
+    return { ast, visitorKeys, scopeManager: analyze(ast, { sourceType: 'module' }) }
+  },
+}
+const lintContract = (code) => new Linter().verify(code, [{ ...contracts, languageOptions: { parser, sourceType: 'module' } }])
+const documented = (description, tags, declaration) => `/**\n * ${description}\n${tags ? ` *\n${tags.split('\n').map((line) => ` * ${line}`).join('\n')}\n` : ''} */\n${declaration}`
 
 test('source-absence lint rejects source inspections while allowing behavior and redaction assertions', () => {
   const invalid = [
@@ -55,6 +72,100 @@ test('JSDoc rejects name restatements and missing contracts while accepting purp
   assert.ok(restatement.some((item) => item.ruleId === 'jsdoc/informative-docs'), JSON.stringify(restatement))
   assert.ok(lint('function total() { return 17 }', contracts).some((item) => item.ruleId === 'jsdoc/require-jsdoc'))
   assert.deepEqual(lint('/** Release scoped resources before the process exits, including on cancellation. */\nfunction runMain() {}', contracts), [])
+
+  const purpose = 'Preserve caller ownership while selecting the first available value.'
+  const callable = 'function first(value: number): number { return value }'
+  const tags = '@param value - Candidate supplied by the caller.\n@returns The unchanged candidate.'
+  const complete = documented(purpose, tags, callable)
+  const idle = documented('Release scoped resources before shutdown, including cancellation.', '', 'function dispose() {}')
+  const generic = 'function first<T>(value: T): T { return value }'
+  const throwing = 'function reject(): never { throw new RangeError("Invalid range") }'
+  const cases = [
+    ['require-jsdoc', callable, complete],
+    ['require-description', documented('', tags, callable), complete],
+    ['informative-docs', '/** Runs the main entry point. */\nfunction runMain() {}', idle],
+    ['no-blank-block-descriptions', complete.replace('/**\n', '/**\n *\n'), complete],
+    ['require-param', documented(purpose, '@returns The unchanged candidate.', callable), complete],
+    ['require-param-description', documented(purpose, '@param value\n@returns The unchanged candidate.', callable), complete],
+    ['check-param-names', documented(purpose, tags.replace('@param value', '@param other'), callable), complete],
+    ['require-returns', documented(purpose, '@param value - Candidate supplied by the caller.', callable), complete],
+    ['require-returns-description', documented(purpose, '@param value - Candidate supplied by the caller.\n@returns', callable), complete],
+    ['require-throws', documented('Reject invalid ranges before they enter storage.', '', throwing), documented('Reject invalid ranges before they enter storage.', '@throws {RangeError} Invalid range cannot enter storage.', throwing)],
+    ['check-tag-names', documented(purpose, `${tags}\n@unknownTag`, callable), complete],
+    ['no-types', documented(purpose, tags.replace('@param value', '@param {number} value'), callable), complete],
+    ['valid-types', documented('Reject invalid ranges before they enter storage.', '@throws {Array<} Invalid range cannot enter storage.', throwing), documented('Reject invalid ranges before they enter storage.', '@throws {RangeError} Invalid range cannot enter storage.', throwing)],
+    ['require-template', documented(purpose, tags, generic), documented(purpose, `@template T - Candidate type preserved without coercion.\n${tags}`, generic)],
+    ['empty-tags', documented(purpose, `${tags}\n@readonly text`, callable), documented(purpose, `${tags}\n@readonly`, callable)],
+    ['check-alignment', complete.replace(' * @param', '   * @param'), complete],
+    ['multiline-blocks', `/** ${purpose}\n */\nfunction dispose() {}`, idle],
+    ['tag-lines', complete.replace(' *\n * @param', ' * @param'), complete],
+    ['match-description', documented('select caller value', tags, callable), complete],
+    ['require-example', documented(purpose, tags, `export ${callable}`), documented(purpose, `${tags}\n@example first(17) // 17`, `export ${callable}`)],
+  ]
+  for (const [rule, rejected, accepted] of cases) {
+    const messages = lintContract(rejected)
+    assert.ok(messages.some((item) => item.ruleId === `jsdoc/${rule}`), JSON.stringify({ rule, messages }))
+    assert.deepEqual(lintContract(accepted), [], `${rule}: ${accepted}`)
+  }
+  // A removed rule must not silently leave its fixture behind, nor may a new rule go unexercised.
+  assert.deepEqual(cases.map(([rule]) => `jsdoc/${rule}`).sort(), Object.keys(contracts.rules).sort())
+
+  for (const fragment of ['select caller value.', 'Select caller value']) {
+    assert.ok(lintContract(documented(fragment, tags, callable)).some((item) => item.ruleId === 'jsdoc/match-description'))
+  }
+  assert.ok(lintContract(documented(purpose, tags.replace('Candidate supplied by the caller.', 'Candidate supplied by the caller'), callable)).some((item) => item.ruleId === 'jsdoc/match-description'))
+
+  for (const [bare, attached] of [
+    ['function dispose() {}', idle],
+    ['const dispose = () => {}', '/** Release scoped resources before shutdown. */\nconst dispose = () => {}'],
+    ['const dispose = function () {}', '/** Release scoped resources before shutdown. */\nconst dispose = function () {}'],
+    ['schedule(() => {})', 'schedule(/** Release scoped resources before shutdown. */ () => {})'],
+    ['schedule(function () {})', 'schedule(/** Release scoped resources before shutdown. */ function () {})'],
+    ['class Session {}', '/** Own scoped resources until cancellation or shutdown. */\nclass Session {}'],
+    ['const Session = class {}', '/** Own scoped resources until cancellation or shutdown. */\nconst Session = class {}'],
+    ['/** Own scoped resources until shutdown. */\nclass Session { dispose() {} }', '/** Own scoped resources until shutdown. */\nclass Session {\n/** Release handles before cancellation completes. */\ndispose() {}\n}'],
+    ['interface Session {}', '/** Own scoped resources until cancellation or shutdown. */\ninterface Session {}'],
+    ['type Session = string', '/** Identify a scoped resource without exposing its contents. */\ntype Session = string'],
+    ['/** Own scoped resources until shutdown. */\ninterface Session { dispose(): void }', '/** Own scoped resources until shutdown. */\ninterface Session {\n/** Release handles before cancellation completes. */\ndispose(): void\n}'],
+    ['declare function dispose(): void', '/** Release scoped resources before shutdown. */\ndeclare function dispose(): void'],
+  ]) {
+    const messages = lintContract(bare)
+    assert.ok(messages.some((item) => item.ruleId === 'jsdoc/require-jsdoc'), JSON.stringify({ bare, messages }))
+    assert.deepEqual(lintContract(attached), [], attached)
+  }
+
+  for (const declaration of [
+    'export function dispose() {}',
+    'export default function dispose() {}',
+    'export const dispose = () => {}',
+    'export const dispose = function () {}',
+    'export const timeout = 17',
+    'export const dispose = createDisposer()',
+    'export default createDisposer()',
+    'export class Session {}',
+    'export interface Session {}',
+    'export type Session = string',
+    'export { dispose } from "./scoped.js"',
+    'export * from "./scoped.js"',
+    'export default dispose',
+  ]) {
+    assert.ok(lintContract(declaration).some((item) => item.ruleId === 'jsdoc/require-jsdoc'), `public boundary: ${declaration}`)
+    const rejected = documented('Preserve scoped resources until cancellation completes.', '', declaration)
+    assert.ok(lintContract(rejected).some((item) => item.ruleId === 'jsdoc/require-example'), rejected)
+    const accepted = documented('Preserve scoped resources until cancellation completes.', '@example\n// Use a scoped resource until cancellation.', declaration)
+    assert.deepEqual(lintContract(accepted), [], accepted)
+  }
+  const publicFunction = documented(purpose, `${tags}\n@public`, callable)
+  assert.ok(lintContract(publicFunction).some((item) => item.ruleId === 'jsdoc/require-example'))
+  assert.deepEqual(lintContract(documented(purpose, `${tags}\n@public\n@example first(17) // 17`, callable)), [])
+  assert.deepEqual(lintContract(complete), [], 'a private helper needs a contract, not a public example')
+  const classDescription = '/**\n * Own scoped resources until shutdown.\n *\n * @example new Session()\n */\n'
+  const member = '/** Release handles before cancellation completes. */\n'
+  assert.ok(lintContract(`${classDescription}export class Session {\n${member}dispose() {}\n}`).some((item) => item.ruleId === 'jsdoc/require-example'))
+  const memberWithExample = documented('Release handles before cancellation completes.', '@example new Session().dispose()', 'dispose() {}')
+  assert.deepEqual(lintContract(`${classDescription}export class Session {\n${memberWithExample}\n}`), [])
+  assert.deepEqual(lintContract(`${classDescription}export class Session {\n${member}private dispose() {}\n}`), [])
+  assert.deepEqual(lintContract(`${classDescription}export class Session {\n${member}#dispose() {}\n}`), [])
 })
 
 test('the repository config applies shared policies to test and lint-tool scopes', async () => {

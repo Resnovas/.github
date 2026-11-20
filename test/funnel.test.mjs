@@ -17,7 +17,7 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { execFileSync, spawnSync } from 'node:child_process'
-import { mkdirSync, mkdtempSync, readFileSync, writeFileSync, copyFileSync } from 'node:fs'
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync, copyFileSync, statSync, utimesSync } from 'node:fs'
 import { resolve, join } from 'node:path'
 import { installPreCommit, runPreCommit } from '../templates/tools/dev/pre-commit.mjs'
 import { checkDocs } from '../templates/tools/verification/docs-budget.mjs'
@@ -47,7 +47,10 @@ test('pre-commit checks the staged snapshot, orders gates, propagates failure an
   writeFileSync(join(root, 'verify.cjs'), "require('node:fs').appendFileSync('events', 'verify\\n')")
   git(root, 'add', '.')
   installPreCommit(root)
+  const installedHook = join(root, '.git/hooks/pre-commit')
+  utimesSync(installedHook, 946684800, 946684800)
   installPreCommit(root)
+  assert.equal(statSync(installedHook).mtimeMs, 946684800000, 'an existing hook must not be rewritten during setup')
   git(root, 'commit', '-qm', 'fixture')
   assert.equal(readFileSync(join(root, 'events'), 'utf8'), 'static\nverify\n')
   writeFileSync(join(root, 'static.cjs'), 'process.exit(3)')

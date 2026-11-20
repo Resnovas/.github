@@ -1,5 +1,5 @@
 // Synced from Resnovas/.github templates/tools/verification/evidence.mjs. Edit it there.
-import { readFileSync, readdirSync, realpathSync, statSync } from 'node:fs'
+import { closeSync, constants, fstatSync, openSync, readFileSync, readdirSync, realpathSync } from 'node:fs'
 import { isAbsolute, relative, resolve, sep } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { checkManifest, digest } from './registry.mjs'
@@ -15,7 +15,14 @@ export function validateEvidence(directory, manifest, context) {
       const local = relative(root, path)
       if (isAbsolute(local) || local.startsWith(`..${sep}`) || local === '..' || !local || files.has(path)) throw new Error('Evidence paths must be unique files inside the reviewed directory; do not follow external symlinks.')
       files.add(path)
-      if (!statSync(path).isFile() || statSync(path).size === 0 || digest(readFileSync(path)) !== file.sha256) throw new Error('Evidence bytes are missing, empty or changed since review. Capture, inspect and hash them again.')
+      // Bind metadata and bytes to one open file, not two path lookups that can race.
+      const descriptor = openSync(path, constants.O_RDONLY | constants.O_NOFOLLOW)
+      try {
+        const metadata = fstatSync(descriptor)
+        if (!metadata.isFile() || metadata.size === 0 || digest(readFileSync(descriptor)) !== file.sha256) throw new Error('Evidence bytes are missing, empty or changed since review. Capture, inspect and hash them again.')
+      } finally {
+        closeSync(descriptor)
+      }
     }
   }
   // Uploading the directory must not disclose extra logs, dotfiles or unreviewed captures.

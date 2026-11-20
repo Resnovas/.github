@@ -2,9 +2,11 @@
 
 Canonical adoption instructions: `docs/house-funnel.md`. This repository's bounded feature inventory and assertions: `docs/verification.md`. Delivery sequencing and owner decisions: `docs/funnel-timeline.md`.
 
-Run `node --run verify:static` before `node --run verify`. The first runs shared ESLint rules, Markdown budgets and source/registry coverage; the second preserves all previous consistency and test gates. Setup installs a pre-commit hook only once both package scripts exist. It verifies the staged snapshot and never overwrites a foreign hook.
+Run `node --run verify:static` before `node --run verify`. The first runs shared ESLint rules, Markdown budgets and source/registry coverage; the second preserves all previous consistency and test gates. Setup exclusively creates a pre-commit hook only once both package scripts exist. It verifies the staged snapshot and never rewrites an existing hook. Evidence metadata and digest reads share one open descriptor; a dedicated publication directory must have no concurrent writers through upload.
 
 The house is non-production Node tooling. Its shared `contracts` ESLint export is adopted with each product's existing TypeScript parser and documentation checks. No runtime feature flag is needed. `funnel` adds source-inspection policy and informative JSDoc without replacing Nx or other rules.
+
+`contracts` enables all 20 documentation rules listed in `docs/house-funnel.md`, including parameter/return/throw/template contracts, sentence-form descriptions, public/exported examples and all declaration/callback shapes. Execute `test/funnel-lint.test.mjs` for each rule's accepted/rejected fixtures. Put examples at export boundaries (including aliases/re-exports), on public members of directly exported classes/interfaces, and on other declarations marked `@public`. Preserve reviewed source exclusions and Eventiva's rationale/zero gate and smartcloud's declaration/example checks. Keep semantic accuracy and meaningful in-body explanations in guidance; syntax lint cannot establish either or execute examples.
 
 AI-03 and AI-31 reserve sign-off for humans except for the documented owner-session exception, which must be present in loaded personal instructions. The existing commit-msg and smartcloud DCO checks compare non-AI signer email with commit author email; identity matching cannot prove consent. Never treat the policy's quotation as authorization. Readiness and merge remain human-owned.
 
