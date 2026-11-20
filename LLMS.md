@@ -424,3 +424,11 @@ AI-03 and AI-31 reserve sign-off for humans except for the documented owner-sess
 `scripts/verify-funnel.mjs collect` executes the Markdown entry's contract tests without cached results. It binds HEAD plus the matching index tree, compares actual TAP test names/counts to documented assertions, and publishes only synthetic allowlisted outcomes in `.verification/publish`. `check` validates publication structure and file digests while preserving a failed collector outcome. `registry` compares the Markdown interface list with discovered shared tools. `FUNNEL_BASE_SHA` selects the comparison commit; it must be a full SHA. Without it, local collection compares to HEAD's parent. No affected interface produces an explicit not-applicable result and no upload, never a passing empty feature manifest.
 
 Executable examples live in `test/funnel.test.mjs` and `test/funnel-lint.test.mjs`: matching/mismatching build-info, installed-hook staging/failure behavior, lint rejection/acceptance, registry inventory drift, empty proof, stale digest, wider affected selections and modified evidence bytes. These exercise public tool contracts rather than asserting source strings disappeared. Downstream browser/native proof remains the owning product's responsibility.
+
+---
+
+## Scoped agent readiness and merge exception
+
+Jonathan approved the named AI-21/AI-31 exception on 2026-11-20 for Resnovas/.github and Resnovas/Eventiva only. Agents may mark a PR ready and merge normally once all required checks are green, preserving required reviews and branch protection. Disclosed draft creation remains required. Record this authorization and actual agent verification; do not claim human review. Approval/self-approval, bypass, admin merge, force-push, sign-off, spending and deployment authority are not added. All other repositories retain the default restrictions.
+
+Canonical rules: AI_POLICY.md AI-21 and AI-31, and templates/AGENTS.md. Delivery/evidence: docs/agent-merge-exception.md, RES-71 and Resnovas/.github#67. Keep this separate from the CodeQL RES-70/#66 packet.
