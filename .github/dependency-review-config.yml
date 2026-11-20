@@ -31,3 +31,9 @@ allow-licenses:
   - Zlib
 # house:managed:end
 # house:local - add this repository's own policy below this line.
+# Owner-approved ALL versions of exactly these packages for RES-67.
+# Licence exceptions only; vulnerability checks remain required. See docs/workflows.md.
+allow-dependencies-licenses:
+  - pkg:npm/spdx-exceptions
+  - pkg:npm/uri-js
+  - pkg:npm/parse-statements
