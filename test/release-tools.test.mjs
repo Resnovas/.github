@@ -98,13 +98,15 @@ test('the SBOM file name follows pnpm sbom', () => {
   assert.equal(out.trim(), 'resnovas-action-2.0.0.spdx.json')
 })
 
-test('every release tool starts with the sync marker, and the ones that act read the config, not a repository name', () => {
+test('release tools retain sync provenance and release configuration follows the consuming repository', () => {
   for (const tool of ['bundle', 'sourcemaps', 'release', 'nightly', 'release-preview']) {
     const text = readFileSync(join(templates, `tools/release/${tool}.ts`), 'utf8')
     assert.match(text.split('\n').slice(0, 3).join('\n'), /Synced from Resnovas\/\.github/, tool)
     assert.match(text, /loadReleaseConfig\(/, tool)
-    assert.doesNotMatch(text, /smartcloud/i, tool)
   }
+  // Exercise configuration with distinct consumers instead of banning a product's name in source text.
+  assert.equal(load(repository({}, { name: '@synthetic/second-product' })).name, 'second-product')
+  assert.equal(load(repository({ name: 'custom-release' }, { name: '@synthetic/third-product' })).name, 'custom-release')
 })
 
 test('source-map processing preserves executable headers and uploaded source positions', (t) => {

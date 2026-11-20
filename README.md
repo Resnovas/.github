@@ -24,6 +24,7 @@ Because the repository is public and named `.github`, GitHub also shows its root
 | Use a reusable workflow, or know what a house check does | [Workflows](docs/workflows.md) |
 | Set up the Resnovas Bot app, secrets and variables | [Access: the app, secrets and variables](docs/access.md) |
 | Set up CI the house way (matrix, caching, nightly runs, flaky tests) | [CI standards](docs/ci-standards.md) |
+| Adopt corrective lints, staged-safe hooks and affected-feature evidence | [Verification funnel](docs/house-funnel.md) |
 | Release and publish changelogs | [Releases](docs/releases.md) |
 | Write documentation for AI agents (`ai-docs`, `LLMS.md`) | [AI docs](docs/ai-docs.md) |
 | Fix something that went wrong | [Troubleshooting](docs/troubleshooting.md) |
@@ -49,7 +50,7 @@ An AI agent should read [`LLMS.md`](LLMS.md) instead: the same ground, written f
 
 ## <a id="changing"></a>Changing the house
 
-You need Node 24 or newer. There is nothing to install.
+You need Node 24.15 or newer. Run `npm ci --ignore-scripts` to install the locked lint tooling, then `node --run setup` for editor surfaces and hooks. The renderer itself remains dependency-free.
 
 1. Edit the file under `templates/`, or a default in `house.yml`.
    Every value except `REPOSITORY` and `HOUSE_EXCLUDE` also goes, unchanged, under `sync.values` in `smartcloud/house.yml`, because that is where the other repositories' sync reads values from; `test/values.test.mjs` fails if the two differ.

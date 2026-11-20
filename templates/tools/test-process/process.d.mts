@@ -54,7 +54,6 @@ export interface ChildOptions {
   readonly journal?: boolean
   readonly maxBuffer?: number
   readonly inheritOutput?: boolean
-  readonly shell?: boolean
   readonly signal?: AbortSignal
 }
 

@@ -13,7 +13,7 @@
 // `pnpm nx test <project>` still checks. Runs on Node's built-in TypeScript
 // support, so it needs no build step.
 
-import { existsSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { dirname, isAbsolute, join, relative, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { runChild, terminationGraceMs } from '../test-process/process.mjs'
@@ -44,18 +44,20 @@ if (!existsSync(join(project, 'vitest.config.mts'))) {
 const spec = `src/${rest}.spec.ts`
 const filter = area === 'tests' || existsSync(join(project, spec)) ? [spec] : []
 
-// The repository's own Vitest, so `node tools/test/file.ts` works outside a package script.
-const vitest = join(root, 'node_modules', '.bin', process.platform === 'win32' ? 'vitest.cmd' : 'vitest')
+// Use the repository's declared Node entry point on every platform. A shell
+// shim would add a second process whose termination cannot certify CLI close.
+const vitestPackage = join(root, 'node_modules', 'vitest')
+const manifest: { bin: { vitest: string } } = JSON.parse(readFileSync(join(vitestPackage, 'package.json'), 'utf8'))
+const vitest = join(vitestPackage, manifest.bin.vitest)
 // A complete project may run when no mirrored spec exists. This new command
 // ceiling does not alter Vitest's per-test limits or its coverage policy.
 const budgetMs = 600000
-const result = await runChild(vitest, ['run', '--coverage.enabled=false', ...filter], {
+const result = await runChild(process.execPath, [vitest, 'run', '--coverage.enabled=false', ...filter], {
   cwd: project,
   budgetMs,
   signal: AbortSignal.timeout(budgetMs + terminationGraceMs + 1000),
   maxBuffer: 1024 * 1024,
   inheritOutput: true,
-  shell: process.platform === 'win32',
 })
 if (result.error) console.error(result.error.code === 'ENOENT'
   ? `Cannot run ${vitest}: install the dependencies first.`

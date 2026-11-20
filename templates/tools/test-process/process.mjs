@@ -65,7 +65,7 @@ function emit(row) {
 export function startChild(command, args, options) {
   if (options.signal?.aborted) throw new Error('Child launch aborted before spawn.')
   const { budgetMs, ordinal = 1, cwd, env = process.env, input, ipc = false,
-    journal = false, maxBuffer = 65536, inheritOutput = false, shell = false } = options
+    journal = false, maxBuffer = 65536, inheritOutput = false } = options
   if (!Number.isSafeInteger(budgetMs) || budgetMs <= 0 || !Number.isSafeInteger(ordinal) || ordinal <= 0 ||
       !Number.isSafeInteger(maxBuffer) || maxBuffer <= 0)
     throw new TypeError('Declare a positive integer child budget, ordinal and output bound before spawning.')
@@ -86,7 +86,7 @@ export function startChild(command, args, options) {
   }
   phase('spawn-request')
   const stdio = ['pipe', 'pipe', 'pipe', ...(journal ? ['pipe'] : []), ...(ipc ? ['ipc'] : [])]
-  const child = spawn(command, args, { cwd, env, stdio, shell })
+  const child = spawn(command, args, { cwd, env, stdio })
   let stdout = ''
   let stderr = ''
   let diagnostic = ''

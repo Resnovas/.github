@@ -19,6 +19,7 @@ import assert from 'node:assert/strict'
 import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { runInNewContext } from 'node:vm'
 
 const root = fileURLToPath(new URL('../', import.meta.url))
 const directories = ['.github/workflows', 'templates/.github/workflows']
@@ -201,4 +202,93 @@ test('the release checks npm before it publishes', () => {
   const before = lines.slice(0, publish).join('\n')
   assert.match(before, /npm view "\$name@\$VERSION" version/)
   assert.match(before, /is not on npm yet/)
+})
+
+test('the funnel workflow preserves static-first gates and reviewed seven-day publication', () => {
+  const workflow = workflows.find(({ path }) => path === join('templates/.github/workflows', 'house-funnel.yml'))
+  const [job] = jobs(workflow)
+  const text = job.lines.join('\n')
+  const commands = job.lines.flatMap((line) => line.match(/^\s+run: node --run (.+)$/)?.[1] ?? [])
+  assert.deepEqual(commands, ['verify:static', 'verify', 'verify:evidence', 'verify:evidence:check'])
+  assert.match(text, /runs-on: ubuntu-latest/)
+  assert.match(text, /contents: read/)
+  assert.match(text, /persist-credentials: false/)
+  assert.match(text, /steps\.static\.outcome == 'success'/)
+  assert.match(text, /steps\.publish\.outcome == 'success'/)
+  assert.match(text, /path: \.verification\/publish\//)
+  assert.match(text, /retention-days: 7\n/)
+  assert.match(text, /if-no-files-found: error/)
+  assert.match(text, /include-hidden-files: false/)
+  // Missing continue-on-error means false; introducing it must never turn failed verification green.
+  const failureModes = job.lines.filter((line) => /^\s+continue-on-error:/.test(line)).map((line) => line.trim().split(':')[1].trim())
+  assert.ok(failureModes.every((value) => value === 'false'))
+  const ci = workflows.find(({ path }) => path === join('.github/workflows', 'ci.yml'))
+  assert.match(jobs(ci).find((candidate) => candidate.name === 'test').lines.join('\n'), /needs: rendered/)
+})
+
+test('readiness restoration acts only on the latest Linear transition and preserves human decisions', () => {
+  const workflow = workflows.find(({ path }) => path === join('templates/.github/workflows', 'house-readiness.yml'))
+  const [job] = jobs(workflow)
+  assert.match(workflow.lines.join('\n'), /pull_request_target:\n    types: \[ready_for_review\]/)
+  assert.match(job.lines.join('\n'), /if: github.event.sender.login == 'linear-code\[bot\]'/)
+  assert.deepEqual(job.lines.filter((line) => /^      [\w-]+: (read|write)$/.test(line)).map((line) => line.trim()), ['pull-requests: write'])
+  // A checkout or another step would cross the privileged metadata-only boundary.
+  assert.deepEqual(job.lines.filter((line) => /^      - /.test(line)).map((line) => line.trim()), ['- name: Restore Linear-converted drafts without overriding later human readiness'])
+  assert.match(job.lines.join('\n'), /shell: node \{0\}/)
+  // Execute the exact workflow body with synthetic API responses, without a live mutation.
+  const start = workflow.lines.indexOf('        run: |')
+  const script = workflow.lines.slice(start + 1).filter((line) => line.startsWith('          ')).map((line) => line.slice(10)).join('\n')
+  const ready = (login) => ({ event: 'ready_for_review', actor: { login } })
+  const bot = ready('linear-code[bot]')
+  const run = ({ pages = [[bot]], state = 'open', draft = false, sender = 'linear-code[bot]', fails = false, persists = true } = {}) => {
+    let currentDraft = draft
+    let mutations = 0
+    const output = []
+    const execute = () => runInNewContext(script, {
+      process: { env: { REPOSITORY: 'Resnovas/.github', NUMBER: '56', SENDER: sender } },
+      console: { log: (message) => output.push(message) },
+      require: (name) => {
+        assert.equal(name, 'node:child_process')
+        return { execFileSync: (command, args) => {
+          assert.equal(command, 'gh')
+          if (fails) throw new Error('API permission denied')
+          const arguments_ = Array.from(args)
+          if (arguments_[0] === 'pr') {
+            assert.deepEqual(arguments_, ['pr', 'ready', '56', '--undo', '--repo', 'Resnovas/.github'])
+            mutations += 1
+            currentDraft = persists
+            return ''
+          }
+          if (arguments_[1].includes('/timeline')) {
+            assert.deepEqual(arguments_, ['api', 'repos/Resnovas/.github/issues/56/timeline?per_page=100', '--paginate', '--slurp'])
+            return JSON.stringify(pages)
+          }
+          assert.deepEqual(arguments_, ['api', 'repos/Resnovas/.github/pulls/56'])
+          return JSON.stringify({ state, draft: currentDraft })
+        } }
+      },
+    })
+    return { execute, result: () => ({ mutations, draft: currentDraft, output }) }
+  }
+  const restored = run({ pages: [[ready('maintainer')], [bot, { event: 'commented' }]] })
+  restored.execute()
+  assert.equal(restored.result().draft, true)
+  assert.equal(restored.result().mutations, 1)
+  assert.match(restored.result().output[0], /A human must decide readiness/)
+  for (const fixture of [
+    { pages: [[bot], [ready('maintainer')]] },
+    { pages: [[bot], [{ event: 'converted_to_draft', actor: { login: 'maintainer' } }]] },
+    { pages: [[ready('another-bot[bot]')]] },
+    { draft: true },
+    { state: 'closed' },
+  ]) {
+    const unchanged = run(fixture)
+    unchanged.execute()
+    assert.equal(unchanged.result().mutations, 0)
+    assert.match(unchanged.result().output[0], /unchanged/)
+  }
+  assert.throws(run({ sender: 'maintainer' }).execute, /Only Linear readiness/)
+  assert.throws(run({ pages: [[]] }).execute, /Readiness history unavailable/)
+  assert.throws(run({ fails: true }).execute, /API permission denied/)
+  assert.throws(run({ persists: false }).execute, /Draft restoration did not persist/)
 })

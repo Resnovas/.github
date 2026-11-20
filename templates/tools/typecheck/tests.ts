@@ -9,13 +9,19 @@
 // they set noEmit, so without this their type errors would only show up at
 // run time, if at all. Runs on Node's built-in TypeScript support.
 
-import { existsSync, readdirSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { runChild, terminationGraceMs } from '../test-process/process.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
-const tsc = join(root, 'node_modules', '.bin', 'tsc')
+// Node executes the installed packages' declared entry points directly, without
+// POSIX shebangs, Windows command shims or an intermediate shell to own.
+const nxPackage = join(root, 'node_modules', 'nx')
+const nxManifest: { bin: { nx: string } } = JSON.parse(readFileSync(join(nxPackage, 'package.json'), 'utf8'))
+const typescriptPackage = join(root, 'node_modules', 'typescript')
+const typescriptManifest: { bin: { tsc: string } } = JSON.parse(readFileSync(join(typescriptPackage, 'package.json'), 'utf8'))
+const tsc = join(typescriptPackage, typescriptManifest.bin.tsc)
 
 const projects = readdirSync(join(root, 'tests'), { withFileTypes: true })
   .filter(
@@ -28,11 +34,11 @@ const projects = readdirSync(join(root, 'tests'), { withFileTypes: true })
 // everything first; Nx serves unchanged projects from its cache. This serial
 // plan is the only source of child and complete-command lifetime allowances.
 const plan = [
-  { project: null, command: join(root, 'node_modules', '.bin', 'nx'),
-    args: ['run-many', '-t', 'build', '--output-style=static'], budgetMs: 120000 },
+  { project: null, command: process.execPath,
+    args: [join(nxPackage, nxManifest.bin.nx), 'run-many', '-t', 'build', '--output-style=static'], budgetMs: 120000 },
   ...projects.map(/** Give every discovered compiler the same bounded opportunity to report errors. */ (project) => ({
-    project, command: tsc,
-    args: ['-p', `${project}/tsconfig.json`, '--noEmit', '--declaration', 'false', '--declarationMap', 'false'],
+    project, command: process.execPath,
+    args: [tsc, '-p', `${project}/tsconfig.json`, '--noEmit', '--declaration', 'false', '--declarationMap', 'false'],
     budgetMs: 60000,
   })),
 ]

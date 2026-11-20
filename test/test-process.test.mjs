@@ -16,7 +16,7 @@
 
 import assert from 'node:assert/strict'
 import { once } from 'node:events'
-import { chmodSync, copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import test from 'node:test'
 import { fileURLToPath } from 'node:url'
@@ -100,7 +100,8 @@ test('deadline and output limits terminate real children instead of stranding th
   await once(stuck.child, 'message')
   const expired = await stuck.completed
   assert.equal(expired.error.code, 'ETIMEDOUT')
-  assert.equal(expired.signal, 'SIGKILL')
+  // Windows terminates on SIGTERM rather than delivering a catchable POSIX signal.
+  assert.equal(expired.signal, process.platform === 'win32' ? 'SIGTERM' : 'SIGKILL')
   assert.ok(expired.timings.some((row) => row.phase === 'deadline'))
   assert.equal(expired.timings.at(-1).phase, 'total')
   const noisy = await runChild(process.execPath, ['--eval', 'process.stdout.write("x".repeat(4096)); setInterval(() => {}, 1000)'],
@@ -151,16 +152,15 @@ function runnerFixture(t) {
     copyFileSync(fileURLToPath(new URL(`../templates/tools/${path}`, import.meta.url)), destination)
   }
   const log = join(root, 'calls.jsonl')
-  for (const name of ['nx', 'tsc', 'vitest']) {
-    const executable = join(root, 'node_modules/.bin', name)
-    put(`node_modules/.bin/${name}`, `#!${process.execPath}
+  for (const [name, packageName] of [['nx', 'nx'], ['tsc', 'typescript'], ['vitest', 'vitest']]) {
+    put(`node_modules/${packageName}/package.json`, JSON.stringify({ bin: { [name]: './fixture.mjs' } }))
+    put(`node_modules/${packageName}/fixture.mjs`, `
 import { appendFileSync } from 'node:fs';
 appendFileSync(${JSON.stringify(log)}, JSON.stringify({name:${JSON.stringify(name)},args:process.argv.slice(2)})+'\\n');
 console.log(${JSON.stringify(name)}+' completed');
 if (${JSON.stringify(name)} === 'nx') process.exitCode=Number(process.env.FIXTURE_BUILD_EXIT ?? 0);
 if (${JSON.stringify(name)} === 'tsc' && process.argv.includes(process.env.FIXTURE_FAIL_PROJECT)) process.exitCode=1;
 `)
-    chmodSync(executable, 0o755)
   }
   return { root, log, calls: () => readFileSync(log, 'utf8').trim().split('\n').map((line) => JSON.parse(line)) }
 }
