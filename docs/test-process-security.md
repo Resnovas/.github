@@ -71,3 +71,18 @@ loaded execution of the corrected150 ms test and all six1000 ms scenarios passes
 startup guarantee, not a harness speedup or an exact reconstruction of the
 original scheduler. An earlier diagnostic with a malformed eval newline is
 excluded; corrected fixture status/stderr and phase records were inspected.
+
+## Explicit descriptor-close evidence
+
+Every child emits `close` from the actual Node `close` callback, whether or not
+fd3 is enabled. `exit` records leader exit; `close` records drained descriptors;
+`total` records ownership release, which may additionally await descendant
+escalation. None substitutes for another. Nested safe timing forwarding accepts
+`close` without exposing stream payloads. There is no new option or timing opt-out.
+
+The existing ordinary/no-fd3, journal, IPC cancellation and deadline contracts
+require this phase on all six matrix lanes. Before the correction, the three
+focused ordinary/cancel/deadline cases failed with `exit,total` instead of
+`close,total`; afterward the full local process suite passes21/21. All existing
+budgets, signals, assertions, output bounds and resource-release rules remain.
+This adds evidence, not a runtime optimization or downstream acceptance claim.
