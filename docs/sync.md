@@ -27,6 +27,23 @@ The `house/sync` branch is force-updated on every run, so never push your own wo
 The sync needs the Resnovas Bot app token (see [Access](access.md)).
 A run without it, such as one from a fork or Dependabot, skips the sync and says so in its job summary.
 
+### Verify prompt mirrors
+
+The sync copies rendered template paths; it does not execute a downstream surface generator. The house therefore includes `.claude/commands/verify.md` and `.cursor/commands/verify.md` as generated templates beside the canonical `.agents/prompts/verify.md`. These are transport copies, not additional prompt sources. Other repository prompts and their host files remain local.
+
+After changing the canonical Verify prompt, derive its templates locally with the existing generator:
+
+```sh
+node --run render
+node tools/dev/surfaces.mjs sync
+cp .claude/commands/verify.md templates/.claude/commands/verify.md
+cp .cursor/commands/verify.md templates/.cursor/commands/verify.md
+node --test test/render.test.mjs
+node --run check
+```
+
+Do not hand-edit these mirrors or execute candidate-controlled generators in a privileged sync workflow. The regression checks the actual rendered templates against the surface generator, rejects source-only and host-only divergence, and preserves a repository-only prompt and its host files. The existing root render and surface checks stay required. This adds no sync option or token permission. Publish through normal house review; downstream adoption remains separate. A stale mirror is not a reason to dispatch a combined settings/sync workflow or push human work to `house/sync`.
+
 ## <a id="managed-blocks"></a>Keeping your own lines: managed blocks
 
 Most configuration files, and `AGENTS.md`, `CLAUDE.md` and `APPROVAL_POLICY.md`, are **extendable**.
