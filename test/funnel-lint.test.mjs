@@ -17,11 +17,13 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { createRequire } from 'node:module'
-import { readFileSync } from 'node:fs'
-import { resolve } from 'node:path'
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { dirname, join, resolve } from 'node:path'
 import { ESLint, Linter } from 'eslint'
 import { funnel, contracts } from '../tools/lint/funnel.mjs'
 import { headerFor } from '../templates/tools/license/check-headers.mjs'
+import { renderAll } from '../scripts/lib/render.mjs'
+import { loadValues } from '../scripts/lib/values.mjs'
 
 const lint = (code, config = funnel) => new Linter().verify(code, [{ ...config, languageOptions: { ecmaVersion: 'latest', sourceType: 'module' } }])
 
@@ -106,10 +108,13 @@ test('JSDoc rejects name restatements and missing contracts while accepting purp
     ['require-example', documented(purpose, tags, `export ${callable}`), documented(purpose, `${tags}\n@example first(17) // 17`, `export ${callable}`)],
   ]
   const ruleId = (rule) => `${['require-description', 'match-description'].includes(rule) ? 'house' : 'jsdoc'}/${rule}`
+  const canonical = headerFor(readFileSync('tools/license/header.txt', 'utf8'), 'contract.js', String(new Date().getFullYear()))
   for (const [rule, rejected, accepted] of cases) {
     const messages = lintContract(rejected)
     assert.ok(messages.some((item) => item.ruleId === ruleId(rule)), JSON.stringify({ rule, messages }))
     assert.deepEqual(lintContract(accepted), [], `${rule}: ${accepted}`)
+    assert.ok(lintContract(`${canonical}\n\n${rejected}`).some((item) => item.ruleId === ruleId(rule)), `${rule}: a canonical header must not exempt the declaration`)
+    assert.deepEqual(lintContract(`${canonical}\n\n${accepted}`), [], `${rule}: a canonical header must not add findings`)
   }
   // A removed rule must not silently leave its fixture behind, nor may a new rule go unexercised.
   assert.deepEqual(cases.map(([rule]) => ruleId(rule)).sort(), Object.entries(contracts.rules).filter(([, value]) => value !== 'off').map(([name]) => name).sort())
@@ -198,6 +203,25 @@ test('JSDoc rejects name restatements and missing contracts while accepting purp
     assert.ok(check(`${header}\n\n${documented('select caller value', tags, callable)}`).some((item) => /match-description$/.test(item.ruleId)))
     assert.ok(check(`${header}\n\n${callable}`).some((item) => item.ruleId === 'jsdoc/require-jsdoc'), 'a file header cannot document a declaration')
   }
+
+  // Consumer-added JSDoc rules must use the same exemption as the twenty shared contracts.
+  for (const shared of [funnel, contracts]) {
+    const config = {
+      plugins: shared.plugins,
+      settings: { jsdoc: { mode: 'typescript', tagNamePreference: { file: false } } },
+      rules: { 'jsdoc/check-tag-names': 'error', 'jsdoc/require-description-complete-sentence': 'error' },
+    }
+    const code = `${canonical}\n\n${idle}`
+    assert.deepEqual(new Linter().verify(code, [config], { filename: 'contract.js' }), [])
+    const fixed = new Linter().verifyAndFix(code, [config], { filename: 'contract.js' })
+    assert.equal(fixed.output, code, 'autofix must preserve the canonical legal text')
+    assert.ok(new Linter().verify(`${canonical}\n\n/** release resources */\nfunction dispose() {}`, [config], { filename: 'contract.js' }).some((item) => item.ruleId === 'jsdoc/require-description-complete-sentence'))
+    const settingsError = new Linter().verify(code, [{ plugins: shared.plugins, rules: { 'jsdoc/no-missing-syntax': 'error' } }], { filename: 'contract.js' })
+    assert.ok(settingsError.some((item) => /missing a `contexts` option/.test(item.message)), 'a file header must not conceal invalid rule settings')
+    const overview = { plugins: shared.plugins, rules: { 'jsdoc/require-file-overview': ['error', { tags: { author: { mustExist: true } } }] } }
+    assert.ok(new Linter().verify(code, [overview], { filename: 'contract.js' }).some((item) => item.message === 'Missing @author'), 'a file header must not exempt whole-file requirements')
+    assert.deepEqual(new Linter().verify(`${canonical}\n\n/** @author Fixture owner */\n${idle}`, [overview], { filename: 'contract.js' }), [])
+  }
 })
 
 test('the repository config applies shared policies to test and lint-tool scopes', async () => {
@@ -205,5 +229,47 @@ test('the repository config applies shared policies to test and lint-tool scopes
   for (const filePath of ['test/funnel-probe.test.mjs', 'tools/lint/probe.mjs']) {
     const [result] = await eslint.lintText("assert.equal(existsSync('src/old.ts'), false)", { filePath })
     assert.ok(result.messages.some((item) => item.ruleId === 'house/no-source-absence'), JSON.stringify(result.messages))
+  }
+})
+
+test('rendered Node consumers exempt canonical headers across JSDoc rules without exempting declarations', async (context) => {
+  const scratch = resolve('.amp/in/orb-backup')
+  mkdirSync(scratch, { recursive: true })
+  for (const repository of ['Resnovas/Eventiva', 'Resnovas/smartcloud', 'Fixture/other-node']) {
+    const root = mkdtempSync(join(scratch, 'jsdoc-consumer-'))
+    context.after(() => rmSync(root, { recursive: true, force: true }))
+    const values = { ...loadValues('house.yml'), REPOSITORY: repository, LEGAL_HOLDER: `${repository} fixture owner` }
+    const rendered = renderAll('templates', values)
+    for (const path of ['tools/lint/funnel.mjs', 'tools/license/header.txt', 'tools/license/check-headers.mjs']) {
+      const file = rendered.find((entry) => entry.path.replaceAll('\\', '/') === path)
+      assert.ok(file, `house sync must deliver ${path} to ${repository}`)
+      mkdirSync(dirname(join(root, path)), { recursive: true })
+      writeFileSync(join(root, path), file.content)
+    }
+    writeFileSync(join(root, 'eslint.config.mjs'), `
+import { funnel, contracts } from './tools/lint/funnel.mjs'
+export default [
+  { ...funnel, files: ['**/src/**/*.js'] },
+  { ...contracts, files: ['**/src/**/*.js'] },
+  { files: ['**/src/**/*.js'], settings: { jsdoc: { tagNamePreference: { file: false } } }, rules: { 'jsdoc/require-description-complete-sentence': 'error' } },
+]
+`)
+    const path = 'packages/fixture/src/main.js'
+    const file = join(root, path)
+    mkdirSync(dirname(file), { recursive: true })
+    const header = headerFor(readFileSync(join(root, 'tools/license/header.txt'), 'utf8'), path, String(new Date().getFullYear()))
+    const declaration = '/** Release scoped resources before shutdown. */\nfunction dispose() {}\n'
+    for (const cwd of [root, join(root, 'packages/fixture')]) {
+      const eslint = new ESLint({ cwd })
+      writeFileSync(file, `${header}\n\n${declaration}`)
+      const [accepted] = await eslint.lintFiles([file])
+      assert.deepEqual(accepted.messages, [], `${repository} from ${cwd}`)
+      writeFileSync(file, `${header.replace(`@file ${path}`, '@file src/main.js')}\n\n${declaration}`)
+      const [wrongPath] = await eslint.lintFiles([file])
+      assert.ok(wrongPath.messages.some((item) => item.ruleId === 'jsdoc/check-tag-names'), 'noncanonical headers retain consumer rule checks')
+      writeFileSync(file, `${header}\n\nfunction dispose() {}\n`)
+      const [undocumented] = await eslint.lintFiles([file])
+      assert.ok(undocumented.messages.some((item) => item.ruleId === 'jsdoc/require-jsdoc'), 'all consumer declaration gates remain active')
+    }
   }
 })

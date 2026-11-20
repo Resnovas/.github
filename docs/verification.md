@@ -27,7 +27,8 @@ Use disposable Git repositories, synthetic JSON and lint snippets. Execute the c
     "evidence validation binds reviewed bytes rather than accepting a manifest alone",
     "source-absence lint rejects source inspections while allowing behavior and redaction assertions",
     "JSDoc rejects name restatements and missing contracts while accepting purpose and constraints",
-    "the repository config applies shared policies to test and lint-tool scopes"
+    "the repository config applies shared policies to test and lint-tool scopes",
+    "rendered Node consumers exempt canonical headers across JSDoc rules without exempting declarations"
   ],
   "evidence": ["log"]
 }
