@@ -361,6 +361,12 @@ for (const mode of ['deadline', 'cancel', 'abort', 'exit-first', 'no-pipes', 'no
     else assert.equal(result.error, undefined)
     assert.equal(result.stderr, noPipes ? '' : 'NATIVE_DESCENDANT')
     assert.equal(result.timings.at(-1).phase, 'total')
+    if (windows) {
+      const timings = new Map(result.timings.map(({ phase, elapsedMs }) => [phase, elapsedMs]))
+      for (const phase of ['native-supervisor-spawned', 'native-process-created', 'native-main-entry', 'native-control-connected', 'native-request-decoded'])
+        assert.ok(Number.isSafeInteger(timings.get(phase)), `Missing ${phase}`)
+      assert.ok(timings.get('native-main-entry') >= timings.get('native-process-created'))
+    }
     await assertStopped(descendantPid)
     t.diagnostic(`${process.platform}/${process.version} native ${mode}: status=${result.status}, signal=${result.signal}, total=${result.elapsedMs} ms; descendant stopped`)
   })

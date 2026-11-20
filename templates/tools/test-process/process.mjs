@@ -163,7 +163,7 @@ export function childBudgetIssue(budgets, testMs) {
 }
 
 const journalPhase = /^(?:child-start|module-first|module-64|module-256|module-1024|entry-source-loaded|effect-source-loaded|root-start|bootstrap-failure-logged|process-before-exit|process-exit-success|process-exit-failure|(?:main-use-exit|main-services-released|main-telemetry-released|bootstrap-use-exit|root-exit):(?:success|failure|interrupted))(?![\s\S])/
-const ownedPhase = /^(?:spawn-request|spawned|output-first|diagnostic-output|registration-output|ipc-output|ready|deadline|output-limit|cancel|exit|close|total)(?![\s\S])/
+const ownedPhase = /^(?:spawn-request|spawned|native-supervisor-spawned|native-process-created|native-main-entry|native-control-connected|native-request-decoded|output-first|diagnostic-output|registration-output|ipc-output|ready|deadline|output-limit|cancel|exit|close|total)(?![\s\S])/
 
 /**
  * Accept only bounded numeric phase evidence, never commands, IPC payloads or arbitrary child text.
@@ -224,7 +224,7 @@ export function startChild(command, args, options) {
   // POSIX descendants inherit this owned group, even after its leader exits.
   const grouped = process.platform !== 'win32'
   const spawnOptions = { cwd, env: nested ? { ...env, HOUSE_CHILD_OWNER: '1' } : env, stdio, detached: grouped, shell: false }
-  const child = nativeWindows ? windowsChild(command, args, spawnOptions) : spawn(command, args, spawnOptions)
+  const child = nativeWindows ? windowsChild(command, args, spawnOptions, phase, spawnedAtMs) : spawn(command, args, spawnOptions)
   const children = new Map()
   const originalEmit = child.emit
   // Node otherwise buffers private IPC when the caller did not request business messages.

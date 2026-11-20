@@ -166,5 +166,27 @@ as the way to read and write simultaneously. This is a focused correction to
 the observed deadlock hypothesis; only new Windows execution can confirm it.
 The existing natural Git/compiler and lifecycle assertions remain its regression
 controls, with no budget, readiness allowance or threshold increase.
-The local corrected full gate passes153/153; Windows requalification is pending.
+The local corrected full gate passes153/153. Published correction head
+`fbcf2708d52f9589efa5a21afc3da50e1b84eab6` completes Windows24 at151/153 and
+Windows-current at147/153. Real Git, compiler-shaped transport and delegated
+native PID/close pass both. Two/six early native scenarios still fail their
+unchanged700ms readiness requirement; later native closes take100-140ms.
+Delayed native spawn observations include915/2146/3353ms. Neither Defender or
+SmartScreen scanning nor CLR cold start/JIT is established as the cause.
+
+The next diagnostic records `native-supervisor-spawned`, OS process creation,
+managed Main entry, private control connection and request decoding through the
+same canonical numeric timing owner. A non-inlined Main wrapper captures entry
+before compiling the serializer-bearing method. Creation/entry use Windows
+FILETIME/UTC, translated to parent-relative milliseconds; connection/decoding
+are parent receipt times. Their difference is not a CPU profile or proof of
+which subsystem waited. Cancellation before a report leaves that interval
+unknown, never zero. Existing ready/PID/death tests require the new phases too.
+No warm-up, readiness/deadline increase or startup exclusion is implemented.
+Any proposed explicit setup warm-up requires owner review after measurements.
+
+Jonathan's conditional decision permits false-positive dismissal of alerts70/71
+only after the corrected exact head passes every OS and both flows are confirmed
+unchanged: separate argv, `shell:false`, normalized prefixed test filter.
+Different alerts return for review; no alert is dismissed by these partial runs.
 No speedup, downstream adoption or whole EVE-261 acceptance is claimed.

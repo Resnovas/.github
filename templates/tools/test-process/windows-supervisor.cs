@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.IO.Pipes;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -120,6 +121,8 @@ internal static class WindowsSupervisor
     private static extern uint WaitForSingleObject(IntPtr handle, uint milliseconds);
     [DllImport("kernel32.dll", SetLastError = true)]
     private static extern bool GetExitCodeProcess(IntPtr process, out uint code);
+    [DllImport("kernel32.dll", SetLastError = true)]
+    private static extern bool GetProcessTimes(IntPtr process, out long creation, out long exit, out long kernel, out long user);
     [DllImport("kernel32.dll")]
     private static extern bool CloseHandle(IntPtr handle);
 
@@ -221,6 +224,13 @@ internal static class WindowsSupervisor
 
     private static int Main(string[] arguments)
     {
+        // Capture entry before JIT-compiling Run and loading its serializer path.
+        return Run(arguments, DateTime.UtcNow.ToFileTimeUtc());
+    }
+
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static int Run(string[] arguments, long mainEntry)
+    {
         if (arguments.Length != 1) return 1;
         JavaScriptSerializer json = new JavaScriptSerializer();
         // The control thread keeps a read pending while this thread publishes
@@ -232,12 +242,19 @@ internal static class WindowsSupervisor
             StreamReader reader = new StreamReader(pipe, new UTF8Encoding(false));
             StreamWriter writer = new StreamWriter(pipe, new UTF8Encoding(false));
             writer.AutoFlush = true;
+            long creation, exitTime, kernelTime, userTime;
+            Check(GetProcessTimes(GetCurrentProcess(), out creation, out exitTime, out kernelTime, out userTime));
+            // FILETIME and UTC entry share the Windows clock. They separate OS
+            // creation-to-managed-entry from post-entry setup; not a CPU profile.
+            writer.WriteLine("{\"action\":\"entry\",\"createdAtMs\":" + (creation / 10000 - 11644473600000L) +
+                ",\"mainAtMs\":" + (mainEntry / 10000 - 11644473600000L) + "}");
             ProcessInfo process = new ProcessInfo();
             ManualResetEvent released = new ManualResetEvent(false);
             Thread control = null;
             try
             {
                 Dictionary<string, object> request = json.Deserialize<Dictionary<string, object>>(reader.ReadLine());
+                writer.WriteLine("{\"action\":\"decoded\"}");
                 if ((bool)request["cancelled"]) return 1;
                 job = CreateJobObjectW(IntPtr.Zero, IntPtr.Zero);
                 Check(job != IntPtr.Zero);

@@ -25,7 +25,7 @@ import { fileURLToPath } from 'node:url'
  * This adapter supplies no budget, deadline, output counter or second result owner.
  * The supervisor's sole job handle is private, kill-on-close and non-breakaway.
  */
-export function windowsChild(command, args, options) {
+export function windowsChild(command, args, options, phase, startedAtMs) {
   const name = `house-child-${randomUUID()}`
   const server = createServer()
   server.listen(`\\\\.\\pipe\\${name}`)
@@ -53,7 +53,10 @@ export function windowsChild(command, args, options) {
 
   /** Keep actual native PID/spawn and root exit distinct from supervisor release. */
   child.emit = function (event, ...values) {
-    if (event === 'spawn') return true
+    if (event === 'spawn') {
+      phase('native-supervisor-spawned')
+      return true
+    }
     if (event === 'exit' || event === 'close') {
       const signal = rootExit ? rootExit.terminated ? requestedSignal ?? 'SIGKILL' : null : values[1]
       const status = failed || rootExit?.terminated ? null : rootExit?.status ?? values[0]
@@ -85,6 +88,7 @@ export function windowsChild(command, args, options) {
   })
   server.once('connection', (socket) => {
     connected = true
+    phase('native-control-connected')
     server.close()
     channel = socket
     socket.setEncoding('utf8')
@@ -106,7 +110,13 @@ export function windowsChild(command, args, options) {
       for (const line of lines) {
         let packet
         try { packet = JSON.parse(line) } catch { socket.destroy(); continue }
-        if (packet.action === 'started' && Number.isSafeInteger(packet.pid) && packet.pid > 0) {
+        if (packet.action === 'entry' && Number.isSafeInteger(packet.createdAtMs) &&
+            Number.isSafeInteger(packet.mainAtMs) && packet.mainAtMs >= packet.createdAtMs) {
+          phase('native-process-created', packet.createdAtMs - startedAtMs)
+          phase('native-main-entry', packet.mainAtMs - startedAtMs)
+        } else if (packet.action === 'decoded') {
+          phase('native-request-decoded')
+        } else if (packet.action === 'started' && Number.isSafeInteger(packet.pid) && packet.pid > 0) {
           child.pid = packet.pid
           originalEmit.call(child, 'spawn')
           if (requestedSignal) socket.write('stop\n')
