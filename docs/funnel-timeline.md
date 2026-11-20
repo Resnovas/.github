@@ -8,8 +8,8 @@ Owner: [.github pod](https://ampcode.com/threads/T-01a1f637-2241-770e-aa29-22cf1
 
 - 2026-11-19T23:53Z: verified Eventiva and smartcloud findings; neither enables eslint-plugin-jsdoc. Preserve Eventiva's AST/rationale/zero gate and smartcloud's declaration/example contracts.
 - 2026-11-19T23:53Z: GitHub counterparts created after open/closed duplicate searches. The integration assigned RES-66 and RES-67 (subsequently SMC-178) rather than attaching to the existing SMC issues. Mapping decision escalated; no issue deleted or relinked. The first Linear activity comment used an approximate future minute; this timeline records the actual observed tool timestamps.
-- 2026-11-20T00:09Z: Jonathan approved ESLint as the minimal shared-config host, corrected AI-03 to prohibit delegated certification except the exact personal-instructions owner exception, and assigned canonical ownership to RES-66/RES-67. The existing author-email DCO check remains in smartcloud CI; its maintainer-warning and trusted-bot rules are unchanged.
-- 2026-11-20T00:23Z: verified RES-67 restored to RES under RES-66 with GitHub #55 attached. Exact exception confirmed in loaded personal instructions; TGTGamer/private owner session verified. Updated RES-67 to In Progress for active local verification.
+- 2026-11-20T00:09Z: Jonathan approved ESLint as the minimal shared-config host and assigned canonical ownership to RES-66/RES-67. The identity decision below supersedes the early AI-03 wording; smartcloud's maintainer-warning and trusted-bot rules are unchanged.
+- 2026-11-20T00:23Z: verified RES-67 restored to RES under RES-66 with GitHub #55 attached. Updated RES-67 to In Progress for active local verification.
 
 ## Implemented contracts
 
@@ -119,10 +119,16 @@ Following Jonathan's later explicit rebase/draft instruction (receipt time not r
 
 ## Approved native smartcloud profile
 
-2026-11-20, exact approval time unknown: Puck relayed Jonathan's approval of smartcloud #753's native profile. This pod owns the house checker/recipe; the [smartcloud pod](https://ampcode.com/threads/T-7bc48393-501f-401d-8736-2412fd5b18de) owns adoption. From accepted #76, require trusted-main build/config, pre-build queue metadata/checkRunId, script-free installs, uncached bundle and post-build split tokens. Preserve authorized comments; merge_group gets no full app token. Other repositories retain the published-action profile. No dependency, protection, token-scope, bot-branch or queue-admission change.
+2026-11-20, approval time unknown: Jonathan approved smartcloud #753's native profile: trusted-main build/config, pre-build queue metadata/checkRunId, script-free installs, uncached bundle and post-build split tokens. Authorized comments remain; merge_group gets no full app token. Other repos keep the published-action profile. No dependency, protection, token-scope, bot-branch or queue-admission change. The [smartcloud pod](https://ampcode.com/threads/T-7bc48393-501f-401d-8736-2412fd5b18de) owns adoption.
 
-Explicit local `preCommit` script/marker registration resolves the reproduced #76 native-hook collision. The runner retains alternate-index/snapshot guards and owns static/affected execution; CI owns full verification. Installed-hook and workflow regressions failed before the fix and pass afterward, including rejected mutations. v2.1.1 is released separately; review and live queued-SHA proof remain with the review host after owner-ready confirmation. Preserve RES-67/#55's owner-completed state and non-closing references.
+Local `preCommit` script/marker registration fixes the #76 native-hook collision, retaining alternate-index/snapshot guards and static/affected execution. Hook/workflow regressions failed before and passed after. CI owns full verification. v2.1.1/review/live queued-SHA proof remain separate. Preserve RES-67/#55's owner-completed state and non-closing references.
 
-2026-11-20T15:45Z: static/check pass; full tests147/147, affected112/112, renderer lines100%/branches95.30%. Actionlint passes both caller/recipe; offline zizmor has zero findings, two scoped ignores and seven existing suppressions.
+2026-11-20T15:45Z: static/check pass; tests147/147, affected112/112, renderer lines100%/branches95.30%. Actionlint passes; offline zizmor zero findings.
 
-2026-11-20T15:49Z: [#77](https://github.com/Resnovas/.github/pull/77) opened draft; Linear converted it, not human readiness. Head eccbad74 passed [six-lane CI44766794454](https://github.com/Resnovas/.github/actions/runs/44766794454) and workflow contracts, but CodeQL alert69 flags the new fixture's path-stat/read sequence and required aggregation fails. Bind fixture bytes/metadata to one descriptor without dropping assertions or suppressing the gate. Detailed alert API returns403; the head-bound bot comment provides the finding. Reverify corrected head before acceptance or queue operations.
+2026-11-20T15:59:53Z: Jonathan merged [#77](https://github.com/Resnovas/.github/pull/77) as [6c0d3f2](https://github.com/Resnovas/.github/commit/6c0d3f2962f64adab32fa2f0cb0e8c0ba3b70463). CodeQL alert69 on eccbad74 was fixed by descriptor-bound fixture reads in 380805e; exact-head required checks and all eight main workflows passed, including [CI44768859102](https://github.com/Resnovas/.github/actions/runs/44768859102). No assertions/gates weakened. Downstream adoption/live proof remain separate.
+
+## Commit identity proposal
+
+2026-11-20, decision time unknown: RES-67 [identity proposal](commit-signers.md) separates provenance/human certification and binds signatures to author accounts. No platform/key exceptions; human PRs avoid self-approval. Evaluators stay dormant; owner-completed status/downstream holds remain.
+
+2026-11-20T17:39:29Z: rebased [#79](https://github.com/Resnovas/.github/pull/79) onto #78/main a8af00f without changing either contract. Jonathan accepts exact-head re-approval; AI-21/merge remain his. Revalidation precedes delivery; activation waits for merge.
