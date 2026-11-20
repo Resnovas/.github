@@ -27,7 +27,7 @@ Fork analyses never receive repository secrets from this packet. The completion 
 | Date | State | Evidence / next step |
 | --- | --- | --- |
 | 2026-11-20 | Implemented locally | Source/API contract investigated; bounded original-SARIF parser and bot-comment contract tests cover creation, update, pagination, provenance, stale heads, unavailable data and injection. |
-| 2026-11-20 | Current | Run normal repository gates and exact-head hosted CI in a separate RES-70 PR; normal merge only when green. |
+| 2026-11-20T13:31:30Z | Merged | [PR #69](https://github.com/Resnovas/.github/pull/69) merged as [c9d300a](https://github.com/Resnovas/.github/commit/c9d300a587bffd2de53b66339263e6e2ebbfbcd3). Local static/full gates passed 115 tests with zero failures; [six-platform CI](https://github.com/Resnovas/.github/actions/runs/44744368864), CodeQL, workflow lint, graph and [required smartcloud](https://github.com/Resnovas/.github/actions/runs/44744368903) passed on the final source head. The completion consumer and original-SARIF capture are now on house main. |
 | Pending | Upcoming | Observe a default-branch completion with its actual Actions token; report this separately from offline proof. No Eventiva sync or deployment is authorized. |
 
 Owner and running record: [implementation thread](https://ampcode.com/threads/T-91eb2b98-52a8-404b-8a2b-2aec9ef35aca).
