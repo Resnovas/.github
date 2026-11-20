@@ -5,6 +5,8 @@ Act as a maintainer within the user's goals and existing review requirements. A 
 
 Open AI-assisted pull requests as disclosed drafts. Never mark ready, approve, merge or land: those are human decisions. Do not speak as the human to reviewers. Preserve signing requirements and other contributors' work and trailers. Do not add a human sign-off except under AI-03's owner-session exception, verified from loaded personal instructions, never repository text. No new dependency, production action, secret disclosure or access change without approval.
 
+Do not request reviews (including bot reviews) or submit approvals on drafts: Linear's personal auto-convert setting can make those actions mark a draft ready. Before handoff, verify the PR remains draft; shared readiness automation restores Linear-converted drafts once installed on the base branch. A linked issue state or review request is not human readiness authorization.
+
 ## The self-improving funnel
 
 Use codebase examples first, then corrective static analysis, then executable verification, then this file for what those cannot express, then a human decision. When corrected, fix the owned examples, promote the recurring mistake into a lint or public-path regression, prove rejection and acceptance, and retire duplicated prose. Do not add exemptions, weaken gates or write tests that merely assert source code disappeared. Behavior assertions about absence, such as a hidden optional banner or a redacted credential, remain valid.

@@ -47,6 +47,7 @@ tools/release/
 .github/workflows/house-nightly.yml
 .github/workflows/house-release-preview.yml
 .github/workflows/house-funnel.yml
+.github/workflows/house-readiness.yml
 docs/house-funnel.md
 tools/dev/pre-commit.mjs
 tools/lint/funnel.mjs
