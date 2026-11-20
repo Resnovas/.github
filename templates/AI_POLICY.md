@@ -217,6 +217,8 @@ You **MAY** mark the pull request ready for review only once you have personally
 Marking it ready means you take responsibility for it.
 At that point `Accountable human` **MUST** be your GitHub handle, and `Human review` **MUST** state what you reviewed and ran.
 
+**Named exception approved by Jonathan ([@TGTGamer](https://github.com/TGTGamer)) on 2026-11-20:** in **Resnovas/.github** and **Resnovas/Eventiva** only, agents **MAY** mark pull requests ready and merge them once all required checks are green, overriding AI-21 and [AI-31](#ai-31) for those actions only. Record this authorization and the agent's verification evidence in the pull request; do not present agent verification as human review. Pull requests still start as disclosed drafts under [AI-20](#ai-20). Configured required reviews, branch protection and required checks still apply. The exception grants no approval or self-approval, bypass, admin merge, force-push, sign-off, deployment or spending authority. Other repositories retain the default restrictions.
+
 ### <a id="evidence"></a>Evidence by type of change
 
 | Change | Evidence required |
@@ -252,9 +254,10 @@ An agent that cannot be traced to a person **MUST NOT** submit anything.
 ### <a id="ai-31"></a>AI-31: Agents open drafts and stop
 
 An agent **MAY** open issues and draft pull requests.
-It **MUST NOT** mark a pull request ready for review, approve or merge.
+It **MUST NOT** mark a pull request ready for review or merge, except under the dated, repository-scoped authorization in [AI-21](#ai-21).
+It **MUST NOT** approve a pull request; the AI-21 exception does not grant approval authority.
 It **MUST NOT** sign off a commit except under the narrow owner-session exception in [AI-03](#ai-03).
-All other certifications and review decisions belong to the accountable human under [AI-21](#ai-21).
+All other certifications and human review decisions remain with the accountable human.
 
 ### <a id="ai-32"></a>AI-32: Agents identify themselves
 
