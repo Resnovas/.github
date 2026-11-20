@@ -185,11 +185,11 @@ Timing goes to stderr, preserving JSON stdout. Records contain only `code`, chil
 
 POSIX launches own an isolated group. Deadline/output-limit/cancel and normal leader exit signal remaining members; escalation survives leader close. Results preserve the leader's status/signal and await actual descriptors plus escalation. Deliberately detached groups are excluded.
 
-Windows Node-parent cases use libuv's existing Job cleanup, not arbitrary native-root ownership. Native shell-root regressions run on all six OS/Node jobs. No new Job/supervisor is adopted. PR59 stays draft pending portable proof and human acceptance; downstream migration remains held.
+At `ece7e01`, Linux/macOS pass 124/124; Windows passes 121/124, failing native shell deadline/cancel/exited-root ownership. Node-root cases pass via libuv Job cleanup. PR59 stays draft; native ownership approval and downstream adoption remain held. See [evidence](funnel-timeline.md#eve-261-process-lifetime-follow-up).
 
 The previously unbounded typecheck launcher now declares 120000 ms for its build and 60000 ms per compiler, deriving its whole-command cancellation budget from that vector plus cleanup and reporting headroom. The editor launcher declares 600000 ms because it can select a complete project; Vitest's existing per-test deadlines and the editor's existing coverage-off behavior remain unchanged. These are new safety ceilings, not claims that every repository completes at those limits. A slow/flooded child reports its phase: shorten its work or escalate a genuinely inadequate task budget rather than suppress timing.
 
-Both launchers execute installed Node `bin` entries through `process.execPath`, without shebangs or shells. Exact-launcher fixtures use ordinary modules/manifests, not platform shims. Linux proof cannot establish portability; the full matrix remains required. Windows SIGTERM forcibly terminates rather than delivering a catchable signal; assertions preserve its actual result while requiring expiry and close.
+Both launchers execute installed Node `bin` entries through `process.execPath`, without shebangs or shells. Exact-launcher fixtures use ordinary modules/manifests, not platform shims. Windows SIGTERM forcibly terminates rather than delivering a catchable signal; assertions preserve its actual result while requiring expiry and close.
 
 Proposal pending review, merge and sync, not downstream acceptance or early managed-file adoption. Partial owner: [EVE-261](https://linear.app/resnovas/issue/EVE-261) / [Eventiva#1035](https://github.com/Resnovas/Eventiva/issues/1035). No existing AGENTS budget/timing instruction duplicates this check, so none is removed.
 
