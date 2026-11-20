@@ -15,10 +15,12 @@
  */
 
 import assert from 'node:assert/strict'
+import { spawnSync } from 'node:child_process'
 import { once } from 'node:events'
 import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import test from 'node:test'
+import { setTimeout as delay } from 'node:timers/promises'
 import { fileURLToPath } from 'node:url'
 import { childBudgetIssue, runChild, startChild, terminationGraceMs } from '../templates/tools/test-process/process.mjs'
 
@@ -111,6 +113,123 @@ test('deadline and output limits terminate real children instead of stranding th
   const missing = await runChild('eventiva-test-intentionally-missing-executable', [], { budgetMs: 1000 })
   assert.equal(missing.error.code, 'ENOENT')
 })
+
+test('a descendant holding output cannot extend the 150 ms child deadline', { timeout: 3000 }, async () => {
+  const result = await runChild(process.execPath, ['--eval', `
+    const { spawn } = require('node:child_process');
+    const descendant = spawn(process.execPath, ['--eval', 'setTimeout(() => {}, 1800)'], {
+      stdio: ['ignore', 1, 2],
+    });
+    console.log('descendant:' + descendant.pid);
+    setInterval(() => {}, 1000);
+  `], { budgetMs: 150 })
+  assert.match(result.stdout, /descendant:\d+/)
+  assert.equal(result.error.code, 'ETIMEDOUT')
+  assert.equal(result.timings.at(-1).phase, 'total')
+  // A generous scheduling tolerance still rejects waiting for the descendant's 1800 ms timer.
+  assert.ok(result.elapsedMs < 1000, `Descendant delayed actual close to ${result.elapsedMs} ms`)
+})
+
+/** Bound regression failure independently of the owner under test, clearing the watchdog on success. */
+async function within(promise, ms) {
+  let timer
+  try {
+    return await Promise.race([promise, new Promise((_, reject) => {
+      timer = setTimeout(() => reject(new Error(`Process ownership did not finish within ${ms} ms`)), ms)
+    })])
+  } finally {
+    clearTimeout(timer)
+  }
+}
+
+/** Allow bounded OS signal delivery; a Linux zombie cannot hold descriptors or execute. */
+async function assertStopped(pid) {
+  for (let remaining = 10; remaining > 0; remaining--) {
+    if (process.platform === 'linux') {
+      try {
+        if (/^State:\s+Z/m.test(readFileSync(`/proc/${pid}/status`, 'utf8'))) return
+      } catch (failure) {
+        if (failure.code !== 'ENOENT') throw failure
+      }
+    }
+    try {
+      process.kill(pid, 0)
+    } catch (failure) {
+      if (failure.code === 'ESRCH') return
+      throw failure
+    }
+    await delay(5)
+  }
+  assert.fail('Descendant is still running after bounded signal delivery')
+}
+
+for (const mode of ['deadline', 'cancel', 'abort', 'exit-first', 'no-pipes']) {
+  test(`descendant ownership: ${mode} releases resistant descendants and actual descriptors`, { timeout: 3000 }, async (t) => {
+    const controller = new AbortController()
+    const owner = startChild(process.execPath, ['--eval', `
+      const { spawn } = require('node:child_process');
+      const descendant = spawn(process.execPath, ['--eval', ${JSON.stringify(`
+        process.on('SIGTERM', () => {});
+        process.stdout.write('DESCENDANT_OUT');
+        process.stderr.write('DESCENDANT_ERR');
+        if (${mode !== 'no-pipes'}) require('node:fs').writeSync(3, 'journal-canary');
+        process.send({ready: true, pid: process.pid});
+        setInterval(() => {}, 1000);
+        setTimeout(() => process.exit(99), 10000);
+      `)}], {stdio: ${JSON.stringify(mode === 'no-pipes' ? ['ignore', 'ignore', 'ignore', 'ipc'] : ['ignore', 1, 2, 3, 'ipc'])}});
+      descendant.once('message', value => process.send(value, () => {
+        if (${mode === 'exit-first' || mode === 'no-pipes'}) process.exit(23);
+      }));
+      setInterval(() => {}, 1000);
+    `], { budgetMs: 1000, ipc: true, journal: true, signal: controller.signal })
+    let descendantPid
+    const ready = once(owner.child, 'message').then(([value]) => {
+      descendantPid = value.pid
+      return value
+    })
+    // Failed assertions must not rely on the broken owner to clean up a persistent descendant.
+    t.after(async () => {
+      if (process.platform === 'win32' && mode === 'exit-first' && owner.child.exitCode !== null) {
+        const probe = spawnSync('taskkill.exe', ['/PID', String(owner.child.pid), '/T', '/F'], { encoding: 'utf8', timeout: 500 })
+        t.diagnostic(`Exited-root taskkill: status=${probe.status}; error=${probe.error?.code}; ${probe.stdout.trim()} ${probe.stderr.trim()}`)
+      }
+      for (const pid of [descendantPid, owner.child.pid]) {
+        if (!pid) continue
+        try { process.kill(pid, 'SIGKILL') } catch (failure) { if (failure.code !== 'ESRCH') throw failure }
+      }
+      await within(owner.cancel(), 500)
+    })
+    assert.equal((await within(ready, 700)).ready, true)
+    const close = once(owner.child, 'close')
+    if (mode === 'cancel') await within(owner.cancel(), 700)
+    if (mode === 'abort') controller.abort()
+    const result = await within(owner.completed, mode === 'deadline' ? 1500 : 700)
+    const [status, signal] = await within(close, 100)
+    assert.equal(result.status, status)
+    assert.equal(result.signal, signal)
+    if (mode === 'exit-first' || mode === 'no-pipes') {
+      assert.equal(result.status, 23)
+      assert.equal(result.signal, null)
+      assert.equal(result.error, undefined)
+    } else if (mode === 'deadline') {
+      assert.equal(result.error.code, 'ETIMEDOUT')
+      assert.ok(result.timings.some((row) => row.phase === 'deadline'))
+    } else {
+      assert.equal(result.error, undefined)
+      assert.ok(result.timings.some((row) => row.phase === 'cancel'))
+      assert.ok(!result.timings.some((row) => row.phase === 'deadline'))
+    }
+    if (mode !== 'no-pipes') {
+      assert.equal(result.stdout, 'DESCENDANT_OUT')
+      assert.equal(result.stderr, 'DESCENDANT_ERR')
+      assert.equal(result.output[3], 'journal-canary')
+    }
+    assert.ok(result.elapsedMs < 1600, `Actual close took ${result.elapsedMs} ms`)
+    assert.equal(result.timings.at(-1).phase, 'total')
+    await assertStopped(descendantPid)
+    t.diagnostic(`${process.platform}/${process.version} ${mode}: status=${status}, signal=${signal}, total=${result.elapsedMs} ms; descendant stopped`)
+  })
+}
 
 test('journal and nested timing accept only closed numeric records without payload forwarding', { timeout: 3000 }, async (t) => {
   const records = []

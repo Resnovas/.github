@@ -59,6 +59,8 @@ function emit(row) {
 /**
  * Start one bounded child with mandatory timing, bounded streams and optional IPC/journal descriptors.
  * The returned owner retains cancellation until actual close; callers must await completed or cancel().
+ * POSIX signals target the owned process group; Windows currently owns only the direct PID.
+ * Descendants that deliberately create another POSIX session/group are outside this ownership boundary.
  * No option disables timing. Command, environment, stream and IPC payloads are never logged as timing.
  * Optimization evidence: real-child output/IPC/abort proofs took 73.52/42.95/45.11 ms; one owner avoids a second polling runner.
  */
@@ -86,7 +88,9 @@ export function startChild(command, args, options) {
   }
   phase('spawn-request')
   const stdio = ['pipe', 'pipe', 'pipe', ...(journal ? ['pipe'] : []), ...(ipc ? ['ipc'] : [])]
-  const child = spawn(command, args, { cwd, env, stdio })
+  // POSIX descendants inherit this owned group, even after its leader exits.
+  const grouped = process.platform !== 'win32'
+  const child = spawn(command, args, { cwd, env, stdio, detached: grouped })
   let stdout = ''
   let stderr = ''
   let diagnostic = ''
@@ -97,8 +101,28 @@ export function startChild(command, args, options) {
   let forced
   let closed = false
   let terminating = false
+  let release
   child.stdout.setEncoding('utf8')
   child.stderr.setEncoding('utf8')
+  /** Signal the owned POSIX group without reinterpreting the direct child's exit result. */
+  const signalTree = (signal) => {
+    if (!grouped) return child.kill(signal)
+    if (!child.pid) return false
+    try {
+      process.kill(-child.pid, signal)
+      return true
+    } catch (failure) {
+      if (failure.code !== 'ESRCH') error ??= failure
+      return false
+    }
+  }
+  /** Finish escalation even if the group leader and its own descriptors have already closed. */
+  const force = () => {
+    clearTimeout(forced)
+    forced = undefined
+    signalTree('SIGKILL')
+    release?.()
+  }
   /**
    * Signal a bounded failure once, retaining a forced-kill allowance for non-cooperating children.
    * Optimization evidence: the resistant child hit its 400 ms deadline at 408 ms and closed at 511 ms with unchanged 100 ms grace.
@@ -108,8 +132,8 @@ export function startChild(command, args, options) {
     terminating = true
     error ??= Object.assign(new Error('Bounded child did not complete normally.'), { code })
     phase(code === 'ETIMEDOUT' ? 'deadline' : 'output-limit')
-    child.kill('SIGTERM')
-    forced = setTimeout(() => child.kill('SIGKILL'), terminationGraceMs)
+    signalTree('SIGTERM')
+    forced = setTimeout(force, terminationGraceMs)
   }
   const deadline = setTimeout(() => terminate('ETIMEDOUT'), budgetMs)
   /**
@@ -169,29 +193,40 @@ export function startChild(command, args, options) {
   // EPIPE is a launch/result failure, not an unhandled parent exception.
   child.stdin.on('error', (failure) => { error ??= failure })
   child.stdin.end(input)
-  child.once('exit', () => phase('exit'))
+  child.once('exit', () => {
+    phase('exit')
+    // A normally exited leader must not leave descendants holding pipes or doing background work.
+    if (grouped && !terminating && signalTree('SIGTERM')) {
+      terminating = true
+      forced = setTimeout(force, terminationGraceMs)
+    }
+  })
   const completed = new Promise((resolve) => {
     child.once('close', (status, signal) => {
       closed = true
       clearTimeout(deadline)
-      clearTimeout(forced)
       options.signal?.removeEventListener('abort', abort)
-      phase('total')
-      resolve({ pid: child.pid ?? 0, status, signal, ...(error ? { error } : {}), stdout, stderr,
-        output: journal ? [null, stdout, stderr, diagnostic] : [null, stdout, stderr],
-        spawnedAtMs, elapsedMs: Math.round(performance.now() - started), timings })
+      release = () => {
+        phase('total')
+        resolve({ pid: child.pid ?? 0, status, signal, ...(error ? { error } : {}), stdout, stderr,
+          output: journal ? [null, stdout, stderr, diagnostic] : [null, stdout, stderr],
+          spawnedAtMs, elapsedMs: Math.round(performance.now() - started), timings })
+      }
+      // Closing the leader's pipes cannot cancel escalation of a resistant descendant.
+      if (!forced) release()
     })
   })
   /**
-   * Cancellation transfers no live process: completion means the pipes and IPC channel actually closed.
-   * Optimization evidence: the real IPC/abort contracts completed in 42.95/45.11 ms and proved actual close without polling.
+   * Cancellation awaits actual pipes/IPC close and sends SIGKILL to the owned group on POSIX.
+   * Windows direct-PID cancellation cannot yet bound inherited descendant descriptors.
+   * Linux descendant cancel/abort contracts completed in 66/66 ms; this is correctness evidence, not a speedup.
    */
   const cancel = async () => {
     clearTimeout(deadline)
-    clearTimeout(forced)
-    if (!closed) {
+    if (!closed || forced) {
       phase('cancel')
-      child.kill('SIGKILL')
+      terminating = true
+      force()
     }
     await completed
   }

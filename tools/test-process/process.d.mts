@@ -57,7 +57,12 @@ export interface ChildOptions {
   readonly signal?: AbortSignal
 }
 
-/** One cancellable resource; completed/cancel both wait for actual stream and IPC close. */
+/**
+ * One cancellable resource; completed/cancel both wait for actual stream and IPC close.
+ * POSIX signals include descendants retaining the owned group, including after leader exit.
+ * Windows direct-PID ownership does not yet bound inherited descendant descriptors.
+ * Deliberately detached POSIX groups/sessions are not recursively owned.
+ */
 export interface ChildOwner {
   readonly child: ChildProcess
   readonly completed: Promise<ChildResult>

@@ -41,6 +41,12 @@ Owner: [.github pod](https://ampcode.com/threads/T-01a1f637-2241-770e-aa29-22cf1
 3. Product pods adopt the tested shared contracts via normal house sync; preserve their trust gates, coverage and documentation ratchets. Verify affected runtime/native paths in those repositories. A synced config is not proof of adoption.
 4. Human reviews and decides readiness/merge. RES-67 and RES-66 remain non-closing until whole-issue acceptance. Do not remove the personal documentation paragraph until downstream adoption is verified; the remaining semantic guidance now lives in shared AGENTS and the canonical guide.
 
+## EVE-261 process-lifetime follow-up
+
+- 2026-11-20T06:30Z: [replacement owner](https://ampcode.com/threads/T-5dcbf3b4-41e4-4df0-906d-93629eebe199) reproduced the [PR59](https://github.com/Resnovas/.github/pull/59) descendant defect against `ed465c31`: deadline 154 ms, direct exit 156 ms, actual close 1868 ms for a 150 ms budget. Five additional real resistant-descendant contracts fail on that baseline: deadline, cancellation, abort, leader exit with inherited pipes and leader exit with ignored pipes. Independent PID teardown bounds failed proofs.
+- Local POSIX group ownership passes all 15 process contracts, preserving actual exit status 23 for natural leader exit, descriptor/IPC close and 100 ms escalation even after leader close. No existing budget, assertion, matrix, dependency or coverage gate changes. These measurements establish correctness, not an optimization speedup. Full static/verification and fresh matrix evidence are required on the delivered head.
+- Windows remains direct-PID-only: descendant lifetime and exited-root cleanup are unresolved, with no native Job/supervisor adoption authorized. PR59 stays draft; [EVE-261](https://linear.app/resnovas/issue/EVE-261) / [Eventiva#1035](https://github.com/Resnovas/Eventiva/issues/1035) remain non-closing. Eventiva migration is held for a corrected house merge plus normal sync. This does not block unrelated Core work or assign the separately investigated telemetry timeout to this defect.
+
 ```mermaid
 flowchart LR
   A[Pod findings and owner decisions verified] --> B[Shared checks implemented]
