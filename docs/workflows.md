@@ -37,8 +37,10 @@ On issues it applies labels.
 On a push to the default branch, weekly and by hand, it syncs the labels, applies the repository settings and runs the [sync](sync.md).
 
 **When it runs.** Pull requests (opened, edited, pushed to, reopened, marked ready or draft), issues (opened, edited, reopened, labelled), pushes to `main`, the merge queue, Mondays at 07:00 UTC, and by hand.
-In the merge queue the job is skipped, which GitHub counts as passing: the pull request was already checked.
+In the merge queue the job executes the published action on the queued result. A skipped job does not verify that result.
 A newer run for the same pull request, issue or branch cancels the older one.
+
+**Queue acceptance.** Require a successful, executed `smartcloud` job on the exact merge-group SHA, plus the retained required matrix and post-merge checks. Workflow eligibility is not runtime aggregation proof: at inspected `smartcloud@v2` revision `2d5c398d536664a22b473e9126491305a1c0e96e`, the engine decodes `merge_group.head_sha`, but the `required` feature handles only pull requests. Its runtime correction and release remain a prerequisite to clearing the queue-coverage hold. Do not change required checks or protections to work around it.
 
 **Access.** It uses three tokens, each for its own job (see [Access](access.md#tokens)): the workflow token for checks, comments and labels; a read-only Resnovas Bot token for reading the preset and templates in `Resnovas/.github`; and, only on pushes, the weekly run and manual runs, a full Resnovas Bot token that reaches only the repository, for settings and sync.
 Forks and Dependabot get no app token, so smartcloud runs restricted: it skips the preset, settings and sync, and lists what it skipped in the job summary.
@@ -154,10 +156,10 @@ The workflow uses only the read-only workflow token, so the branch protection sc
 
 ## <a id="workflow-lint"></a>Workflow lint
 
-**What it does.** Two jobs.
+**What it does.** Two reusable jobs and one synced contract job.
 `actionlint` checks workflow syntax, expressions and the shell in `run:` steps with [actionlint](https://github.com/rhysd/actionlint).
 `zizmor` audits workflows, actions and the Dependabot configuration for security problems (template injection, persisted credentials, too much access, unpinned actions) with [zizmor](https://docs.zizmor.sh).
-Both fail on any finding.
+`merge-group-contract` checks the canonical block-format `smartcloud.yml`: its queue trigger, required job and action must be unconditional. Job dependencies, conditions, inherited properties, renamed checks and swallowed failures are rejected with a corrective message; conditional token-mint steps remain valid. Unknown layouts fail closed: retain the synced format rather than bypass the contract. This is a narrow scheduling contract, not a general YAML parser or a check of arbitrary repository-specific jobs. `actionlint` still validates YAML syntax. All three fail on findings.
 
 **When it runs.** Pull requests, the merge queue and pushes to `main`.
 
@@ -172,8 +174,9 @@ Both fail on any finding.
 
 actionlint reads the repository's own `.github/actionlint.yaml`.
 Run both locally with `uvx --from actionlint-py actionlint` and `uvx zizmor .`.
+The queue contract travels in `templates/.github/workflows/house-workflow-lint.yml`, with read-only checkout and no dependency installation. `node --test test/workflows.test.mjs` executes its actual body against canonical/rendered workflows and rejected mutations, including the old queue skip. Downstream repositories receive both corrected workflow templates in normal house sync; this does not claim adoption before their sync is accepted.
 
-**What you will see.** Checks named `actionlint` and `zizmor`, with one annotation per finding on the line it is about.
+**What you will see.** Checks named `actionlint`, `zizmor` and `merge-group-contract`; the first two annotate findings on the affected lines.
 
 **Make it required** by adding `house-workflow-lint / actionlint` and `house-workflow-lint / zizmor` under `settings.ruleset.statusChecks.checks`.
 

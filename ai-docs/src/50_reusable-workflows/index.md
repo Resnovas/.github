@@ -17,6 +17,8 @@ so a change here reaches every repository on its next run.
 reusable ones: the first runs the smartcloud action with the preset, the second
 re-runs a pull request's smartcloud run when it is reviewed.
 
+The required `smartcloud` job executes on `merge_group`; preserve its check name and existing permissions. The synced workflow-lint caller executes `merge-group-contract` without installing repository code. It accepts the canonical block-format trigger, unconditional job/action and conditional token steps; it rejects job conditions/dependencies, inherited fields, failure suppression and filtered queue events. Unsupported layouts fail closed, while actionlint checks YAML syntax. Run `node --test test/workflows.test.mjs` to exercise the exact script against canonical/rendered files and rejected mutations. This contract covers the shared smartcloud job, not arbitrary downstream jobs or runtime aggregate publication. Confirm an actual successful run and retained aggregate checks on the queue SHA before lifting a queue hold; the inspected published runtime's pull-request-only required feature needs its separate correction/release.
+
 The house repository's local dependency policy approves all versions of exactly `spdx-exceptions`, `uri-js` and `parse-statements` for RES-67, with no exact-version guard. Evidence for the inspected versions and reproducible steps are in `docs/workflows.md#house-lint-dependency-review-2026-11-20`. Preserve the three-package boundary, vulnerability checks and base-commit policy loading; dependency-adding PRs cannot approve their own exceptions. Human review must land the prerequisite policy before funnel PR #56 can pass that gate.
 
 For a dependency update to a synced workflow, update the matching source in
