@@ -656,7 +656,7 @@ if (command === 'sync' || command === 'check') {
   // A sync cannot invent a repository's staged affected-test selection or move CI work into commits.
   const packagePath = join(root, 'package.json')
   const scripts = existsSync(packagePath) ? JSON.parse(readFileSync(packagePath, 'utf8')).scripts : {}
-  if (scripts?.['verify:static'] && scripts?.['test:affected']) console.log(installPreCommit(root, dryRun))
+  if (manifest.preCommit !== undefined || (scripts?.['verify:static'] && scripts?.['test:affected'])) console.log(installPreCommit(root, dryRun, manifest.preCommit))
   console.log(await installOrca(prompts))
   console.log(installOpenChamber())
   if (dryRun) console.log('Dry run: nothing was written.')

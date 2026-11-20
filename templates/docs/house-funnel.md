@@ -29,6 +29,26 @@ node tools/dev/pre-commit.mjs run
 
 It executes `node --run verify:static` then `node --run test:affected`, and stops on either failure or a changed working/index tree. Full CI verification remains independently runnable for diagnosis; it is not a prerequisite of every local commit.
 
+### Retain a repository-owned hook
+
+If a native runner already protects staged snapshots or isolates Git's alternate index, retain it. Add this optional property after the local marker in `.agents/surfaces.jsonc`, using the runner's actual package script and existing comment marker:
+
+```json
+"preCommit": { "script": "funnel:pre-commit", "marker": "smartcloud-funnel pre-commit" }
+```
+
+Both properties are required; unknown properties, shell syntax, multiline markers and missing package scripts fail setup. Omit `preCommit` to use the house runner. Setup exclusively installs or recognizes exactly `#!/bin/sh`, `# <marker>`, `exec node --run <script>` with final newlines. It never overwrites a differing hook, including a previously installed house hook. A maintainer must review any replacement; declaring the native owner is not permission to discard a hook. `--dry-run` inspects without writing.
+
+The native runner must execute `verify:static` then staged `test:affected`, propagate failures and retain before/after snapshot guards. Do not also invoke the house runner or run full verification from the native hook. If verification children clear Git-local environment variables, pass the captured staged-tree identifier explicitly to the affected-test adapter; never silently select the ordinary index. Test that contract in the repository. The installer validates identity and required scripts, not the runner's semantics. Run `node --run setup` twice to verify idempotence and exercise a real commit plus a failing affected-test control.
+
+### Adopt smartcloud's native queue profile
+
+Only `Resnovas/smartcloud` may copy `tools/ci/smartcloud-native.yml` verbatim to `.github/workflows/smartcloud.yml` in its owned adoption PR. Other repositories keep the published-action workflow. Sync the recipe, `tools/ci/smartcloud-native-contract.cjs` and `house-workflow-lint.yml` together. The checker permits CRLF and outer whitespace only; changing steps, comments, pins or conditions requires an upstream recipe review. Do not edit a bot-owned sync branch. Retain smartcloud's existing sync ownership for its native workflow.
+
+The recipe checks repository identity, a positive check-run ID and complete main-based queue metadata before building. It checks out only `refs/heads/main`, installs frozen dependencies without lifecycle scripts, rebuilds without Nx cache and reads main's config. House read-only and full app tokens are minted after building; queue/comment/open-PR events never receive the full app token. Authorized slash comments remain eligible. The checker rejects additional steps, candidate refs/config, missing queue guards, skipped queue actions and broader permissions/tokens. There is no profile switch or general local-action exemption.
+
+In the house source, run `node --test test/workflows.test.mjs` for accepted/rejected workflows, executed metadata guards and event/token fixtures. Downstream, run workflow lint against the copied recipe, then verify actual queue execution, the self check-run ID and aggregation on the exact queued SHA. The static recipe cannot attest branch protection, hosted execution or the safety of trusted main's build/config; retain protection and required checks. Release v2.1.1 supplies the separately delivered merge-group runtime, but a release is not live queue proof. Smartcloud's identity selects this strict profile even if a candidate replaces the local action with a published action. A rollback to that different execution model needs a reviewed upstream contract change; never restore a skipped queue job or disable the checker.
+
 Example flat-config addition, after the existing parser configuration:
 
 ```js

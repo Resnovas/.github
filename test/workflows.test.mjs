@@ -20,6 +20,7 @@ import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { runInNewContext } from 'node:vm'
+import { createRequire } from 'node:module'
 
 const root = fileURLToPath(new URL('../', import.meta.url))
 const directories = ['.github/workflows', 'templates/.github/workflows']
@@ -149,10 +150,12 @@ test('the synced queue contract rejects skipped required jobs and retains condit
   const start = job.lines.indexOf('        run: |')
   assert.ok(start >= 0)
   const script = job.lines.slice(start + 1).filter((line) => line.startsWith('          ')).map((line) => line.slice(10)).join('\n')
-  const run = (workflow) => {
+  const run = (workflow, repository = 'Resnovas/.github') => {
     const output = []
     runInNewContext(script, {
+      process: { cwd: () => '/fixture', env: { GITHUB_REPOSITORY: repository } },
       require: (name) => {
+        if (name === '/fixture/tools/ci/smartcloud-native-contract.cjs') return createRequire(import.meta.url)('../templates/tools/ci/smartcloud-native-contract.cjs')
         assert.equal(name, 'node:fs')
         return { readFileSync: (path, encoding) => {
           assert.equal(path, '.github/workflows/smartcloud.yml')
@@ -164,8 +167,50 @@ test('the synced queue contract rejects skipped required jobs and retains condit
     })
     return output
   }
+  const native = readFileSync(join(root, 'templates/tools/ci/smartcloud-native.yml'), 'utf8')
+  assert.deepEqual(run(native, 'Resnovas/smartcloud'), ['Trusted smartcloud native-self-build recipe accepted.'])
+  assert.deepEqual(run(native.replaceAll('\n', '\r\n'), 'Resnovas/smartcloud'), run(native, 'Resnovas/smartcloud'))
+  for (const repository of ['Resnovas/.github', 'Resnovas/Eventiva', 'fork/smartcloud', '']) {
+    assert.throws(() => run(native, repository), /Required queue checks must execute/)
+  }
+  // Each changed input must be rejected through the workflow's actual public check.
+  const mutations = [
+    ['  merge_group:', '  merge_group:\n    branches: [main]'],
+    ["github.event_name != 'issue_comment' ||", "github.event_name != 'merge_group' && github.event_name != 'issue_comment' ||"],
+    ['    runs-on: ubuntu-latest', '    runs-on: ubuntu-latest\n    continue-on-error: true'],
+    ['    timeout-minutes: 75', '    timeout-minutes: 5'],
+    ['          ref: refs/heads/main', '          ref: ${{ github.sha }}'],
+    ['          repository: Resnovas/smartcloud', '          repository: ${{ github.event.pull_request.head.repo.full_name }}'],
+    ['          persist-credentials: false', '          persist-credentials: true'],
+    ['          configRef: refs/heads/main', '          configRef: ${{ github.sha }}'],
+    ['          configRef: refs/heads/main', '          configJson: ${{ github.event.pull_request.body }}'],
+    ['--frozen-lockfile --ignore-scripts', '--frozen-lockfile'],
+    ['          run_install: false', '          run_install: true'],
+    [' --skip-nx-cache', ''],
+    ['        uses: ./', "        uses: ./\n        if: github.event_name != 'merge_group'"],
+    ['          checkRunId: ${{ job.check_run_id }}', '          checkRunId: ""'],
+    ['          CHECK_RUN_ID: ${{ job.check_run_id }}', '          CHECK_RUN_ID: 123'],
+    ["group.head_sha !== process.env.GITHUB_SHA", 'false'],
+    ['          permission-contents: read', '          permission-contents: write'],
+    ['          repositories: smartcloud', '          repositories: smartcloud, .github'],
+    ['["push", "schedule", "workflow_dispatch"]', '["push", "schedule", "workflow_dispatch", "merge_group"]'],
+    ['      contents: read', '      contents: write'],
+    ['          GITHUB_TOKEN: ${{ steps.app.outputs.token || github.token }}', '          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}'],
+    ['      - name: Bundle the trusted action', '      - run: echo ${{ secrets.RESNOVAS_BOT_PRIVATE_KEY }}\n\n      - name: Bundle the trusted action'],
+  ]
+  for (const [before, after] of mutations) {
+    assert.ok(native.includes(before), `fixture must exercise ${before}`)
+    const changed = native.replace(before, after)
+    assert.notEqual(changed, native)
+    assert.throws(() => run(changed, 'Resnovas/smartcloud'), /Required queue checks must execute/)
+  }
+  const build = '      - name: Bundle the trusted action\n        run: pnpm exec nx run @resnovas/action:bundle --skip-nx-cache\n'
+  assert.ok(native.includes(build))
+  const earlyTokens = native.replace(build, '').replace('      - name: Run smartcloud', `${build}\n      - name: Run smartcloud`)
+  assert.throws(() => run(earlyTokens, 'Resnovas/smartcloud'), /Required queue checks must execute/)
   for (const directory of directories) {
     const workflow = workflows.find(({ path }) => path === join(directory, 'smartcloud.yml')).lines.join('\n')
+    assert.throws(() => run(workflow, 'Resnovas/smartcloud'), /Required queue checks must execute/)
     assert.deepEqual(run(workflow), ['Required smartcloud job and action are unconditional on merge_group.'])
     assert.deepEqual(run(workflow.replaceAll('\n', '\r\n')), run(workflow))
     for (const condition of ["if: github.event_name != 'merge_group'", "if: github.event_name == 'pull_request'", 'if: false', "'if': false", 'needs: optional', 'continue-on-error: true', '<<: *conditional']) {
@@ -178,6 +223,66 @@ test('the synced queue contract rejects skipped required jobs and retains condit
       workflow.replace('- uses: resnovas/smartcloud@v2', "- uses: resnovas/smartcloud@v2\n        if: github.event_name != 'merge_group'"),
       workflow.replace('- uses: resnovas/smartcloud@v2', '- uses: resnovas/smartcloud@v2\n        continue-on-error: true'),
     ]) assert.throws(() => run(changed), /Required queue checks must execute/)
+  }
+})
+
+test('native recipe executes fail-closed queue guards and preserves event-specific token boundaries', () => {
+  const recipe = readFileSync(join(root, 'templates/tools/ci/smartcloud-native.yml'), 'utf8')
+  const script = recipe.split('        run: |\n')[1].split('\n\n')[0].split('\n').map((line) => line.slice(10)).join('\n')
+  const head = 'a'.repeat(40)
+  const base = 'b'.repeat(40)
+  const ref = 'refs/heads/gh-readonly-queue/main/pr-42-synthetic'
+  const event = { action: 'checks_requested', repository: { default_branch: 'main' }, merge_group: { head_ref: ref, base_ref: 'refs/heads/main', base_sha: base, head_sha: head } }
+  const env = { GITHUB_REPOSITORY: 'Resnovas/smartcloud', GITHUB_EVENT_NAME: 'merge_group', GITHUB_REF: ref, GITHUB_SHA: head, CHECK_RUN_ID: '42', GITHUB_EVENT_PATH: '/synthetic/event.json' }
+  const guard = (payload, variables = env) => runInNewContext(script, {
+    process: { env: variables },
+    require: (name) => {
+      assert.equal(name, 'node:fs')
+      return { readFileSync: (path) => { assert.equal(path, '/synthetic/event.json'); return JSON.stringify(payload) } }
+    },
+  })
+  assert.doesNotThrow(() => guard(event))
+  for (const payload of [
+    {}, { ...event, merge_group: undefined }, { ...event, repository: {} }, { ...event, action: undefined },
+    ...[{ head_ref: '' }, { head_ref: 'refs/pull/42/merge' }, { base_ref: 'refs/heads/feature' }, { base_sha: '' }, { head_sha: '' }, { head_sha: base }].map((change) => ({ ...event, merge_group: { ...event.merge_group, ...change } })),
+  ]) assert.throws(() => guard(payload), /Require smartcloud repository/)
+  for (const change of [{ CHECK_RUN_ID: '' }, { CHECK_RUN_ID: '0' }, { CHECK_RUN_ID: 'abc' }, { GITHUB_REPOSITORY: 'fork/smartcloud' }, { GITHUB_SHA: '' }, { GITHUB_REF: '' }]) {
+    assert.throws(() => guard(event, { ...env, ...change }), /Require smartcloud repository/)
+  }
+  assert.doesNotThrow(() => guard({}, { ...env, GITHUB_EVENT_NAME: 'schedule' }))
+  assert.throws(() => guard({}, { ...env, GITHUB_EVENT_NAME: 'push', CHECK_RUN_ID: '' }), /checkRunId/)
+
+  // Evaluate this recipe's GitHub expression subset with GitHub's missing-property empty strings.
+  const conditions = [...recipe.matchAll(/^\s+if: >-\n((?: +[^\n]+\n)+?)(?= {4}\w| {8}continue-on-error)/gm)].map((match) => match[1].trim())
+  assert.equal(conditions.length, 3)
+  const evaluate = (expression, context) => {
+    const expanded = expression.replace(/\b(?:github|env)(?:\.[A-Za-z_][\w]*)+/g, (path) => JSON.stringify(path.split('.').reduce((value, key) => value?.[key], context) ?? ''))
+    return runInNewContext(expanded, { fromJSON: JSON.parse, contains: (value, item) => value.includes(item) })
+  }
+  const context = (name, extra = {}) => ({ env: { HAS_APP_KEY: 'true' }, github: { event_name: name, repository: 'Resnovas/smartcloud', actor: 'maintainer', ref_name: 'main', event: { repository: { default_branch: 'main' } }, ...extra } })
+  for (const name of ['merge_group', 'push', 'schedule', 'workflow_dispatch', 'pull_request']) {
+    assert.equal(evaluate(conditions[0], context(name)), true)
+    assert.equal(evaluate(conditions[1], context(name)), true)
+    assert.equal(evaluate(conditions[2], context(name)), ['push', 'schedule', 'workflow_dispatch'].includes(name))
+  }
+  for (const role of ['OWNER', 'MEMBER', 'COLLABORATOR', 'CONTRIBUTOR', 'NONE']) {
+    const comment = context('issue_comment', { event: { comment: { body: '/check', author_association: role } } })
+    assert.equal(evaluate(conditions[0], comment), ['OWNER', 'MEMBER', 'COLLABORATOR'].includes(role))
+    assert.equal(evaluate(conditions[2], comment), false)
+  }
+  assert.equal(evaluate(conditions[0], context('issue_comment', { event: { comment: { body: 'hello', author_association: 'OWNER' } } })), false)
+  assert.equal(evaluate(conditions[2], context('workflow_dispatch', { ref_name: 'feature' })), false)
+  for (const repository of ['Resnovas/smartcloud', 'fork/smartcloud', '']) {
+    const closed = context('pull_request', { event: { action: 'closed', pull_request: { merged: true, head: { repo: { full_name: repository } }, user: { login: 'maintainer' } } } })
+    assert.equal(evaluate(conditions[1], closed), repository === 'Resnovas/smartcloud')
+    assert.equal(evaluate(conditions[2], closed), repository === 'Resnovas/smartcloud')
+    closed.github.event.pull_request.merged = false
+    assert.equal(evaluate(conditions[2], closed), false)
+  }
+  for (const token of conditions.slice(1)) {
+    assert.equal(evaluate(token, context('push', { actor: 'dependabot[bot]' })), false)
+    const missingKey = context('push'); missingKey.env.HAS_APP_KEY = 'false'
+    assert.equal(evaluate(token, missingKey), false)
   }
 })
 
