@@ -1,0 +1,41 @@
+# Privileged commenter executes only the shared house's trusted main branch.
+# Analysis data and PR metadata remain data, never code or shell arguments.
+name: CodeQL alert comment
+
+on:
+  workflow_call:
+
+permissions: {}
+
+concurrency:
+  group: house-codeql-comment-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  comment:
+    if: github.event_name == 'workflow_run' && github.event.workflow_run.event == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      actions: read
+      contents: read
+      security-events: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: Resnovas/.github
+          ref: main
+          persist-credentials: false
+          sparse-checkout: scripts/lib
+      - name: Update the bot-owned PR comment from processed CodeQL analyses
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs'
+          import { commentCodeQL, githubRequest } from './scripts/lib/codeql-alert-comment.mjs'
+          const event = JSON.parse(readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8'))
+          await commentCodeQL({ repository: process.env.REPOSITORY, runID: event.workflow_run.id, request: githubRequest(process.env.GH_TOKEN) })
+          NODE

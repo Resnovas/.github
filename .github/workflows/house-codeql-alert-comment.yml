@@ -1,0 +1,22 @@
+# house:managed:begin - synced from Resnovas/.github templates/.github/workflows/house-codeql-alert-comment.yml. Edits inside this block are overwritten.
+# Completion trigger runs trusted default-branch code even for fork analyses.
+# No inherited secrets, PR checkout, caches or PR-supplied executable artifacts.
+name: House CodeQL alert comment
+
+on: # zizmor: ignore[dangerous-triggers] Trusted house code only; no PR code executes.
+  workflow_run:
+    workflows: [House CodeQL]
+    types: [completed]
+
+permissions: {}
+
+jobs:
+  house-codeql-alert-comment:
+    uses: Resnovas/.github/.github/workflows/codeql-alert-comment.yml@fd5b65addd03918c531f22ac07d0078e993964cb # reviewed house commenter implementation
+    permissions:
+      actions: read
+      contents: read
+      security-events: read
+      pull-requests: write
+# house:managed:end
+# house:local - add further jobs below, indented under jobs.

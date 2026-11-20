@@ -434,3 +434,11 @@ Executable examples live in `test/funnel.test.mjs` and `test/funnel-lint.test.mj
 Jonathan approved the named AI-21/AI-31 exception on 2026-11-20 for Resnovas/.github and Resnovas/Eventiva only. Agents may mark a PR ready and merge normally once all required checks are green, preserving required reviews and branch protection. Disclosed draft creation remains required. Record this authorization and actual agent verification; do not claim human review. Approval/self-approval, bypass, admin merge, force-push, sign-off, spending and deployment authority are not added. All other repositories retain the default restrictions.
 
 Canonical rules: AI_POLICY.md AI-21 and AI-31, and templates/AGENTS.md. Delivery/evidence: docs/agent-merge-exception.md, RES-71 and Resnovas/.github#67. Keep this separate from the CodeQL RES-70/#66 packet.
+
+---
+
+# CodeQL alert comment
+
+`templates/.github/workflows/house-codeql-alert-comment.yml` renders the completion trigger. `.github/workflows/codeql-alert-comment.yml` executes trusted house main code from `scripts/lib/codeql-alert-comment.mjs`; `.github/workflows/codeql.yml` retains original analyzer SARIF for seven days. Use only the scoped Actions token, never the connected App token or PR code. Match repository/run/head/PR/merge ref and artifact metadata/digest before parsing bounded untrusted original `codeFlows`; API-downloaded SARIF is only an identity-bearing subset. No paths from message links. Non-flow `problem` rules are explicitly not applicable; missing paths/errors are unavailable and fail, never zero or fabricated complete traces.
+
+Read [the guide](docs/codeql-alert-comment.md) for trust limits, retries and delivery timeline. RES-70 / Resnovas/.github#66 owns this behavior. Tests: `node --test test/codeql-alert-comment.test.mjs`; normal `verify:static` then `verify` still apply. Offline fixtures are not a hosted-token run, and this packet does not triage alerts 64/65 or authorize Eventiva sync.
