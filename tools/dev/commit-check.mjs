@@ -151,7 +151,7 @@ export const checkMessage = (message, author, linearPrefix = 'none') => {
   }
   if (!signOffs.some((signer) => !isAi(signer) && signer.email === author.email)) {
     problems.push(
-      `No Signed-off-by matching the author <${author.email}>. Commit with git commit -s as the accountable human; an agent adds someone's sign-off only where they set it up. See ${POLICY}/CONTRIBUTING.md#dco`,
+      `No Signed-off-by matching the author <${author.email}>. The accountable human must certify with git commit -s; agents must not delegate certification except under AI-03's narrow owner-session exception in loaded personal instructions. See ${POLICY}/AI_POLICY.md#ai-03`,
     )
   }
   for (const value of trailer('Co-authored-by')) {

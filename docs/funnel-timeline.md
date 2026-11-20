@@ -1,0 +1,51 @@
+# Funnel implementation timeline
+
+This changes contributor-visible verification order, pre-commit behavior and the shared AGENTS entry point. It does not authorize deployment, change artifact access or replace product gates.
+
+Owner: [.github pod](https://ampcode.com/threads/T-01a1f637-2241-770e-aa29-22cf10bd727e). Task: [RES-67](https://linear.app/resnovas/issue/RES-67), [Resnovas/.github#55](https://github.com/Resnovas/.github/issues/55). Parent: [RES-66](https://linear.app/resnovas/issue/RES-66), [Resnovas/.github#54](https://github.com/Resnovas/.github/issues/54). SMC-175 and SMC-174 are superseded duplicates. Non-closing delivery until full acceptance.
+
+## Completed discovery
+
+- 2026-11-19T23:53Z: verified Eventiva and smartcloud findings; neither enables eslint-plugin-jsdoc. Preserve Eventiva's AST/rationale/zero gate and smartcloud's declaration/example contracts.
+- 2026-11-19T23:53Z: GitHub counterparts created after open/closed duplicate searches. The integration assigned RES-66 and RES-67 (subsequently SMC-178) rather than attaching to the existing SMC issues. Mapping decision escalated; no issue deleted or relinked. The first Linear activity comment used an approximate future minute; this timeline records the actual observed tool timestamps.
+- 2026-11-20T00:09Z: Jonathan approved ESLint as the minimal shared-config host, corrected AI-03 to prohibit delegated certification except the exact personal-instructions owner exception, and assigned canonical ownership to RES-66/RES-67. The existing author-email DCO check remains in smartcloud CI; its maintainer-warning and trusted-bot rules are unchanged.
+- 2026-11-20T00:23Z: verified RES-67 restored to RES under RES-66 with GitHub #55 attached. Exact exception confirmed in loaded personal instructions; TGTGamer/private owner session verified. Updated RES-67 to In Progress for active local verification.
+
+## Implemented contracts
+
+- Shared corrective source-inspection lint and additive JSDoc config; tests exercise rejected/accepted behavior, not deleted-source strings.
+- Pre-commit preserves foreign hooks and requires matching staged/working trees, then static and full verification.
+- Markdown registry parser, source-inventory comparison, affected selection and byte-bound evidence contracts. No schema result is claimed as semantic proof.
+- Fixed document budgets, exact deployed build-info SHA check, static-first reusable CI and seven-day reviewed artifact publication policy.
+- Shared AGENTS slimmed while retaining human authority, tracker lifecycle and tool-routing boundaries. Supplied escalation text retained verbatim.
+
+## Delivery and verification
+
+2026-11-20T00:23Z: `npm ci --ignore-scripts` installed the locked toolchain with zero reported vulnerabilities. `node --run verify:static` passed document budgets and six-interface coverage. `node --run verify` passed render, 19 headers, surfaces, generated docs and 103 tests, with measured renderer coverage of 100% lines and 98.58% branches. `node --run verify:evidence` executed all nine documented contracts; `node --run verify:evidence:check` reported structurally valid, byte-bound publication evidence. The installed pre-commit hook is exercised in disposable Git repositories. No downstream runtime, production endpoint or media-redaction review is claimed by these nonvisual contracts.
+
+- 2026-11-20T00:26Z: pushed contracts and the separate graph commit to [draft PR #56](https://github.com/Resnovas/.github/pull/56). Linear automation changed readiness; restored draft and escalated the integration behavior. Human readiness and merge authority remain unchanged.
+- 2026-11-20T00:28Z: [CI run 44645981211](https://github.com/Resnovas/.github/actions/runs/44645981211) passed Linux/macOS/Windows on Node 24/current. Synthetic affected-contract evidence expires after seven days. Workflow lint and Graphify passed. Dependency review rejected three transitive licences; CodeQL reported hook-write and evidence-read races in canonical/rendered copies. No full-green claim.
+- 2026-11-20T00:34Z: local follow-up passed all 103 tests and static gates. Hook installation now creates exclusively without rewriting an existing hook; evidence metadata/digests use one descriptor. All 18 requested JSDoc rules have accepted/rejected real TypeScript fixtures, plus 12 declaration/callback shapes. Semantic accuracy and meaningful in-body rationale remain guidance; downstream AST, zero and example gates are preserved.
+- 2026-11-20T00:37Z: MIT-only provenance confirmed for parse-statements@1.0.11 against npm tarball integrity, release LICENSE/package.json and upstream history. Jonathan approved exact-version exceptions for it, spdx-exceptions@2.5.0 and uri-js@4.4.1. Before publication, found that dependency-review-action v5.0.0 ignores versions when matching licence exclusions. Held the policy-only change and requested an owner decision on an exact-version guard versus waiting for an upstream fix; no broadened exception was pushed. Base-ref policy loading stays intact.
+- 2026-11-20T00:41Z: added the two subsequently approved rules, sentence-form descriptions and public/exported examples. All 20 rule fixture pairs pass, alongside declaration/callback, export/re-export and private-member controls. Licence exceptions remain held pending the owner's version-guard decision. Eventiva confirms no shared adoption yet; its registry still needs the fenced JSON, blocked/unimplemented and media-duration contracts. Its large-checkout header-inventory buffer/fallback report is a separate shared candidate, not silently included in this change.
+- 2026-11-20T00:45Z: Jonathan approved all versions of exactly parse-statements, spdx-exceptions and uri-js, without a version guard. Published [policy PR #57](https://github.com/Resnovas/.github/pull/57), including MIT-only provenance and explicit all-version scope. Local render/check and all 93 base-branch tests passed. Human merge of #57 must precede #56; base-ref licence enforcement stays intact.
+- 2026-11-20T00:48Z: confirmed the readiness trigger from [Linear's documentation](https://linear.app/docs/code-and-reviews) and GitHub timelines. #56 requested Copilot at 00:27:12Z and Linear made it ready at 00:27:16Z; #57 repeated at 00:45:49Z/00:45:52Z. The active house ruleset requests Copilot on drafts and pushes. The shared guard's actual command body restored #57 to draft, then preserved it on a second run. Synthetic workflow fixtures cover paginated history, later human transitions, closed/draft PRs, missing history and API/restoration failures. Personal settings were not inspected or changed; turning off only auto-convert prevents the transient ready window while retaining Linear.
+- 2026-11-20T00:49Z: policy PR #57 completed CI successfully, including the latest smartcloud aggregate. The #56 follow-up passes local static/full verification (104 tests, zero failures; renderer coverage unchanged), plus actionlint and zizmor for the readiness workflow. The intentional privileged event has a line-local audit exception: trusted metadata only, no checkout or PR code. Zizmor cannot analyze the custom Node shell for GITHUB_ENV usage; the workflow body and synthetic boundary fixtures are reviewed directly. Follow-up delivery and head-specific CI evidence remain on #56; no downstream or production completion is claimed.
+- 2026-11-20T00:54Z: follow-up code and graph are pushed to #56 at [afa5fb1](https://github.com/Resnovas/.github/commit/afa5fb16e5b2e222e7067c3738a086b12e448f6c). [CI 44649187620](https://github.com/Resnovas/.github/actions/runs/44649187620) passed all six OS/Node jobs; CodeQL, workflow lint and Graphify passed. CI uploaded affected-funnel-evidence with expiry 2026-11-27. Dependency review still rejects the three packages because #57 is unmerged; smartcloud fails only by aggregating that failure. Both PRs are verified draft. Shared implementation is handed off for human prerequisite review, not running or Done; Eventiva received the exact published adoption contract. Linear updates were verified mirrored to #54 and #55.
+- 2026-11-20T01:05Z: Jonathan marked #57 ready and merged it at 01:03:41Z. Resumed RES-67 and removed its obsolete blocked handoff. Local rebase verification passed (104 tests, zero failures), but its lease-protected push refused to overwrite Jonathan's concurrent merge of main into #56. Preserved the unpublished rebase on a backup branch and continued from his [1697fab](https://github.com/Resnovas/.github/commit/1697fab935d1b7271a4e8b81640532980d624f23) without rewriting it. [CI 44650896227](https://github.com/Resnovas/.github/actions/runs/44650896227) passed all six OS/Node jobs; dependency review and smartcloud now pass on the approved policy base. Only refreshed delivery notes and the regenerated graph follow that merge. #56 remains draft; human review and downstream adoption remain outstanding.
+
+## Remaining acceptance
+
+1. Preserve passing dependency review and the smartcloud aggregate on subsequent #56 heads. The licence blocker cleared on the human-updated head; earlier failed runs used the old base.
+2. Keep fresh CodeQL and full CI evidence on every later #56 head; the PR's latest checks are the authoritative remote delivery evidence.
+3. Product pods adopt the tested shared contracts via normal house sync; preserve their trust gates, coverage and documentation ratchets. Verify affected runtime/native paths in those repositories. A synced config is not proof of adoption.
+4. Human reviews and decides readiness/merge. RES-67 and RES-66 remain non-closing until whole-issue acceptance. Do not remove the personal documentation paragraph until downstream adoption is verified; the remaining semantic guidance now lives in shared AGENTS and the canonical guide.
+
+```mermaid
+flowchart LR
+  A[Pod findings and owner decisions verified] --> B[Shared checks implemented]
+  B --> C[Local full verification]
+  C --> D[Draft PR and CI]
+  D --> E[Human review and merge]
+  E --> F[Product adoption and public-path proof]
+```
