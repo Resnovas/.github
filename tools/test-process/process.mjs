@@ -45,7 +45,7 @@ export function childBudgetIssue(budgets, testMs) {
 }
 
 const journalPhase = /^(?:child-start|module-first|module-64|module-256|module-1024|entry-source-loaded|effect-source-loaded|root-start|bootstrap-failure-logged|process-before-exit|process-exit-success|process-exit-failure|(?:main-use-exit|main-services-released|main-telemetry-released|bootstrap-use-exit|root-exit):(?:success|failure|interrupted))(?![\s\S])/
-const ownedPhase = /^(?:spawn-request|spawned|output-first|diagnostic-output|registration-output|ipc-output|ready|deadline|output-limit|cancel|exit|total)(?![\s\S])/
+const ownedPhase = /^(?:spawn-request|spawned|output-first|diagnostic-output|registration-output|ipc-output|ready|deadline|output-limit|cancel|exit|close|total)(?![\s\S])/
 
 /**
  * Accept only bounded numeric phase evidence, never commands, IPC payloads or arbitrary child text.
@@ -216,6 +216,8 @@ export function startChild(command, args, options) {
   const completed = new Promise((resolve) => {
     child.once('close', (status, signal) => {
       closed = true
+      // Descriptor close is distinct from leader exit and any later descendant escalation release.
+      phase('close')
       clearTimeout(deadline)
       release = () => {
         options.signal?.removeEventListener('abort', abort)

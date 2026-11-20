@@ -417,6 +417,8 @@ The typecheck build/compiler ceilings are new 120000/60000 ms safety ceilings, n
 
 The core hard-codes `shell: false` and rejects every own/inherited shell option before spawn. `ChildOptions.shell?: never` supplies the type boundary; exact optional typing rejects explicit undefined too. Literal argv/space-path and zero-spawn rejection tests run on all OS lanes. The150 ms deadline test no longer assumes bootstrap readiness: its PID prerequisite belongs to the six1000 ms ready/PID/death scenarios in the same suite/matrix. See `docs/test-process-security.md` for executed load evidence, caller audit, compiler checks and the unresolved human CodeQL64/65 triage. A passing retry alone is not acceptance.
 
+The real child `close` callback emits an explicit `close` phase even without fd3. `total` remains ownership release and can follow post-close descendant escalation; never infer actual descriptor-close time from it. Nested forwarding accepts only the closed numeric schema, including `close`, without arbitrary payloads. Ordinary/no-fd3, journal, IPC cancellation and deadline regressions run unchanged budgets on every OS/Node matrix lane. See the explicit-close section in `docs/test-process-security.md`; no signal, budget, stream or lifetime behavior changes.
+
 ---
 
 ## Funnel tooling contracts

@@ -83,6 +83,8 @@ test('the dependency-free consumer preserves UTF-8, output, exit and mandatory c
   assert.deepEqual(result.output, [null, '\u00e9', 'SECRET_ERROR'])
   assert.ok(result.timings.some((row) => row.phase === 'spawned'))
   assert.ok(result.timings.some((row) => row.phase === 'output-first'))
+  assert.equal(result.timings.filter((row) => row.phase === 'close').length, 1)
+  assert.deepEqual(result.timings.slice(-2).map((row) => row.phase), ['close', 'total'])
   assert.equal(result.timings.at(-1).phase, 'total')
   assert.ok(records.every((row) => row.code === 'test.child.timing' && Number.isSafeInteger(row.elapsedMs) && row.elapsedMs >= 0))
   assert.doesNotMatch(JSON.stringify(records), /SECRET_ERROR|--eval/)
@@ -103,6 +105,7 @@ test('IPC readiness, messages and cancellation retain one owner through actual c
   await owner.cancel()
   const result = await owner.completed
   assert.equal(result.signal, 'SIGKILL')
+  assert.deepEqual(result.timings.slice(-2).map((row) => row.phase), ['close', 'total'])
   assert.equal(result.timings.at(-1).phase, 'total')
   assert.ok(result.timings.some((row) => row.phase === 'ready'))
   assert.ok(records.some((row) => row.phase === 'cancel'))
@@ -139,6 +142,7 @@ test('deadline and output limits terminate real children instead of stranding th
   // Windows terminates on SIGTERM rather than delivering a catchable POSIX signal.
   assert.equal(expired.signal, process.platform === 'win32' ? 'SIGTERM' : 'SIGKILL')
   assert.ok(expired.timings.some((row) => row.phase === 'deadline'))
+  assert.deepEqual(expired.timings.slice(-2).map((row) => row.phase), ['close', 'total'])
   assert.equal(expired.timings.at(-1).phase, 'total')
   const noisy = await runChild(process.execPath, ['--eval', 'process.stdout.write("x".repeat(4096)); setInterval(() => {}, 1000)'],
     { budgetMs: 1000, maxBuffer: 32 })
@@ -374,11 +378,14 @@ test('journal and nested timing accept only closed numeric records without paylo
     writeSync(3, JSON.stringify(['root-start', Date.now()])+'\\n');
     writeSync(3, JSON.stringify(['SECRET_PHASE', Date.now()])+'\\n');
     process.stderr.write(JSON.stringify({code:'test.child.timing',child:7,startedAtMs:1,budgetMs:100,phase:'ready',elapsedMs:3,payload:'SECRET_PAYLOAD'})+'\\n');
+    process.stderr.write(JSON.stringify({code:'test.child.timing',child:7,startedAtMs:1,budgetMs:100,phase:'close',elapsedMs:4,payload:'SECRET_PAYLOAD'})+'\\n');
     process.stderr.write(JSON.stringify({code:'test.child.timing',child:8,startedAtMs:1,budgetMs:100,phase:'SECRET_PHASE',elapsedMs:3})+'\\n');`],
     { budgetMs: 1000, journal: true })
   assert.equal(result.status, 0)
   assert.ok(result.timings.some((row) => row.phase === 'root-start'))
+  assert.deepEqual(result.timings.slice(-2).map((row) => row.phase), ['close', 'total'])
   assert.ok(records.some((row) => row.child === 7 && row.phase === 'ready'))
+  assert.ok(records.some((row) => row.child === 7 && row.phase === 'close' && row.elapsedMs === 4))
   assert.ok(!records.some((row) => row.child === 8))
   assert.doesNotMatch(JSON.stringify(records), /SECRET_/)
   assert.match(result.stderr, /SECRET_PAYLOAD/)
