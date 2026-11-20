@@ -156,10 +156,35 @@ Plain scripts every repository runs the same way, synced whole. They need only N
 | `tools/license/check-headers.mjs`, `tools/license/header.txt` | `headers`, `headers:fix` (`--fix`) | Every source file (`.ts`, `.tsx`, `.js`, `.mjs`, `.cjs` and their variants) starts with the FCL-1.0-MIT header from `header.txt`, with its own path in the `@file` line and the current year in the copyright line. `headers` fails on a missing or outdated header; `headers:fix` writes it. Each January the check fails until `headers:fix` has moved every file to the new year: one commit, then green. Generated and vendored directories, `.d.ts` files and synced files are skipped; a repository lists further paths in `tools/license/ignore`, one regular expression a line. Run `headers` from `check`. |
 | `tools/ci/coverage-goal.ts` | none (a Vitest reporter) | Warns, as a CI annotation, when a test project covers less than the goal (100%) while still passing the enforced minimum ({{COVERAGE_MIN}}%), so a gap is never silent. Add it to the reporters in the shared Vitest config. |
 | `tools/ci/flaky-tests.ts` | none (a Vitest reporter) | Reports every test that failed and then passed on a retry, as an annotation and a job summary table, so a retry never hides a flaky test. |
+| `tools/test-process/process.mjs`, `tools/test-process/process.d.mts` | none (shared process boundary) | Dependency-free asynchronous process ownership, mandatory numeric timing, bounded output, child deadlines and cancellation through actual close. The declaration describes the same Node API without importing an application framework. |
 | `tools/test/file.ts` | `test:file` | Runs the tests for one file, for the editors' "debug the current test" configurations: a spec under `tests/<name>/src`, or a source file whose mirrored spec runs. Coverage off. |
 | `tools/typecheck/tests.ts` | `typecheck:tests` | Type-checks every test project under `tests/`, which Nx does not, after building the packages they reference. |
 | `tools/dev/docs.ts` | `docs:dev` | Serves the Mintlify docs under `docs/` locally, fetching the pinned Mintlify CLI once into pnpm's cache. |
 | `tools/release/*.ts` | `release:dry-run` (`release.ts --dry-run`), `release:preview` (`release-preview.ts`) | The release tooling the house release workflows run: `config.ts` reads `release.config.json`, `release.ts` and `nightly.ts` cut a release or a nightly, `bundle.ts` bundles an app with esbuild, `sourcemaps.ts` uploads source maps to error tracking, `changelog-renderer.ts` renders the notes in the house style, `preview.ts` and `release-preview.ts` make the pull request preview. See [Workflows: Release](workflows.md#release). |
+
+### Test subprocess timing
+
+After the normal house pull request merges and syncs, the two test launchers use one Node-only process owner. A synchronous child blocks a JavaScript test runner's watchdog; an unrelated child timeout does not make its enclosing test budget consistent. `childBudgetIssue(budgets, testMs)` rejects nonpositive/noninteger limits and serial plans whose children plus 100 ms termination grace each do not fit strictly below the enclosing limit. Keep existing justified enclosing limits and measure the children instead of increasing timeouts.
+
+```js
+import { childBudgetIssue, runChild } from './tools/test-process/process.mjs'
+
+const issue = childBudgetIssue([1000], 3000)
+if (issue) throw new Error(issue)
+const result = await runChild(process.execPath, ['--eval', 'process.stdout.write("ready")'], {
+  budgetMs: 1000,
+})
+if (result.error || result.status !== 0) throw new Error('The child did not complete successfully.')
+console.log(result.stdout)
+```
+
+`runChild(command, args, options)` awaits actual process and pipe close. `startChild` additionally returns `child` for IPC, `completed` and an awaitable `cancel`. Callers must await `completed` or `cancel`; sending a signal alone does not release ownership. An optional `signal` rejects an already-aborted launch and cancels an active child. `budgetMs` is required; defaults are ordinal 1, current environment, 65536 captured bytes, piped output, no IPC, no journal and no shell. Optional `cwd`, `env`, `input`, `ipc`, `journal`, `maxBuffer`, `inheritOutput` and `shell` configure the actual launch, not a second runner. IPC adds a message channel; journal adds fd 3 for the closed phase format. There is no timing-disable option or application dependency.
+
+Timing records go to stderr so fixture JSON stdout is preserved. Each record contains only `code`, child ordinal, start timestamp, budget, closed phase and elapsed milliseconds. Command arguments, environment, errors, business streams and IPC payloads are not timing attributes. Results retain bounded stdout/stderr and nonzero exits for the caller's original assertions. The deadline sends SIGTERM then SIGKILL after the reserved grace; cancellation sends SIGKILL and awaits close. Launch errors, deadline expiry and output floods are explicit result errors, not successful exits. These contracts cover the directly owned child; they do not establish portable recursive process-tree termination.
+
+The previously unbounded typecheck launcher now declares 120000 ms for its build and 60000 ms per compiler, deriving its whole-command cancellation budget from that vector plus cleanup and reporting headroom. The editor launcher declares 600000 ms because it can select a complete project; Vitest's existing per-test deadlines and the editor's existing coverage-off behavior remain unchanged. These are new safety ceilings, not claims that every repository completes at those limits. A slow/flooded child reports its phase: shorten its work or escalate a genuinely inadequate task budget rather than suppress timing. Windows shell execution is retained for the editor's `.cmd` launcher; the executable contract tests run on POSIX and do not claim Windows process-tree proof.
+
+This house change is a proposal until normal review, merge and sync. It does not make a downstream repository universally migrated or authorize a managed-file patch before adoption. The owning partial acceptance remains [EVE-261](https://linear.app/resnovas/issue/EVE-261) / [Eventiva#1035](https://github.com/Resnovas/Eventiva/issues/1035). No existing AGENTS instruction duplicates this newly executable budget/timing check, so none is retired speculatively.
 
 ## <a id="graphify"></a>Code graph (Graphify)
 

@@ -522,3 +522,11 @@ a downstream patch publication or rewriting an existing release.
 
 The repository-local prompt `change-template` (`.agents/prompts/change-template.md`)
 walks an agent through the same steps.
+
+### Shared test-process boundary
+
+Canonical sources are `templates/tools/test-process/process.mjs` and its explicit `process.d.mts` boundary. The generic typecheck/editor test launchers import this dependency-free Node core; application adapters provide their existing Effect/Flags and runner registration without owning a second process. `test/test-process.test.mjs` exercises real child exit/output, mandatory private timing, budget rejection, IPC, forced termination, cancellation-through-close and the exact launcher files against small real executables. Run it with `node --test test/test-process.test.mjs`, then the unchanged complete `node --run test` and `node --run check` gates.
+
+`childBudgetIssue([10000, 10000], 5000)` rejects the inconsistent original pattern; `[2300, 2300]` under 5000 and `[60000]` under 65000 remain valid. Every child reserves 100 ms cleanup and the enclosing sum must leave headroom. The public `runChild`/`startChild` API has no timing opt-out. Results preserve business streams and failure status; safe numeric phase records are emitted separately to stderr. Await `completed` or `cancel` before releasing a child. Application flag evaluation may reject admission but cannot disable an admitted Node child's timing.
+
+The typecheck build/compiler ceilings are new 120000/60000 ms safety ceilings, not measured universal performance acceptance. Its whole budget derives from the serial vector. The editor's new 600000 ms command ceiling does not change Vitest's test limits or its existing coverage-off invocation. Review a slow phase using retained timing and representative measurements; do not infer a production defect from host contention or call a passing retry a causal correction. POSIX executable proofs do not establish Windows descendant termination. See `docs/synced-files.md#test-subprocess-timing` for the complete options and limitations. The proposal remains unadopted downstream until the normal house PR merges and syncs; use non-closing `Refs: EVE-261` and `Refs: Resnovas/Eventiva#1035` for this partial delivery.
