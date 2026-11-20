@@ -23,6 +23,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { list, loadValues, parseValues } from '../scripts/lib/values.mjs'
 import { renderAll, renderText } from '../scripts/lib/render.mjs'
+import { managedConflicts, mergeManaged, splitManaged } from '../scripts/lib/managed.mjs'
 
 test('values parse flat keys, strip comments and one pair of quotes', () => {
   const values = parseValues('# heading\nORG_NAME: Resnovas  # trailing\nURL: "https://x.io/#a"\n\nEMPTY:\n')
@@ -63,6 +64,36 @@ test('loadValues reads a file, and a missing file is an error unless optional', 
   assert.deepEqual(loadValues(join(dir, 'house.yml')), { ORG_NAME: 'Resnovas' })
   assert.deepEqual(loadValues(join(dir, 'absent.yml'), { optional: true }), {})
   assert.throws(() => loadValues(join(dir, 'absent.yml')), /values file not found/)
+})
+
+test('sync delivers exactly the approved licence exceptions and detects duplicate local policy', () => {
+  const root = fileURLToPath(new URL('../', import.meta.url))
+  const path = '.github/dependency-review-config.yml'
+  const rendered = renderAll(join(root, 'templates'), loadValues(join(root, 'house.yml')))
+    .find((file) => file.path.replaceAll('\\', '/') === path).content
+  const licences = 'allow-licenses:\n' + [
+    '0BSD', 'Apache-2.0', 'BlueOak-1.0.0', 'BSD-2-Clause', 'BSD-3-Clause', 'CC-BY-4.0',
+    'CC0-1.0', 'ISC', 'MIT', 'MIT-0', 'MPL-2.0', 'Python-2.0', 'Unlicense', 'Zlib',
+  ].map((licence) => `  - ${licence}\n`).join('')
+  const exceptions = 'allow-dependencies-licenses:\n' + [
+    'pkg:npm/spdx-exceptions', 'pkg:npm/uri-js', 'pkg:npm/parse-statements',
+  ].map((packageUrl) => `  - ${packageUrl}\n`).join('')
+  const firstSync = mergeManaged(rendered, null, path)
+  const policy = splitManaged(firstSync).block.filter((line) => line.trim() && !line.startsWith('#')).join('\n')
+  assert.equal(policy, `${licences}${exceptions}`.trimEnd())
+  assert.deepEqual(managedConflicts(path, rendered, firstSync), [])
+
+  const local = 'allow-ghsas:\n  - GHSA-xxxx-xxxx-xxxx\n'
+  const oldPolicy = `# house:managed:begin\n${licences}# house:managed:end\n# house:local\n${local}`
+  const duplicate = mergeManaged(rendered, `${oldPolicy}${exceptions}`, path)
+  assert.deepEqual(managedConflicts(path, rendered, duplicate), ['redefines the synced key "allow-dependencies-licenses"'])
+  assert.equal(splitManaged(duplicate).after.join('\n'), `# house:local\n${local}${exceptions}`)
+  // A reviewed migration removes only the redundant local list, keeping unrelated policy.
+  const migrated = mergeManaged(rendered, oldPolicy, path)
+  assert.deepEqual(managedConflicts(path, rendered, migrated), [])
+  assert.deepEqual(splitManaged(migrated).block, splitManaged(firstSync).block)
+  assert.equal(splitManaged(migrated).after.join('\n'), `# house:local\n${local}`)
+  assert.equal(mergeManaged(rendered, migrated, path), migrated)
 })
 
 test('sync renders Verify host mirrors that the surface generator accepts without replacing local prompts', (context) => {
