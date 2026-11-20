@@ -205,8 +205,8 @@ export function startChild(command, args, options) {
     child.once('close', (status, signal) => {
       closed = true
       clearTimeout(deadline)
-      options.signal?.removeEventListener('abort', abort)
       release = () => {
+        options.signal?.removeEventListener('abort', abort)
         phase('total')
         resolve({ pid: child.pid ?? 0, status, signal, ...(error ? { error } : {}), stdout, stderr,
           output: journal ? [null, stdout, stderr, diagnostic] : [null, stdout, stderr],

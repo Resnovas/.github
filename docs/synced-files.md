@@ -113,6 +113,7 @@ They only call three package scripts every repository has (`setup`, `check` and 
 | `orca.yaml` | Extendable | Orca | Runs `setup` after each new worktree. Add tabs and shared directories after `house:local`. |
 | `.agents/surfaces.jsonc` | Extendable | Orca, OpenChamber | The quick commands and project actions. Your own go in the `actions` list. |
 | `.agents/prompts/verify.md`, `review.md`, `address-review.md` | Whole file | Every agent host | Agent prompts: run the gate and fix failures; review the branch against the house rules; work through review comments. Add your own prompts as other files beside them. |
+| `.claude/commands/verify.md`, `.cursor/commands/verify.md` | Whole file, generated | Claude Code, Cursor | Transport copies of the canonical Verify prompt, derived by the existing surface generator so static sync includes both host mirrors. [Regenerate, never hand-edit](sync.md#verify-prompt-mirrors); repository-only prompts and other host files remain local. |
 | `.agents/mcp.jsonc` | Extendable | Every agent host | The MCP servers agents use (Mem0 gateway, the repository's Graphify graph, and Graphify Cloud with its memory). Your own go under `servers`. No credential is ever written: each host reads them from environment variables. |
 | `tools/dev/surfaces.mjs` | Whole file | You, and `setup` and `check` | `sync` writes the prompts to `.claude/commands` and `.cursor/commands`, the skills to `.claude/skills`, and the MCP servers to `.mcp.json`, `.cursor/mcp.json`, `.vscode/mcp.json` and a block in `.codex/config.toml`. `check` fails when they are out of date. `install` registers the actions in Orca and OpenChamber, which keep them in per-user settings, and installs the commit hook; outside CI, `check` fails while the hook is missing, and everywhere it fails while a project with a `package.json` lacks `scripts/agent-setup` or `AGENT-SETUP.md`. |
 | `tools/dev/open.mjs` | Whole file | The tasks | Opens a file in the default browser on any platform. |
@@ -164,7 +165,7 @@ Plain scripts every repository runs the same way, synced whole. They need only N
 
 ### Test subprocess timing
 
-After the normal house pull request merges and syncs, the two test launchers use one Node-only process owner. A synchronous child blocks a JavaScript test runner's watchdog; an unrelated child timeout does not make its enclosing test budget consistent. `childBudgetIssue(budgets, testMs)` rejects nonpositive/noninteger limits and serial plans whose children plus 100 ms termination grace each do not fit strictly below the enclosing limit. Keep existing justified enclosing limits and measure the children instead of increasing timeouts.
+After merge/sync, both launchers use one Node-only owner. Synchronous children block runner watchdogs. `childBudgetIssue(budgets, testMs)` rejects nonpositive/noninteger limits and serial plans whose children plus 100 ms grace each do not fit strictly below the test limit. Preserve justified enclosing limits; measure and shorten children instead of increasing timeouts.
 
 ```js
 import { childBudgetIssue, runChild } from './tools/test-process/process.mjs'
@@ -190,7 +191,7 @@ The previously unbounded typecheck launcher now declares 120000 ms for its build
 
 Both launchers execute installed Node `bin` entries through `process.execPath`, without shebangs or shells. Exact-launcher fixtures use ordinary modules/manifests, not platform shims. Linux proof cannot establish portability; the full matrix remains required. Windows SIGTERM forcibly terminates rather than delivering a catchable signal; assertions preserve its actual result while requiring expiry and close.
 
-This house change is a proposal until normal review, merge and sync. It does not make a downstream repository universally migrated or authorize a managed-file patch before adoption. The owning partial acceptance remains [EVE-261](https://linear.app/resnovas/issue/EVE-261) / [Eventiva#1035](https://github.com/Resnovas/Eventiva/issues/1035). No existing AGENTS instruction duplicates this newly executable budget/timing check, so none is retired speculatively.
+Proposal pending review, merge and sync, not downstream acceptance or early managed-file adoption. Partial owner: [EVE-261](https://linear.app/resnovas/issue/EVE-261) / [Eventiva#1035](https://github.com/Resnovas/Eventiva/issues/1035). No existing AGENTS budget/timing instruction duplicates this check, so none is removed.
 
 ## <a id="graphify"></a>Code graph (Graphify)
 

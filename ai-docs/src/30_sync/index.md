@@ -48,3 +48,7 @@ fails every repository's sync. Add the value to the preset in the same commit,
 or give the placeholder a default (`{{KEY:-default}}`) when each repository
 should set its own; never put a per-repository value in the preset's
 `sync.values`, which locks it for everyone.
+
+## Verify transport templates
+
+Static sync renders template paths without executing downstream generators. The two Verify host templates under `templates/.claude/commands/verify.md` and `templates/.cursor/commands/verify.md` are generated transport, not independent authority. After changing `templates/.agents/prompts/verify.md`, run `node --run render`, then `node tools/dev/surfaces.mjs sync`, and copy those two generated root files back to their template paths. Run `node --test test/render.test.mjs` and the normal checks. The regression executes the surface checker against actual rendered sync bytes, rejects source-only and either host-only divergence, and verifies that repository-only prompts and host files survive. Root render/surface gates remain required. Read the [complete example](../../../docs/sync.md#verify-prompt-mirrors). No new option, privilege, candidate-generator execution or combined workflow dispatch is needed; normal house review and downstream acceptance remain separate.

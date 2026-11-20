@@ -163,8 +163,10 @@ async function assertStopped(pid) {
   assert.fail('Descendant is still running after bounded signal delivery')
 }
 
-for (const mode of ['deadline', 'cancel', 'abort', 'exit-first', 'no-pipes']) {
+for (const mode of ['deadline', 'cancel', 'abort', 'exit-first', 'no-pipes', 'no-pipes-abort']) {
   test(`descendant ownership: ${mode} releases resistant descendants and actual descriptors`, { timeout: 3000 }, async (t) => {
+    const noPipes = mode.startsWith('no-pipes')
+    const exitFirst = mode === 'exit-first' || noPipes
     const controller = new AbortController()
     const owner = startChild(process.execPath, ['--eval', `
       const { spawn } = require('node:child_process');
@@ -172,13 +174,13 @@ for (const mode of ['deadline', 'cancel', 'abort', 'exit-first', 'no-pipes']) {
         process.on('SIGTERM', () => {});
         process.stdout.write('DESCENDANT_OUT');
         process.stderr.write('DESCENDANT_ERR');
-        if (${mode !== 'no-pipes'}) require('node:fs').writeSync(3, 'journal-canary');
+        if (${!noPipes}) require('node:fs').writeSync(3, 'journal-canary');
         process.send({ready: true, pid: process.pid});
         setInterval(() => {}, 1000);
         setTimeout(() => process.exit(99), 10000);
-      `)}], {stdio: ${JSON.stringify(mode === 'no-pipes' ? ['ignore', 'ignore', 'ignore', 'ipc'] : ['ignore', 1, 2, 3, 'ipc'])}});
+      `)}], {stdio: ${JSON.stringify(noPipes ? ['ignore', 'ignore', 'ignore', 'ipc'] : ['ignore', 1, 2, 3, 'ipc'])}});
       descendant.once('message', value => process.send(value, () => {
-        if (${mode === 'exit-first' || mode === 'no-pipes'}) process.exit(23);
+        if (${exitFirst}) process.exit(23);
       }));
       setInterval(() => {}, 1000);
     `], { budgetMs: 1000, ipc: true, journal: true, signal: controller.signal })
@@ -203,14 +205,19 @@ for (const mode of ['deadline', 'cancel', 'abort', 'exit-first', 'no-pipes']) {
     const close = once(owner.child, 'close')
     if (mode === 'cancel') await within(owner.cancel(), 700)
     if (mode === 'abort') controller.abort()
+    if (mode === 'no-pipes-abort') {
+      await within(close, 700)
+      controller.abort()
+    }
     const result = await within(owner.completed, mode === 'deadline' ? 1500 : 700)
     const [status, signal] = await within(close, 100)
     assert.equal(result.status, status)
     assert.equal(result.signal, signal)
-    if (mode === 'exit-first' || mode === 'no-pipes') {
+    if (exitFirst) {
       assert.equal(result.status, 23)
       assert.equal(result.signal, null)
       assert.equal(result.error, undefined)
+      if (mode === 'no-pipes-abort') assert.ok(result.timings.some((row) => row.phase === 'cancel'))
     } else if (mode === 'deadline') {
       assert.equal(result.error.code, 'ETIMEDOUT')
       assert.ok(result.timings.some((row) => row.phase === 'deadline'))
@@ -219,7 +226,7 @@ for (const mode of ['deadline', 'cancel', 'abort', 'exit-first', 'no-pipes']) {
       assert.ok(result.timings.some((row) => row.phase === 'cancel'))
       assert.ok(!result.timings.some((row) => row.phase === 'deadline'))
     }
-    if (mode !== 'no-pipes') {
+    if (!noPipes) {
       assert.equal(result.stdout, 'DESCENDANT_OUT')
       assert.equal(result.stderr, 'DESCENDANT_ERR')
       assert.equal(result.output[3], 'journal-canary')
