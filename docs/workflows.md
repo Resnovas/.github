@@ -116,6 +116,18 @@ allow-dependencies-licenses:
 The file is read from the base commit, so a pull request cannot allow its own advisories.
 The house severity and scopes win over the file.
 
+### House lint dependency review, 2026-11-20
+
+For [RES-67](https://linear.app/resnovas/issue/RES-67), [house issue #55](https://github.com/Resnovas/.github/issues/55) under [RES-66](https://linear.app/resnovas/issue/RES-66), [house issue #54](https://github.com/Resnovas/.github/issues/54), Jonathan approved licence exceptions for **all versions of exactly parse-statements, spdx-exceptions and uri-js** in this repository's local configuration. The inspected versions below are provenance evidence, not version restrictions. No other package is exempted; the shared licence list and vulnerability checks remain unchanged. The action ignores versions in licence-exclusion matching, so the explicitly approved policy uses versionless package URLs and adds no exact-version guard.
+
+- `spdx-exceptions@2.5.0`: CC-BY-3.0, approved explicitly.
+- `uri-js@4.4.1`: BSD-2-Clause with BSD-2-Clause-Views notice, approved explicitly.
+- `parse-statements@1.0.11`: approved only after confirming MIT-only provenance. The [npm tarball](https://registry.npmjs.org/parse-statements/-/parse-statements-1.0.11.tgz) has integrity `sha512-HlsyYdMBnbPQ9Jr/VgJ1YF4scnldvJpJxCVx6KgqPL4dxppsWrJHCIIxQXMJrqGnsRkNPATbeMJ8Yxu7JMsYcA==`, matching npm metadata and the funnel lockfile. Its LICENSE and package.json are byte-identical to the [published gitHead](https://github.com/joomcode/parse-statements/tree/3121502dab85f6e561a3a37d7ab91875c7e5371d). The [release LICENSE](https://github.com/joomcode/parse-statements/blob/3121502dab85f6e561a3a37d7ab91875c7e5371d/LICENSE) contains MIT terms only; the package declares `MIT`, has no runtime dependencies, and its nine published files contain no additional licence notice or JSON good/evil restriction. The complete package.json history from [the initial commit](https://github.com/joomcode/parse-statements/commit/9b78517b0b53dbd24c5fec823ca10d3dba1bdedd) through the inspected upstream head retains `MIT`. The current upstream LICENSE changes only the copyright year and final newline. The dependency-review `JSON AND MIT` classification is not supported by these published licence sources.
+
+Reproduce with `npm view parse-statements@1.0.11 dist gitHead license --json`, download the tarball without executing it, compare its LICENSE/package.json with that gitHead, and inspect `git log -p -- package.json LICENSE` in the upstream repository. Preserve the package notices. This records the review evidence, not a general legal determination.
+
+Land this policy-only change before the dependent lint PR [#56](https://github.com/Resnovas/.github/pull/56), through normal human review. The base-ref trust boundary deliberately prevents #56 from approving its own dependency exceptions.
+
 **What you will see.** A check named `dependency-review`, and a table of changed dependencies with their licences and OpenSSF Scorecards in the job summary.
 It does not comment on the pull request.
 
