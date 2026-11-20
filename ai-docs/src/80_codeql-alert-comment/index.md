@@ -1,0 +1,5 @@
+# CodeQL alert comment
+
+`templates/.github/workflows/house-codeql-alert-comment.yml` renders the completion trigger. `.github/workflows/codeql-alert-comment.yml` executes trusted house main code from `scripts/lib/codeql-alert-comment.mjs`; `.github/workflows/codeql.yml` retains original analyzer SARIF for seven days. Use only the scoped Actions token, never the connected App token or PR code. Match repository/run/head/PR/merge ref and artifact metadata/digest before parsing bounded untrusted original `codeFlows`; API-downloaded SARIF is only an identity-bearing subset. No paths from message links. Non-flow `problem` rules are explicitly not applicable; missing paths/errors are unavailable and fail, never zero or fabricated complete traces.
+
+Read [the guide](docs/codeql-alert-comment.md) for trust limits, retries and delivery timeline. RES-70 / Resnovas/.github#66 owns this behavior. Tests: `node --test test/codeql-alert-comment.test.mjs`; normal `verify:static` then `verify` still apply. Offline fixtures are not a hosted-token run, and this packet does not triage alerts 64/65 or authorize Eventiva sync.

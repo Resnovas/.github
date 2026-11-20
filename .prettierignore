@@ -21,6 +21,7 @@ LICENSE
 .github/PULL_REQUEST_TEMPLATE.md
 .github/smartcloud.yml
 .github/workflows/house-codeql.yml
+.github/workflows/house-codeql-alert-comment.yml
 .github/workflows/house-dependency-review.yml
 .github/workflows/house-scorecard.yml
 .github/zizmor.yml

@@ -10,8 +10,9 @@ Owner: [implementation worker](https://ampcode.com/threads/T-91eb2b98-52a8-404b-
 
 - Completed, 2026-11-20T13:03Z: read back the paired brief and current origin/main; retained the separate CodeQL packet without adopting unpublished work.
 - Completed, 2026-11-20T13:05Z: canonical policy and directly conflicting guidance updated; render and agent-doc generation passed. `node --run verify:static` passed document budgets and six-interface registry coverage; `node --run verify` passed 105 tests, zero failures, 100% covered renderer-library lines and 98.57% branches on the local proposed tree. No check, permission or runtime code changed.
-- Current: publish the separate normal PR with a mechanically refreshed clean-source graph and verify exact-head hosted CI.
-- Upcoming: mark ready and merge only when configured required checks/reviews allow it, then synchronize tracker evidence. No downstream sync or deployment is part of this packet.
+- Completed, 2026-11-20T13:24:43Z: [separate PR #68](https://github.com/Resnovas/.github/pull/68) merged as [c29468f](https://github.com/Resnovas/.github/commit/c29468f7b34c7a8866342ac760affebb0c1213d5). After published-main reconciliation, local static/full gates passed 107 tests with zero failures; [hosted CI](https://github.com/Resnovas/.github/actions/runs/44743375007) and [pre-merge smartcloud](https://github.com/Resnovas/.github/runs/136312391235) passed on the final head.
+- Current: the scoped policy is delivered on house main; the paired issue records delivery evidence. The separate CodeQL packet remains independent.
+- Upcoming: no downstream sync or deployment is part of this packet. Other repositories retain the default restrictions.
 
 ```mermaid
 flowchart LR
