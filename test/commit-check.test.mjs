@@ -22,6 +22,7 @@ import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import { checkMessage, checkStagedText } from '../templates/tools/dev/commit-check.mjs'
+import * as commitPolicy from '../templates/tools/dev/commit-check.mjs'
 import { renderText } from '../scripts/lib/render.mjs'
 
 const human = { name: 'Jane Doe', email: 'jane@example.com' }
@@ -73,17 +74,78 @@ test('the subject must be a conventional commit, except what git writes itself',
   assert.deepEqual(checkMessage(`fixup! fix: x\n\n${signed}`, human), [])
 })
 
-test('an AI author, an AI sign-off, or a sign-off that does not match the author fails', () => {
+test('agent provenance is accepted without impersonating a human, but mismatched or absent sign-offs fail', () => {
   const ai = { name: 'Claude', email: 'noreply@anthropic.com' }
   const problems = checkMessage(`fix: x\n\n${signed}`, ai).join('\n')
-  assert.match(problems, /author "Claude <noreply@anthropic.com>" is an AI tool/)
   assert.match(problems, /No Signed-off-by matching the author <noreply@anthropic.com>/)
+  assert.deepEqual(checkMessage('fix: x\n\nSigned-off-by: Claude <noreply@anthropic.com>', ai), [])
   assert.match(
     checkMessage('fix: x\n\nSigned-off-by: Claude <noreply@anthropic.com>', human).join('\n'),
-    /names an AI tool/,
+    /No Signed-off-by matching/,
   )
   assert.match(checkMessage('fix: x\n\nSigned-off-by: Someone Else <else@example.com>', human).join('\n'), /No Signed-off-by matching/)
   assert.match(checkMessage('fix: x\n', human).join('\n'), /No Signed-off-by/)
+})
+
+test('signatures bind the author account without platform or per-tool key rules', () => {
+  const check = commitPolicy.checkAuthorSignature
+  const user = { login: 'cursoragent', databaseId: 199161495 }
+  const signature = { isValid: true, state: 'VALID', signer: user }
+  const commit = { author: { user }, signature }
+  assert.deepEqual(check(commit), [])
+  // An unfamiliar agent account or bot uses the same rule, without registering a key.
+  const other = { login: 'another-agent[bot]', databaseId: 300001 }
+  assert.deepEqual(check({ author: { user: other }, signature: { ...signature, signer: other } }), [])
+  const person = { login: 'maintainer', databaseId: 400001 }
+  assert.deepEqual(check({ author: { user: person }, signature: { ...signature, signer: person } }), [])
+  for (const changed of [
+    { signature: null }, { signature: undefined },
+    { signature: { ...signature, isValid: false } },
+    { signature: { ...signature, state: 'INVALID' } },
+    { signature: { verified: true } },
+    { signature: { ...signature, signer: null } },
+    { signature: { ...signature, signer: { ...user, databaseId: 300001 } } },
+    { signature: { ...signature, signer: person } },
+    { signature: { ...signature, wasSignedByGitHub: true, signer: { login: 'web-flow', databaseId: 19864447 } } },
+    { author: { name: 'cursoragent', email: 'cursoragent@cursor.com', user: null } },
+    { author: { user: { ...user, databaseId: '199161495' } } },
+    { author: { user: { databaseId: 0 } }, signature: { ...signature, signer: { databaseId: 0 } } },
+  ]) assert.match(check({ ...commit, ...changed }).join('\n'), /Sign with your own identity/, JSON.stringify(changed))
+  // Self-declared provenance does not authenticate an unsigned commit.
+  assert.ok(check({ ...commit, signature: null, message: 'Signed-off-by: maintainer <human@example.com>' }).length > 0)
+})
+
+test('agent provenance needs independent exact-head human certification, never just a trailer or PR fields', () => {
+  const headSha = 'a'.repeat(40)
+  const body = 'DCO certification: I certify the Developer Certificate of Origin for all changes in this pull request.'
+  const approval = { id: 23, state: 'APPROVED', commit_id: headSha, body, user: { login: 'maintainer', type: 'User' } }
+  const packet = { headSha, commitsComplete: true, commitKinds: ['human', 'agent'], humanLogins: ['maintainer'], accountableHuman: '@maintainer', humanReview: 'Reviewed the patch and tests.', reviewsComplete: true, reviews: [] }
+  const check = commitPolicy.checkPullRequestCertification
+  assert.deepEqual(checkMessage('fix: x\n\nSigned-off-by: Cursor Agent <cursoragent@cursor.com>', { name: 'Cursor Agent', email: 'cursoragent@cursor.com' }), [])
+  assert.match(check(packet).join('\n'), /human.*approval/i)
+  assert.deepEqual(check({ ...packet, reviews: [approval] }), [])
+  // Ordinary human PRs do not require impossible self-approval.
+  for (const commitKinds of [['human'], ['trusted-bot'], ['human', 'trusted-bot']]) {
+    assert.deepEqual(check({ headSha, commitsComplete: true, commitKinds }), [])
+  }
+  for (const changed of [
+    { commitKinds: [] }, { commitKinds: ['unknown'] }, { commitKinds: undefined },
+    { commitsComplete: false }, { commitsComplete: undefined }, { humanLogins: [] },
+    { headSha: '' }, { headSha: 'b'.repeat(40) }, { reviewsComplete: false },
+    { accountableHuman: '@someone-else' }, { humanReview: '' },
+    { reviews: [{ ...approval, state: 'DISMISSED' }] },
+    { reviews: [{ ...approval, state: 'COMMENTED' }] },
+    { reviews: [{ ...approval, body: 'Looks good' }] },
+    { reviews: [{ ...approval, body: `\`\`\`\n${body}\n\`\`\`` }] },
+    { reviews: [{ ...approval, body: 'Signed-off-by: maintainer <maintainer@example.com>' }] },
+    { reviews: [{ ...approval, user: { login: 'maintainer', type: 'Bot' } }] },
+    { accountableHuman: '@cursoragent', reviews: [{ ...approval, user: { login: 'cursoragent', type: 'User' } }] },
+    { reviews: [{ ...approval, id: 0 }] },
+    { reviews: [approval, { ...approval, id: 24, state: 'CHANGES_REQUESTED' }] },
+    { reviews: [{ ...approval, id: 24, state: 'DISMISSED' }, approval] },
+  ]) assert.ok(check({ ...packet, reviews: [approval], ...changed }).length > 0, JSON.stringify(changed))
+  // A fresh explicit approval supersedes an earlier rejection, regardless of API order.
+  assert.deepEqual(check({ ...packet, reviews: [{ ...approval, id: 24 }, { ...approval, state: 'CHANGES_REQUESTED' }] }), [])
 })
 
 test('an AI co-author names the model, and host attribution lines are rejected', () => {
