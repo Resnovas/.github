@@ -466,6 +466,19 @@ test('nested acquisition completes a real launch failure without hanging the pro
   assert.equal(result.children[0].error.code, 'ENOENT')
 })
 
+test('nested synchronous acquisition rejection settles without fabricated child close', { timeout: 4000 }, async () => {
+  const module = new URL('../templates/tools/test-process/process.mjs', import.meta.url).href
+  const parent = `import {startChild} from ${JSON.stringify(module)};
+    const owner=startChild(process.execPath,['invalid\\0argument'],{budgetMs:1000});
+    let closes=0;owner.child.on('close',()=>closes++);
+    const result=await owner.completed;
+    process.stdout.write(JSON.stringify({code:result.error?.code,closes,pid:result.pid,timings:result.timings,connected:owner.child.connected}));`
+  const result = await runChild(process.execPath, ['--input-type=module', '--eval', parent], { budgetMs: 3000, nested: true })
+  assert.equal(result.status, 0, result.stderr)
+  assert.deepEqual(JSON.parse(result.stdout), { code: 'ERR_INVALID_ARG_VALUE', closes: 0, pid: 0, timings: [], connected: false })
+  assert.deepEqual(result.children, [])
+})
+
 for (const mode of ['deadline', 'cancel', 'abort']) {
   test(`nested owners retain actual close through outer ${mode}, without disconnect self-kill`, { timeout: 4000 }, async (t) => {
     const controller = new AbortController()

@@ -116,6 +116,10 @@ function remoteChild(command, args, options) {
       child.stderr.end()
       child.emit('close', packet.status, packet.signal)
     } else if (packet.event === 'completed') {
+      closed = true
+      child.connected = false
+      child.stdout.end()
+      child.stderr.end()
       options.signal?.removeEventListener('abort', abort)
       for (const callback of sends.values()) callback(new Error('Child closed before IPC delivery completed.'))
       sends.clear()
@@ -241,6 +245,12 @@ export function startChild(command, args, options) {
         void owner.completed.then((result) => sendControl(child, { id: packet.id, event: 'completed', result: wireResult(result) }))
       } catch (failure) {
         sendControl(child, { id: packet.id, event: 'error', message: failure.message, code: failure.code })
+        // Acquisition threw before a child existed: settle without inventing a close observation.
+        sendControl(child, { id: packet.id, event: 'completed', result: wireResult({
+          pid: 0, status: null, signal: null, error: failure, stdout: '', stderr: '',
+          output: [null, '', ''], spawnedAtMs: Math.round(performance.timeOrigin + performance.now()),
+          elapsedMs: 0, timings: [],
+        }) })
       }
     } else {
       const owner = children.get(packet.id)
