@@ -1,7 +1,8 @@
 # Test-process shell and deadline contracts
 
 Canonical source: `templates/tools/test-process/process.mjs` and `process.d.mts`.
-Run `node --test test/test-process.test.mjs`, then static-first full verification.
+Run `node templates/tools/test-process/build-windows.mjs` before
+`node --test test/test-process.test.mjs`, then static-first full verification.
 
 ## Shell interpretation is forbidden
 
@@ -13,8 +14,8 @@ assigned shell options; `exactOptionalPropertyTypes` also rejects explicit
 `undefined` statically. Runtime rejection does not depend on compiler settings.
 
 Use `runChild(process.execPath, [scriptPath, ...args], { budgetMs: 1000 })`.
-Windows accepts only that current Node executable; other roots throw typed
-`UnsupportedChildRootError` before spawn. Linux/macOS retain native roots.
+Windows native roots require the explicit build prerequisite described below.
+Linux/macOS retain native roots without that prerequisite.
 This is an argument-transport contract, not a sandbox: executing an explicitly
 selected interpreter, Node `--eval`, or a trusted script still executes code.
 
@@ -94,7 +95,7 @@ roots. A canonical acquisition inside that root delegates to the surviving
 outer observer, which calls the same `startChild`, retains its real handle,
 and awaits its actual `close` before outer `total`. `result.children` contains
 the recursive completed evidence, including actual close timings. No close
-is inferred from IPC disconnect. Windows remains Node-root only, option B.
+is inferred from IPC disconnect. Native Windows acquisitions use the private Job below.
 
 Joining the intermediate's POSIX group alone would kill its observer before
 it could report grandchildren closing. Delegation keeps observation outside
@@ -124,3 +125,98 @@ the owner now enables Node's message dispatch explicitly. All 27 process tests
 pass on Linux; every matrix OS executes these tests without skips. Hosted
 results, normal house merge and Eventiva adoption remain separate gates.
 This is a correctness change; no optimization speedup is claimed.
+
+## Windows-native acquisition
+
+Jonathan selected the native option B after the earlier Node-only restriction.
+Run `node tools/test-process/build-windows.mjs` after accepted house sync on
+Windows. It compiles the checked-in C# source with the installed .NET Framework 4
+`csc.exe` and `System.Web.Extensions.dll`; no download, NuGet or dependency is
+added. Compilation has a 30000 ms build bound and is not hidden in a child budget.
+It then performs one canonical-owner native no-op acquisition of system
+`cmd.exe` with fixed separate arguments `/d /c exit 0` and hard-coded
+`shell:false`. This owner-approved prerequisite has its own10000ms ceiling,
+selected above the prior3353ms acquisition observation. It must report request
+decode, status0, Job release, actual close and final ownership release before
+timed tests begin; any failure stops setup. `test.child.setup` start/complete
+records distinguish its budget and elapsed time from test timing. Mandatory
+child phases remain visible. Other OS hosts do nothing. `npm test` builds and
+warms the template helper first. Direct test invocations must run this same
+explicit prerequisite first; test startup is never silently excluded.
+
+The platform adapter uses an unnamed, noninherited Job with
+`JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE` and neither breakaway flag. It creates the
+native root suspended, assigns the Job before resuming, and inherits only the
+three duplicated stdio handles. A private named pipe carries PID, root-exit,
+empty-Job and release messages, never business output. Literal CRT argv quoting
+does not introduce a shell. IPC and fd3 remain Node-entrypoint-only contracts.
+
+Deadline, cancel, abort, owner-pipe EOF and natural root exit terminate remaining
+Job processes. `QueryInformationJobObject` must observe active-process-zero
+before the release handshake, supervisor exit and actual stream close settle
+the existing owner. The public PID is the native root, not the supervisor.
+The Node core still owns every timer, output bound, result and numeric timing;
+the helper is a platform acquisition boundary, not a second budget runner.
+Existing Node roots retain their libuv behavior and its breakaway limitation.
+See Microsoft's [nested Job contract](https://learn.microsoft.com/windows/win32/procthread/nested-jobs).
+
+Local Linux proof passes 33/33 process tests, including the six native lifecycle
+cases with unchanged 1000 ms budgets, real Git byte/argv/status contracts and a
+compiler-shaped renamed executable. That executable is a transport fixture,
+not real Hermes or compiler performance evidence. PR78 head `3a8b48d` compiled
+on Windows24/current but failed eight native tests and reached the 10-minute
+job limit. Git produced output at64-97 ms but exit appeared only at its deadline.
+Linux/macOS passed on both Node versions; this is not all-OS qualification.
+
+The private client now requests `PipeOptions.Asynchronous`: a pending control
+read must not serialize exit/empty writes on the same Windows pipe handle.
+Microsoft documents [overlapped pipe I/O](https://learn.microsoft.com/windows/win32/ipc/synchronous-and-overlapped-input-and-output)
+as the way to read and write simultaneously. This is a focused correction to
+the observed deadlock hypothesis; only new Windows execution can confirm it.
+The existing natural Git/compiler and lifecycle assertions remain its regression
+controls, with no budget, readiness allowance or threshold increase.
+The local corrected full gate passes153/153. Published correction head
+`fbcf2708d52f9589efa5a21afc3da50e1b84eab6` completes Windows24 at151/153 and
+Windows-current at147/153. Real Git, compiler-shaped transport and delegated
+native PID/close pass both. Two/six early native scenarios still fail their
+unchanged700ms readiness requirement; later native closes take100-140ms.
+Delayed native spawn observations include915/2146/3353ms. Neither Defender or
+SmartScreen scanning nor CLR cold start/JIT is established as the cause.
+
+The next diagnostic records `native-supervisor-spawned`, OS process creation,
+managed Main entry, private control connection and request decoding through the
+same canonical numeric timing owner. A non-inlined Main wrapper captures entry
+before compiling the serializer-bearing method. Creation/entry use Windows
+FILETIME/UTC, translated to parent-relative milliseconds; connection/decoding
+are parent receipt times. Their difference is not a CPU profile or proof of
+which subsystem waited. Cancellation before a report leaves that interval
+unknown, never zero. Existing ready/PID/death tests require the new phases too.
+Diagnostic head9275d95 completes both Windows lanes at152/153: only the first
+native deadline fixture misses unchanged700ms readiness. Windows24 first
+creation/Main/connection/decode/root-spawn/close is3/29/509/929/1025/1037ms;
+current is4/28/454/841ms through decode and894ms through close. Subsequent
+Main entries take20-26ms, connections42-48ms and decode57-64ms. Thus this run
+does not show a large creation-to-Main delay; most excess is after Main and
+during decoding. Assembly/JIT/page-cache and post-entry scanning are not
+independently attributed. Jonathan approved the explicit setup acquisition
+above via Puck on2026-11-20 after these measurements; exact human time unknown.
+All child budgets,700ms readiness, assertions and phase logging remain unchanged.
+New exact-head Windows execution must qualify this correction; no speedup is
+claimed from moving explicitly reported setup work outside tests.
+
+On setup head9c99904 both Windows lanes pass; Ubuntu-current instead fails a
+death-observation probe after actual child close at26ms. Opening a Linux procfs
+status file, reaping the process, then reading the retained descriptor reproduces
+`ESRCH`, not only `ENOENT`. The probe now permits either disappearing-entry
+error and still requires its existing signal-zero/death check; a live process
+cannot pass. No owner implementation, assertion, readiness or budget changes.
+Local static-first full verification passes153/153 with lines/functions100%
+and branches95.30%; new exact-head hosted verification remains required.
+
+Jonathan's conditional decision permits false-positive dismissal of alerts70/71
+only after the corrected exact head passes every OS and both flows are confirmed
+unchanged: separate argv, `shell:false`, normalized prefixed test filter.
+Different alerts return for review; no alert is dismissed by these partial runs.
+New alert IDs72/73 on the diagnostic head were returned to Jonathan via Puck;
+the70/71 authorization is not extended to them. No alert action is taken yet.
+No speedup, downstream adoption or whole EVE-261 acceptance is claimed.
