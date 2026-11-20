@@ -18,9 +18,10 @@ import assert from 'node:assert/strict'
 import childProcess, { spawnSync } from 'node:child_process'
 import { once } from 'node:events'
 import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { copyFile } from 'node:fs/promises'
 import { syncBuiltinESMExports } from 'node:module'
 import { dirname, join, resolve } from 'node:path'
-import test from 'node:test'
+import test, { after, before, describe } from 'node:test'
 import { setTimeout as delay } from 'node:timers/promises'
 import { fileURLToPath } from 'node:url'
 import { childBudgetIssue, runChild, startChild, terminationGraceMs } from '../templates/tools/test-process/process.mjs'
@@ -396,24 +397,34 @@ test('native Git retains stdin bytes, literal configuration argv, cwd and nonzer
   t.diagnostic(`native Git literal/stdin/status: ${literal.elapsedMs}/${bytes.elapsedMs}/${missing.elapsedMs} ms`)
 })
 
-test('a compiler-shaped native executable retains empty/quoted argv, UTF-8 output and failure status', { timeout: 3000 }, async (t) => {
+describe('compiler-shaped executable fixture', () => {
   const backup = resolve('.amp/in/orb-backup')
   mkdirSync(backup, { recursive: true })
   const root = mkdtempSync(join(backup, 'native compiler '))
-  t.after(() => rmSync(root, { recursive: true, force: true }))
+  after(() => rmSync(root, { recursive: true, force: true }))
   // A renamed real executable exercises native acquisition, not a shebang or shell shim.
   // Its small fixture program tests transport; it is not a real Hermes performance claim.
   const compiler = join(root, process.platform === 'win32' ? 'hermesc-fixture.exe' : 'hermesc-fixture')
-  copyFileSync(process.execPath, compiler)
-  const args = ['', '-emit-binary', '-out', 'output path\\', 'source "quoted".js', ';&&|%VAR%$VAR']
-  const result = await runChild(compiler, ['--eval', 'process.stdout.write(JSON.stringify(process.argv.slice(1)));process.stderr.write("compiler diagnostic");process.exitCode=23', '--', ...args], { budgetMs: 1000, cwd: root })
-  assert.equal(result.error, undefined)
-  assert.equal(result.status, 23)
-  assert.equal(result.signal, null)
-  assert.deepEqual(JSON.parse(result.stdout), args)
-  assert.equal(result.stderr, 'compiler diagnostic')
-  assert.deepEqual(result.timings.slice(-2).map((row) => row.phase), ['close', 'total'])
-  t.diagnostic(`compiler-shaped native transport: ${result.elapsedMs} ms`)
+  // Provisioning can block on filesystem work before acquisition starts. Keep it
+  // independently bounded and reported, not charged to the transport test.
+  before(async () => {
+    const startedAt = performance.now()
+    console.error(JSON.stringify({ code: 'test.fixture.setup', phase: 'start', budgetMs: 3000 }))
+    await copyFile(process.execPath, compiler)
+    console.error(JSON.stringify({ code: 'test.fixture.setup', phase: 'complete', budgetMs: 3000, elapsedMs: Math.round(performance.now() - startedAt) }))
+  }, { timeout: 3000 })
+
+  test('a compiler-shaped native executable retains empty/quoted argv, UTF-8 output and failure status', { timeout: 3000 }, async (t) => {
+    const args = ['', '-emit-binary', '-out', 'output path\\', 'source "quoted".js', ';&&|%VAR%$VAR']
+    const result = await runChild(compiler, ['--eval', 'process.stdout.write(JSON.stringify(process.argv.slice(1)));process.stderr.write("compiler diagnostic");process.exitCode=23', '--', ...args], { budgetMs: 1000, cwd: root })
+    assert.equal(result.error, undefined)
+    assert.equal(result.status, 23)
+    assert.equal(result.signal, null)
+    assert.deepEqual(JSON.parse(result.stdout), args)
+    assert.equal(result.stderr, 'compiler diagnostic')
+    assert.deepEqual(result.timings.slice(-2).map((row) => row.phase), ['close', 'total'])
+    t.diagnostic(`compiler-shaped native transport: ${result.elapsedMs} ms`)
+  })
 })
 
 test('nested native Git acquisition reports its actual PID and completed close to the outer owner', { timeout: 3000 }, async () => {
