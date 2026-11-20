@@ -5,7 +5,7 @@ Use `AGENTS.md` for authority, tool routing and handoff requirements, `AI_POLICY
 
 The funnel is code examples, corrective static checks, executable verification, minimal agent guidance, then human decisions. The adoption contract and commands are in `docs/house-funnel.md`. Preserve existing repository checks when adding shared tooling; a parser or lint pass is not semantic proof.
 
-Read the repository's package scripts and CI before reporting verification. `verify:static` runs first; `verify` covers the behavioral gate. `check` alone need not include either. Feature guides remain canonical Markdown; their executable examples and registry entries must agree with reached public paths. Record only affected-feature evidence using synthetic data, the existing artifact audience and seven-day retention.
+Read package scripts and CI before reporting verification. Pre-commit runs only `verify:static` then staged `test:affected`; full `verify`, smoke and evidence collection run in PR and main-push CI. `check` alone need not include either gate. Feature guides remain canonical Markdown; executable examples and registry entries must agree with reached public paths. Record only affected-feature evidence using synthetic data, the existing artifact audience and seven-day retention.
 
 Sections numbered from 10 describe this repository's features and compiling examples. Update the corresponding people guide alongside them, and regenerate `LLMS.md` with `node tools/ai-docs/docgen.mjs`.
 <!-- house:managed:end -->

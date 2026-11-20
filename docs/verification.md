@@ -21,6 +21,7 @@ Use disposable Git repositories, synthetic JSON and lint snippets. Execute the c
   "selector": "house funnel public contracts",
   "assertions": [
     "pre-commit checks the staged snapshot, orders gates, propagates failure and preserves foreign hooks",
+    "staged test selection follows source owners without collecting full verification evidence",
     "document budgets reject both line inflation and a single enormous paragraph",
     "deployment proof accepts only the full intended live build-info commit",
     "registry coverage uses an independent inventory and refuses empty or unknown selections",

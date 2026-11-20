@@ -24,6 +24,7 @@ import { checkDocs } from '../templates/tools/verification/docs-budget.mjs'
 import { verifyBuild } from '../templates/tools/verification/build-info.mjs'
 import { checkCoverage, checkManifest, digest, parseRegistry, selectFeatures } from '../templates/tools/verification/registry.mjs'
 import { validateEvidence } from '../templates/tools/verification/evidence.mjs'
+import { selectAffectedTests } from '../scripts/test-affected.mjs'
 
 // Fixture repositories must not inherit the enclosing real commit's index or worktree.
 for (const key of ['GIT_INDEX_FILE', 'GIT_DIR', 'GIT_WORK_TREE']) delete process.env[key]
@@ -41,10 +42,12 @@ test('pre-commit checks the staged snapshot, orders gates, propagates failure an
   mkdirSync(join(root, 'tools/dev'), { recursive: true })
   copyFileSync(resolve('templates/tools/dev/pre-commit.mjs'), join(root, 'tools/dev/pre-commit.mjs'))
   writeFileSync(join(root, '.gitignore'), 'events\n')
-  const pkg = { scripts: { 'verify:static': 'node static.cjs', verify: 'node verify.cjs' } }
+  const pkg = { scripts: { 'verify:static': 'node static.cjs', 'test:affected': 'node affected.cjs', verify: 'node verify.cjs', 'verify:evidence': 'node verify.cjs', 'verify:smoke': 'node verify.cjs' } }
   writeFileSync(join(root, 'package.json'), JSON.stringify(pkg))
   writeFileSync(join(root, 'static.cjs'), "require('node:fs').appendFileSync('events', 'static\\n')")
-  writeFileSync(join(root, 'verify.cjs'), "require('node:fs').appendFileSync('events', 'verify\\n')")
+  writeFileSync(join(root, 'affected.cjs'), "require('node:fs').appendFileSync('events', 'affected\\n')")
+  // Expensive CI commands must not run even when available in an adopted repository.
+  writeFileSync(join(root, 'verify.cjs'), 'process.exit(9)')
   git(root, 'add', '.')
   installPreCommit(root)
   const installedHook = join(root, '.git/hooks/pre-commit')
@@ -52,18 +55,57 @@ test('pre-commit checks the staged snapshot, orders gates, propagates failure an
   installPreCommit(root)
   assert.equal(statSync(installedHook).mtimeMs, 946684800000, 'an existing hook must not be rewritten during setup')
   git(root, 'commit', '-qm', 'fixture')
-  assert.equal(readFileSync(join(root, 'events'), 'utf8'), 'static\nverify\n')
+  assert.equal(readFileSync(join(root, 'events'), 'utf8'), 'static\naffected\n')
   writeFileSync(join(root, 'static.cjs'), 'process.exit(3)')
   assert.throws(() => runPreCommit(root), /Stage or preserve/)
   git(root, 'add', 'static.cjs')
   assert.throws(() => runPreCommit(root), /verify:static failed/)
-  assert.equal(readFileSync(join(root, 'events'), 'utf8'), 'static\nverify\n')
+  assert.equal(readFileSync(join(root, 'events'), 'utf8'), 'static\naffected\n')
+  writeFileSync(join(root, 'static.cjs'), "require('node:fs').appendFileSync('events', 'static\\n')")
+  writeFileSync(join(root, 'affected.cjs'), 'process.exit(4)')
+  git(root, 'add', '.')
+  assert.throws(() => runPreCommit(root), /test:affected failed/)
+  delete pkg.scripts['test:affected']
+  writeFileSync(join(root, 'package.json'), JSON.stringify(pkg))
+  git(root, 'add', '.')
+  assert.throws(() => runPreCommit(root), /Define package script test:affected/)
   writeFileSync(join(root, 'static.cjs'), "require('node:fs').writeFileSync('static.cjs', '// changed by verification')")
   git(root, 'add', 'static.cjs')
   assert.throws(() => runPreCommit(root), /Stage or preserve/)
   writeFileSync(join(root, '.git/hooks/pre-commit'), '#!/bin/sh\necho foreign\n')
   assert.throws(() => installPreCommit(root), /Preserve the existing/)
   assert.equal(readFileSync(join(root, '.git/hooks/pre-commit'), 'utf8'), '#!/bin/sh\necho foreign\n')
+})
+
+test('staged test selection follows source owners without collecting full verification evidence', () => {
+  const tests = ['test/funnel.test.mjs', 'test/funnel-lint.test.mjs', 'test/graphify.test.mjs', 'test/render.test.mjs']
+  assert.deepEqual(selectAffectedTests(['tools/lint/react.mjs'], tests), ['test/funnel-lint.test.mjs'])
+  assert.deepEqual(selectAffectedTests(['test/graphify.test.mjs'], tests), ['test/graphify.test.mjs'])
+  assert.deepEqual(selectAffectedTests(['docs/funnel-timeline.md'], tests), [])
+  assert.deepEqual(selectAffectedTests(['tools/dev/pre-commit.mjs', 'tools/lint/react.mjs'], tests), ['test/funnel-lint.test.mjs', 'test/funnel.test.mjs', 'test/render.test.mjs'])
+  assert.deepEqual(selectAffectedTests(['package-lock.json'], tests), [...tests].sort())
+  assert.throws(() => selectAffectedTests(['scripts/new-tool.mjs'], tests), /Map scripts\/new-tool.mjs to its affected tests/)
+  // A deleted test is not an executable target; deleted source still selects its owner's tests.
+  assert.deepEqual(selectAffectedTests(['test/removed.test.mjs', 'tools/lint/removed.mjs'], tests), ['test/funnel-lint.test.mjs'])
+
+  const root = fixture()
+  git(root, 'init', '-q')
+  for (const directory of ['scripts', 'test', 'tools/lint']) mkdirSync(join(root, directory), { recursive: true })
+  copyFileSync(resolve('scripts/test-affected.mjs'), join(root, 'scripts/test-affected.mjs'))
+  writeFileSync(join(root, 'test/funnel-lint.test.mjs'), "import { test } from 'node:test'; test('selected lint path', () => {});")
+  writeFileSync(join(root, 'test/graphify.test.mjs'), 'process.exit(7)')
+  writeFileSync(join(root, 'tools/lint/changed file.mjs'), '// staged lint input')
+  // Only the lint input is staged: untracked tests must not widen selection to all tests.
+  git(root, 'add', 'tools/lint/changed file.mjs')
+  const env = { ...process.env }
+  delete env.NODE_TEST_CONTEXT // Exercise the CLI as a hook, not as a nested Node test worker.
+  const execute = () => spawnSync(process.execPath, ['scripts/test-affected.mjs'], { cwd: root, encoding: 'utf8', env })
+  const passed = execute()
+  assert.equal(passed.status, 0, passed.stderr)
+  assert.match(passed.stdout, /selected lint path/)
+  // A failing selected test must reach the caller; an unrelated failing test above did not.
+  writeFileSync(join(root, 'test/funnel-lint.test.mjs'), 'process.exit(3)')
+  assert.equal(execute().status, 1)
 })
 
 test('document budgets reject both line inflation and a single enormous paragraph', () => {

@@ -112,8 +112,10 @@ test('sync renders Verify host mirrors that the surface generator accepts withou
   }
   const local = '---\nlabel: Local proof\ndescription: Exercise a repository-only command\n---\n\nRun the local proof.\n'
   writeFileSync(join(fixture, '.agents/prompts/local-proof.md'), local)
-  const run = (command) => spawnSync(process.execPath, ['tools/dev/surfaces.mjs', command], {
-    cwd: fixture, encoding: 'utf8', env: { ...process.env, CI: 'true' },
+  const env = { ...process.env, CI: 'true' }
+  for (const key of ['GIT_INDEX_FILE', 'GIT_DIR', 'GIT_WORK_TREE']) delete env[key]
+  const run = (...args) => spawnSync(process.execPath, ['tools/dev/surfaces.mjs', ...args], {
+    cwd: fixture, encoding: 'utf8', env,
   })
   // Bootstrap unrelated skill/MCP outputs, then put the proposed sync bytes back before checking.
   const synced = run('sync')
@@ -145,4 +147,16 @@ test('sync renders Verify host mirrors that the surface generator accepts withou
   assert.equal(final.status, 0, final.stderr)
   assert.equal(readFileSync(join(fixture, '.agents/prompts/local-proof.md'), 'utf8'), local)
   assert.deepEqual(localMirrors.map((path) => readFileSync(join(fixture, path), 'utf8')), preserved)
+
+  // Setup recognizes the lightweight pair without requiring the CI-only verify command.
+  const initialized = spawnSync('git', ['init', '-q'], { cwd: fixture, encoding: 'utf8', env })
+  assert.equal(initialized.status, 0, initialized.stderr)
+  writeFileSync(join(fixture, 'package.json'), JSON.stringify({ scripts: { 'verify:static': 'static-check', 'test:affected': 'affected-tests' } }))
+  const adopted = run('install', '--dry-run')
+  assert.equal(adopted.status, 0, adopted.stderr)
+  assert.match(adopted.stdout, /Pre-commit hook: would install/)
+  writeFileSync(join(fixture, 'package.json'), JSON.stringify({ scripts: { 'verify:static': 'static-check', verify: 'complete-ci-gate' } }))
+  const legacy = run('install', '--dry-run')
+  assert.equal(legacy.status, 0, legacy.stderr)
+  assert.doesNotMatch(legacy.stdout, /Pre-commit hook: would install/)
 })
