@@ -228,6 +228,7 @@ test('workflow trust contract uses completion, trusted house code and only scope
   const caller = readFileSync(new URL('../templates/.github/workflows/house-codeql-alert-comment.yml', import.meta.url), 'utf8')
   const workflow = readFileSync(new URL('../.github/workflows/codeql-alert-comment.yml', import.meta.url), 'utf8')
   assert.match(caller, /workflow_run:\n    workflows: \[House CodeQL\]\n    types: \[completed\]/)
+  assert.match(caller, /uses: Resnovas\/\.github\/\.github\/workflows\/codeql-alert-comment.yml@[a-f0-9]{40} /)
   assert.match(workflow, /repository: Resnovas\/\.github\n          ref: main\n          persist-credentials: false/)
   assert.match(workflow, /GH_TOKEN: \$\{\{ github.token \}\}/)
   assert.deepEqual(workflow.split('\n').filter((line) => /^      [\w-]+: (read|write)$/.test(line)).map((line) => line.trim()), ['actions: read', 'contents: read', 'security-events: read', 'pull-requests: write'])

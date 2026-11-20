@@ -12,7 +12,7 @@ permissions: {}
 
 jobs:
   house-codeql-alert-comment:
-    uses: Resnovas/.github/.github/workflows/codeql-alert-comment.yml@main
+    uses: Resnovas/.github/.github/workflows/codeql-alert-comment.yml@fd5b65addd03918c531f22ac07d0078e993964cb # reviewed house commenter implementation
     permissions:
       actions: read
       contents: read
