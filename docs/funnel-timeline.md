@@ -57,6 +57,9 @@ Owner: [.github pod](https://ampcode.com/threads/T-01a1f637-2241-770e-aa29-22cf1
 
 ## EVE-261 process-lifetime follow-up
 
+- 2026-11-20: [PR74](https://github.com/Resnovas/.github/pull/74) merged14:09:10Z; accepted core synced.
+- [Nesting](test-process-security.md#nested-ownership-survives-an-intermediate-process):27/27; hook142/142. Rebased gates/merge/sync pending; EVE261 open.
+
 - 2026-11-20T13:55:16Z: PR59 merged normally as [d6daf4a](https://github.com/Resnovas/.github/commit/d6daf4af54bf195915d14ac04706aa5ea4ba3152), following fully green sourcecd1dc80. Scoped Eventiva sync exposed missing explicit `close` evidence required by its newer telemetry contracts. Puck authorized this owner's narrow canonical follow-up: emit at the actual close callback, allow safe nested forwarding and extend existing normal/no-fd3/journal/cancel/deadline matrix proofs, without lifetime or budget changes. Three focused cases fail before; local process21/21 and static checks pass after. Full hooks, exact-head hosted matrix, normal merge and downstream resync remain separate gates; EVE-261/Core stays open.
 
 - 2026-11-20T06:30Z: [replacement owner](https://ampcode.com/threads/T-5dcbf3b4-41e4-4df0-906d-93629eebe199) reproduced the [PR59](https://github.com/Resnovas/.github/pull/59) descendant defect against `ed465c31`: deadline 154 ms, direct exit 156 ms, actual close 1868 ms for a 150 ms budget. Five additional real resistant-descendant contracts fail on that baseline: deadline, cancellation, abort, leader exit with inherited pipes and leader exit with ignored pipes. Independent PID teardown bounds failed proofs.

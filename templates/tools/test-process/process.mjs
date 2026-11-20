@@ -16,7 +16,124 @@
  */
 
 // One dependency-free process owner for Node tools and test-runner adapters.
-import { spawn } from 'node:child_process'
+import { ChildProcess, spawn } from 'node:child_process'
+import { PassThrough } from 'node:stream'
+
+const controlKey = '__house_child_owner_v1'
+const remoteOwners = new Map()
+let remoteSequence = 0
+const controlListener = () => {}
+// Only an explicitly nested Node root receives this private control capability.
+const delegated = process.env.HOUSE_CHILD_OWNER === '1' && typeof process.send === 'function'
+
+/** Separate process-owner traffic from the fixture's public IPC channel. */
+if (delegated) {
+  const originalEmit = process.emit
+  process.emit = function (event, ...args) {
+    const packet = event === 'message' && args[0]?.[controlKey]
+    if (!packet) return Reflect.apply(originalEmit, this, [event, ...args])
+    remoteOwners.get(packet.id)?.(packet)
+    return true
+  }
+}
+
+/** Send private ownership traffic without treating a disconnected business process as a live observer. */
+function sendControl(channel, packet) {
+  if (channel.connected) channel.send({ [controlKey]: packet }, () => {})
+}
+
+/** Preserve error identity fields across Node's JSON IPC serialization, never in timing records. */
+function wireResult(result) {
+  return { ...result, ...(result.error ? { error: { message: result.error.message, code: result.error.code } } : {}),
+    ...(result.children ? { children: result.children.map(wireResult) } : {}) }
+}
+
+/** Restore typed process failures after transport; timing still contains no error text. */
+function localResult(result) {
+  return { ...result, ...(result.error ? { error: Object.assign(new Error(result.error.message), { code: result.error.code }) } : {}),
+    ...(result.children ? { children: result.children.map(localResult) } : {}) }
+}
+
+/**
+ * Delegate acquisition to the surviving outer observer, not another local launcher.
+ * PID is available at spawn, as for a ChildProcess whose creation has not completed yet.
+ * Business IPC and stream events retain their public channel; only the private envelope is consumed.
+ */
+function remoteChild(command, args, options) {
+  const id = ++remoteSequence
+  const child = new ChildProcess()
+  child.stdout = new PassThrough()
+  child.stderr = new PassThrough()
+  child.stdout.setEncoding('utf8')
+  child.stderr.setEncoding('utf8')
+  // As at the real acquisition boundary, a launch error is retained in completed even without a caller listener.
+  child.on('error', () => {})
+  child.connected = true
+  const sends = new Map()
+  let sendSequence = 0
+  let closed = false
+  let finish
+  const completed = new Promise((resolve) => { finish = resolve })
+  child.send = (message, callback) => {
+    const sendId = ++sendSequence
+    if (callback) sends.set(sendId, callback)
+    sendControl(process, { id, action: 'message', message, sendId })
+    return process.connected
+  }
+  child.kill = (signal = 'SIGTERM') => {
+    if (closed) return false
+    sendControl(process, { id, action: 'kill', signal })
+    return true
+  }
+  const cancel = async () => {
+    if (!closed) sendControl(process, { id, action: 'cancel' })
+    await completed
+  }
+  const abort = () => { void cancel() }
+  options.signal?.addEventListener('abort', abort, { once: true })
+  if (remoteOwners.size === 0) process.on('message', controlListener)
+  remoteOwners.set(id, (packet) => {
+    if (packet.event === 'spawn') {
+      child.pid = packet.pid
+      child.emit('spawn')
+    } else if (packet.event === 'message') child.emit('message', packet.message)
+    else if (packet.event === 'sent') {
+      sends.get(packet.sendId)?.(packet.error ? new Error(packet.error) : null)
+      sends.delete(packet.sendId)
+    }
+    else if (packet.event === 'stdout' || packet.event === 'stderr') {
+      child[packet.event].write(packet.chunk)
+      if (options.inheritOutput) process[packet.event].write(packet.chunk)
+    } else if (packet.event === 'exit') {
+      child.exitCode = packet.code
+      child.signalCode = packet.signal
+      child.emit('exit', packet.code, packet.signal)
+    } else if (packet.event === 'error') child.emit('error', Object.assign(new Error(packet.message), { code: packet.code }))
+    else if (packet.event === 'close') {
+      closed = true
+      child.connected = false
+      child.stdout.end()
+      child.stderr.end()
+      child.emit('close', packet.status, packet.signal)
+    } else if (packet.event === 'completed') {
+      closed = true
+      child.connected = false
+      child.stdout.end()
+      child.stderr.end()
+      options.signal?.removeEventListener('abort', abort)
+      for (const callback of sends.values()) callback(new Error('Child closed before IPC delivery completed.'))
+      sends.clear()
+      remoteOwners.delete(id)
+      if (remoteOwners.size === 0) process.off('message', controlListener)
+      finish(localResult(packet.result))
+    }
+  })
+  const serializable = { ...options, env: options.env ?? process.env, cwd: options.cwd ?? process.cwd() }
+  delete serializable.signal
+  if (options.input instanceof Uint8Array) serializable.input = [...options.input]
+  sendControl(process, { id, action: 'spawn', command, args, options: serializable })
+  return { child, completed, cancel }
+}
 
 /** Per-child cleanup allowance reserved by both registration and execution. */
 export const terminationGraceMs = 100
@@ -77,12 +194,14 @@ function emit(row) {
 export function startChild(command, args, options) {
   if (options.signal?.aborted) throw new Error('Child launch aborted before spawn.')
   if ('shell' in options) throw new TypeError('Shell options are forbidden; pass an executable and an argument array, never a command string.')
-  const { budgetMs, ordinal = 1, cwd, env = process.env, input, ipc = false,
+  const { budgetMs, ordinal = 1, cwd, env = process.env, input, ipc = false, nested = false,
     journal = false, maxBuffer = 65536, inheritOutput = false } = options
   if (!Number.isSafeInteger(budgetMs) || budgetMs <= 0 || !Number.isSafeInteger(ordinal) || ordinal <= 0 ||
       !Number.isSafeInteger(maxBuffer) || maxBuffer <= 0)
     throw new TypeError('Declare a positive integer child budget, ordinal and output bound before spawning.')
   if (process.platform === 'win32' && command !== process.execPath) throw new UnsupportedChildRootError()
+  if ((nested || delegated) && command !== process.execPath) throw new TypeError('Nested ownership requires process.execPath.')
+  if (delegated) return remoteChild(command, args, options)
   const started = performance.now()
   const spawnedAtMs = Math.round(performance.timeOrigin + started)
   const timings = []
@@ -99,10 +218,49 @@ export function startChild(command, args, options) {
     emit({ child: ordinal, startedAtMs: spawnedAtMs, budgetMs, ...row })
   }
   phase('spawn-request')
-  const stdio = ['pipe', 'pipe', 'pipe', ...(journal ? ['pipe'] : []), ...(ipc ? ['ipc'] : [])]
+  const stdio = ['pipe', 'pipe', 'pipe', ...(journal ? ['pipe'] : nested && !ipc ? ['ignore'] : []), ...(ipc || nested ? ['ipc'] : [])]
   // POSIX descendants inherit this owned group, even after its leader exits.
   const grouped = process.platform !== 'win32'
-  const child = spawn(command, args, { cwd, env, stdio, detached: grouped, shell: false })
+  const child = spawn(command, args, { cwd, env: nested ? { ...env, HOUSE_CHILD_OWNER: '1' } : env, stdio, detached: grouped, shell: false })
+  const children = new Map()
+  const originalEmit = child.emit
+  // Node otherwise buffers private IPC when the caller did not request business messages.
+  if (nested) child.on('message', controlListener)
+  if (nested) child.emit = function (event, ...values) {
+    const packet = event === 'message' && values[0]?.[controlKey]
+    if (!packet) return Reflect.apply(originalEmit, this, [event, ...values])
+    if (packet.action === 'spawn') {
+      if (terminating || closed) return true
+      try {
+        const input = Array.isArray(packet.options.input) ? Uint8Array.from(packet.options.input) : packet.options.input
+        const owner = startChild(packet.command, packet.args, { ...packet.options, input, nested: true, inheritOutput: false })
+        children.set(packet.id, owner)
+        sendControl(child, { id: packet.id, event: 'spawn', pid: owner.child.pid })
+        owner.child.stdout.on('data', (chunk) => sendControl(child, { id: packet.id, event: 'stdout', chunk }))
+        owner.child.stderr.on('data', (chunk) => sendControl(child, { id: packet.id, event: 'stderr', chunk }))
+        owner.child.on('message', (message) => sendControl(child, { id: packet.id, event: 'message', message }))
+        owner.child.once('exit', (code, signal) => sendControl(child, { id: packet.id, event: 'exit', code, signal }))
+        owner.child.once('close', (status, signal) => sendControl(child, { id: packet.id, event: 'close', status, signal }))
+        owner.child.once('error', (failure) => sendControl(child, { id: packet.id, event: 'error', message: failure.message, code: failure.code }))
+        void owner.completed.then((result) => sendControl(child, { id: packet.id, event: 'completed', result: wireResult(result) }))
+      } catch (failure) {
+        sendControl(child, { id: packet.id, event: 'error', message: failure.message, code: failure.code })
+        // Acquisition threw before a child existed: settle without inventing a close observation.
+        sendControl(child, { id: packet.id, event: 'completed', result: wireResult({
+          pid: 0, status: null, signal: null, error: failure, stdout: '', stderr: '',
+          output: [null, '', ''], spawnedAtMs: Math.round(performance.timeOrigin + performance.now()),
+          elapsedMs: 0, timings: [],
+        }) })
+      }
+    } else {
+      const owner = children.get(packet.id)
+      if (packet.action === 'cancel') void owner?.cancel()
+      if (packet.action === 'kill') owner?.child.kill(packet.signal)
+      if (packet.action === 'message' && owner?.child.connected) owner.child.send(packet.message,
+        (failure) => sendControl(child, { id: packet.id, event: 'sent', sendId: packet.sendId, error: failure?.message }))
+    }
+    return true
+  }
   let stdout = ''
   let stderr = ''
   let diagnostic = ''
@@ -133,6 +291,7 @@ export function startChild(command, args, options) {
     clearTimeout(forced)
     forced = undefined
     signalTree('SIGKILL')
+    for (const owner of children.values()) void owner.cancel()
     release?.()
   }
   /**
@@ -145,6 +304,7 @@ export function startChild(command, args, options) {
     error ??= Object.assign(new Error('Bounded child did not complete normally.'), { code })
     phase(code === 'ETIMEDOUT' ? 'deadline' : 'output-limit')
     signalTree('SIGTERM')
+    for (const owner of children.values()) void owner.cancel()
     forced = setTimeout(force, terminationGraceMs)
   }
   const deadline = setTimeout(() => terminate('ETIMEDOUT'), budgetMs)
@@ -207,6 +367,7 @@ export function startChild(command, args, options) {
   child.stdin.end(input)
   child.once('exit', () => {
     phase('exit')
+    for (const owner of children.values()) void owner.cancel()
     // A normally exited leader must not leave descendants holding pipes or doing background work.
     if (grouped && !terminating && signalTree('SIGTERM')) {
       terminating = true
@@ -219,12 +380,17 @@ export function startChild(command, args, options) {
       // Descriptor close is distinct from leader exit and any later descendant escalation release.
       phase('close')
       clearTimeout(deadline)
-      release = () => {
+      let released = false
+      release = async () => {
+        if (released) return
+        released = true
+        const nestedResults = await Promise.all([...children.values()].map((owner) => owner.completed))
         options.signal?.removeEventListener('abort', abort)
         phase('total')
         resolve({ pid: child.pid ?? 0, status, signal, ...(error ? { error } : {}), stdout, stderr,
           output: journal ? [null, stdout, stderr, diagnostic] : [null, stdout, stderr],
-          spawnedAtMs, elapsedMs: Math.round(performance.now() - started), timings })
+          spawnedAtMs, elapsedMs: Math.round(performance.now() - started), timings,
+          ...(nested ? { children: nestedResults } : {}) })
       }
       // Closing the leader's pipes cannot cancel escalation of a resistant descendant.
       if (!forced) release()

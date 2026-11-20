@@ -179,7 +179,7 @@ if (result.error || result.status !== 0) throw new Error('The child did not comp
 console.log(result.stdout)
 ```
 
-`runChild(command, args, options)` awaits actual close. `startChild` returns `child` for IPC, `completed` and awaitable `cancel`; await one of the latter before releasing ownership. Optional `signal` rejects pre-aborted launches and cancels active children. `budgetMs` is required. Defaults: ordinal 1, current environment, 65536 captured bytes, piped output, no IPC/journal. Optional `cwd`, `env`, `input`, `ipc`, `journal`, `maxBuffer` and `inheritOutput` configure the launch. IPC adds a message channel; journal adds fd 3 for closed phases. No shell, timing opt-out or application dependency exists.
+`runChild(command, args, options)` awaits close. `startChild` returns IPC `child`, `completed` and awaitable `cancel`; await completion/cancellation before release. `signal` rejects pre-aborted launches and cancels active children. Required: `budgetMs`. Defaults: ordinal1, current env/cwd, no input, 65536 captured bytes, piped output, no IPC/journal/nesting. Options: `cwd`, `env`, `input`, `ipc`, `journal` (fd3), `maxBuffer`, `inheritOutput`. `nested:true` enables [Node delegation and recursive close evidence](test-process-security.md#nested-ownership-survives-an-intermediate-process). No shell or timing opt-out.
 
 Timing goes to stderr, preserving JSON stdout. Records contain only `code`, child ordinal, start timestamp, budget, closed phase and elapsed milliseconds, never command/environment/error/stream/IPC payloads. Results retain bounded streams and nonzero exits. Deadlines send SIGTERM then SIGKILL after reserved grace; cancellation sends SIGKILL and awaits close. Launch errors, expiry and output floods are explicit result errors.
 
