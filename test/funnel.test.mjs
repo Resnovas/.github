@@ -79,6 +79,50 @@ test('document budgets reject both line inflation and a single enormous paragrap
   writeFileSync(join(root, 'docs/guide.md'), 'short')
   writeFileSync(join(root, 'AGENTS.md'), 'Guidance\n'.repeat(121))
   assert.match(checkDocs(root)[0], /121\/120/)
+
+  // Populate the real index without writing thousands of irrelevant fixture files.
+  const large = fixture()
+  git(large, 'init', '-q')
+  const blob = execFileSync('git', ['hash-object', '-w', '--stdin'], { cwd: large, input: '', encoding: 'utf8' }).trim()
+  const paths = Array.from({ length: 18000 }, (_, index) => `docs/${String(index).padStart(5, '0')}-${'x'.repeat(180)}.md`)
+  assert.ok(Buffer.byteLength(paths.join('\0')) > 3303046)
+  execFileSync('git', ['update-index', '-z', '--index-info'], { cwd: large, input: paths.map((path) => `100644 ${blob}\t${path}\0`).join('') })
+  mkdirSync(join(large, 'docs/nested'), { recursive: true })
+  writeFileSync(join(large, 'docs/zz-tracked.md'), 'x'.repeat(32001))
+  git(large, 'add', 'docs/zz-tracked.md')
+  writeFileSync(join(large, 'docs/nested/untracked.md'), 'Guide\n'.repeat(401))
+  writeFileSync(join(large, '.gitignore'), 'docs/ignored.md\n')
+  writeFileSync(join(large, 'docs/ignored.md'), 'x'.repeat(32001))
+  assert.deepEqual(checkDocs(large).map((finding) => finding.split(':')[0]).sort(), ['docs/nested/untracked.md', 'docs/zz-tracked.md'])
+
+  const regions = fixture()
+  git(regions, 'init', '-q')
+  mkdirSync(join(regions, 'docs'))
+  for (const generator of ['linear', 'planning']) {
+    const generated = `<!-- ${generator}:generated:start -->\n${'Generated source\n'.repeat(500)}<!-- ${generator}:generated:end -->\n`
+    writeFileSync(join(regions, 'docs/mixed.md'), generated)
+    assert.deepEqual(checkDocs(regions), [])
+    writeFileSync(join(regions, 'docs/mixed.md'), `Authored context\n${generated}Authored conclusion\n`)
+    assert.deepEqual(checkDocs(regions), [])
+    writeFileSync(join(regions, 'docs/mixed.md'), `Authored context\n${generated}Authored conclusion\n`.replaceAll('\n', '\r\n'))
+    assert.deepEqual(checkDocs(regions), [])
+    writeFileSync(join(regions, 'docs/mixed.md'), `${'Authored context\n'.repeat(200)}${generated}${'Authored conclusion\n'.repeat(201)}`)
+    assert.match(checkDocs(regions)[0], /401\/400/)
+    writeFileSync(join(regions, 'docs/mixed.md'), `${generated}${'x'.repeat(32001)}`)
+    assert.match(checkDocs(regions)[0], /32001\/32000/)
+    // Literal examples and malformed or unknown boundaries must not hide authored prose.
+    for (const text of [
+      `\`\`\`markdown\n${generated}\`\`\`\n`,
+      `~~~~markdown\n${generated}~~~~\n`,
+      generated.replace(':generated:end', ':generated:start'),
+      generated.replace(`${generator}:generated:end`, 'unknown:generated:end'),
+      generated.replaceAll(`${generator}:generated`, 'unknown:generated'),
+      generated.replace('<!-- ', 'text <!-- '),
+    ]) {
+      writeFileSync(join(regions, 'docs/mixed.md'), text)
+      assert.ok(checkDocs(regions).length > 0, text.slice(0, 100))
+    }
+  }
 })
 
 test('deployment proof accepts only the full intended live build-info commit', async () => {

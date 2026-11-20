@@ -36,7 +36,7 @@ export default [
 
 Every editable TypeScript function, method, class, interface and type alias needs useful JSDoc explaining its contract, purpose and important constraints. Apply `contracts` only to the repository's editable sources, preserving its reviewed vendored, generated and immutable historical exclusions. Extend discovered-config fixtures to prove ordinary sources are checked and those existing exclusions stay excluded; never grow exclusions to obtain a passing gate.
 
-The shared config enables these `jsdoc/` rules as errors. Options not listed use eslint-plugin-jsdoc 65.5.0 defaults:
+The shared config enables the following 20 contracts as errors. `require-description` and `match-description` run as `house/` adapters around the unchanged vendor rules; all other rule IDs use `jsdoc/`. Options not listed use eslint-plugin-jsdoc 65.5.0 defaults:
 
 | Rules | Contract |
 | --- | --- |
@@ -48,6 +48,8 @@ The shared config enables these `jsdoc/` rules as errors. Options not listed use
 | `check-alignment`, `multiline-blocks`, `tag-lines` | Aligned comment stars and multiline delimiters; exactly one blank line before tags and none between tags. |
 | `match-description` | Sentence-form block, parameter, return, throw and template descriptions: initial capital (or code-led text), final period, question mark or exclamation mark. Grammar and truth still need review. |
 | `require-example` | Nonempty examples at named/default/star export boundaries, including aliases and re-exports; public methods/signatures of directly exported classes/interfaces; and declarations marked `@public`. No empty-example autofix. Private helpers and private/protected methods are not forced to carry examples. |
+
+The two prose adapters suppress only reports inside the exact current-year, matching-path header produced from `tools/license/header.txt` by `headerFor`. Run ESLint from the repository root, as with the other house gates. LF/CRLF and the header checker's optional leading shebang are supported. Changed legal text, a different file path, an ordinary top-of-file comment or a later licence block gets no exemption. Declaration JSDoc and all other rules remain checked; a licence header cannot document a declaration. The config disables the two duplicate upstream rule IDs while enabling their adapters, without replacing the parser, processor or vendor plugin. Keep the byte-exact licence-header check required.
 
 `test/funnel-lint.test.mjs` executes accepted/rejected TypeScript fixtures for all 20 rules, 12 declaration/callback shapes and 13 export forms, plus public/private member controls. Tests use the parser already locked transitively under the approved JSDoc dependency; consumers keep their own parser. The house repository does not adopt a broad style preset.
 
@@ -119,6 +121,10 @@ Database-backed PR tests use separately reviewed disposable synthetic fixtures w
 ## Enforce document and deployment boundaries
 
 `docs-budget.mjs` checks root README/CONTRIBUTING, docs Markdown and `ai-docs/src` at 400 lines and 32,000 bytes per file. The shared AGENTS entry block is capped at 120 lines and 16,000 bytes. Generated LLMS/host mirrors, vendor/skill sources, legal documents and `docs/archive/` provenance are outside this entry-point budget. These are fixed shared defaults; archive only obsolete material and repair current links. Do not evade the limit with enormous single lines or move active rules into an archive.
+
+The Git inventory includes tracked and non-ignored untracked Markdown, uses NUL-delimited paths, and selects these paths before buffering with no fixed subprocess-output cap. Repository size does not authorize a fallback, truncation or a larger document budget.
+
+Inside `docs/` only, balanced standalone `<!-- linear:generated:start -->` / `<!-- linear:generated:end -->` and `<!-- planning:generated:start -->` / `<!-- planning:generated:end -->` delimit generator-owned regions. Only those regions and their boundary lines are omitted; every authored byte before, between and after them counts together toward the unchanged budget. A generated-only file therefore contributes no authored content, while a mixed timeline or decision file still does. Markers inside Markdown code fences or inline examples are literal prose; unknown, nested, mismatched or unclosed boundaries grant no exemption. Keep the owning generators' drift checks required (`linear-mirror.mjs --check` and `planning.mjs --check` in Eventiva); markers declare ownership, not proof of regeneration. Never wrap authored material in markers to evade a limit. Unmarked over-budget files need downstream remediation.
 
 After an authorized deployment, expose a public credential-free HTTPS build-info endpoint returning `{ "commit": "<full SHA>" }` from the built artifact. Run:
 
