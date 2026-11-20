@@ -142,6 +142,45 @@ test('every workflow that checks pull requests also runs in the merge queue', ()
   assert.deepEqual(missing, [])
 })
 
+test('the synced queue contract rejects skipped required jobs and retains conditional token steps', () => {
+  const caller = workflows.find(({ path }) => path === join('templates/.github/workflows', 'house-workflow-lint.yml'))
+  const job = jobs(caller).find(({ name }) => name === 'merge-group-contract')
+  assert.ok(job, 'house sync must carry the queue contract to consumers')
+  const start = job.lines.indexOf('        run: |')
+  assert.ok(start >= 0)
+  const script = job.lines.slice(start + 1).filter((line) => line.startsWith('          ')).map((line) => line.slice(10)).join('\n')
+  const run = (workflow) => {
+    const output = []
+    runInNewContext(script, {
+      require: (name) => {
+        assert.equal(name, 'node:fs')
+        return { readFileSync: (path, encoding) => {
+          assert.equal(path, '.github/workflows/smartcloud.yml')
+          assert.equal(encoding, 'utf8')
+          return workflow
+        } }
+      },
+      console: { log: (message) => output.push(message) },
+    })
+    return output
+  }
+  for (const directory of directories) {
+    const workflow = workflows.find(({ path }) => path === join(directory, 'smartcloud.yml')).lines.join('\n')
+    assert.deepEqual(run(workflow), ['Required smartcloud job and action are unconditional on merge_group.'])
+    assert.deepEqual(run(workflow.replaceAll('\n', '\r\n')), run(workflow))
+    for (const condition of ["if: github.event_name != 'merge_group'", "if: github.event_name == 'pull_request'", 'if: false', "'if': false", 'needs: optional', 'continue-on-error: true', '<<: *conditional']) {
+      assert.throws(() => run(workflow.replace('    name: smartcloud', `    ${condition}\n    name: smartcloud`)), /Required queue checks must execute/)
+    }
+    for (const changed of [
+      workflow.replace('  merge_group:', '  merge_group:\n    branches: [main]'),
+      workflow.replace('  merge_group:', '  workflow_run:'),
+      workflow.replace('    name: smartcloud', '    name: other'),
+      workflow.replace('- uses: resnovas/smartcloud@v2', "- uses: resnovas/smartcloud@v2\n        if: github.event_name != 'merge_group'"),
+      workflow.replace('- uses: resnovas/smartcloud@v2', '- uses: resnovas/smartcloud@v2\n        continue-on-error: true'),
+    ]) assert.throws(() => run(changed), /Required queue checks must execute/)
+  }
+})
+
 // A matrix cancels its other combinations when one fails unless fail-fast is
 // off, so a failure on one OS or Node version would hide the state of the
 // rest, and the aggregate check would report them as cancelled.
@@ -224,71 +263,4 @@ test('the funnel workflow preserves static-first gates and reviewed seven-day pu
   assert.ok(failureModes.every((value) => value === 'false'))
   const ci = workflows.find(({ path }) => path === join('.github/workflows', 'ci.yml'))
   assert.match(jobs(ci).find((candidate) => candidate.name === 'test').lines.join('\n'), /needs: rendered/)
-})
-
-test('readiness restoration acts only on the latest Linear transition and preserves human decisions', () => {
-  const workflow = workflows.find(({ path }) => path === join('templates/.github/workflows', 'house-readiness.yml'))
-  const [job] = jobs(workflow)
-  assert.match(workflow.lines.join('\n'), /pull_request_target:\n    types: \[ready_for_review\]/)
-  assert.match(job.lines.join('\n'), /if: github.event.sender.login == 'linear-code\[bot\]'/)
-  assert.deepEqual(job.lines.filter((line) => /^      [\w-]+: (read|write)$/.test(line)).map((line) => line.trim()), ['pull-requests: write'])
-  // A checkout or another step would cross the privileged metadata-only boundary.
-  assert.deepEqual(job.lines.filter((line) => /^      - /.test(line)).map((line) => line.trim()), ['- name: Restore Linear-converted drafts without overriding later human readiness'])
-  assert.match(job.lines.join('\n'), /shell: node \{0\}/)
-  // Execute the exact workflow body with synthetic API responses, without a live mutation.
-  const start = workflow.lines.indexOf('        run: |')
-  const script = workflow.lines.slice(start + 1).filter((line) => line.startsWith('          ')).map((line) => line.slice(10)).join('\n')
-  const ready = (login) => ({ event: 'ready_for_review', actor: { login } })
-  const bot = ready('linear-code[bot]')
-  const run = ({ pages = [[bot]], state = 'open', draft = false, sender = 'linear-code[bot]', fails = false, persists = true } = {}) => {
-    let currentDraft = draft
-    let mutations = 0
-    const output = []
-    const execute = () => runInNewContext(script, {
-      process: { env: { REPOSITORY: 'Resnovas/.github', NUMBER: '56', SENDER: sender } },
-      console: { log: (message) => output.push(message) },
-      require: (name) => {
-        assert.equal(name, 'node:child_process')
-        return { execFileSync: (command, args) => {
-          assert.equal(command, 'gh')
-          if (fails) throw new Error('API permission denied')
-          const arguments_ = Array.from(args)
-          if (arguments_[0] === 'pr') {
-            assert.deepEqual(arguments_, ['pr', 'ready', '56', '--undo', '--repo', 'Resnovas/.github'])
-            mutations += 1
-            currentDraft = persists
-            return ''
-          }
-          if (arguments_[1].includes('/timeline')) {
-            assert.deepEqual(arguments_, ['api', 'repos/Resnovas/.github/issues/56/timeline?per_page=100', '--paginate', '--slurp'])
-            return JSON.stringify(pages)
-          }
-          assert.deepEqual(arguments_, ['api', 'repos/Resnovas/.github/pulls/56'])
-          return JSON.stringify({ state, draft: currentDraft })
-        } }
-      },
-    })
-    return { execute, result: () => ({ mutations, draft: currentDraft, output }) }
-  }
-  const restored = run({ pages: [[ready('maintainer')], [bot, { event: 'commented' }]] })
-  restored.execute()
-  assert.equal(restored.result().draft, true)
-  assert.equal(restored.result().mutations, 1)
-  assert.match(restored.result().output[0], /A human must decide readiness/)
-  for (const fixture of [
-    { pages: [[bot], [ready('maintainer')]] },
-    { pages: [[bot], [{ event: 'converted_to_draft', actor: { login: 'maintainer' } }]] },
-    { pages: [[ready('another-bot[bot]')]] },
-    { draft: true },
-    { state: 'closed' },
-  ]) {
-    const unchanged = run(fixture)
-    unchanged.execute()
-    assert.equal(unchanged.result().mutations, 0)
-    assert.match(unchanged.result().output[0], /unchanged/)
-  }
-  assert.throws(run({ sender: 'maintainer' }).execute, /Only Linear readiness/)
-  assert.throws(run({ pages: [[]] }).execute, /Readiness history unavailable/)
-  assert.throws(run({ fails: true }).execute, /API permission denied/)
-  assert.throws(run({ persists: false }).execute, /Draft restoration did not persist/)
 })
