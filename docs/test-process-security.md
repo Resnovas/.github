@@ -86,3 +86,39 @@ focused ordinary/cancel/deadline cases failed with `exit,total` instead of
 `close,total`; afterward the full local process suite passes21/21. All existing
 budgets, signals, assertions, output bounds and resource-release rules remain.
 This adds evidence, not a runtime optimization or downstream acceptance claim.
+
+## Nested ownership survives an intermediate process
+
+`nested: true` (default false) opens a private IPC control channel for Node
+roots. A canonical acquisition inside that root delegates to the surviving
+outer observer, which calls the same `startChild`, retains its real handle,
+and awaits its actual `close` before outer `total`. `result.children` contains
+the recursive completed evidence, including actual close timings. No close
+is inferred from IPC disconnect. Windows remains Node-root only, option B.
+
+Joining the intermediate's POSIX group alone would kill its observer before
+it could report grandchildren closing. Delegation keeps observation outside
+that failure domain without a second process launcher or polling supervisor.
+Outer deadline, cancellation, AbortSignal and natural leader exit cancel the
+delegated descendants, including those with their own canonical groups.
+The existing 100 ms grace, output bounds and budgets are unchanged.
+
+Business IPC is distinct from the reserved `__house_child_owner_v1` envelope;
+`HOUSE_CHILD_OWNER=1` identifies the inherited private channel, not a timing
+toggle. Do not use that envelope or disconnect ownership IPC while awaiting a
+nested result. Private control works even with business `ipc: false` and no
+fd3. Arguments, selected cwd/env, byte input, output, error code, send callback
+and exit status survive transport. The declared `ChildHandle` is intentionally
+limited to streams, events, PID/status, send and kill; raw stdin, descriptors,
+ref/unref and IPC handle passing are not delegated. Supply stdin with `input`.
+Await `spawn` or readiness before using a delegated PID.
+
+Three regressions first fail descendant-death assertions on accepted PR74.
+Five new contracts now pass locally: live grandchildren under outer deadline,
+cancel and abort, normal command/IPC/stream completion, and failed acquisition.
+The producer deliberately lacks a disconnect self-kill handler. Positive
+no-business-IPC tests exposed buffered private messages during development;
+the owner now enables Node's message dispatch explicitly. All 26 process tests
+pass on Linux; every matrix OS executes these tests without skips. Hosted
+results, normal house merge and Eventiva adoption remain separate gates.
+This is a correctness change; no optimization speedup is claimed.

@@ -426,6 +426,89 @@ if (${JSON.stringify(name)} === 'tsc' && process.argv.includes(process.env.FIXTU
   return { root, log, calls: () => readFileSync(log, 'utf8').trim().split('\n').map((line) => JSON.parse(line)) }
 }
 
+test('nested acquisition preserves literal commands, IPC acknowledgement, input, env, cwd and real normal close', { timeout: 4000 }, async () => {
+  const module = new URL('../templates/tools/test-process/process.mjs', import.meta.url).href
+  const leaf = `const input=require('node:fs').readFileSync(0,'utf8');
+    process.on('message', row=>{process.send({row,input,cwd:process.cwd(),marker:process.env.NESTED_MARKER,args:process.argv.slice(1)});
+    process.stdout.write('nested output');process.stderr.write('PRIVATE_NESTED_ERROR');process.exitCode=23;process.disconnect()});
+    process.send({ready:true});`
+  const parent = `import assert from 'node:assert/strict';import {once} from 'node:events';import {startChild} from ${JSON.stringify(module)};
+    assert.throws(()=>startChild('not-the-node-root',[],{budgetMs:1000}), /Nested ownership requires|Windows child ownership/);
+    const owner=startChild(process.execPath,['--eval',${JSON.stringify(leaf)},'literal;&&$VAR'],{
+      budgetMs:1000,ipc:true,input:new Uint8Array([195,169]),env:{...process.env,NESTED_MARKER:'selected'},cwd:process.cwd()});
+    assert.deepEqual((await once(owner.child,'message'))[0],{ready:true});
+    const closed=once(owner.child,'close');
+    const reply=once(owner.child,'message');
+    await new Promise((resolve,reject)=>owner.child.send({literal:'SECRET_IPC'}, error=>error?reject(error):resolve()));
+    const [message]=await reply;assert.deepEqual(await closed,[23,null]);const result=await owner.completed;
+    process.stdout.write(JSON.stringify({message,result,isError:result.error instanceof Error}));`
+  const result = await runChild(process.execPath, ['--input-type=module', '--eval', parent], { budgetMs: 3000, nested: true })
+  assert.equal(result.error, undefined)
+  assert.equal(result.status, 0, result.stderr)
+  const actual = JSON.parse(result.stdout)
+  assert.deepEqual(actual.message, { row: { literal: 'SECRET_IPC' }, input: '\u00e9', cwd: process.cwd(), marker: 'selected', args: ['literal;&&$VAR'] })
+  assert.equal(actual.result.status, 23)
+  assert.equal(actual.result.stdout, 'nested output')
+  assert.equal(actual.result.stderr, 'PRIVATE_NESTED_ERROR')
+  assert.deepEqual(actual.result.timings.slice(-2).map((row) => row.phase), ['close', 'total'])
+  assert.equal(result.children[0].pid, actual.result.pid)
+  assert.doesNotMatch(result.stderr, /PRIVATE_NESTED_ERROR|SECRET_IPC|literal;/)
+})
+
+test('nested acquisition completes a real launch failure without hanging the proxy', { timeout: 4000 }, async () => {
+  const module = new URL('../templates/tools/test-process/process.mjs', import.meta.url).href
+  const parent = `import {startChild} from ${JSON.stringify(module)};
+    const owner=startChild(process.execPath,[],{budgetMs:1000,cwd:'missing-nested-directory'});
+    const result=await owner.completed;process.stdout.write(JSON.stringify({code:result.error?.code,isError:result.error instanceof Error,phases:result.timings.map(row=>row.phase)}));`
+  const result = await runChild(process.execPath, ['--input-type=module', '--eval', parent], { budgetMs: 3000, nested: true })
+  assert.equal(result.status, 0, result.stderr)
+  assert.deepEqual(JSON.parse(result.stdout), { code: 'ENOENT', isError: true, phases: ['spawn-request', 'close', 'total'] })
+  assert.equal(result.children[0].error.code, 'ENOENT')
+})
+
+for (const mode of ['deadline', 'cancel', 'abort']) {
+  test(`nested owners retain actual close through outer ${mode}, without disconnect self-kill`, { timeout: 4000 }, async (t) => {
+    const controller = new AbortController()
+    const module = new URL('../templates/tools/test-process/process.mjs', import.meta.url).href
+    const leaf = 'process.send({ready:true,pids:[process.pid]}); setInterval(()=>{},1000)'
+    const middle = `import {startChild} from ${JSON.stringify(module)};
+      const owner=startChild(process.execPath,['--eval',${JSON.stringify(leaf)}],{budgetMs:2000,ipc:true,nested:true});
+      owner.child.once('message',row=>process.send({ready:true,pids:[process.pid,...row.pids]}));
+      setInterval(()=>{},1000);`
+    const parent = `import {startChild} from ${JSON.stringify(module)};
+      const owner=startChild(process.execPath,['--input-type=module','--eval',${JSON.stringify(middle)}],{budgetMs:2000,ipc:true,nested:true});
+      owner.child.once('message',row=>process.send({ready:true,pids:[process.pid,...row.pids]}));
+      setInterval(()=>{},1000);`
+    const owner = startChild(process.execPath, ['--input-type=module', '--eval', parent], {
+      budgetMs: 1000, ipc: true, nested: true, signal: controller.signal,
+    })
+    let pids = []
+    t.after(async () => {
+      await owner.cancel()
+      // Independent cleanup also bounds the deliberately failing pre-fix implementation.
+      for (const pid of pids) { try { process.kill(pid, 'SIGKILL') } catch (error) { if (error.code !== 'ESRCH') throw error } }
+    })
+    const [ready] = await once(owner.child, 'message')
+    pids = ready.pids
+    assert.equal(pids.length, 3)
+    assert.equal(new Set(pids).size, 3)
+    if (mode === 'cancel') await owner.cancel()
+    if (mode === 'abort') controller.abort()
+    const result = await owner.completed
+    if (mode === 'deadline') assert.equal(result.error.code, 'ETIMEDOUT')
+    else assert.equal(result.signal, 'SIGKILL')
+    for (const pid of pids) assert.throws(() => process.kill(pid, 0), { code: 'ESRCH' })
+    assert.equal(result.children.length, 1)
+    assert.equal(result.children[0].children.length, 1)
+    const nested = [result.children[0], result.children[0].children[0]]
+    assert.deepEqual(nested.map((child) => child.pid), pids.slice(1))
+    for (const child of nested) {
+      assert.equal(child.timings.filter((row) => row.phase === 'close').length, 1)
+      assert.equal(child.timings.at(-1).phase, 'total')
+    }
+  })
+}
+
 test('typecheck consumer builds once, checks every project and reports a real compiler failure', { timeout: 245000 }, async (t) => {
   const fixture = runnerFixture(t)
   const result = await runChild(process.execPath, [join(fixture.root, 'tools/typecheck/tests.ts')], {

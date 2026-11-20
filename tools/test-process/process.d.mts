@@ -47,6 +47,8 @@ export interface ChildResult {
   readonly spawnedAtMs: number
   readonly elapsedMs: number
   readonly timings: ReadonlyArray<ChildTiming>
+  /** With nested ownership enabled, actual completed child results, recursively, never inferred from disconnect. */
+  readonly children?: ReadonlyArray<ChildResult>
 }
 
 /** Explicit child lifetime and stream policy; there is deliberately no timing-disable option. */
@@ -59,20 +61,30 @@ export interface ChildOptions {
   readonly env?: Readonly<Record<string, string | undefined>>
   readonly input?: string | Uint8Array
   readonly ipc?: boolean
+  /** Default false. Delegate nested Node acquisitions to the surviving outer observer through private IPC. */
+  readonly nested?: boolean
   readonly journal?: boolean
   readonly maxBuffer?: number
   readonly inheritOutput?: boolean
   readonly signal?: AbortSignal
 }
 
+/** Public process-control surface, also supported by delegated handles; stdin is supplied through options.input. */
+export type ChildHandle = Pick<ChildProcess, 'pid' | 'exitCode' | 'signalCode' | 'connected' | 'stdout' | 'stderr' |
+  'on' | 'once' | 'off' | 'kill'> & {
+    readonly send: (message: Parameters<ChildProcess['send']>[0], callback?: (error: Error | null) => void) => boolean
+  }
+
 /**
  * One cancellable resource; completed/cancel both wait for actual stream and IPC close.
  * POSIX signals include descendants retaining the owned group, including after leader exit.
  * Windows accepts only process.execPath roots and uses libuv Job cleanup, excluding deliberate breakaway.
  * Deliberately detached POSIX groups/sessions are not recursively owned.
+ * With nested:true, canonical nested acquisitions are also owned and observed directly by the surviving host.
+ * Their child PID becomes available at spawn; await spawn/readiness before using it.
  */
 export interface ChildOwner {
-  readonly child: ChildProcess
+  readonly child: ChildHandle
   readonly completed: Promise<ChildResult>
   /** Terminate once and wait until the process is fully released, including after natural close. */
   readonly cancel: () => Promise<void>
