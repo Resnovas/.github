@@ -158,6 +158,7 @@ Plain scripts every repository runs the same way, synced whole. They need only N
 | `tools/ci/coverage-goal.ts` | none (a Vitest reporter) | Warns, as a CI annotation, when a test project covers less than the goal (100%) while still passing the enforced minimum ({{COVERAGE_MIN}}%), so a gap is never silent. Add it to the reporters in the shared Vitest config. |
 | `tools/ci/flaky-tests.ts` | none (a Vitest reporter) | Reports every test that failed and then passed on a retry, as an annotation and a job summary table, so a retry never hides a flaky test. |
 | `tools/test-process/process.mjs`, `tools/test-process/process.d.mts` | none (shared process boundary) | Dependency-free asynchronous process ownership, mandatory numeric timing, bounded output, child deadlines and cancellation through actual close. The declaration describes the same Node API without importing an application framework. |
+| `tools/test-process/{windows.mjs,windows-supervisor.cs,build-windows.mjs,.gitignore}` | build prerequisite | [Native Windows Job acquisition](test-process-security.md#windows-native-acquisition); compile locally, never sync the executable. |
 | `tools/test/file.ts` | `test:file` | Runs the tests for one file, for the editors' "debug the current test" configurations: a spec under `tests/<name>/src`, or a source file whose mirrored spec runs. Coverage off. |
 | `tools/typecheck/tests.ts` | `typecheck:tests` | Type-checks every test project under `tests/`, which Nx does not, after building the packages they reference. |
 | `tools/dev/docs.ts` | `docs:dev` | Serves the Mintlify docs under `docs/` locally, fetching the pinned Mintlify CLI once into pnpm's cache. |
@@ -165,7 +166,7 @@ Plain scripts every repository runs the same way, synced whole. They need only N
 
 ### Test subprocess timing
 
-After merge/sync, both launchers use one Node-only owner. Synchronous children block runner watchdogs. `childBudgetIssue(budgets, testMs)` rejects nonpositive/noninteger limits and serial plans whose children plus 100 ms grace each do not fit strictly below the test limit. Preserve justified enclosing limits; measure and shorten children instead of increasing timeouts.
+After merge/sync, both launchers use one dependency-free Node owner. Synchronous children block runner watchdogs. `childBudgetIssue(budgets, testMs)` rejects nonpositive/noninteger limits and serial plans whose children plus 100 ms grace each do not fit strictly below the test limit. Preserve justified enclosing limits; measure and shorten children instead of increasing timeouts.
 
 ```js
 import { childBudgetIssue, runChild } from './tools/test-process/process.mjs'
@@ -185,13 +186,13 @@ Timing goes to stderr, preserving JSON stdout. Records contain only `code`, chil
 
 POSIX launches own an isolated group. Deadline/output-limit/cancel and normal leader exit signal remaining members; escalation survives leader close. Results preserve the leader's status/signal and await actual descriptors plus escalation. Deliberately detached groups are excluded.
 
-Windows requires `process.execPath`; other commands synchronously throw exported `UnsupportedChildRootError` (`TypeError`, code `ERR_CHILD_ROOT_UNSUPPORTED`) before spawn. Use Node entry points. Node roots use libuv Job cleanup, excluding deliberate breakaway. Linux/macOS retain native roots. Approved choice B: [evidence](funnel-timeline.md#eve-261-process-lifetime-follow-up). Adoption requires green house merge and sync.
+Windows native roots require `node tools/test-process/build-windows.mjs` first (installed .NET Framework 4 compiler/system assemblies; no downloads). The [native contract](test-process-security.md#windows-native-acquisition) defines suspended non-breakaway Job acquisition and empty-Job/actual-close release. Node roots retain libuv cleanup; IPC/fd3 remain Node-only.
 
-The previously unbounded typecheck launcher now declares 120000 ms for its build and 60000 ms per compiler, deriving its whole-command cancellation budget from that vector plus cleanup and reporting headroom. The editor launcher declares 600000 ms because it can select a complete project; Vitest's existing per-test deadlines and the editor's existing coverage-off behavior remain unchanged. These are new safety ceilings, not claims that every repository completes at those limits. A slow/flooded child reports its phase: shorten its work or escalate a genuinely inadequate task budget rather than suppress timing.
+Typecheck reserves 120000 ms for build and 60000 ms per compiler, deriving its whole-command budget from the vector plus cleanup. The editor reserves 600000 ms for a complete project; Vitest deadlines and coverage-off behavior are unchanged. These are safety ceilings, not universal performance acceptance. Measure slow phases; do not suppress timing.
 
 Both launchers execute installed Node `bin` entries through `process.execPath`, without shebangs or shells. Exact-launcher fixtures use ordinary modules/manifests, not platform shims. Windows SIGTERM forcibly terminates rather than delivering a catchable signal; assertions preserve its actual result while requiring expiry and close.
 
-Proposal pending review, merge and sync, not downstream acceptance or early managed-file adoption. Partial owner: [EVE-261](https://linear.app/resnovas/issue/EVE-261) / [Eventiva#1035](https://github.com/Resnovas/Eventiva/issues/1035). No existing AGENTS budget/timing instruction duplicates this check, so none is removed.
+Partial owner: [EVE-261](https://linear.app/resnovas/issue/EVE-261) / [Eventiva#1035](https://github.com/Resnovas/Eventiva/issues/1035). Native adoption waits for green house merge/sync and downstream proof.
 
 ## <a id="graphify"></a>Code graph (Graphify)
 

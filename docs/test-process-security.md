@@ -1,7 +1,8 @@
 # Test-process shell and deadline contracts
 
 Canonical source: `templates/tools/test-process/process.mjs` and `process.d.mts`.
-Run `node --test test/test-process.test.mjs`, then static-first full verification.
+Run `node templates/tools/test-process/build-windows.mjs` before
+`node --test test/test-process.test.mjs`, then static-first full verification.
 
 ## Shell interpretation is forbidden
 
@@ -13,8 +14,8 @@ assigned shell options; `exactOptionalPropertyTypes` also rejects explicit
 `undefined` statically. Runtime rejection does not depend on compiler settings.
 
 Use `runChild(process.execPath, [scriptPath, ...args], { budgetMs: 1000 })`.
-Windows accepts only that current Node executable; other roots throw typed
-`UnsupportedChildRootError` before spawn. Linux/macOS retain native roots.
+Windows native roots require the explicit build prerequisite described below.
+Linux/macOS retain native roots without that prerequisite.
 This is an argument-transport contract, not a sandbox: executing an explicitly
 selected interpreter, Node `--eval`, or a trusted script still executes code.
 
@@ -94,7 +95,7 @@ roots. A canonical acquisition inside that root delegates to the surviving
 outer observer, which calls the same `startChild`, retains its real handle,
 and awaits its actual `close` before outer `total`. `result.children` contains
 the recursive completed evidence, including actual close timings. No close
-is inferred from IPC disconnect. Windows remains Node-root only, option B.
+is inferred from IPC disconnect. Native Windows acquisitions use the private Job below.
 
 Joining the intermediate's POSIX group alone would kill its observer before
 it could report grandchildren closing. Delegation keeps observation outside
@@ -124,3 +125,36 @@ the owner now enables Node's message dispatch explicitly. All 27 process tests
 pass on Linux; every matrix OS executes these tests without skips. Hosted
 results, normal house merge and Eventiva adoption remain separate gates.
 This is a correctness change; no optimization speedup is claimed.
+
+## Windows-native acquisition
+
+Jonathan selected the native option B after the earlier Node-only restriction.
+Run `node tools/test-process/build-windows.mjs` after accepted house sync on
+Windows. It compiles the checked-in C# source with the installed .NET Framework 4
+`csc.exe` and `System.Web.Extensions.dll`; no download, NuGet or dependency is
+added. Compilation has a 30000 ms build bound and is not hidden in a child budget.
+Other OS hosts do nothing. `npm test` builds the template helper first.
+
+The platform adapter uses an unnamed, noninherited Job with
+`JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE` and neither breakaway flag. It creates the
+native root suspended, assigns the Job before resuming, and inherits only the
+three duplicated stdio handles. A private named pipe carries PID, root-exit,
+empty-Job and release messages, never business output. Literal CRT argv quoting
+does not introduce a shell. IPC and fd3 remain Node-entrypoint-only contracts.
+
+Deadline, cancel, abort, owner-pipe EOF and natural root exit terminate remaining
+Job processes. `QueryInformationJobObject` must observe active-process-zero
+before the release handshake, supervisor exit and actual stream close settle
+the existing owner. The public PID is the native root, not the supervisor.
+The Node core still owns every timer, output bound, result and numeric timing;
+the helper is a platform acquisition boundary, not a second budget runner.
+Existing Node roots retain their libuv behavior and its breakaway limitation.
+See Microsoft's [nested Job contract](https://learn.microsoft.com/windows/win32/procthread/nested-jobs).
+
+Local Linux proof passes 33/33 process tests, including the six native lifecycle
+cases with unchanged 1000 ms budgets, real Git byte/argv/status contracts and a
+compiler-shaped renamed executable. That executable is a transport fixture,
+not real Hermes or compiler performance evidence. Windows compilation, native
+Job behavior and both Windows Node versions remain unverified until hosted
+matrix execution. No speedup, downstream adoption or whole EVE-261 acceptance
+is claimed. No OS test is skipped and no existing threshold is lowered.

@@ -18,6 +18,7 @@
 // One dependency-free process owner for Node tools and test-runner adapters.
 import { ChildProcess, spawn } from 'node:child_process'
 import { PassThrough } from 'node:stream'
+import { windowsChild } from './windows.mjs'
 
 const controlKey = '__house_child_owner_v1'
 const remoteOwners = new Map()
@@ -138,7 +139,7 @@ function remoteChild(command, args, options) {
 /** Per-child cleanup allowance reserved by both registration and execution. */
 export const terminationGraceMs = 100
 
-/** Refuse an unowned Windows native root before any child or descriptor exists. */
+/** Legacy error identity retained for consumers of the earlier Node-only Windows boundary. */
 export class UnsupportedChildRootError extends TypeError {
   /** Explain the supported launch form without exposing the rejected command. */
   constructor() {
@@ -186,7 +187,7 @@ function emit(row) {
 /**
  * Start one bounded child with mandatory timing, bounded streams and optional IPC/journal descriptors.
  * The returned owner retains cancellation until actual close; callers must await completed or cancel().
- * POSIX signals target the owned group; Windows requires process.execPath and uses libuv's existing Job cleanup.
+ * POSIX signals target the owned group; Windows native roots use a suspended, non-breakaway Job acquisition.
  * Descendants that deliberately create another POSIX session/group are outside this ownership boundary.
  * No option disables timing. Command, environment, stream and IPC payloads are never logged as timing.
  * Optimization evidence: real-child output/IPC/abort proofs took 73.52/42.95/45.11 ms; one owner avoids a second polling runner.
@@ -199,8 +200,9 @@ export function startChild(command, args, options) {
   if (!Number.isSafeInteger(budgetMs) || budgetMs <= 0 || !Number.isSafeInteger(ordinal) || ordinal <= 0 ||
       !Number.isSafeInteger(maxBuffer) || maxBuffer <= 0)
     throw new TypeError('Declare a positive integer child budget, ordinal and output bound before spawning.')
-  if (process.platform === 'win32' && command !== process.execPath) throw new UnsupportedChildRootError()
-  if ((nested || delegated) && command !== process.execPath) throw new TypeError('Nested ownership requires process.execPath.')
+  if (nested && command !== process.execPath) throw new TypeError('Nested ownership requires process.execPath.')
+  const nativeWindows = process.platform === 'win32' && command !== process.execPath
+  if (nativeWindows && (ipc || journal)) throw new TypeError('IPC and journal descriptors require a Node entry point; native programs use stdin/stdout/stderr.')
   if (delegated) return remoteChild(command, args, options)
   const started = performance.now()
   const spawnedAtMs = Math.round(performance.timeOrigin + started)
@@ -221,7 +223,8 @@ export function startChild(command, args, options) {
   const stdio = ['pipe', 'pipe', 'pipe', ...(journal ? ['pipe'] : nested && !ipc ? ['ignore'] : []), ...(ipc || nested ? ['ipc'] : [])]
   // POSIX descendants inherit this owned group, even after its leader exits.
   const grouped = process.platform !== 'win32'
-  const child = spawn(command, args, { cwd, env: nested ? { ...env, HOUSE_CHILD_OWNER: '1' } : env, stdio, detached: grouped, shell: false })
+  const spawnOptions = { cwd, env: nested ? { ...env, HOUSE_CHILD_OWNER: '1' } : env, stdio, detached: grouped, shell: false }
+  const child = nativeWindows ? windowsChild(command, args, spawnOptions) : spawn(command, args, spawnOptions)
   const children = new Map()
   const originalEmit = child.emit
   // Node otherwise buffers private IPC when the caller did not request business messages.
@@ -233,9 +236,9 @@ export function startChild(command, args, options) {
       if (terminating || closed) return true
       try {
         const input = Array.isArray(packet.options.input) ? Uint8Array.from(packet.options.input) : packet.options.input
-        const owner = startChild(packet.command, packet.args, { ...packet.options, input, nested: true, inheritOutput: false })
+        const owner = startChild(packet.command, packet.args, { ...packet.options, input, nested: packet.command === process.execPath, inheritOutput: false })
         children.set(packet.id, owner)
-        sendControl(child, { id: packet.id, event: 'spawn', pid: owner.child.pid })
+        owner.child.once('spawn', () => sendControl(child, { id: packet.id, event: 'spawn', pid: owner.child.pid }))
         owner.child.stdout.on('data', (chunk) => sendControl(child, { id: packet.id, event: 'stdout', chunk }))
         owner.child.stderr.on('data', (chunk) => sendControl(child, { id: packet.id, event: 'stderr', chunk }))
         owner.child.on('message', (message) => sendControl(child, { id: packet.id, event: 'message', message }))
@@ -398,7 +401,7 @@ export function startChild(command, args, options) {
   })
   /**
    * Cancellation awaits actual pipes/IPC close and sends SIGKILL to the owned group on POSIX.
-   * Windows Node-parent cleanup does not establish ownership for arbitrary native-root trees.
+   * Windows native cancellation observes an empty private Job before supervisor close.
    * Linux descendant cancel/abort contracts completed in 66/66 ms; this is correctness evidence, not a speedup.
    */
   const cancel = async () => {

@@ -23,7 +23,7 @@ import { dirname, join, resolve } from 'node:path'
 import test from 'node:test'
 import { setTimeout as delay } from 'node:timers/promises'
 import { fileURLToPath } from 'node:url'
-import { childBudgetIssue, runChild, startChild, terminationGraceMs, UnsupportedChildRootError } from '../templates/tools/test-process/process.mjs'
+import { childBudgetIssue, runChild, startChild, terminationGraceMs } from '../templates/tools/test-process/process.mjs'
 
 test('serial admission rejects the original pair and accepts measured and nearby valid plans', () => {
   assert.match(childBudgetIssue([10000, 10000], 5000), /shorten.*not raise/)
@@ -286,30 +286,8 @@ for (const mode of ['deadline', 'cancel', 'abort', 'exit-first', 'no-pipes', 'no
   })
 }
 
-for (const mode of ['deadline', 'cancel', 'exit-first']) {
-  test(`native-root ${mode}: Windows rejects before spawn; POSIX retains actual close and descendant lifetime`, { timeout: 3000 }, async (t) => {
-    // Exercise the Windows refusal on every host, then retain the real POSIX ownership proof.
-    const platform = Object.getOwnPropertyDescriptor(process, 'platform')
-    const spawn = t.mock.method(childProcess, 'spawn', () => assert.fail('Unsupported root spawned'))
-    syncBuiltinESMExports()
-    Object.defineProperty(process, 'platform', { value: 'win32' })
-    try {
-      for (const command of ['cmd.exe', 'powershell.exe', 'C:\\native\\probe.exe']) {
-        for (const launch of [runChild, startChild]) assert.throws(() => launch(command, [], { budgetMs: 1000 }), (error) => {
-          assert.ok(error instanceof UnsupportedChildRootError)
-          assert.ok(error instanceof TypeError)
-          assert.equal(error.code, 'ERR_CHILD_ROOT_UNSUPPORTED')
-          assert.match(error.message, /Windows.*descendant cleanup.*process\.execPath/)
-          return true
-        })
-      }
-      assert.equal(spawn.mock.callCount(), 0)
-    } finally {
-      Object.defineProperty(process, 'platform', platform)
-      spawn.mock.restore()
-      syncBuiltinESMExports()
-    }
-    if (process.platform === 'win32') return
+for (const mode of ['deadline', 'cancel', 'abort', 'exit-first', 'no-pipes', 'no-pipes-abort']) {
+  test(`native-root ${mode}: actual close and descendant lifetime on every OS`, { timeout: 3000 }, async (t) => {
     const backup = resolve('.amp/in/orb-backup')
     mkdirSync(backup, { recursive: true })
     const root = mkdtempSync(join(backup, 'native-descendant-'))
@@ -318,20 +296,28 @@ for (const mode of ['deadline', 'cancel', 'exit-first']) {
       process.on('SIGTERM', () => {});
       process.stderr.write('NATIVE_DESCENDANT', () => {
         process.stdout.write(JSON.stringify({pid: process.pid}) + '\\n', () => {
-          require('node:fs').writeFileSync(process.env.PROBE_READY, 'ready');
+          require('node:fs').writeFileSync(process.env.PROBE_READY, String(process.pid));
         });
       });
       setInterval(() => {}, 1000);
       setTimeout(() => process.exit(99), 10000);
     `)
-    const command = '/bin/sh'
-    const invocation = '"$PROBE_NODE" "$PROBE_FILE"'
-    const script = join(root, 'root.sh')
-    writeFileSync(script, mode === 'exit-first'
+    const windows = process.platform === 'win32'
+    const noPipes = mode.startsWith('no-pipes')
+    const exits = mode === 'exit-first' || noPipes
+    const command = windows ? process.env.ComSpec : '/bin/sh'
+    const invocation = `"$PROBE_NODE" "$PROBE_FILE"${noPipes ? ' >/dev/null 2>&1' : ''}`
+    const script = join(root, windows ? 'root.cmd' : 'root.sh')
+    writeFileSync(script, windows
+      ? exits
+        ? `@echo off\r\nstart "" /b "%PROBE_NODE%" "%PROBE_FILE%"${noPipes ? ' >nul 2>&1' : ''}\r\n:wait\r\nif not exist "%PROBE_READY%" goto wait\r\nexit /b 23\r\n`
+        : '@echo off\r\n"%PROBE_NODE%" "%PROBE_FILE%"\r\n'
+      : exits
         ? `${invocation} &\nwhile [ ! -f "$PROBE_READY" ]; do sleep 0.01; done\nexit 23\n`
         : `${invocation} & wait\n`)
-    const owner = startChild(command, [script], {
-      budgetMs: 1000,
+    const controller = new AbortController()
+    const owner = startChild(command, windows ? ['/d', '/s', '/c', script] : [script], {
+      budgetMs: 1000, signal: controller.signal,
       env: { ...process.env, PROBE_NODE: process.execPath, PROBE_FILE: leaf, PROBE_READY: join(root, 'ready') },
     })
     let descendantPid
@@ -353,22 +339,97 @@ for (const mode of ['deadline', 'cancel', 'exit-first']) {
       await within(owner.cancel(), 500)
       rmSync(root, { recursive: true, force: true })
     })
-    await within(ready, 700)
+    if (noPipes) {
+      await within((async () => {
+        while (!descendantPid) {
+          try { descendantPid = Number(readFileSync(join(root, 'ready'), 'utf8')) } catch (failure) {
+            if (failure.code !== 'ENOENT') throw failure
+          }
+          if (!descendantPid) await delay(5)
+        }
+      })(), 700)
+    } else await within(ready, 700)
     assert.ok(Number.isSafeInteger(descendantPid) && descendantPid > 0)
     if (mode === 'cancel') await within(owner.cancel(), 700)
+    if (mode === 'abort' || mode === 'no-pipes-abort') controller.abort()
     const result = await within(owner.completed, mode === 'deadline' ? 1500 : 700)
-    if (mode === 'exit-first') {
+    if (exits && mode !== 'no-pipes-abort') {
       assert.equal(result.status, 23)
       assert.equal(result.signal, null)
       assert.equal(result.error, undefined)
     } else if (mode === 'deadline') assert.equal(result.error.code, 'ETIMEDOUT')
     else assert.equal(result.error, undefined)
-    assert.equal(result.stderr, 'NATIVE_DESCENDANT')
+    assert.equal(result.stderr, noPipes ? '' : 'NATIVE_DESCENDANT')
     assert.equal(result.timings.at(-1).phase, 'total')
     await assertStopped(descendantPid)
     t.diagnostic(`${process.platform}/${process.version} native ${mode}: status=${result.status}, signal=${result.signal}, total=${result.elapsedMs} ms; descendant stopped`)
   })
 }
+
+test('native Git retains stdin bytes, literal configuration argv, cwd and nonzero status', { timeout: 3000 }, async (t) => {
+  const backup = resolve('.amp/in/orb-backup')
+  mkdirSync(backup, { recursive: true })
+  const root = mkdtempSync(join(backup, 'native git '))
+  t.after(() => rmSync(root, { recursive: true, force: true }))
+  const value = 'spaces "quotes" ; & | $VAR %VAR% \\tail\\'
+  const budgetMs = 700
+  assert.equal(childBudgetIssue([budgetMs, budgetMs, budgetMs], 3000), undefined)
+  const literal = await runChild('git', ['-c', `house.literal=${value}`, 'config', '--get', 'house.literal'], { budgetMs, cwd: root })
+  assert.equal(literal.error, undefined)
+  assert.equal(literal.status, 0)
+  assert.equal(literal.stdout, `${value}\n`)
+  const bytes = await runChild('git', ['hash-object', '--stdin'], { budgetMs, cwd: root, input: 'abc' })
+  assert.equal(bytes.error, undefined)
+  assert.equal(bytes.status, 0)
+  assert.equal(bytes.stdout.trim(), 'f2ba8f84ab5c1bce84a7b441cb1959cfc7093b7f')
+  const missing = await runChild('git', ['config', '--get', 'house.absent'], { budgetMs, cwd: root })
+  assert.equal(missing.error, undefined)
+  assert.equal(missing.status, 1)
+  t.diagnostic(`native Git literal/stdin/status: ${literal.elapsedMs}/${bytes.elapsedMs}/${missing.elapsedMs} ms`)
+})
+
+test('a compiler-shaped native executable retains empty/quoted argv, UTF-8 output and failure status', { timeout: 3000 }, async (t) => {
+  const backup = resolve('.amp/in/orb-backup')
+  mkdirSync(backup, { recursive: true })
+  const root = mkdtempSync(join(backup, 'native compiler '))
+  t.after(() => rmSync(root, { recursive: true, force: true }))
+  // A renamed real executable exercises native acquisition, not a shebang or shell shim.
+  // Its small fixture program tests transport; it is not a real Hermes performance claim.
+  const compiler = join(root, process.platform === 'win32' ? 'hermesc-fixture.exe' : 'hermesc-fixture')
+  copyFileSync(process.execPath, compiler)
+  const args = ['', '-emit-binary', '-out', 'output path\\', 'source "quoted".js', ';&&|%VAR%$VAR']
+  const result = await runChild(compiler, ['--eval', 'process.stdout.write(JSON.stringify(process.argv.slice(1)));process.stderr.write("compiler diagnostic");process.exitCode=23', '--', ...args], { budgetMs: 1000, cwd: root })
+  assert.equal(result.error, undefined)
+  assert.equal(result.status, 23)
+  assert.equal(result.signal, null)
+  assert.deepEqual(JSON.parse(result.stdout), args)
+  assert.equal(result.stderr, 'compiler diagnostic')
+  assert.deepEqual(result.timings.slice(-2).map((row) => row.phase), ['close', 'total'])
+  t.diagnostic(`compiler-shaped native transport: ${result.elapsedMs} ms`)
+})
+
+test('nested native Git acquisition reports its actual PID and completed close to the outer owner', { timeout: 3000 }, async () => {
+  const module = new URL('../templates/tools/test-process/process.mjs', import.meta.url).href
+  const result = await runChild(process.execPath, ['--input-type=module', '--eval', `
+    import {once} from 'node:events';
+    import {startChild} from ${JSON.stringify(module)};
+    const owner=startChild('git',['--version'],{budgetMs:700});
+    await once(owner.child,'spawn');
+    const pid=owner.child.pid;
+    const result=await owner.completed;
+    process.stdout.write(JSON.stringify({pid,result}));
+  `], { budgetMs: 2000, nested: true })
+  assert.equal(result.error, undefined)
+  assert.equal(result.status, 0, result.stderr)
+  const evidence = JSON.parse(result.stdout)
+  assert.ok(Number.isSafeInteger(evidence.pid) && evidence.pid > 0)
+  assert.equal(evidence.pid, evidence.result.pid)
+  assert.equal(evidence.result.status, 0)
+  assert.match(evidence.result.stdout, /^git version /)
+  assert.equal(result.children.length, 1)
+  assert.equal(result.children[0].pid, evidence.pid)
+  assert.deepEqual(result.children[0].timings.slice(-2).map((row) => row.phase), ['close', 'total'])
+})
 
 test('journal and nested timing accept only closed numeric records without payload forwarding', { timeout: 3000 }, async (t) => {
   const records = []
@@ -407,7 +468,7 @@ function runnerFixture(t) {
     put(`tests/${name}/vitest.config.mts`, 'export default {}')
   }
   put('tests/a/src/probe.spec.ts', '')
-  for (const path of ['typecheck/tests.ts', 'test/file.ts', 'test-process/process.mjs']) {
+  for (const path of ['typecheck/tests.ts', 'test/file.ts', 'test-process/process.mjs', 'test-process/windows.mjs']) {
     const destination = join(root, 'tools', path)
     mkdirSync(dirname(destination), { recursive: true })
     copyFileSync(fileURLToPath(new URL(`../templates/tools/${path}`, import.meta.url)), destination)
@@ -433,7 +494,7 @@ test('nested acquisition preserves literal commands, IPC acknowledgement, input,
     process.stdout.write('nested output');process.stderr.write('PRIVATE_NESTED_ERROR');process.exitCode=23;process.disconnect()});
     process.send({ready:true});`
   const parent = `import assert from 'node:assert/strict';import {once} from 'node:events';import {startChild} from ${JSON.stringify(module)};
-    assert.throws(()=>startChild('not-the-node-root',[],{budgetMs:1000}), /Nested ownership requires|Windows child ownership/);
+    assert.throws(()=>startChild('not-the-node-root',[],{budgetMs:1000,nested:true}), /Nested ownership requires/);
     const owner=startChild(process.execPath,['--eval',${JSON.stringify(leaf)},'literal;&&$VAR'],{
       budgetMs:1000,ipc:true,input:new Uint8Array([195,169]),env:{...process.env,NESTED_MARKER:'selected'},cwd:process.cwd()});
     assert.deepEqual((await once(owner.child,'message'))[0],{ready:true});

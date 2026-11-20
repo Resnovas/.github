@@ -20,10 +20,10 @@ import type { ChildProcess } from 'node:child_process'
 /** SIGTERM-to-SIGKILL allowance that every registered budget must reserve. */
 export const terminationGraceMs: 100
 
-/** Synchronous pre-spawn rejection of a Windows root other than process.execPath. */
+/** Legacy error identity retained for callers of the earlier Node-only Windows boundary. */
 export class UnsupportedChildRootError extends TypeError {
   readonly code: 'ERR_CHILD_ROOT_UNSUPPORTED'
-  /** Explain the unsupported root without retaining its command or arguments. */
+  /** Construct the historical diagnostic without retaining commands or arguments. */
   constructor()
 }
 
@@ -79,7 +79,8 @@ export type ChildHandle = Pick<ChildProcess, 'pid' | 'exitCode' | 'signalCode' |
 /**
  * One cancellable resource; completed/cancel both wait for actual stream and IPC close.
  * POSIX signals include descendants retaining the owned group, including after leader exit.
- * Windows accepts only process.execPath roots and uses libuv Job cleanup, excluding deliberate breakaway.
+ * Windows Node roots retain libuv cleanup; native roots use a suspended, non-breakaway private Job.
+ * Native completion waits for active-process-zero and supervisor/stream close; IPC/journal remain Node-only.
  * Deliberately detached POSIX groups/sessions are not recursively owned.
  * With nested:true, canonical nested acquisitions are also owned and observed directly by the surviving host.
  * Their child PID becomes available at spawn; await spawn/readiness before using it.
@@ -91,8 +92,8 @@ export interface ChildOwner {
   readonly cancel: () => Promise<void>
 }
 
-/** Start one timed resource; Windows rejects other roots with UnsupportedChildRootError before spawning. */
+/** Start one timed resource; native Windows roots require the explicit build-windows.mjs prerequisite. */
 export function startChild(command: string, args: ReadonlyArray<string>, options: ChildOptions): ChildOwner
 
-/** Await actual close; Windows synchronously throws UnsupportedChildRootError for roots other than process.execPath. */
+/** Await actual close, including empty-Job evidence for native Windows trees; no shell option is accepted. */
 export function runChild(command: string, args: ReadonlyArray<string>, options: ChildOptions): Promise<ChildResult>
