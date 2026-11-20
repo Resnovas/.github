@@ -190,7 +190,9 @@ async function assertStopped(pid) {
       try {
         if (/^State:\s+Z/m.test(readFileSync(`/proc/${pid}/status`, 'utf8'))) return
       } catch (failure) {
-        if (failure.code !== 'ENOENT') throw failure
+        // Reaping after procfs opens the entry can fail its read with ESRCH.
+        // Still perform the signal-zero check; never accept a live process.
+        if (failure.code !== 'ENOENT' && failure.code !== 'ESRCH') throw failure
       }
     }
     try {

@@ -204,6 +204,15 @@ All child budgets,700ms readiness, assertions and phase logging remain unchanged
 New exact-head Windows execution must qualify this correction; no speedup is
 claimed from moving explicitly reported setup work outside tests.
 
+On setup head9c99904 both Windows lanes pass; Ubuntu-current instead fails a
+death-observation probe after actual child close at26ms. Opening a Linux procfs
+status file, reaping the process, then reading the retained descriptor reproduces
+`ESRCH`, not only `ENOENT`. The probe now permits either disappearing-entry
+error and still requires its existing signal-zero/death check; a live process
+cannot pass. No owner implementation, assertion, readiness or budget changes.
+Local static-first full verification passes153/153 with lines/functions100%
+and branches95.30%; new exact-head hosted verification remains required.
+
 Jonathan's conditional decision permits false-positive dismissal of alerts70/71
 only after the corrected exact head passes every OS and both flows are confirmed
 unchanged: separate argv, `shell:false`, normalized prefixed test filter.
