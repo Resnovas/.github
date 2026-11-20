@@ -18,8 +18,9 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { createRequire } from 'node:module'
 import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import { ESLint, Linter } from 'eslint'
-import { funnel, contracts } from '../templates/tools/lint/funnel.mjs'
+import { funnel, contracts } from '../tools/lint/funnel.mjs'
 import { headerFor } from '../templates/tools/license/check-headers.mjs'
 
 const lint = (code, config = funnel) => new Linter().verify(code, [{ ...config, languageOptions: { ecmaVersion: 'latest', sourceType: 'module' } }])
@@ -37,7 +38,7 @@ const parser = {
     return { ast, visitorKeys, scopeManager: analyze(ast, { sourceType: 'module' }) }
   },
 }
-const lintContract = (code) => new Linter().verify(code, [{ ...contracts, languageOptions: { parser, sourceType: 'module' } }], { filename: 'contract.js' })
+const lintContract = (code, { cwd = process.cwd(), filename = 'contract.js' } = {}) => new Linter({ cwd }).verify(code, [{ ...contracts, languageOptions: { parser, sourceType: 'module' } }], { filename })
 const documented = (description, tags, declaration) => `/**\n * ${description}\n${tags ? ` *\n${tags.split('\n').map((line) => ` * ${line}`).join('\n')}\n` : ''} */\n${declaration}`
 
 test('source-absence lint rejects source inspections while allowing behavior and redaction assertions', () => {
@@ -170,21 +171,33 @@ test('JSDoc rejects name restatements and missing contracts while accepting purp
   assert.deepEqual(lintContract(`${classDescription}export class Session {\n${member}private dispose() {}\n}`), [])
   assert.deepEqual(lintContract(`${classDescription}export class Session {\n${member}#dispose() {}\n}`), [])
 
-  const header = headerFor(readFileSync('tools/license/header.txt', 'utf8'), 'contract.js', String(new Date().getFullYear()))
-  assert.deepEqual(lintContract(`${header}\n\n${complete}`), [], 'the mandatory licence header is not a declaration contract')
-  assert.deepEqual(lintContract(`${header}\n\n${complete}`.replaceAll('\n', '\r\n')), [], 'canonical CRLF headers remain valid')
-  assert.deepEqual(lintContract(`#!/usr/bin/env node\n${header}\n\n${complete}`), [], 'the header checker permits a leading shebang')
-  for (const prefix of [
-    '/** @file contract.js */',
-    header.replace('All rights reserved.', 'All rights changed.'),
-    header.replace('@file contract.js', '@file other.js'),
-    `// Not a file header at byte zero.\n${header}`,
+  const nestedPath = 'packages/fixture/src/contract.js'
+  for (const [cwd, filename, path] of [
+    [process.cwd(), 'contract.js', 'contract.js'],
+    [process.cwd(), resolve(nestedPath), nestedPath],
+    [resolve('packages/fixture'), resolve(nestedPath), nestedPath],
+    [resolve('packages/fixture'), 'src/contract.js', nestedPath],
   ]) {
-    assert.ok(lintContract(`${prefix}\n\n${complete}`).some((item) => /require-description|match-description/.test(item.ruleId)), prefix)
+    const check = (code) => lintContract(code, { cwd, filename })
+    const year = new Date().getFullYear()
+    const header = headerFor(readFileSync('tools/license/header.txt', 'utf8'), path, String(year))
+    assert.deepEqual(check(`${header}\n\n${complete}`), [], `canonical header from ${cwd}`)
+    assert.deepEqual(check(`${header}\n\n${complete}`.replaceAll('\n', '\r\n')), [], 'canonical CRLF headers remain valid')
+    assert.deepEqual(check(`#!/usr/bin/env node\n${header}\n\n${complete}`), [], 'the header checker permits a leading shebang')
+    for (const prefix of [
+      `/** @file ${path} */`,
+      header.replace('All rights reserved.', 'All rights changed.'),
+      header.replace(`@file ${path}`, '@file other.js'),
+      header.replace(`@file ${path}`, '@file src/contract.js'),
+      header.replace(`Copyright ${year}`, `Copyright ${year - 1}`),
+      `// Not a file header at byte zero.\n${header}`,
+    ]) {
+      assert.ok(check(`${prefix}\n\n${complete}`).some((item) => /require-description|match-description/.test(item.ruleId)), prefix)
+    }
+    assert.ok(check(`${header}\n\n${documented('', tags, callable)}`).some((item) => /require-description$/.test(item.ruleId)))
+    assert.ok(check(`${header}\n\n${documented('select caller value', tags, callable)}`).some((item) => /match-description$/.test(item.ruleId)))
+    assert.ok(check(`${header}\n\n${callable}`).some((item) => item.ruleId === 'jsdoc/require-jsdoc'), 'a file header cannot document a declaration')
   }
-  assert.ok(lintContract(`${header}\n\n${documented('', tags, callable)}`).some((item) => /require-description$/.test(item.ruleId)))
-  assert.ok(lintContract(`${header}\n\n${documented('select caller value', tags, callable)}`).some((item) => /match-description$/.test(item.ruleId)))
-  assert.ok(lintContract(`${header}\n\n${callable}`).some((item) => item.ruleId === 'jsdoc/require-jsdoc'), 'a file header cannot document a declaration')
 })
 
 test('the repository config applies shared policies to test and lint-tool scopes', async () => {
