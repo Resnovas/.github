@@ -34,7 +34,7 @@ if (mode === 'registry') {
   const base = process.env.FUNNEL_BASE_SHA || git('rev-parse', 'HEAD^')
   if (!/^[a-f0-9]{40}$/.test(base)) throw new Error('FUNNEL_BASE_SHA must identify a real full base commit, not event text or a branch.')
   const changed = git('diff', '--name-only', base, '--').split('\n')
-  const affected = changed.some((path) => /^(?:templates\/)?(?:tools\/(?:verification\/|lint\/|dev\/(?:surfaces|pre-commit)\.mjs)|test\/funnel|scripts\/verify-funnel\.mjs|docs\/(?:verification|house-funnel)\.md|package(?:-lock)?\.json|eslint\.config\.mjs|\.github\/workflows\/(?:ci|house-funnel)\.yml)/.test(path))
+  const affected = changed.some((path) => /^(?:templates\/)?(?:tools\/(?:verification\/|lint\/|dev\/(?:surfaces|pre-commit)\.mjs)|test\/funnel|scripts\/(?:verify-funnel|test-affected)\.mjs|docs\/(?:verification|house-funnel)\.md|package(?:-lock)?\.json|eslint\.config\.mjs|\.github\/workflows\/(?:ci|house-funnel)\.yml)/.test(path))
   const context = { markdown, commit: git('rev-parse', 'HEAD'), tree: git('write-tree'), affected: ['house.funnel'] }
   const directory = resolve('.verification/publish')
   if (!affected) {

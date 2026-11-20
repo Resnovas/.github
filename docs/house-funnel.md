@@ -5,7 +5,7 @@ The funnel moves recurring corrections into examples, corrective static checks a
 
 ## What changes for contributors
 
-Run static checks before expensive behavior and documentation checks. The installed pre-commit hook rejects partial staging rather than silently testing a different tree. Feature evidence covers only affected features, uses synthetic data, and expires after seven days in the existing CI artifact audience. No deployment, new artifact access or production fixture is authorized by adopting this tooling.
+Pre-commit runs only static checks and affected tests. Full verification, smoke and evidence collection run in CI on PRs and pushes to main, including repositories that ship directly to main. The hook rejects partial staging rather than silently testing a different tree. Feature evidence covers only affected features, uses synthetic data, and expires after seven days in the existing CI artifact audience. No deployment, new artifact access or production fixture is authorized by adopting this tooling.
 
 ## Install without replacing local checks
 
@@ -16,10 +16,18 @@ First land the policy-only sync of `.github/dependency-review-config.yml`, then 
 1. Review the house sync, including `tools/lint/funnel.mjs`, `tools/verification/` and `tools/dev/pre-commit.mjs`.
 2. Add the approved `eslint-plugin-jsdoc` version to the repository's development dependencies. Use the existing ESLint and TypeScript parser; a repository without them needs approval before adding those peers. Keep its lockfile and frozen CI install.
 3. Add the exported `funnel` config to editable tests and lint tooling; add `contracts` to editable production TypeScript using the existing parser. Keep the existing parser, language options, Nx restrictions, declaration examples, rationale checks and ratchets. Do not apply to vendored, generated or immutable historical files.
-4. Define `verify:static` to run existing lint/type/source checks, including `node tools/verification/docs-budget.mjs`. Build only prerequisites that static checks actually need. Define `verify` to run the complete existing behavior, documentation, build and platform gates. Do not replace a full suite with affected-only proof collection.
-5. Run `node --run setup`. The shared surface installer adds pre-commit when both scripts exist. Exclusive creation preserves commit-msg and prevents overwriting an existing or concurrently installed pre-commit hook. Review and compose a foreign hook yourself; do not disable it to install this one.
+4. Define `verify:static` for lint/type/source checks, including `node tools/verification/docs-budget.mjs`; build only prerequisites those checks need. Define `test:affected` to select tests from staged paths and their dependents using the repository's existing test graph or reviewed path map. Include deletions and both sides of renames. Report a genuine empty selection; never alias it to full `verify`, smoke or evidence collection. Dependency/config changes may affect every test. Define `verify` for the complete existing behavior, smoke, documentation, build and platform gates in CI; do not replace that suite with affected-only proof.
+5. Run `node --run setup`. The installer adds pre-commit when `verify:static` and `test:affected` exist. Existing house hooks use the new command after sync, so add `test:affected` in the same adoption PR; a missing command fails rather than falling back to full verification. Exclusive creation preserves commit-msg and existing hooks. Review and compose foreign hooks using only static checks and affected tests; setup will not overwrite them.
 6. Add the Markdown registry and repository-owned source inventory/affected-selection adapter described below. Wire their comparison into `verify:static` or a contract test included in `verify`.
-7. Add `verify:evidence` to execute affected paths without test-result caching, and `verify:evidence:check` to validate the publication directory. Call `.github/workflows/house-funnel.yml` from the existing CI only after those commands are real. Preserve every previous required job.
+7. Add `verify:evidence` to execute affected paths without test-result caching, and `verify:evidence:check` to validate the publication directory. Call `.github/workflows/house-funnel.yml` from existing PR and main-push CI only after those commands are real. Keep merge-group callers and every previous required job. The reusable workflow has no push/PR trigger of its own; the repository caller supplies both. Never collect evidence or run smoke from a commit hook, directly or through a nested script.
+
+To run the commit gate explicitly after staging the complete snapshot:
+
+```sh
+node tools/dev/pre-commit.mjs run
+```
+
+It executes `node --run verify:static` then `node --run test:affected`, and stops on either failure or a changed working/index tree. Full CI verification remains independently runnable for diagnosis; it is not a prerequisite of every local commit.
 
 Example flat-config addition, after the existing parser configuration:
 

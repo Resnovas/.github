@@ -29,7 +29,7 @@ export function installPreCommit(root, dryRun = false) {
   }
 }
 
-/** Reject partial staging before running the same static and behavioral package gates as CI. */
+/** Check the staged snapshot with static checks and affected tests; full verification belongs in CI. */
 export function runPreCommit(root) {
   const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' })
   const assertSnapshot = () => {
@@ -40,8 +40,8 @@ export function runPreCommit(root) {
   assertSnapshot()
   const index = git('write-tree').trim()
   const scripts = JSON.parse(readFileSync(resolve(root, 'package.json'), 'utf8')).scripts
-  for (const name of ['verify:static', 'verify']) {
-    if (!scripts?.[name]) throw new Error(`Define package script ${name} with the repository gates; do not substitute an empty success.`)
+  for (const name of ['verify:static', 'test:affected']) {
+    if (!scripts?.[name]) throw new Error(`Define package script ${name} for static checks or staged affected tests only; keep full verification, smoke and evidence in CI. Do not substitute an empty success.`)
     const result = spawnSync(process.execPath, ['--run', name], { cwd: root, stdio: 'inherit' })
     if (result.error) throw result.error
     if (result.status !== 0) throw new Error(`${name} failed. Fix the reported path; do not skip checks or weaken coverage.`)

@@ -14,6 +14,7 @@
     "ai-docs:check": "node tools/ai-docs/docgen.mjs --check",
     "check": "node scripts/render.mjs --check && node tools/license/check-headers.mjs && node tools/dev/surfaces.mjs check && node tools/ai-docs/docgen.mjs --check",
     "verify:static": "eslint . && node tools/verification/docs-budget.mjs && node scripts/verify-funnel.mjs registry",
+    "test:affected": "node scripts/test-affected.mjs",
     "verify": "node --run check && node --run test",
     "verify:evidence": "node scripts/verify-funnel.mjs collect",
     "verify:evidence:check": "node scripts/verify-funnel.mjs check",

@@ -653,10 +653,10 @@ if (command === 'sync' || command === 'check') {
   }
   const prompts = readPrompts()
   console.log(installCommitHook())
-  // Repositories adopt the complete static/behavior contract together; a sync alone cannot invent their gates.
+  // A sync cannot invent a repository's staged affected-test selection or move CI work into commits.
   const packagePath = join(root, 'package.json')
   const scripts = existsSync(packagePath) ? JSON.parse(readFileSync(packagePath, 'utf8')).scripts : {}
-  if (scripts?.['verify:static'] && scripts?.verify) console.log(installPreCommit(root, dryRun))
+  if (scripts?.['verify:static'] && scripts?.['test:affected']) console.log(installPreCommit(root, dryRun))
   console.log(await installOrca(prompts))
   console.log(installOpenChamber())
   if (dryRun) console.log('Dry run: nothing was written.')
