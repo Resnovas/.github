@@ -77,6 +77,49 @@ test('pre-commit checks the staged snapshot, orders gates, propagates failure an
   assert.equal(readFileSync(join(root, '.git/hooks/pre-commit'), 'utf8'), '#!/bin/sh\necho foreign\n')
 })
 
+test('explicit native composition preserves the owned hook and executes its package runner', () => {
+  const root = fixture()
+  git(root, 'init', '-q')
+  git(root, 'config', 'user.name', 'Synthetic Fixture')
+  git(root, 'config', 'user.email', 'fixture@example.invalid')
+  git(root, 'config', 'commit.gpgSign', 'false')
+  const native = { script: 'funnel:pre-commit', marker: 'smartcloud-funnel pre-commit' }
+  const scripts = { 'verify:static': 'node static.cjs', 'test:affected': 'node affected.cjs', 'funnel:pre-commit': 'node native.cjs' }
+  writeFileSync(join(root, 'package.json'), JSON.stringify({ scripts }))
+  writeFileSync(join(root, '.gitignore'), 'events\n')
+  writeFileSync(join(root, 'native.cjs'), "require('node:child_process').execFileSync(process.execPath, ['--run', 'verify:static']); require('node:child_process').execFileSync(process.execPath, ['--run', 'test:affected']);")
+  for (const name of ['static', 'affected']) writeFileSync(join(root, `${name}.cjs`), `require('node:fs').appendFileSync('events', '${name}\\n')`)
+  assert.equal(installPreCommit(root, true, native), 'Pre-commit hook: would install.')
+  installPreCommit(root, false, native)
+  const path = join(root, '.git/hooks/pre-commit')
+  const expected = '#!/bin/sh\n# smartcloud-funnel pre-commit\nexec node --run funnel:pre-commit\n'
+  assert.equal(readFileSync(path, 'utf8'), expected)
+  utimesSync(path, 946684800, 946684800)
+  installPreCommit(root, false, native)
+  assert.equal(statSync(path).mtimeMs, 946684800000)
+  mkdirSync(join(root, '.agents/prompts'), { recursive: true })
+  mkdirSync(join(root, 'tools/dev'), { recursive: true })
+  for (const file of ['surfaces.mjs', 'pre-commit.mjs']) copyFileSync(resolve('templates/tools/dev', file), join(root, 'tools/dev', file))
+  writeFileSync(join(root, '.agents/surfaces.jsonc'), JSON.stringify({ repository: 'synthetic/native', preCommit: native }))
+  const setup = () => execFileSync(process.execPath, ['tools/dev/surfaces.mjs', 'install', '--dry-run'], { cwd: root, encoding: 'utf8' })
+  assert.match(setup(), /Pre-commit hook: already installed/)
+  assert.equal(statSync(path).mtimeMs, 946684800000)
+  git(root, 'add', '.')
+  git(root, 'commit', '-qm', 'native fixture')
+  assert.equal(readFileSync(join(root, 'events'), 'utf8'), 'static\naffected\n')
+  writeFileSync(join(root, 'affected.cjs'), 'process.exit(7)')
+  git(root, 'add', '.')
+  assert.throws(() => git(root, 'commit', '-qm', 'rejected fixture'))
+  for (const config of [{ ...native, script: 'verify; true' }, { ...native, marker: 'marker\nexit 0' }, { ...native, unexpected: true }, null]) {
+    assert.throws(() => installPreCommit(root, false, config), /preCommit/)
+  }
+  delete scripts['funnel:pre-commit']
+  writeFileSync(join(root, 'package.json'), JSON.stringify({ scripts }))
+  assert.throws(() => installPreCommit(root, false, native), /Define package script/)
+  assert.throws(setup, /Define package script/)
+  assert.equal(readFileSync(path, 'utf8'), expected)
+})
+
 test('staged test selection follows source owners without collecting full verification evidence', () => {
   const tests = ['test/funnel.test.mjs', 'test/funnel-lint.test.mjs', 'test/graphify.test.mjs', 'test/render.test.mjs']
   assert.deepEqual(selectAffectedTests(['tools/lint/react.mjs'], tests), ['test/funnel-lint.test.mjs'])

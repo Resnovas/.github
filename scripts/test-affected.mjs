@@ -33,6 +33,7 @@ const owners = [
   [/^(?:templates\/)?(?:tools\/graphify\/|graphify-out\/|\.graphifyignore$)/, ['graphify']],
   [/^(?:templates\/)?tools\/release\//, ['release-tools']],
   [/^(?:templates\/)?tools\/(?:test-process|typecheck|ci)\//, ['test-process']],
+  [/^(?:templates\/)?tools\/ci\/smartcloud-native/, ['actions', 'workflows']],
   [/^(?:templates\/)?\.github\/workflows\//, ['actions', 'workflows', 'codeql-alert-comment']],
   [/^scripts\/lib\/codeql-alert-comment\.mjs$/, ['codeql-alert-comment']],
   [/^(?:templates\/)?(?:skills\/|\.(?:agents|claude)\/skills\/)/, ['skills']],

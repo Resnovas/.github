@@ -7,21 +7,34 @@ import { pathToFileURL } from 'node:url'
 const hook = '#!/bin/sh\n# house:pre-commit\nexec node "$(git rev-parse --show-toplevel)/tools/dev/pre-commit.mjs" run\n'
 
 /** Install only into an empty hook slot; foreign hooks require explicit composition. */
-export function installPreCommit(root, dryRun = false) {
+export function installPreCommit(root, dryRun = false, native = undefined) {
+  let expected = hook
+  if (native !== undefined) {
+    if (!native || typeof native !== 'object' || Object.keys(native).sort().join(',') !== 'marker,script' ||
+        typeof native.script !== 'string' || !/^[a-zA-Z0-9][a-zA-Z0-9:_-]*$/.test(native.script) ||
+        typeof native.marker !== 'string' || !/^[a-zA-Z0-9][a-zA-Z0-9 :_-]*$/.test(native.marker)) {
+      throw new Error('preCommit must contain only a package script name and a single-line marker; keep the native runner in repository code.')
+    }
+    const scripts = JSON.parse(readFileSync(resolve(root, 'package.json'), 'utf8')).scripts
+    for (const name of [native.script, 'verify:static', 'test:affected']) {
+      if (typeof scripts?.[name] !== 'string' || !scripts[name].trim()) throw new Error(`Define package script ${name} before composing preCommit; the native runner must execute static checks and staged affected tests only.`)
+    }
+    expected = `#!/bin/sh\n# ${native.marker}\nexec node --run ${native.script}\n`
+  }
   const hooks = execFileSync('git', ['rev-parse', '--git-path', 'hooks'], { cwd: root, encoding: 'utf8' }).trim()
   const path = resolve(root, hooks, 'pre-commit')
   if (!dryRun) {
     mkdirSync(dirname(path), { recursive: true })
     try {
       // Exclusive creation never overwrites a hook installed concurrently after inspection.
-      writeFileSync(path, hook, { flag: 'wx', mode: 0o755 })
+      writeFileSync(path, expected, { flag: 'wx', mode: 0o755 })
       return 'Pre-commit hook: installed.'
     } catch (error) {
       if (error.code !== 'EEXIST') throw error
     }
   }
   try {
-    if (readFileSync(path, 'utf8') !== hook) throw new Error('Preserve the existing pre-commit hook. Compose the house verification call manually or review and replace it explicitly; setup will not overwrite it.')
+    if (readFileSync(path, 'utf8') !== expected) throw new Error('Preserve the existing pre-commit hook. Declare its reviewed package runner and marker in .agents/surfaces.jsonc preCommit, or review and replace it explicitly; setup will not overwrite it.')
     return 'Pre-commit hook: already installed.'
   } catch (error) {
     if (dryRun && error.code === 'ENOENT') return 'Pre-commit hook: would install.'

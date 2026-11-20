@@ -40,7 +40,7 @@ On a push to the default branch, weekly and by hand, it syncs the labels, applie
 In the merge queue the job executes the published action on the queued result. A skipped job does not verify that result.
 A newer run for the same pull request, issue or branch cancels the older one.
 
-**Queue acceptance.** Require an executed, successful `smartcloud` job on the exact queue SHA, retained matrix and post-merge checks. At inspected `smartcloud@v2` revision `2d5c398d536664a22b473e9126491305a1c0e96e`, the engine decodes the queue SHA but `required` handles only pull requests. Correct and release that runtime before clearing the hold; workflow eligibility alone is not aggregate proof. Preserve checks and protections.
+**Queue acceptance.** Require an executed, successful `smartcloud` job on the exact queue SHA, retained matrix and post-merge checks. Runtime [v2.1.1](https://github.com/Resnovas/smartcloud/releases/tag/v2.1.1) is released with merge-group aggregation. Release and workflow eligibility alone are not live queue proof. Preserve checks and protections.
 
 **Access.** It uses three tokens, each for its own job (see [Access](access.md#tokens)): the workflow token for checks, comments and labels; a read-only Resnovas Bot token for reading the preset and templates in `Resnovas/.github`; and, only on pushes, the weekly run and manual runs, a full Resnovas Bot token that reaches only the repository, for settings and sync.
 Forks and Dependabot get no app token, so smartcloud runs restricted: it skips the preset, settings and sync, and lists what it skipped in the job summary.
@@ -159,7 +159,7 @@ The workflow uses only the read-only workflow token, so the branch protection sc
 **What it does.** Two reusable jobs and one synced contract job.
 `actionlint` checks workflow syntax, expressions and the shell in `run:` steps with [actionlint](https://github.com/rhysd/actionlint).
 `zizmor` audits workflows, actions and the Dependabot configuration for security problems (template injection, persisted credentials, too much access, unpinned actions) with [zizmor](https://docs.zizmor.sh).
-`merge-group-contract` requires an unconditional queue trigger, job and action in canonical block-format `smartcloud.yml`. It rejects job dependencies, conditions, inherited fields, renamed checks and swallowed failures; conditional token steps remain valid. Unknown layouts fail closed: retain the synced format. It checks this shared job, not arbitrary repository jobs or general YAML syntax, which actionlint owns. All three fail on findings.
+`merge-group-contract` checks canonical `smartcloud.yml`: the published action must execute unconditionally on an unfiltered queue event. Only `Resnovas/smartcloud` may use the exact trusted-main native recipe in `tools/ci/smartcloud-native.yml`; see [adoption and safeguards](house-funnel.md#adopt-smartclouds-native-queue-profile). Unknown layouts fail closed. This checks the shared job, not arbitrary jobs or runtime aggregation. All three checks fail on findings.
 
 **When it runs.** Pull requests, the merge queue and pushes to `main`.
 
@@ -174,7 +174,7 @@ The workflow uses only the read-only workflow token, so the branch protection sc
 
 actionlint reads the repository's own `.github/actionlint.yaml`.
 Run both locally with `uvx --from actionlint-py actionlint` and `uvx zizmor .`.
-The queue contract ships in `templates/.github/workflows/house-workflow-lint.yml`, with read-only checkout and no dependency installation. `node --test test/workflows.test.mjs` executes it against canonical/rendered workflows and rejected mutations, including the old skip. Downstream adoption requires acceptance of both synced templates.
+The queue contract uses read-only checkout, without dependency installation. `node --test test/workflows.test.mjs` exercises both profiles, rejected mutations and native event guards. Adopt the synced caller, native checker and recipe together.
 
 **What you will see.** Checks named `actionlint`, `zizmor` and `merge-group-contract`; the first two annotate findings on the affected lines.
 

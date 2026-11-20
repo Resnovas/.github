@@ -56,6 +56,8 @@ tools/lint/react.mjs
 tools/verification/
 tools/ci/coverage-goal.ts
 tools/ci/flaky-tests.ts
+tools/ci/smartcloud-native-contract.cjs
+tools/ci/smartcloud-native.yml
 tools/test-process/process.mjs
 tools/test-process/process.d.mts
 tools/test/file.ts
