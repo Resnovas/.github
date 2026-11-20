@@ -411,6 +411,8 @@ so a change here reaches every repository on its next run.
 reusable ones: the first runs the smartcloud action with the preset, the second
 re-runs a pull request's smartcloud run when it is reviewed.
 
+The house repository's local dependency policy approves all versions of exactly `spdx-exceptions`, `uri-js` and `parse-statements` for RES-67, with no exact-version guard. Evidence for the inspected versions and reproducible steps are in `docs/workflows.md#house-lint-dependency-review-2026-11-20`. Preserve the three-package boundary, vulnerability checks and base-commit policy loading; dependency-adding PRs cannot approve their own exceptions. Human review must land the prerequisite policy before funnel PR #56 can pass that gate.
+
 For a dependency update to a synced workflow, update the matching source in
 `templates/.github/workflows/` and run `npm run render`, `npm test` and
 `npm run check`. For example, keep both `actions/create-github-app-token`
