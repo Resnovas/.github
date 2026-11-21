@@ -217,7 +217,7 @@ The house skills, by what they are for:
 
 | Group | Skills |
 | --- | --- |
-| House standards | `coding-preferences`, `commits-and-rd-evidence`, `commit`, `creating-pull-requests`, `no-em-or-en-dashes`, `whitelabel-customer-facing-copy`, `feature-flags`, `extendable-module-architecture`, `project-dev-surfaces`, `documentation-writing-standards`, `writing-specifications`, `gitbutler`, `gitbutler-instead-worktrees`, `graphify`, `graphify-vendor` |
+| House standards | `coding-preferences`, `commits-and-rd-evidence`, `commit`, `creating-pull-requests`, `no-em-or-en-dashes`, `whitelabel-customer-facing-copy`, `feature-flags`, `extendable-module-architecture`, `project-dev-surfaces`, `documentation-writing-standards`, `writing-specifications`, `gitbutler`, `gitbutler-instead-worktrees`, `graphify`, `graphify-vendor`, `correction-to-lint` |
 | Changing code | `investigate-first`, `surgical-patch`, `safe-refactor`, `migration`, `lean-build`, `build-error-resolver`, `react-build-resolver` |
 | Reviewing | `code-review`, `silent-failure-hunter`, `type-design-analyzer`, `typescript-reviewer`, `python-reviewer`, `database-reviewer`, `react-reviewer`, `agent-self-evaluation`, `eval-harness`, `harness-optimizer`, `gan-planner`, `gan-generator`, `gan-evaluator` |
 | Thinking and writing | `research`, `eli5`, `archify`, `grilling`, `cross-critique`, `frontend-design-hard-rules`, `convert-documents-to-markdown`, `skills-spec`, `skills-best-practices` |
