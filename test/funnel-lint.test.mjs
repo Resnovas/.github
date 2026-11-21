@@ -175,7 +175,6 @@ test('JSDoc rejects name restatements and missing contracts while accepting purp
     ['check-param-names', documented(purpose, tags.replace('@param value', '@param other'), callable), complete],
     ['require-returns', documented(purpose, '@param value - Candidate supplied by the caller.', callable), complete],
     ['require-returns-description', documented(purpose, '@param value - Candidate supplied by the caller.\n@returns', callable), complete],
-    ['require-throws', documented('Reject invalid ranges before they enter storage.', '', throwing), documented('Reject invalid ranges before they enter storage.', '@throws {RangeError} Invalid range cannot enter storage.', throwing)],
     ['check-tag-names', documented(purpose, `${tags}\n@unknownTag`, callable), complete],
     ['no-types', documented(purpose, tags.replace('@param value', '@param {number} value'), callable), complete],
     ['valid-types', documented('Reject invalid ranges before they enter storage.', '@throws {Array<} Invalid range cannot enter storage.', throwing), documented('Reject invalid ranges before they enter storage.', '@throws {RangeError} Invalid range cannot enter storage.', throwing)],
@@ -198,6 +197,18 @@ test('JSDoc rejects name restatements and missing contracts while accepting purp
   }
   // A removed rule must not silently leave its fixture behind, nor may a new rule go unexercised.
   assert.deepEqual(cases.map(([rule]) => ruleId(rule)).sort(), Object.entries(contracts.rules).filter(([, value]) => value !== 'off').map(([name]) => name).sort())
+
+  // Effect failures travel in the typed error channel, so a throwing body needs no @throws contract.
+  assert.equal(contracts.rules['jsdoc/require-throws'], 'off')
+  assert.deepEqual(lintContract(documented('Reject invalid ranges before they enter storage.', '', throwing)), [])
+  // A repository overrides the shared set with a later entry for the same files, without editing the module.
+  const banned = ['error', { contexts: [{ comment: 'JsdocBlock:has(JsdocTag[tag=/^(?:throws|exception|author|license)$/])', context: 'any', message: 'Do not use @throws, @author or @license.' }] }]
+  const overridden = (code) => new Linter().verify(code, [{ ...contracts, languageOptions: { parser, sourceType: 'module' } }, { rules: { 'jsdoc/no-restricted-syntax': banned } }], { filename: 'contract.js' })
+  for (const tag of ['@throws {RangeError} Invalid range cannot enter storage.', '@exception {RangeError} Invalid range cannot enter storage.', '@author Someone', '@license MIT']) {
+    const messages = overridden(documented('Reject invalid ranges before they enter storage.', tag, throwing))
+    assert.ok(messages.some((item) => item.ruleId === 'jsdoc/no-restricted-syntax' && item.message === 'Do not use @throws, @author or @license.'), JSON.stringify({ tag, messages }))
+  }
+  assert.deepEqual(overridden(documented('Reject invalid ranges before they enter storage.', '', throwing)), [])
 
   for (const fragment of ['select caller value.', 'Select caller value']) {
     assert.ok(lintContract(documented(fragment, tags, callable)).some((item) => item.ruleId === 'house/match-description'))
