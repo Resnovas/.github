@@ -39,6 +39,8 @@ If a native runner already protects staged snapshots or isolates Git's alternate
 
 Both properties are required; unknown properties, shell syntax, multiline markers and missing package scripts fail setup. Omit `preCommit` to use the house runner. Setup exclusively installs or recognizes exactly `#!/bin/sh`, `# <marker>`, `exec node --run <script>` with final newlines. It never overwrites a differing hook, including a previously installed house hook. A maintainer must review any replacement; declaring the native owner is not permission to discard a hook. `--dry-run` inspects without writing.
 
+For a hook that already invokes a Node file directly, use `entry` instead of `script`, for example `"entry": "tools/verification/pre-commit.mjs"`. The file must exist under `tools/`. This form expects the same shebang and marker followed by `set -eu` and `node <entry>` on separate lines. Other hook text is never replaced.
+
 The native runner must execute `verify:static` then staged `test:affected`, propagate failures and retain before/after snapshot guards. Do not also invoke the house runner or run full verification from the native hook. If verification children clear Git-local environment variables, pass the captured staged-tree identifier explicitly to the affected-test adapter; never silently select the ordinary index. Test that contract in the repository. The installer validates identity and required scripts, not the runner's semantics. Run `node --run setup` twice to verify idempotence and exercise a real commit plus a failing affected-test control.
 
 ### Adopt smartcloud's native queue profile

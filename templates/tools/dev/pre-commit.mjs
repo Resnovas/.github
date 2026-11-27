@@ -10,16 +10,19 @@ const hook = '#!/bin/sh\n# house:pre-commit\nexec node "$(git rev-parse --show-t
 export function installPreCommit(root, dryRun = false, native = undefined) {
   let expected = hook
   if (native !== undefined) {
-    if (!native || typeof native !== 'object' || Object.keys(native).sort().join(',') !== 'marker,script' ||
-        typeof native.script !== 'string' || !/^[a-zA-Z0-9][a-zA-Z0-9:_-]*$/.test(native.script) ||
+    const keys = native && typeof native === 'object' && Object.keys(native).sort().join(',')
+    const direct = keys === 'entry,marker' && typeof native.entry === 'string' &&
+      /^tools\/(?:[a-zA-Z0-9_-]+\/)*[a-zA-Z0-9_-]+\.mjs$/.test(native.entry)
+    if (!(direct || (keys === 'marker,script' && typeof native.script === 'string' && /^[a-zA-Z0-9][a-zA-Z0-9:_-]*$/.test(native.script))) ||
         typeof native.marker !== 'string' || !/^[a-zA-Z0-9][a-zA-Z0-9 :_-]*$/.test(native.marker)) {
-      throw new Error('preCommit must contain only a package script name and a single-line marker; keep the native runner in repository code.')
+      throw new Error('preCommit requires a marker and either a package script or a relative tools/**/*.mjs entry; keep the native runner in repository code.')
     }
     const scripts = JSON.parse(readFileSync(resolve(root, 'package.json'), 'utf8')).scripts
-    for (const name of [native.script, 'verify:static', 'test:affected']) {
+    for (const name of [...(direct ? [] : [native.script]), 'verify:static', 'test:affected']) {
       if (typeof scripts?.[name] !== 'string' || !scripts[name].trim()) throw new Error(`Define package script ${name} before composing preCommit; the native runner must execute static checks and staged affected tests only.`)
     }
-    expected = `#!/bin/sh\n# ${native.marker}\nexec node --run ${native.script}\n`
+    if (direct) readFileSync(resolve(root, native.entry))
+    expected = `#!/bin/sh\n# ${native.marker}\n` + (direct ? `set -eu\nnode ${native.entry}\n` : `exec node --run ${native.script}\n`)
   }
   const hooks = execFileSync('git', ['rev-parse', '--git-path', 'hooks'], { cwd: root, encoding: 'utf8' }).trim()
   const path = resolve(root, hooks, 'pre-commit')

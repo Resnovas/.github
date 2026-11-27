@@ -129,6 +129,28 @@ test('explicit native composition preserves the owned hook and executes its pack
   assert.deepEqual(inspect(), { text: expected, modified: 946684800000 })
 })
 
+test('direct-entry registration preserves an existing native hook byte for byte', () => {
+  const root = fixture()
+  git(root, 'init', '-q')
+  const config = { entry: 'tools/native.mjs', marker: 'existing runner' }
+  mkdirSync(join(root, 'tools'))
+  writeFileSync(join(root, config.entry), 'process.exit(9)')
+  writeFileSync(join(root, 'package.json'), JSON.stringify({ scripts: { 'verify:static': 'node static.mjs', 'test:affected': 'node affected.mjs' } }))
+  const path = join(root, '.git/hooks/pre-commit')
+  const existing = '#!/bin/sh\n# existing runner\nset -eu\nnode tools/native.mjs\n'
+  writeFileSync(path, existing, { mode: 0o755 })
+  utimesSync(path, 946684800, 946684800)
+  assert.match(installPreCommit(root, false, config), /already installed/)
+  assert.equal(statSync(path).mtimeMs, 946684800000)
+  assert.notEqual(spawnSync('git', ['hook', 'run', 'pre-commit'], { cwd: root }).status, 0)
+  for (const entry of ['tools/../native.mjs', 'tools/native.mjs;true', '/tools/native.mjs']) {
+    assert.throws(() => installPreCommit(root, false, { ...config, entry }), /preCommit/)
+  }
+  writeFileSync(path, existing + 'exit 0\n')
+  assert.throws(() => installPreCommit(root, false, config), /Preserve the existing/)
+  assert.equal(readFileSync(path, 'utf8'), existing + 'exit 0\n')
+})
+
 test('staged test selection follows source owners without collecting full verification evidence', () => {
   const tests = ['test/funnel.test.mjs', 'test/funnel-lint.test.mjs', 'test/graphify.test.mjs', 'test/render.test.mjs']
   assert.deepEqual(selectAffectedTests(['tools/lint/react.mjs'], tests), ['test/funnel-lint.test.mjs'])
