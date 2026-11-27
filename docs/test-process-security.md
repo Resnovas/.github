@@ -128,6 +128,28 @@ This is a correctness change; no optimization speedup is claimed.
 
 ## Windows-native acquisition
 
+The compiler-shaped transport fixture copies its real executable in a separate
+3000ms suite setup hook, using asynchronous file I/O so that setup timeout can
+fire. `test.fixture.setup` records start/completion and elapsed time. A setup
+failure prevents the transport test from spawning; setup is not test time.
+The existing3000ms test,1000ms child budget and all argv/output/status/close
+assertions remain unchanged. No new runtime option or speedup is claimed.
+
+PR78 was owner-merged as a8af00f at2026-11-20T17:34:51Z, not successful ALLGREEN
+queue delivery: group173ababc failed Ubuntu24's compiler fixture at3156.8ms
+before its104ms child finished. Synchronous executable copying was inside that
+test's timed window. Injecting2500ms fixture I/O plus600ms real child work makes
+the original test expire at3000ms; the separated setup passes with636ms child
+time. Injecting3200ms setup fails closed with no spawn. These are controlled
+boundary probes, not a reconstruction of the hosted filesystem delay.
+Unmodified focused proof measures343ms setup and39ms child locally. Postmerge
+six lanes, aggregate, smartcloud and JavaScript CodeQL pass on a8af00f; Jonathan's
+decision accepts that owner merge for downstream adoption. The failed group's
+C# SARIF upload lost its queue ref after removal; separate house follow-up owns
+that configuration error. Security dismissals remain owner-attested, not
+independently verified by this integration. A positive normal-queue follow-up
+and downstream qualification remain separate gates.
+
 Jonathan selected the native option B after the earlier Node-only restriction.
 Run `node tools/test-process/build-windows.mjs` after accepted house sync on
 Windows. It compiles the checked-in C# source with the installed .NET Framework 4

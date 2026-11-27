@@ -23,8 +23,24 @@ root status23 and requiring actual child close. Original real-child scenarios,
 assertions,1000ms budgets,700ms readiness and3000ms test limits remain intact.
 Static-first full local verification passes157/157, with instrumented lines
 and functions100%, branches95.30%. This is not Windows execution evidence.
-Graphify lane reports PR88's unchanged-process heade592795 now green, including
-Windows/current run46056167914; an intermittent race is not disproved by a pass.
-Protected fix PR delivery and its own exact-head matrix/CodeQL remain pending.
-PR88 may merge independently; approved Eventiva adoption follows published
-canonical merge. No bypass, Graphify-file edit or whole-issue closure.
+PR88's unchanged-process heade592795 passed, including Windows/current
+run46056167914, but its queued groupd354299f was removed after
+[run46056625582](https://github.com/Resnovas/.github/actions/runs/46056625582).
+Windows24 job140700644754 reproduces native no-pipes-abort EPIPE; Windows/current
+passes. Ubuntu24 job140700644759 times out the compiler-shaped fixture at6226ms
+against3000ms; its child subsequently closes112ms after acquisition. This
+establishes pre-spawn delay, not exact hosted filesystem attribution.
+
+The existing [PR81](https://github.com/Resnovas/.github/pull/81) fixture repair
+was verified still open at5d211e7, absent from main. Reconcile that pending
+bounded asynchronous setup repair with this terminal-release fix in PR81;
+do not duplicate it or requeue PR88 to chase a pass. Setup retains its own
+3000ms ceiling and fail-before-spawn behavior; transport remains1000ms inside
+the unchanged3000ms test. Fresh controlled2500ms setup plus600ms child work
+times out the old test; combined repair passes with2743ms setup and642ms
+child. Controlled3200ms setup times out before any spawn-request record.
+These are timing-boundary probes, not hosted filesystem attribution or speedups.
+Combined static-first full verification passes157/157, lines/functions100%,
+branches95.30%. Exact-head matrix/CodeQL, protected landing and
+PR88 published-main revalidation remain pending. Approved Eventiva adoption
+follows canonical merge. No bypass, Graphify-file edit or whole-issue closure.
