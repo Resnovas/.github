@@ -160,6 +160,14 @@ the helper is a platform acquisition boundary, not a second budget runner.
 Existing Node roots retain their libuv behavior and its breakaway limitation.
 See Microsoft's [nested Job contract](https://learn.microsoft.com/windows/win32/procthread/nested-jobs).
 
+`release` is the final private control command after empty-Job or acquisition
+failure evidence. Cancellation after release sends no further `stop`, even
+while Node's socket still reports writable: the supervisor may already be
+closing its pipe. The owner still awaits actual supervisor/stream close.
+Pre-release transport errors, including EPIPE, remain result failures; none
+are filtered. See the [repair timeline](test-process-timeline.md) for proof
+and the separate hosted acceptance boundary.
+
 Local Linux proof passes 33/33 process tests, including the six native lifecycle
 cases with unchanged 1000 ms budgets, real Git byte/argv/status contracts and a
 compiler-shaped renamed executable. That executable is a transport fixture,

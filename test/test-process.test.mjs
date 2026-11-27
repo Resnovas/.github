@@ -16,14 +16,66 @@
 
 import assert from 'node:assert/strict'
 import childProcess, { spawnSync } from 'node:child_process'
-import { once } from 'node:events'
+import { EventEmitter, once } from 'node:events'
 import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { syncBuiltinESMExports } from 'node:module'
+import net from 'node:net'
 import { dirname, join, resolve } from 'node:path'
 import test from 'node:test'
 import { setTimeout as delay } from 'node:timers/promises'
 import { fileURLToPath } from 'node:url'
 import { childBudgetIssue, runChild, startChild, terminationGraceMs } from '../templates/tools/test-process/process.mjs'
+import { windowsChild } from '../templates/tools/test-process/windows.mjs'
+
+test('native release is terminal for cancellation writes, not for actual child close', (t) => {
+  const server = new EventEmitter()
+  server.listen = server.close = () => server
+  const supervisor = new EventEmitter()
+  supervisor.kill = () => assert.fail('Connected cancellation must retain the supervisor')
+  supervisor.exitCode = null
+  const socket = new EventEmitter()
+  socket.writable = true
+  socket.setEncoding = () => socket
+  socket.destroy = () => { socket.writable = false }
+  const writes = []
+  socket.write = (value) => {
+    // Model a peer that closes as soon as it consumes release, while Node's
+    // writable flag still permits another buffered write to the closing pipe.
+    if (writes.includes('release\n')) socket.emit('error', Object.assign(new Error('write EPIPE'), { code: 'EPIPE' }))
+    writes.push(value)
+    return true
+  }
+  t.mock.method(net, 'createServer', () => server)
+  t.mock.method(childProcess, 'spawn', () => supervisor)
+  syncBuiltinESMExports()
+  try {
+    const child = windowsChild('native.exe', [], {}, () => {}, Date.now())
+    const errors = []
+    child.on('error', (failure) => errors.push(failure.code))
+    let closed = false
+    child.once('close', () => { closed = true })
+    server.emit('connection', socket)
+    socket.emit('data', '{"action":"started","pid":123}\n')
+    // Genuine control faults before release must remain observable.
+    socket.emit('error', Object.assign(new Error('write EPIPE'), { code: 'EPIPE' }))
+    assert.deepEqual(errors, ['EPIPE'])
+    assert.equal(child.kill('SIGTERM'), true)
+    socket.emit('data', '{"action":"exited","status":23,"terminated":false}\n{"action":"empty"}\n')
+    assert.equal(closed, false)
+    assert.equal(child.kill('SIGKILL'), false)
+    assert.equal(child.kill('SIGKILL'), false)
+    assert.deepEqual(errors, ['EPIPE'])
+    assert.deepEqual(writes.slice(1), ['stop\n', 'release\n'])
+    assert.equal(closed, false)
+    child.emit('close', 23, null)
+    assert.equal(closed, true)
+    assert.equal(child.exitCode, 23)
+    assert.equal(child.signalCode, null)
+  } finally {
+    t.mock.restoreAll()
+    syncBuiltinESMExports()
+  }
+})
 
 test('serial admission rejects the original pair and accepts measured and nearby valid plans', () => {
   assert.match(childBudgetIssue([10000, 10000], 5000), /shorten.*not raise/)
