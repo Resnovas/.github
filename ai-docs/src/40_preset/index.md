@@ -58,4 +58,4 @@ could not be extended, because presets are locked. Each house repository with
 review bots lists `^CodeRabbit` and `'^Cursor '` (quoted; the trailing space
 matters) under `required.ignore` after its `house:local` line, so bot checks
 never gate the aggregate and the Cursor approval agent cannot deadlock with it.
-Graphify is not ignored: its check is an AP-31 gate.
+Migrated Graphify callers produce no PR check. Navigation freshness is not an AP-31 gate; source-based architecture checks remain required.

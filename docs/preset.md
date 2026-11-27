@@ -232,7 +232,7 @@ A repository adds `required.expect` (checks that must appear, such as `'^check$'
 
 The preset leaves these unset so each repository can list its own; a list the preset set could not be added to, because presets are locked.
 Every house repository with review bots should ignore their checks, so a bot that is slow, or reports a neutral result, never holds a merge.
-The review bots advise; the findings that block are listed in [AP-31](../APPROVAL_POLICY.md#ap-31) and reach the pull request as review comments or the Graphify check, which still counts.
+The review bots advise; the findings that block are listed in [AP-31](../APPROVAL_POLICY.md#ap-31). Graphify navigation freshness is not a gate; source-based architecture checks remain required.
 The Cursor approval agent waits for the checks, so counting its own check would make the two wait for each other.
 Add this after the `house:local` line of `.github/smartcloud.yml`:
 

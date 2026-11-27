@@ -16,8 +16,8 @@
 
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { execFileSync } from 'node:child_process'
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { execFileSync, spawnSync } from 'node:child_process'
+import { chmodSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -300,4 +300,89 @@ test('the rendered command line reads messages and enforces the configured mappi
   }
   rmSync(prefixFile)
   assert.equal(run(messageFile, '--author', 'Jane Doe <jane@example.com>', '--no-diff').code, 1)
+})
+
+test('installed commit hook rejects generated output while preserving migration, source and automation contracts', (t) => {
+  const parent = fileURLToPath(new URL('../.amp/in/orb-backup/', import.meta.url))
+  mkdirSync(parent, { recursive: true })
+  const repo = mkdtempSync(join(parent, 'graph-commit-'))
+  t.after(() => rmSync(repo, { recursive: true, force: true }))
+  const env = { ...process.env }
+  for (const key of Object.keys(env)) if (key.startsWith('GIT_') || key.startsWith('GITHUB_') || key === 'HOUSE_SKIP_COMMIT_CHECK') delete env[key]
+  const git = (...args) => execFileSync('git', args, { cwd: repo, env, encoding: 'utf8', stdio: 'pipe' }).trim()
+  const write = (path, text) => {
+    mkdirSync(join(repo, path, '..'), { recursive: true })
+    writeFileSync(join(repo, path), text)
+  }
+  git('init', '-q', '-b', 'main')
+  git('config', 'user.name', human.name)
+  git('config', 'user.email', human.email)
+  git('config', 'commit.gpgsign', 'false')
+  write('tools/dev/commit-check.mjs', readFileSync(script, 'utf8'))
+  write('tools/dev/commit-check-linear-prefix.txt', 'none\n')
+  const caller = readFileSync(new URL('../templates/.github/workflows/house-graphify.yml', import.meta.url), 'utf8')
+  write('.github/workflows/house-graphify.yml', caller)
+  const permitted = /^      publication-message: '([^'\r\n]+)'$/m.exec(caller)?.[1]
+  assert.ok(permitted)
+  write('.gitignore', 'graphify-out/*\n!graphify-out/.gitignore\n!graphify-out/.gitattributes\n')
+  write('graphify-out/graph.json', '{}')
+  git('add', '.')
+  git('add', '-f', 'graphify-out/graph.json')
+  git('commit', '-qm', 'fixture')
+  write('.git/hooks/commit-msg', '#!/bin/sh\nprintf called >> "$(git rev-parse --git-path foreign-hook-proof)"\nexec node "$(git rev-parse --show-toplevel)/tools/dev/commit-check.mjs" "$1"\n')
+  chmodSync(join(repo, '.git/hooks/commit-msg'), 0o755)
+  const commit = (message, extra = {}) => spawnSync('git', ['commit', '-qm', message], { cwd: repo, env: { ...env, ...extra }, encoding: 'utf8' })
+  const normal = `chore: preserve source ownership\n\n${signed}`
+  // A staged legacy removal is the intentional migration, not graph publication.
+  git('rm', '--cached', 'graphify-out/graph.json')
+  write('graphify-out/.gitignore', '*\n!.gitignore\n!.gitattributes\n')
+  write('source.txt', 'normal source')
+  git('add', '.')
+  assert.equal(commit(normal).status, 0)
+  git('switch', '-qc', 'feature/guard-proof')
+  for (const file of ['graphify-out/graph.json', 'graphify-out/cache/semantic/a.json', 'graphify-snapshot/graph.json']) {
+    write(file, '{"fixture":true}')
+    git('add', '-f', file)
+    const before = git('rev-parse', 'HEAD')
+    const result = commit(normal)
+    assert.equal(result.status, 1)
+    assert.match(result.stderr, /merge conflicts.*repository automation/)
+    assert.equal(git('rev-parse', 'HEAD'), before)
+    assert.equal(commit(normal, { HOUSE_SKIP_COMMIT_CHECK: '1' }).status, 1)
+    const messageOnly = spawnSync(process.execPath, ['tools/dev/commit-check.mjs', '--message', normal, '--no-diff'], { cwd: repo, env, encoding: 'utf8' })
+    assert.equal(messageOnly.status, 1)
+    git('reset', '-q', '--', file)
+    rmSync(join(repo, file))
+  }
+  write('graphify-snapshot/graph.json', '{"fixture":true}')
+  write('graphify-snapshot/provenance.json', '{}')
+  git('add', 'graphify-snapshot')
+  const event = { repository: { full_name: 'Resnovas/Eventiva', default_branch: 'main' } }
+  write('.git/event.json', JSON.stringify(event))
+  const automation = {
+    GITHUB_ACTIONS: 'true', GITHUB_EVENT_NAME: 'schedule', GITHUB_REF: 'refs/heads/main',
+    GITHUB_REPOSITORY: event.repository.full_name, GITHUB_EVENT_PATH: join(repo, '.git/event.json'),
+    GITHUB_WORKFLOW_REF: `${event.repository.full_name}/.github/workflows/house-graphify.yml@refs/heads/main`,
+    GITHUB_SHA: git('rev-parse', 'HEAD'),
+  }
+  // Even copied workflow context and its configured message cannot authorize a feature/fix branch.
+  assert.equal(commit(permitted, automation).status, 1)
+  git('switch', '-qc', 'fix/guard-proof')
+  assert.equal(commit(permitted, automation).status, 1)
+  git('switch', '-q', 'main')
+  assert.equal(commit(permitted).status, 1)
+  for (const overrides of [{ GITHUB_EVENT_NAME: 'pull_request' }, { GITHUB_REF: 'refs/heads/feature/other' }, { GITHUB_WORKFLOW_REF: 'other' }, { GITHUB_SHA: '0'.repeat(40) }]) {
+    assert.equal(commit(permitted, { ...automation, ...overrides }).status, 1)
+  }
+  assert.equal(commit(`${permitted}\nextra`, automation).status, 1)
+  write('source.txt', 'mixed source is not an automation snapshot')
+  git('add', 'source.txt')
+  assert.equal(commit(permitted, automation).status, 1)
+  git('restore', '--staged', '--worktree', 'source.txt')
+  assert.equal(commit(permitted, automation).status, 0)
+  git('switch', '-qc', 'feature/source-only')
+  write('source.txt', 'ordinary commit after automation')
+  git('add', 'source.txt')
+  assert.equal(commit(normal).status, 0)
+  assert.match(readFileSync(join(repo, '.git/foreign-hook-proof'), 'utf8'), /called/)
 })

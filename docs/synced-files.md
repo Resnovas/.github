@@ -61,7 +61,7 @@ Each is described in full in [Workflows](workflows.md).
 | `.github/workflows/house-dependency-review.yml` | Extendable | Blocks new dependencies with serious known vulnerabilities or disallowed licences. |
 | `.github/workflows/house-scorecard.yml` | Extendable | OpenSSF Scorecard. |
 | `.github/workflows/house-workflow-lint.yml` | Extendable | actionlint and zizmor on the workflows. |
-| `.github/workflows/house-graphify.yml` | Extendable | Keeps the committed code graph current. |
+| `.github/workflows/house-graphify.yml` | Extendable | Daily main automation proposes signed navigation snapshot PRs and retains revision-labelled artifacts for migrated callers. |
 
 In a workflow you add your own jobs after `house:local`, indented under `jobs:`. A job may not reuse a synced job's name.
 
@@ -117,7 +117,7 @@ They only call three package scripts every repository has (`setup`, `check` and 
 | `.agents/mcp.jsonc` | Extendable | Every agent host | The MCP servers agents use (Mem0 gateway, the repository's Graphify graph, and Graphify Cloud with its memory). Your own go under `servers`. No credential is ever written: each host reads them from environment variables. |
 | `tools/dev/surfaces.mjs` | Whole file | You, and `setup` and `check` | `sync` writes the prompts to `.claude/commands` and `.cursor/commands`, the skills to `.claude/skills`, and the MCP servers to `.mcp.json`, `.cursor/mcp.json`, `.vscode/mcp.json` and a block in `.codex/config.toml`. `check` fails when they are out of date. `install` registers the actions in Orca and OpenChamber, which keep them in per-user settings, and installs the commit hook; outside CI, `check` fails while the hook is missing, and everywhere it fails while a project with a `package.json` lacks `scripts/agent-setup` or `AGENT-SETUP.md`. |
 | `tools/dev/open.mjs` | Whole file | The tasks | Opens a file in the default browser on any platform. |
-| `tools/dev/commit-check.mjs` | Whole file | git, as the `commit-msg` hook that `setup` installs | Refuses a commit that breaks the house commit rules: a conventional subject, the author and sign-off being a person, an AI co-author naming its model, no host attribution lines, no em or en dashes or emoji in the message or the added text; and the house code standard in added TypeScript source lines: no `any`, and no plain `async`, `await`, `try`, `throw`, `new Promise` or `.then(` outside a line that calls `Effect.` or sits under a `// effect-boundary: <reason>` comment (tests, `.d.ts`, `externals/`, `tools/` and `scripts/` are not scanned). `HOUSE_SKIP_COMMIT_CHECK=1` skips one emergency commit; the smartcloud check on the pull request still applies. |
+| `tools/dev/commit-check.mjs` | Whole file | git, as the `commit-msg` hook that `setup` installs | Checks conventional subjects, author-matched sign-off/provenance, AI model credit, task references and added-text/source rules. Rejects generated graph content outside the daily main automation contract; source/config commits and legacy output removals pass. Emergency/message-only switches never skip the graph guard. Local context is not authentication; normal GitHub checks and protections remain required. |
 
 JSON files here are JSON with comments, so their markers are `//` lines, and a local entry may not reuse a synced `label`, `name` or `id`.
 
@@ -196,14 +196,15 @@ Partial owner: [EVE-261](https://linear.app/resnovas/issue/EVE-261) / [Eventiva#
 
 ## <a id="graphify"></a>Code graph (Graphify)
 
-A [Graphify](https://github.com/Graphify-Labs/graphify) graph of the code is committed in `graphify-out/graph.json`, so people and agents can ask what a change touches without reading the whole codebase.
+A [Graphify](https://github.com/Graphify-Labs/graphify) graph of the code is ignored in `graphify-out/graph.json`; only daily main automation updates the separate tracked snapshot through a signed PR. See [migration and local lifecycle](graphify.md).
 Building it uses local parsers only: no model, no network, no cost.
 
 | File | Kind | What it is |
 | --- | --- | --- |
-| `tools/graphify/graphify` | Whole file | The wrapper: `setup` installs Graphify (with [uv](https://docs.astral.sh/uv/)) and the git hooks, `update` rebuilds the graph, `check` fails when it is stale, `query "<question>"` asks it. |
-| `graphify-out/.gitignore` | Whole file | Commits only the graph and the paid-for semantic cache. |
-| `graphify-out/.gitattributes` | Whole file | Marks the output as generated and merges `graph.json` with Graphify's own merge driver. |
+| `tools/graphify/graphify` | Whole file | `setup` installs Graphify and post-event hooks; queries refresh ignored local output. `check` diagnoses freshness, never merge readiness. |
+| `tools/graphify/local.py` | Whole file | Atomic source snapshots, fingerprinting, lifecycle hooks and per-read MCP freshness. |
+| `graphify-out/.gitignore` | Whole file | Ignores all generated output and preserved semantic caches; configuration stays tracked. |
+| `graphify-out/.gitattributes` | Whole file | Marks output generated; no graph merge driver. |
 | `.agents/skills/graphify/` | Whole file | Teaches agents when and how to query the graph. See [House skills](#skills) for the rest of the skills and how they reach Claude Code. |
 | `.graphifyignore` | Extendable | See [Review bot configuration](#review-bots). |
 
