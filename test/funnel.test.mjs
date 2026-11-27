@@ -17,7 +17,7 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { execFileSync, spawnSync } from 'node:child_process'
-import { mkdirSync, mkdtempSync, readFileSync, writeFileSync, copyFileSync, statSync, utimesSync, openSync, fstatSync, closeSync } from 'node:fs'
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync, copyFileSync, statSync, utimesSync, openSync, fstatSync, futimesSync, closeSync } from 'node:fs'
 import { resolve, join } from 'node:path'
 import { installPreCommit, runPreCommit } from '../templates/tools/dev/pre-commit.mjs'
 import { checkDocs } from '../templates/tools/verification/docs-budget.mjs'
@@ -138,25 +138,29 @@ test('direct-entry registration preserves an existing native hook byte for byte'
   writeFileSync(join(root, 'package.json'), JSON.stringify({ scripts: { 'verify:static': 'node static.mjs', 'test:affected': 'node affected.mjs' } }))
   const path = join(root, '.git/hooks/pre-commit')
   const existing = '#!/bin/sh\n# existing runner\nset -eu\nnode tools/native.mjs\n'
-  writeFileSync(path, existing, { mode: 0o755 })
-  utimesSync(path, 946684800, 946684800)
-  assert.match(installPreCommit(root, false, config), /already installed/)
-  const descriptor = openSync(path, 'r')
+  const descriptor = openSync(path, 'wx+', 0o755)
   try {
+    writeFileSync(descriptor, existing)
+    futimesSync(descriptor, 946684800, 946684800)
+    assert.match(installPreCommit(root, false, config), /already installed/)
     assert.equal(fstatSync(descriptor).mtimeMs, 946684800000)
-    assert.equal(readFileSync(descriptor, 'utf8'), existing)
+    writeFileSync(descriptor, 'exit 0\n')
+    assert.throws(() => installPreCommit(root, false, config), /Preserve the existing/)
   } finally {
     closeSync(descriptor)
+  }
+  for (const entry of ['tools/../native.mjs', 'tools/native.mjs;true', '/tools/native.mjs']) {
+    assert.throws(() => installPreCommit(root, false, { ...config, entry }), /preCommit/)
+  }
+  const verified = openSync(path, 'r')
+  try {
+    assert.equal(readFileSync(verified, 'utf8'), existing + 'exit 0\n')
+  } finally {
+    closeSync(verified)
   }
   const rejected = spawnSync('git', ['hook', 'run', 'pre-commit'], { cwd: root, encoding: 'utf8' })
   assert.match(rejected.stderr, /direct entry rejected the commit/)
   assert.notEqual(rejected.status, 0)
-  for (const entry of ['tools/../native.mjs', 'tools/native.mjs;true', '/tools/native.mjs']) {
-    assert.throws(() => installPreCommit(root, false, { ...config, entry }), /preCommit/)
-  }
-  writeFileSync(path, existing + 'exit 0\n')
-  assert.throws(() => installPreCommit(root, false, config), /Preserve the existing/)
-  assert.equal(readFileSync(path, 'utf8'), existing + 'exit 0\n')
 })
 
 test('staged test selection follows source owners without collecting full verification evidence', () => {
