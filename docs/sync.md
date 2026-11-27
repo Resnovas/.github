@@ -44,6 +44,12 @@ node --run check
 
 Do not hand-edit these mirrors or execute candidate-controlled generators in a privileged sync workflow. The regression checks the actual rendered templates against the surface generator, rejects source-only and host-only divergence, and preserves a repository-only prompt and its host files. The existing root render and surface checks stay required. This adds no sync option or token permission. Publish through normal house review; downstream adoption remains separate. A stale mirror is not a reason to dispatch a combined settings/sync workflow or push human work to `house/sync`.
 
+### House skill mirrors
+
+Edit house skills only in `templates/.agents/skills/`. To deliver the matching Claude files through the same template-only sync, copy changed source templates to the corresponding paths under `templates/.claude/skills/` before rendering. When deleting a source template, delete its matching mirror. Copy the templates rather than repository-rendered output so both paths use the recipient's placeholder values. Leave repository-only skills in the recipient repository.
+
+Run `node --run render`, `node tools/dev/surfaces.mjs check` and `node --test test/render.test.mjs`. The transport test compares the complete set of rendered house skill paths and contents, including references and changelogs.
+
 ## <a id="managed-blocks"></a>Keeping your own lines: managed blocks
 
 Most configuration files, and `AGENTS.md`, `CLAUDE.md` and `APPROVAL_POLICY.md`, are **extendable**.
