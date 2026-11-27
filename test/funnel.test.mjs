@@ -134,15 +134,23 @@ test('direct-entry registration preserves an existing native hook byte for byte'
   git(root, 'init', '-q')
   const config = { entry: 'tools/native.mjs', marker: 'existing runner' }
   mkdirSync(join(root, 'tools'))
-  writeFileSync(join(root, config.entry), 'process.exit(9)')
+  writeFileSync(join(root, config.entry), "console.error('direct entry rejected the commit'); process.exit(9)")
   writeFileSync(join(root, 'package.json'), JSON.stringify({ scripts: { 'verify:static': 'node static.mjs', 'test:affected': 'node affected.mjs' } }))
   const path = join(root, '.git/hooks/pre-commit')
   const existing = '#!/bin/sh\n# existing runner\nset -eu\nnode tools/native.mjs\n'
   writeFileSync(path, existing, { mode: 0o755 })
   utimesSync(path, 946684800, 946684800)
   assert.match(installPreCommit(root, false, config), /already installed/)
-  assert.equal(statSync(path).mtimeMs, 946684800000)
-  assert.notEqual(spawnSync('git', ['hook', 'run', 'pre-commit'], { cwd: root }).status, 0)
+  const descriptor = openSync(path, 'r')
+  try {
+    assert.equal(fstatSync(descriptor).mtimeMs, 946684800000)
+    assert.equal(readFileSync(descriptor, 'utf8'), existing)
+  } finally {
+    closeSync(descriptor)
+  }
+  const rejected = spawnSync('git', ['hook', 'run', 'pre-commit'], { cwd: root, encoding: 'utf8' })
+  assert.match(rejected.stderr, /direct entry rejected the commit/)
+  assert.notEqual(rejected.status, 0)
   for (const entry of ['tools/../native.mjs', 'tools/native.mjs;true', '/tools/native.mjs']) {
     assert.throws(() => installPreCommit(root, false, { ...config, entry }), /preCommit/)
   }
