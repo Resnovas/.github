@@ -16,14 +16,67 @@
 
 import assert from 'node:assert/strict'
 import childProcess, { spawnSync } from 'node:child_process'
-import { once } from 'node:events'
+import { EventEmitter, once } from 'node:events'
 import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { copyFile } from 'node:fs/promises'
 import { syncBuiltinESMExports } from 'node:module'
+import net from 'node:net'
 import { dirname, join, resolve } from 'node:path'
-import test from 'node:test'
+import test, { after, before, describe } from 'node:test'
 import { setTimeout as delay } from 'node:timers/promises'
 import { fileURLToPath } from 'node:url'
 import { childBudgetIssue, runChild, startChild, terminationGraceMs } from '../templates/tools/test-process/process.mjs'
+import { windowsChild } from '../templates/tools/test-process/windows.mjs'
+
+test('native release is terminal for cancellation writes, not for actual child close', (t) => {
+  const server = new EventEmitter()
+  server.listen = server.close = () => server
+  const supervisor = new EventEmitter()
+  supervisor.kill = () => assert.fail('Connected cancellation must retain the supervisor')
+  supervisor.exitCode = null
+  const socket = new EventEmitter()
+  socket.writable = true
+  socket.setEncoding = () => socket
+  socket.destroy = () => { socket.writable = false }
+  const writes = []
+  socket.write = (value) => {
+    // Model a peer that closes as soon as it consumes release, while Node's
+    // writable flag still permits another buffered write to the closing pipe.
+    if (writes.includes('release\n')) socket.emit('error', Object.assign(new Error('write EPIPE'), { code: 'EPIPE' }))
+    writes.push(value)
+    return true
+  }
+  t.mock.method(net, 'createServer', () => server)
+  t.mock.method(childProcess, 'spawn', () => supervisor)
+  syncBuiltinESMExports()
+  try {
+    const child = windowsChild('native.exe', [], {}, () => {}, Date.now())
+    const errors = []
+    child.on('error', (failure) => errors.push(failure.code))
+    let closed = false
+    child.once('close', () => { closed = true })
+    server.emit('connection', socket)
+    socket.emit('data', '{"action":"started","pid":123}\n')
+    // Genuine control faults before release must remain observable.
+    socket.emit('error', Object.assign(new Error('write EPIPE'), { code: 'EPIPE' }))
+    assert.deepEqual(errors, ['EPIPE'])
+    assert.equal(child.kill('SIGTERM'), true)
+    socket.emit('data', '{"action":"exited","status":23,"terminated":false}\n{"action":"empty"}\n')
+    assert.equal(closed, false)
+    assert.equal(child.kill('SIGKILL'), false)
+    assert.equal(child.kill('SIGKILL'), false)
+    assert.deepEqual(errors, ['EPIPE'])
+    assert.deepEqual(writes.slice(1), ['stop\n', 'release\n'])
+    assert.equal(closed, false)
+    child.emit('close', 23, null)
+    assert.equal(closed, true)
+    assert.equal(child.exitCode, 23)
+    assert.equal(child.signalCode, null)
+  } finally {
+    t.mock.restoreAll()
+    syncBuiltinESMExports()
+  }
+})
 
 test('serial admission rejects the original pair and accepts measured and nearby valid plans', () => {
   assert.match(childBudgetIssue([10000, 10000], 5000), /shorten.*not raise/)
@@ -396,24 +449,34 @@ test('native Git retains stdin bytes, literal configuration argv, cwd and nonzer
   t.diagnostic(`native Git literal/stdin/status: ${literal.elapsedMs}/${bytes.elapsedMs}/${missing.elapsedMs} ms`)
 })
 
-test('a compiler-shaped native executable retains empty/quoted argv, UTF-8 output and failure status', { timeout: 3000 }, async (t) => {
+describe('compiler-shaped executable fixture', () => {
   const backup = resolve('.amp/in/orb-backup')
   mkdirSync(backup, { recursive: true })
   const root = mkdtempSync(join(backup, 'native compiler '))
-  t.after(() => rmSync(root, { recursive: true, force: true }))
+  after(() => rmSync(root, { recursive: true, force: true }))
   // A renamed real executable exercises native acquisition, not a shebang or shell shim.
   // Its small fixture program tests transport; it is not a real Hermes performance claim.
   const compiler = join(root, process.platform === 'win32' ? 'hermesc-fixture.exe' : 'hermesc-fixture')
-  copyFileSync(process.execPath, compiler)
-  const args = ['', '-emit-binary', '-out', 'output path\\', 'source "quoted".js', ';&&|%VAR%$VAR']
-  const result = await runChild(compiler, ['--eval', 'process.stdout.write(JSON.stringify(process.argv.slice(1)));process.stderr.write("compiler diagnostic");process.exitCode=23', '--', ...args], { budgetMs: 1000, cwd: root })
-  assert.equal(result.error, undefined)
-  assert.equal(result.status, 23)
-  assert.equal(result.signal, null)
-  assert.deepEqual(JSON.parse(result.stdout), args)
-  assert.equal(result.stderr, 'compiler diagnostic')
-  assert.deepEqual(result.timings.slice(-2).map((row) => row.phase), ['close', 'total'])
-  t.diagnostic(`compiler-shaped native transport: ${result.elapsedMs} ms`)
+  // Provisioning can block on filesystem work before acquisition starts. Keep it
+  // independently bounded and reported, not charged to the transport test.
+  before(async () => {
+    const startedAt = performance.now()
+    console.error(JSON.stringify({ code: 'test.fixture.setup', phase: 'start', budgetMs: 3000 }))
+    await copyFile(process.execPath, compiler)
+    console.error(JSON.stringify({ code: 'test.fixture.setup', phase: 'complete', budgetMs: 3000, elapsedMs: Math.round(performance.now() - startedAt) }))
+  }, { timeout: 3000 })
+
+  test('a compiler-shaped native executable retains empty/quoted argv, UTF-8 output and failure status', { timeout: 3000 }, async (t) => {
+    const args = ['', '-emit-binary', '-out', 'output path\\', 'source "quoted".js', ';&&|%VAR%$VAR']
+    const result = await runChild(compiler, ['--eval', 'process.stdout.write(JSON.stringify(process.argv.slice(1)));process.stderr.write("compiler diagnostic");process.exitCode=23', '--', ...args], { budgetMs: 1000, cwd: root })
+    assert.equal(result.error, undefined)
+    assert.equal(result.status, 23)
+    assert.equal(result.signal, null)
+    assert.deepEqual(JSON.parse(result.stdout), args)
+    assert.equal(result.stderr, 'compiler diagnostic')
+    assert.deepEqual(result.timings.slice(-2).map((row) => row.phase), ['close', 'total'])
+    t.diagnostic(`compiler-shaped native transport: ${result.elapsedMs} ms`)
+  })
 })
 
 test('nested native Git acquisition reports its actual PID and completed close to the outer owner', { timeout: 3000 }, async () => {
