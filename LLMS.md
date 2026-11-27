@@ -268,7 +268,7 @@ could not be extended, because presets are locked. Each house repository with
 review bots lists `^CodeRabbit` and `'^Cursor '` (quoted; the trailing space
 matters) under `required.ignore` after its `house:local` line, so bot checks
 never gate the aggregate and the Cursor approval agent cannot deadlock with it.
-Graphify is not ignored: its check is an AP-31 gate.
+Migrated Graphify callers produce no PR check. Navigation freshness is not an AP-31 gate; source-based architecture checks remain required.
 
 ---
 
@@ -284,7 +284,7 @@ so a change here reaches every repository on its next run.
 | `dependency-review.yml` | `house-dependency-review.yml` | pull_request, merge_group | none |
 | `scorecard.yml` | `house-scorecard.yml` | push to main, branch_protection_rule, weekly, manual | none |
 | `workflow-lint.yml` | `house-workflow-lint.yml` | pull_request, merge_group, push to main | none |
-| `graphify.yml` | `house-graphify.yml` | pull_request, push to main, manual | input `app-id`; secrets `private-key`, deprecated `token` |
+| `graphify-snapshot.yml` | migrated `house-graphify.yml` | daily, manual main only | workflow-configured publication contract and existing App credentials; signed snapshot PR, normal checks, seven-day revision-labelled artifact |
 | `attest.yml` | none: a release workflow calls it | workflow_call only | inputs `artifact`, `subject-path` (required), `sbom-path`, `release`, `release-assets` |
 
 `smartcloud.yml` and `smartcloud-review.yml` are synced workflows, not
@@ -348,11 +348,11 @@ The synced callers also pass actionlint and zizmor (`.github/zizmor.yml` lets
 `env:`, and `actions/checkout` sets `persist-credentials: false` unless a later
 step pushes.
 
-Graphify's `check` job never fails a pull request: a graph one commit behind
-is expected, because `refresh` (named `refresh (default branch only)` so its
-skip on pull requests explains itself) rebuilds it after merge. When stale,
-`check` writes one notice and a job summary saying no action is needed; do not
-reintroduce the tool's "update, then commit" advice as the only guidance.
+Graphify's migrated caller runs only daily/manual main publication, initially
+in Eventiva and the house repository. No PR generation, publishing, freshness
+gate or graph commits. `graphify.yml` remains unchanged for legacy callers;
+do not silently migrate other repositories. `docs/graphify.md` owns local
+lifecycle, semantic cache preservation and in-flight branch migration.
 
 CodeQL's `languages` job unions the repository's GitHub languages (default
 branch) with the extensions of the files a pull request or merge queue entry

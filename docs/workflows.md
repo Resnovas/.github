@@ -13,7 +13,7 @@ The caller refers to the reusable workflow at `@main`, so a fix here reaches eve
 | [`house-dependency-review.yml`](#dependency-review) | `dependency-review.yml` | Blocks vulnerable or disallowed new dependencies | No, unless the repository adds it |
 | [`house-scorecard.yml`](#scorecard) | `scorecard.yml` | Scores supply-chain security practices | No |
 | [`house-workflow-lint.yml`](#workflow-lint) | `workflow-lint.yml` | Lints and audits the workflows | No, unless the repository adds it |
-| [`house-graphify.yml`](#graphify) | `graphify.yml` | Keeps the code graph current | No |
+| [`house-graphify.yml`](#graphify) | `graphify-snapshot.yml` | Daily main navigation publication | No |
 | a release workflow you write | [`attest.yml`](#attest) | Signs what a release ships | n/a |
 
 Because the smartcloud check waits for every other check on a pull request ([the aggregate check](preset.md#required)), a failing workflow above still blocks the merge even when it is not required by name.
@@ -182,34 +182,11 @@ The queue contract uses read-only checkout, without dependency installation. `no
 
 ## <a id="graphify"></a>Graphify
 
-**What it does.** Keeps the committed code graph (`graphify-out/graph.json`, see [Synced files](synced-files.md#graphify)) in step with the code.
-On a pull request, `check` reports, without failing, when the graph is behind the code; that is normal, because the git hooks rebuild the graph after each commit.
-On the default branch, `refresh` rebuilds the graph and opens or updates a pull request with it, only when nodes or edges changed.
-Both use local parsers only: no model and no provider key.
-In a repository without `tools/graphify/graphify` both do nothing.
+The migrated caller generates navigation daily at 04:23 UTC and on manual dispatch from main, never on a PR event. It calls `graphify-snapshot.yml`, captures the event SHA, uses local parsers, and retains revision-labelled graph/provenance artifacts for seven days. After generation, the repository-scoped App token creates a signed PR changing only `graphify-snapshot/graph.json` and `graphify-snapshot/provenance.json`. The dedicated automation branch is `house/graphify-navigation`; required checks and reviews remain, with no direct-main push or automatic merge. The workflow token stays read-only.
 
-**When it runs.** Pull requests, pushes to `main`, and by hand (on the default branch only).
+See [local navigation and migration](graphify.md) for hook composition, the generated-output commit guard, cache preservation and branch migration. Local regeneration writes ignored output, never the tracked snapshot. Failures remain visible in Actions; a snapshot is not evidence that a PR passes architecture checks.
 
-**Inputs (reusable workflow).**
-
-| Name | Kind | Required | Meaning |
-| --- | --- | --- | --- |
-| `app-id` | input | no | The Resnovas Bot app ID (the `RESNOVAS_BOT_APP_ID` variable). |
-| `private-key` | secret | no | The app's private key (`RESNOVAS_BOT_PRIVATE_KEY`). The synced caller passes it only outside pull requests. Without it, the workflow token opens the pull request. |
-| `token` | secret | no | Deprecated. A fallback for callers not yet synced. Pass `private-key` instead. |
-
-**What you will see.** On pull requests, a `check` job that always passes, and a `refresh (default branch only)` job shown as skipped, because it only runs after merge.
-When the graph is behind, `check` adds a notice "Graphify graph is behind the code (no action needed)" and the same explanation in the job summary, with the counts of nodes and edges that differ.
-You do not need to do anything: after the pull request merges, `refresh` runs on the default branch and opens a pull request titled `chore(graphify): refresh the code graph` from the `house/graphify` branch, labelled `house-sync`.
-If you would rather ship the rebuilt graph in your own pull request, run `sh tools/graphify/graphify update` and commit `graphify-out/`.
-
-**Common problems.**
-
-| You see | Why | What to do |
-| --- | --- | --- |
-| "Graphify graph is behind the code" on a pull request, and `refresh` skipped | Expected: the graph is refreshed after merge, not on pull requests. | Nothing, or update and commit the graph yourself. |
-| No refresh pull request after a merge | The graph already matched the code, or the default branch has no `tools/graphify/graphify`. | Check the `refresh` job's log on the default branch. |
-| The refresh pull request conflicts | The default branch moved again before it merged. | Close it; the next push to the default branch opens a fresh one. |
+The initial rollout is restricted to Eventiva and the house repository. `graphify.yml` remains the legacy reusable entry point for other callers until their owners approve migration; this work does not merge their house-sync proposals. Do not remove shared bot secrets that those callers or other workflows still use.
 
 ## <a id="release"></a>Release
 

@@ -114,7 +114,7 @@ The synced `smartcloud.yml` already does this; these are the steps if you adopt 
 
 | Name | Kind | Where | Used by |
 | --- | --- | --- | --- |
-| `RESNOVAS_BOT_APP_ID` | variable | organisation | `smartcloud.yml`, `house-graphify.yml`, release `changelogs` jobs |
+| `RESNOVAS_BOT_APP_ID` | variable | organisation | `smartcloud.yml`, legacy Graphify callers, release `changelogs` jobs |
 | `RESNOVAS_BOT_PRIVATE_KEY` | secret | organisation | the same |
 | `ACCESS_TOKEN` | secret | organisation | Legacy. A personal access token used only by the reusable Graphify workflow for callers that have not synced the new `house-graphify.yml`. Remove it once every repository has. |
 
@@ -128,7 +128,7 @@ CodeQL, dependency review, Scorecard, workflow lint and attestations use only th
 | `smartcloud.yml` | Workflow token | The repository, for checks, comments, labels and reviews. |
 | `smartcloud.yml` | House token | `Resnovas/.github`, read-only (`contents: read`), for the preset and the sync templates. |
 | `smartcloud.yml` | App token | The repository only, with the app's full permission set, for settings, sync and CODEOWNERS proposals; minted only on push, schedule and manual runs. |
-| `house-graphify.yml` refresh | App token | The repository only, with contents and pull requests write. |
+| Migrated `house-graphify.yml` snapshot | Workflow token and repository-scoped App token | Read-only checkout/artifacts; App contents and pull-request write permissions only after generation, for signed snapshot PRs with normal checks. No protection bypass or direct-main push. |
 | A release workflow's `changelogs` job | App token | The repository, to commit the changelogs and open their pull request. |
 | Everything else | Workflow token | What each job declares, usually `contents: read`. |
 

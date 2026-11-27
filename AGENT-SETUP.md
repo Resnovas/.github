@@ -5,7 +5,7 @@ Machine-only. People: `README.md`, `AGENTS.md`.
 ## Needs
 
 - Node 24.15+ (`engines.node`), npm and network for the locked lint dependencies. No services or database.
-- `uv` only for the code graph (`sh tools/graphify/graphify setup`), optional.
+- `uv` for local graph setup; Python 3 for synthetic lifecycle tests. CI setup does not generate repository graphs.
 
 ## Env
 
@@ -13,8 +13,8 @@ Machine-only. People: `README.md`, `AGENTS.md`.
 
 ## Setup
 
-- `scripts/agent-setup`. Idempotent. Steps: Node check, frozen dependency install, `node --run setup` (editor surfaces and hooks), `node --run verify:static`, `node --run check`.
-- Success: last line `agent-setup: ok`. A few seconds.
+- `scripts/agent-setup`. Idempotent. Steps: Node check, frozen dependency install, `node --run setup` (editor surfaces and hooks), `node --run verify:static`, `node --run check`, then Graphify setup outside CI.
+- Success: last line `agent-setup: ok`. Initial local graph setup installs the tool and parses source; later runs reuse an unchanged graph. See `docs/graphify.md`.
 
 ## Run
 

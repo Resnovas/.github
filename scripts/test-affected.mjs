@@ -24,7 +24,7 @@ import { pathToFileURL } from 'node:url'
 const rendered = ['render', 'values', 'ai-docs', 'funnel-lint']
 const owners = [
   [/^templates\//, rendered],
-  [/^(?:scripts\/render\.mjs|scripts\/lib\/(?:render|values|managed)\.mjs|house\.yml|smartcloud\/)/, [...rendered, 'managed', 'commit-check']],
+  [/^(?:scripts\/render\.mjs|scripts\/lib\/(?:render|values|managed)\.mjs|house\.yml|smartcloud\/|\.github\/smartcloud\.yml$)/, [...rendered, 'managed', 'commit-check']],
   [/^(?:templates\/)?tools\/dev\//, ['render', 'commit-check', 'funnel']],
   [/^(?:templates\/)?tools\/license\//, ['check-headers', 'funnel-lint']],
   [/^(?:templates\/)?tools\/lint\/|^eslint\.config\.mjs$/, ['funnel-lint']],

@@ -12,4 +12,7 @@ npm ci --ignore-scripts
 node --run setup
 node --run verify:static
 node --run check
+if [ "${CI:-}" != true ] && [ "${GITHUB_ACTIONS:-}" != true ]; then
+  sh tools/graphify/graphify setup
+fi
 echo "agent-setup: ok"

@@ -132,6 +132,7 @@ test('explicit native composition preserves the owned hook and executes its pack
 test('staged test selection follows source owners without collecting full verification evidence', () => {
   const tests = ['test/funnel.test.mjs', 'test/funnel-lint.test.mjs', 'test/graphify.test.mjs', 'test/render.test.mjs']
   assert.deepEqual(selectAffectedTests(['tools/lint/react.mjs'], tests), ['test/funnel-lint.test.mjs'])
+  assert.deepEqual(selectAffectedTests(['.github/smartcloud.yml'], tests), ['test/funnel-lint.test.mjs', 'test/render.test.mjs'])
   assert.deepEqual(selectAffectedTests(['test/graphify.test.mjs'], tests), ['test/graphify.test.mjs'])
   assert.deepEqual(selectAffectedTests(['docs/funnel-timeline.md'], tests), [])
   assert.deepEqual(selectAffectedTests(['tools/dev/pre-commit.mjs', 'tools/lint/react.mjs'], tests), ['test/funnel-lint.test.mjs', 'test/funnel.test.mjs', 'test/render.test.mjs'])
