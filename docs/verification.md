@@ -22,6 +22,7 @@ Use disposable Git repositories, synthetic JSON and lint snippets. Execute the c
   "assertions": [
     "pre-commit checks the staged snapshot, orders gates, propagates failure and preserves foreign hooks",
     "explicit native composition preserves the owned hook and executes its package runner",
+    "direct-entry registration preserves an existing native hook byte for byte",
     "staged test selection follows source owners without collecting full verification evidence",
     "document budgets reject both line inflation and a single enormous paragraph",
     "deployment proof accepts only the full intended live build-info commit",
