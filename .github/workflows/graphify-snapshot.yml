@@ -31,8 +31,9 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          # Capture the main revision carried by the event, not a moving ref.
-          ref: ${{ github.sha }}
+          # Start from trusted main history, then select the captured event SHA.
+          ref: main
+          fetch-depth: 0
           persist-credentials: false
       - name: Install uv
         run: curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -42,6 +43,7 @@ jobs:
           SOURCE_SHA: ${{ github.sha }}
           GRAPHIFY_PUBLICATION_MESSAGE: ${{ inputs.publication-message }}
         run: |
+          git merge-base --is-ancestor "$SOURCE_SHA" origin/main
           git checkout -B main "$SOURCE_SHA"
           sh tools/graphify/graphify setup --no-hooks
           sh tools/graphify/graphify snapshot
@@ -123,4 +125,4 @@ jobs:
           SOURCE_SHA: ${{ github.sha }}
           RESULT: ${{ job.status }}
         run: |
-          printf 'Graphify navigation snapshot for `%s`: **%s**.\n\nThis is not PR acceptance or a freshness merge gate.\n' "$SOURCE_SHA" "$RESULT" >> "$GITHUB_STEP_SUMMARY"
+          printf 'Graphify navigation snapshot for %s: **%s**.\n\nThis is not PR acceptance or a freshness merge gate.\n' "$SOURCE_SHA" "$RESULT" >> "$GITHUB_STEP_SUMMARY"

@@ -213,7 +213,8 @@ def install_hooks() -> None:
             backup = path.with_name(name + ".before-house-graphify")
             if not backup.exists():
                 shutil.copy2(path, backup)
-        path.write_text(updated)
+        # Git invokes these with a POSIX shell even on Windows; CRLF breaks it.
+        path.write_text(updated, newline="\n")
         path.chmod(path.stat().st_mode | 0o100)
     # A common Git config can still serve unmigrated sibling worktrees. Retain
     # the dormant driver there; no attribute in the migrated tree selects it.
