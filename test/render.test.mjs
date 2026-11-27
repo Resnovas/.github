@@ -96,6 +96,20 @@ test('sync delivers exactly the approved licence exceptions and detects duplicat
   assert.equal(mergeManaged(rendered, migrated, path), migrated)
 })
 
+test('template-only sync transports every house skill file to its matching Claude path', () => {
+  const root = fileURLToPath(new URL('../', import.meta.url))
+  const rendered = renderAll(join(root, 'templates'), loadValues(join(root, 'house.yml')))
+  const files = (prefix) => rendered.flatMap(({ path, content }) => {
+    const name = path.replaceAll('\\', '/')
+    return name.startsWith(prefix) ? [[name.slice(prefix.length), content]] : []
+  })
+  const sources = files('.agents/skills/')
+  const mirrors = new Map(files('.claude/skills/'))
+  assert.ok(sources.length > 0)
+  assert.deepEqual([...mirrors.keys()].sort(), sources.map(([name]) => name).sort())
+  for (const [name, content] of sources) assert.equal(mirrors.get(name), content, name)
+})
+
 test('sync renders Verify host mirrors that the surface generator accepts without replacing local prompts', (context) => {
   const root = fileURLToPath(new URL('../', import.meta.url))
   const scratch = join(root, '.amp/in/orb-backup')
